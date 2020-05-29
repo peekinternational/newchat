@@ -53,10 +53,10 @@ module.exports = function (io, saveUser) {
 
   router.groupChat = function (req, res) {
     var chatType = req.body.chatType;
-    console.log("chatType: "+ chatType);
+    console.log("chatType: "+ req.body.groupId);
     if (chatType == 0) {
       newMessage = new chatModel({
-        groupId: req.body.id,
+        groupId: req.body.groupId,
         senderId: req.body.senderId,
         message: req.body.message,
         isGroup: 1
@@ -65,7 +65,7 @@ module.exports = function (io, saveUser) {
       newMessage = new chatModel({
         commentId: req.body.commentId,
         chatType: chatType,
-        groupId: req.body.id,
+        groupId: req.body.groupId,
         senderId: req.body.senderId,
         message: req.body.message,
         isGroup: 1
@@ -77,7 +77,7 @@ module.exports = function (io, saveUser) {
 
       if (chatType == 0) {
         chatModel
-          .findOne({ groupId: req.body.id, senderId: req.body.senderId })
+          .findOne({ groupId: req.body.groupId, senderId: req.body.senderId })
           .populate("senderId")
           .sort({ updatedAt: -1 })
           .exec(function (err, data) {
@@ -89,7 +89,7 @@ module.exports = function (io, saveUser) {
         chatModel
           .findOne({
             commentId: req.body.commentId,
-            groupId: req.body.id,
+            groupId: req.body.groupId,
             senderId: req.body.senderId
           })
           .populate("commentId")
@@ -558,7 +558,7 @@ module.exports = function (io, saveUser) {
   };
 
   router.updateGroupChat = function (req, res) {
-    var id = req.params.id;
+    var id = req.params._id;
     var message = req.body.message;
     var groupId = req.body.groupId;
 
@@ -637,7 +637,7 @@ module.exports = function (io, saveUser) {
       }
 
       var newchat = new chatModel({
-        groupId: req.body.id,
+        groupId: req.body._id,
         senderId: req.body.senderId,
         isGroup: 1,
         message: req.files[i].originalname,
