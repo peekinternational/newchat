@@ -4166,7 +4166,7 @@ export default {
 
   
        getfriends(){
-            this.$http.get('https://peekvideochat.com:22000/getUsers/'+this.c_user._id+'/0/5d4c07fb030f5d0600bf5c02')
+            this.$http.get('https://peekvideochat.com:22000/getUsers/'+this.c_user._id+'/0/5d4c07fb030f5d0600bf5c03')
             .then((responce) => this.friendsdata=responce.body.usersList)
             .catch((error) => console.log(error));
         },
@@ -4226,7 +4226,7 @@ export default {
          },
 
         getgroups(){
-               this.$http.get('https://peekvideochat.com:22000/getCreatedGroups/'+this.c_user._id+'/5d4c07fb030f5d0600bf5c02')
+               this.$http.get('https://peekvideochat.com:22000/getCreatedGroups/'+this.c_user._id+'/5d4c07fb030f5d0600bf5c03')
                 .then((responce) => this.groups=responce.body)
                 .catch((error) => console.log(error));
                 $('#group_chat').addClass("active");
