@@ -120,7 +120,7 @@ export default {
              loginuser: function (event) {
               event.preventDefault();
 
-                this.$http.post('https://peekvideochat.com:22000/login', {
+                this.$http.post('https://192.168.43.78:22000/login', {
                   password: this.input.password,
                   name: this.input.username
                 }).then(function (response) {
