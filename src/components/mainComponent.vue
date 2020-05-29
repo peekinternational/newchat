@@ -4234,7 +4234,7 @@ export default {
 
         startgroupchat(group){
           this.singlegroup = group;
-          console.log(this.singlegroup);
+          console.log(group._id);
           $('#group_chat').removeClass("active");
           //$('#friend'+friend._id).addClass("active");
          // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
