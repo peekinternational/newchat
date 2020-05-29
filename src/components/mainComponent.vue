@@ -4166,7 +4166,7 @@ export default {
 
   
        getfriends(){
-            this.$http.get('https://192.168.43.78:22000/getUsers/'+this.c_user._id+'/0/5d4c07fb030f5d0600bf5c03')
+            this.$http.get('https://peekvideochat.com:22000/getUsers/'+this.c_user._id+'/0/5d4c07fb030f5d0600bf5c03')
             .then((responce) => this.friendsdata=responce.body.usersList)
             .catch((error) => console.log(error));
         },
@@ -4178,7 +4178,7 @@ export default {
           $('.init').removeClass("active");
           $('#friend'+friend._id).addClass("active");
           $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-           this.$http.get('https://192.168.43.78:22000/getChat/'+this.c_user._id+'/'+friend._id+'/50')
+           this.$http.get('https://peekvideochat.com:22000/getChat/'+this.c_user._id+'/'+friend._id+'/50')
             .then((responce) => this.friendchat=responce.body)
             .catch((error) => console.log(error));
            
@@ -4208,7 +4208,7 @@ export default {
 
                      this.$socket.emit('sendmsg', this.msgObj )
                   
-                       this.$http.post('https://192.168.43.78:22000/chat' ,{
+                       this.$http.post('https://peekvideochat.com:22000/chat' ,{
                        msgData :this.msgObj ,
                        selectedUserData:this.singlefriend._id
                        }).then(function (response) {
@@ -4226,7 +4226,7 @@ export default {
          },
 
         getgroups(){
-               this.$http.get('https://192.168.43.78:22000/getCreatedGroups/'+this.c_user._id+'/5d4c07fb030f5d0600bf5c03')
+               this.$http.get('https://peekvideochat.com:22000/getCreatedGroups/'+this.c_user._id+'/5d4c07fb030f5d0600bf5c03')
                 .then((responce) => this.groups=responce.body)
                 .catch((error) => console.log(error));
                 $('#group_chat').addClass("active");
@@ -4238,7 +4238,7 @@ export default {
           $('#group_chat').removeClass("active");
           //$('#friend'+friend._id).addClass("active");
          // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-           this.$http.get('https://192.168.43.78:22000/getGroupChat/'+group._id+'/50')
+           this.$http.get('https://peekvideochat.com:22000/getGroupChat/'+group._id+'/50')
             .then((responce) => this.groupchatdata=responce.body)
             .catch((error) => console.log(error));
              $('#startchat').removeClass("active");
@@ -4263,7 +4263,7 @@ export default {
 
                      this.$socket.emit('sendgroupmsg', this.groupmsgObj );
                   
-                    this.$http.post('https://192.168.43.78:22000/groupChat' ,this.groupmsgObj).then(function (response) {
+                    this.$http.post('https://peekvideochat.com:22000/groupChat' ,this.groupmsgObj).then(function (response) {
                         
                          console.log(response.body);
                          
