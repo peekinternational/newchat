@@ -120,16 +120,17 @@ export default {
              loginuser: function (event) {
               event.preventDefault();
 
-                this.$http.post('https://peekvideochat.com:22000/login', {
+                axios.post('/login', {
                   password: this.input.password,
                   name: this.input.username
-                }).then(function (response) {
-                  console.log(response);
-                  if (response.body != '' ) {
+                }).then(response => {
+
+                console.log(response);
+                  if (response.data != '' ) {
                     this.$session.start()
-                    this.$session.set('c_user', response.body.user)
-                    this.$session.set('jwt', response.body.user.token)
-                    Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.user.token
+                    this.$session.set('c_user', response.data.user)
+                    this.$session.set('jwt', response.data.user.token)
+                    Vue.http.headers.common['Authorization'] = 'Bearer ' + response.data.user.token
                     this.$router.push('/')
                   }else{
                     
@@ -137,7 +138,7 @@ export default {
                  theme: "toasted-primary", 
                  position: "top-left", 
                  duration : 5000
-})
+               })
 
                   }
                 }, function (err) {

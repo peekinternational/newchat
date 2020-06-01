@@ -6,14 +6,20 @@ import Toasted from 'vue-toasted';
 import App from './App.vue'
 import VueSocketIO from 'vue-socket.io';
 import socketio from 'socket.io-client';
+import VueClipboard from 'vue-clipboard2';
 
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = 'https://192.168.100.26:22000/';
+window.axios.defaults.withCredentials = true
 import { MyVuexStore } from './my-vuex-store.js';
 //import {ApiService} from './services/api.service.js';
-
+VueClipboard.config.autoSetContainer = true ;
 Vue.use(VueRouter)
 Vue.use(VueSession)
 Vue.use(VueResource)
 Vue.use(Toasted)
+Vue.use(VueClipboard)
 
 const SocketInstance = socketio.connect(':6998');
 

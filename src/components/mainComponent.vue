@@ -1523,7 +1523,7 @@
                           <li class="msg-setting-main">
                             <h5>{{g_chat.message}} </h5>
                             <div class="msg-dropdown-main">
-                              <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                              <div class="msg-setting" ><i class="ti-more-alt"></i></div>
                               <div class="msg-dropdown"> 
                                 <ul>
                                   <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
@@ -1811,7 +1811,7 @@
             </div>
             <div class="contact-chat" >
               <ul class="chatappend" v-for="chat in friendchat"> 
-                <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
+                <li class="replies"  style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
                   <div class="media">
                     <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
                     <div class="media-body">
@@ -1821,17 +1821,22 @@
                         <ul class="msg-box">
                           <li class="msg-setting-main">
                             <div class="msg-dropdown-main">
-                              <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                              <div class="msg-dropdown"> 
+                              <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)"><i class="ti-more-alt"></i></div>
+                              <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;"> 
                                 <ul>
                                   <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                  <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                  <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                  <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                  
+                                  <li><a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy"
+                                      v-clipboard:success="onCopy"
+                                      v-clipboard:error="onError"><i class="fa fa-clone"></i>copy</a></li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                  <li><a href="#" @click="msgdelete(chat._id)"><i class="ti-trash"></i>delete</a></li>
                                 </ul>
                               </div>
                             </div>
-                            <h5>{{ chat.message }}</h5>
+                            
+                            <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
+                            <h5 v-else :id="'sender'+chat._id">{{ chat.message }}</h5>
                           </li>
                           <!-- <li class="msg-setting-main">
                             <h5> your personal assistant to help you &#128512; </h5>
@@ -1853,7 +1858,7 @@
                     </div>
                   </div>
                 </li>
-                <li class="sent" style="padding-bottom:20px" v-else>
+                <li class="sent"  style="padding-bottom:20px" v-else>
                   <div class="media">
                     <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
                     <div class="media-body">
@@ -1862,7 +1867,9 @@
                         <h6>01:35 AM</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
-                            <h5>{{ chat.message }}</h5>
+                              
+                             <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
+                            <h5 v-else :id="'receiver'+chat._id">{{ chat.message }}</h5>
                             <div class="msg-dropdown-main">
                               <div class="msg-setting"><i class="ti-more-alt"></i></div>
                               <div class="msg-dropdown"> 
@@ -4053,11 +4060,13 @@ import feather from 'feather-icons';
 import Popper from 'popper.js';
 import VueSocketIO from 'vue-socket.io';
 import socketio from 'socket.io-client';
+
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
 
 import 'feather-icons/dist/feather.min.js';
 import tippy from 'tippy.js';
+import Toasted from 'vue-toasted';
 import 'tippy.js/dist/tippy.css';
 
 import ApiService from '../services/api.service.js';
@@ -4088,7 +4097,8 @@ export default {
               groupmessage:'',
               groupmsgObj:{},
               groupchatdata:{},
-              not_working:true
+              not_working:true,
+              messagecopy:''
             }
     
         },
@@ -4111,9 +4121,16 @@ export default {
             // Fired when the server sends something on the "messageChannel" channel.
             receivemsg(data) {
               this.friendchat.push(data);
+              if(data.senderId._id !=this.c_user._id ){
+                 $('.chat-main .active .details h6').html(data.message);
+              }
+               
               $(".messages").animate({ scrollTop: 5000 }, "fast");
             },
-
+          reciverdeletemsg(data){
+             $('#receiver'+data).html('message deleted');
+          
+          },
             starttyping(data){
                
               if(data._id == this.c_user._id ){
@@ -4163,11 +4180,24 @@ export default {
       this.$session.destroy()
       this.$router.push('/login')
     },
-
+    onCopy: function (e) {
+          
+              this.$toasted.success(  'copied text : <h4> ' + e.text+'</h4>', { 
+                 theme: "toasted-primary", 
+                 position: "top-right", 
+                 duration : 5000
+               })
+        },
+        onError: function (e) {
+          alert('Failed to copy texts')
+        },
+        copymsg(msg){
+              this.messagecopy=msg;
+        },
   
        getfriends(){
-            this.$http.get('https://peekvideochat.com:22000/getUsers/'+this.c_user._id+'/0/5d4c07fb030f5d0600bf5c03')
-            .then((responce) => this.friendsdata=responce.body.usersList)
+            axios.get('/getUsers/'+this.c_user._id+'/0/5d4c07fb030f5d0600bf5c03')
+            .then((responce) => this.friendsdata=responce.data.usersList)
             .catch((error) => console.log(error));
         },
 
@@ -4178,8 +4208,8 @@ export default {
           $('.init').removeClass("active");
           $('#friend'+friend._id).addClass("active");
           $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-           this.$http.get('https://peekvideochat.com:22000/getChat/'+this.c_user._id+'/'+friend._id+'/50')
-            .then((responce) => this.friendchat=responce.body)
+           axios.get('/getChat/'+this.c_user._id+'/'+friend._id+'/50')
+            .then((responce) => this.friendchat=responce.data)
             .catch((error) => console.log(error));
            
             $('#mainchatpage').remove();
@@ -4206,28 +4236,36 @@ export default {
                      message: this.message
                      };
 
-                     this.$socket.emit('sendmsg', this.msgObj )
+                    // this.$socket.emit('sendmsg', this.msgObj )
                   
-                       this.$http.post('https://peekvideochat.com:22000/chat' ,{
+                       axios.post('/chat' ,{
                        msgData :this.msgObj ,
                        selectedUserData:this.singlefriend._id
-                       }).then(function (response) {
-                        
-                          this.chatdata=response.body;
+                       }).then(response => {
+                        this.$socket.emit('sendmsg', response.data )
                          
-                         $('.chat-main .active .details h6').html('<span>You : </span>' + response.body.message);
+                         $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
                         
-                        }, function (err) {
+                       }, function (err) {
                           console.log('err', err);
                           alert('error');
                         })
                        $(".messages").animate({ scrollTop: 5000 }, "fast");
                        this.message='';
          },
-
+    msgdelete(id){
+         this.$socket.emit('senderdeletemsg',id);
+         
+        $('#sender'+id).html('message deleted');
+        console.log(id);
+                axios.get('/deleteMsg/'+id+'/0')
+                .then((responce) => console.log(responce))
+                .catch((error) => console.log(error));
+                
+    },
         getgroups(){
-               this.$http.get('https://peekvideochat.com:22000/getCreatedGroups/'+this.c_user._id+'/5d4c07fb030f5d0600bf5c03')
-                .then((responce) => this.groups=responce.body)
+               axios.get('/getCreatedGroups/'+this.c_user._id+'/5d4c07fb030f5d0600bf5c03')
+                .then((responce) => this.groups=responce.data)
                 .catch((error) => console.log(error));
                 $('#group_chat').addClass("active");
         },
@@ -4238,8 +4276,8 @@ export default {
           $('#group_chat').removeClass("active");
           //$('#friend'+friend._id).addClass("active");
          // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-           this.$http.get('https://peekvideochat.com:22000/getGroupChat/'+group._id+'/50')
-            .then((responce) => this.groupchatdata=responce.body)
+           axios.get('/getGroupChat/'+group._id+'/50')
+            .then((responce) => this.groupchatdata=responce.data)
             .catch((error) => console.log(error));
              $('#startchat').removeClass("active");
            $('#startgroupchat').addClass("active");
@@ -4263,11 +4301,11 @@ export default {
 
                      this.$socket.emit('sendgroupmsg', this.groupmsgObj );
                   
-                    this.$http.post('https://peekvideochat.com:22000/groupChat' ,this.groupmsgObj).then(function (response) {
+                    axios.post('/groupChat' ,this.groupmsgObj).then(function (response) {
                         
-                         console.log(response.body);
+                         console.log(response.data);
                          
-                         $('.chat-main .active .details h6').html('<span>You : </span>' + response.body.message);
+                         $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
                         
                         }, function (err) {
                           console.log('err', err);
@@ -4391,6 +4429,9 @@ notification(){
       // add class to the one we clicked
       $('#todo').addClass("active");
         
+         },
+         msg_setting(id){
+           $('#msg-setting'+id).siblings('#msg-dropdown'+id).toggle();
          },
 
 
