@@ -4131,6 +4131,7 @@ export default {
              $('#receiver'+data).html('message deleted');
           
           },
+          
             starttyping(data){
                
               if(data._id == this.c_user._id ){
