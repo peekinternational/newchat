@@ -15,6 +15,19 @@ io.on('connection', function (socket) {
 		io.emit('receivemsg',data);
 	});
 
+//////// send and receive chatmsgid //////////   
+      socket.on('sendid', (data) => {
+		console.log(data);
+		io.emit('receiveid',data);
+	});
+
+//////// update chatmsg //////////   
+      socket.on('updatechatmsg', (data) => {
+		console.log(data);
+		io.emit('receiveupdatechatmsg',data);
+	});
+
+
 //////Delete chat //////////
  socket.on('senderdeletemsg', (data) => {
 		console.log(data);
@@ -41,6 +54,11 @@ io.on('connection', function (socket) {
 		io.emit('receivegroupmsg',data);
 	});
 
+//////// send and receive groupchatmsgid //////////   
+      socket.on('groupsendid', (data) => {
+		console.log(data);
+		io.emit('groupreceiveid',data);
+	});
     socket.on('disconnect', function() {
         
         console.log('disconnect');

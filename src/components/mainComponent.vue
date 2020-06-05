@@ -9,7 +9,7 @@
    
       <nav class="main-nav on custom-scroll" id="mainnav">
      
-        <div class="logo-warpper"><a href="messenger.html"><img src="../assets/images/logo/logo.png" alt="logo"/></a></div>
+        <div class="logo-warpper"><a href=""><img src="../assets/images/logo/logo.png" alt="logo"/></a></div>
         <div class="sidebar-main">
           <ul class="sidebar-top">
             <li><a class="button-effect" href="javascript:void(0);" @click="status()" data-intro="Check Status here">
@@ -1518,7 +1518,7 @@
                     <div class="media-body">
                       <div class="contact-name">
                         <h5>{{g_chat.senderId.name}}</h5>
-                        <h6>01:35 AM</h6>
+                        <h6>{{isToday(g_chat.createdAt)}}</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
                             <h5>{{g_chat.message}} </h5>
@@ -1560,7 +1560,7 @@
                     <div class="media-body">
                       <div class="contact-name">
                         <h5>{{g_chat.senderId.name}}</h5>
-                        <h6>01:40 AM</h6>
+                        <h6>{{isToday(g_chat.createdAt)}}</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
                             <div class="msg-dropdown-main">
@@ -1602,14 +1602,15 @@
 
           <div class="message-input">
            
-            <div class="wrap emojis-main"><a class="icon-btn btn-outline-primary button-effect mr-3 toggle-sticker outside"  >
+            <div class="wrap emojis-main">
+              <!--<a class="icon-btn btn-outline-primary button-effect mr-3 toggle-sticker outside"  >
                 <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2158px" height="2148px" viewbox="0 0 2158 2148" enable-background="new 0 0 2158 2148" xml:space="preserve">
                   <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.271,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
                   <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
-                </svg></a>
+                </svg></a>-->
               <div class="dot-btn dot-primary mr-3"><a class="icon-btn btn-outline-primary button-effect toggle-emoji" ><smile-icon size="1.5x" class="custom-class"></smile-icon></a></div>
               <div class="contact-poll" ><a class="icon-btn btn-outline-primary mr-4 outside" href="#"><i class="fa fa-plus"></i></a>
                 <div class="contact-poll-content">
@@ -1626,7 +1627,8 @@
                 </div>
               </div>
              
-              <input class="setemoj" id="groupsetemoj" type="text" @keyup.enter="groupchat()" v-model="groupmessage" placeholder="Write your message..."/><a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#"><mic-icon size="1.5x" class="custom-class"></mic-icon> </a>
+              <input class="setemoj" id="groupsetemoj" type="text" @keyup.enter="groupchat()" v-model="groupmessage" placeholder="Write your message..."/>
+              <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#" @click="feedbackDictation()"><mic-icon size="1.5x" class="custom-class"></mic-icon> </a>
               <button class="submit icon-btn btn-primary" @click="groupchat()" id="send-groupmsg" :disabled="not_working">
                 <send-icon size="1.5x" class="custom-class"></send-icon></button>
               
@@ -1809,7 +1811,10 @@
                 </div>
               </div>
             </div>
-            <div class="contact-chat" >
+            
+              <vue-dropzone ref="myVueDropzone" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"></vue-dropzone>
+          
+            <div class="contact-chat  " >
               <ul class="chatappend" v-for="chat in friendchat"> 
                 <li class="replies"  style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
                   <div class="media">
@@ -1817,16 +1822,17 @@
                     <div class="media-body">
                       <div class="contact-name">
                         <h5>{{ c_user.name}}</h5>
-                        <h6>01:40 AM</h6>
+                        <h6>{{isToday(chat.createdAt)}}</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
-                            <div class="msg-dropdown-main">
+                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)"><i class="ti-more-alt"></i></div>
                               <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;"> 
                                 <ul>
-                                  <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="eidtchat(chat._id,chat.message)"><i class="fa fa-pencil" ></i>edit</a></li>
+                                  <li><a href="#" @click="quote(chat)"><i class="fa fa-share" ></i>Quote</a></li>
                                   
-                                  <li><a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy"
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy"
                                       v-clipboard:success="onCopy"
                                       v-clipboard:error="onError"><i class="fa fa-clone"></i>copy</a></li>
                                   <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
@@ -1836,7 +1842,14 @@
                             </div>
                             
                             <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
-                            <h5 v-else :id="'sender'+chat._id">{{ chat.message }}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 || chat.commentId" :id="'sender'+chat._id">{{chat.commentId}}{{ chat.message }}</h5>
+                            <br>
+                            <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.18:22000/images/chatImages/'+chat.message">
+                               </a>
+                            
+                             <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                         
                           </li>
                           <!-- <li class="msg-setting-main">
                             <h5> your personal assistant to help you &#128512; </h5>
@@ -1864,12 +1877,17 @@
                     <div class="media-body">
                       <div class="contact-name">
                         <h5>{{ singlefriend.name }}</h5>
-                        <h6>01:35 AM</h6>
+                        <h6>{{isToday(chat.createdAt)}}</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
                               
                              <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
-                            <h5 v-else :id="'receiver'+chat._id">{{ chat.message }}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2" :id="'receiver'+chat._id">{{ chat.message }}</h5>
+                            <br>
+                            <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.18:22000/images/chatImages/'+chat.message">
+                               </a>
+                            <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main">
                               <div class="msg-setting"><i class="ti-more-alt"></i></div>
                               <div class="msg-dropdown"> 
@@ -1905,106 +1923,39 @@
               
               </ul>
             </div>
-            <span v-if="typing == true" class="">{{ singlefriend.name }} is typing</span>
+           <span v-if="typing == true" class="">{{ singlefriend.name }} is typing</span>
+     
           </div>
          
          
-          <div class="messages custom-scroll" id="blank">
-            <div class="contact-details">
-              <div class="row">
-                <div class="col">
-                  <div class="media left">
-                    <div class="media-left mr-3">
-                      <div class="profile online menu-trigger"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
-                    </div>
-                    <div class="media-body">
-                      <h5>Josephin water</h5>
-                      <h6>Last Seen 5 hours</h6>
-                    </div>
-                    <div class="media-right">
-                      <ul>
-                        <li><a class="icon-btn btn-light button-effect mute" href="#"><i class="fa fa-volume-up"></i></a></li>
-                        <li><a class="icon-btn btn-light search search-right" href="#"> <search-icon size="1.5x" class="custom-class"></search-icon></a>
-                          <form class="form-inline search-form">
-                            <div class="form-group">
-                              <input class="form-control-plaintext" type="search" placeholder="Search.."/>
-                              <div class="icon-close close-search"> </div>
-                            </div>
-                          </form>
-                        </li>
-                        <li><a class="icon-btn btn-light button-effect mobile-sidebar" href="#"><arrow-left-icon size="1.5x" class="custom-class"></arrow-left-icon></a></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="col"> 
-                  <ul class="calls text-right">
-                    <li><a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#audiocall"><phone-icon size="1.5x" class="custom-class"></phone-icon></a></li>
-                    <li><a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#videocall"><video-icon size="1.5x" class="custom-class"></video-icon></a></li>
-                    <li><a class="icon-btn btn-light button-effect apps-toggle" href="javascript:void(0);" ><i class="ti-layout-grid2"></i></a></li>
-                    <li class="chat-friend-toggle"><a class="icon-btn btn-light bg-transparent button-effect outside" href="#" data-tippy-content="Quick action"><more-vertical-icon size="1.5x" class="custom-class"></more-vertical-icon></a>
-                      <div class="chat-frind-content">
-                        <ul>
-                          <li><a class="icon-btn btn-outline-primary button-effect btn-sm" href="#"><users-icon size="1.5x" class="custom-class"></users-icon></a>
-                            <h5>profile</h5>
-                          </li>
-                          <li><a class="icon-btn btn-outline-success button-effect btn-sm" href="#"><plus-circle-icon size="1.5x" class="custom-class"></plus-circle-icon></a>
-                            <h5>archive</h5>
-                          </li>
-                          <li><a class="icon-btn btn-outline-danger button-effect btn-sm" href="#"><i data-feather="trash-2"></i></a>
-                            <h5>delete</h5>
-                          </li>
-                          <li><a class="icon-btn btn-outline-light button-effect btn-sm" href="#"><i data-feather="slash"></i></a>
-                            <h5>block</h5>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="contact-chat">
-              <div class="rightchat animat-rate">
-                <div class="bg_circle">
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
-                <div class="cross"></div>
-                <div class="cross1"></div>
-                <div class="cross2"></div>
-                <div class="dot"></div>
-                <div class="dot1"> </div>
-              </div>
-            </div>
-            <div class="call-list-center"><img src="../assets/images/chat.png" alt=""/>
-              <div class="animated-bg"><i></i><i></i><i></i></div>
-              <p>Select a chat to read messages</p>
-            </div>
-          </div>
-           
           <div class="message-input">
-           
-            <div class="wrap emojis-main"><a class="icon-btn btn-outline-primary button-effect mr-3 toggle-sticker outside"  >
+                 <div class="replybox" v-if="replyBox == true" >
+                  <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
+                    <span style="float:right;cursor: pointer;" @click="closeReplybox()"><x-icon size="1.5x" class="custom-class"></x-icon></span>
+                  <br>
+                  <span style="margin-left: 6px;">
+                         {{isToday(chatreplydata.createdAt)}}
+                    </span>
+                    </p>
+             </div>
+            <div class="wrap emojis-main">
+              <!--<a class="icon-btn btn-outline-primary button-effect mr-3 toggle-sticker outside"  >
                 <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2158px" height="2148px" viewbox="0 0 2158 2148" enable-background="new 0 0 2158 2148" xml:space="preserve">
                   <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.271,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
                   <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
-                </svg></a>
-              <div class="dot-btn dot-primary mr-3"><a class="icon-btn btn-outline-primary button-effect toggle-emoji" ><smile-icon size="1.5x" class="custom-class"></smile-icon></a></div>
-              <div class="contact-poll" ><a class="icon-btn btn-outline-primary mr-4 outside" href="#"><i class="fa fa-plus"></i></a>
-                <div class="contact-poll-content">
+                </svg></a>-->
+              <div class="dot-btn dot-primary mr-3">
+                <a class="icon-btn btn-outline-primary button-effect toggle-emoji" ><smile-icon size="1.5x" class="custom-class"></smile-icon></a></div>
+              
+                <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
+                  <i class="fa fa-plus"></i>
+                 </label> 
+                  <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
+                 
+                <!--<div class="contact-poll-content">
                   <ul>
                     <li><a href="#"><i data-feather="image"></i>gallery</a></li>
                     <li><a href="#"><i data-feather="camera"></i>camera</a></li>
@@ -2015,13 +1966,14 @@
                     <li><a data-toggle="modal" data-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
                     <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
                   </ul>
-                </div>
-              </div>
+                </div>-->
              
-              <input class="setemoj" id="setemoj" type="text" @keyup.enter="chat()" v-model="message" placeholder="Write your message..."/><a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#"><mic-icon size="1.5x" class="custom-class"></mic-icon> </a>
-              <button class="submit icon-btn btn-primary disabled" @click="chat()" id="send-msg" disabled="disabled">
+             
+              <input class="setemoj" id="setemoj" ref="afterClick" type="text" v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..."/><a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#"><mic-icon size="1.5x" class="custom-class"></mic-icon> </a>
+              <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
                 <send-icon size="1.5x" class="custom-class"></send-icon></button>
-              
+              <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()" >
+                <x-icon size="1.5x" class="custom-class"></x-icon></button>
               <div class="emojis-contain" id="emojiscontain">
                 <div class="emojis-sub-contain custom-scroll">
                   <ul>
@@ -4068,6 +4020,9 @@ import 'feather-icons/dist/feather.min.js';
 import tippy from 'tippy.js';
 import Toasted from 'vue-toasted';
 import 'tippy.js/dist/tippy.css';
+import moment from 'moment'; 
+import vueDropzone from 'vue2-dropzone';
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
 import ApiService from '../services/api.service.js';
 
@@ -4076,7 +4031,7 @@ import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-   components: { carousel,PhoneIncomingIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon,ArrowLeftIcon  },
+   components: { vueDropzone,carousel,PhoneIncomingIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon,ArrowLeftIcon  },
       props:[],
         data(){
             return{
@@ -4098,7 +4053,23 @@ export default {
               groupmsgObj:{},
               groupchatdata:{},
               not_working:true,
-              messagecopy:''
+              messagecopy:'',
+              editChatid:'',
+              onEditclear: false,
+              onChat: true,
+               dropzoneOptions: {
+                url: 'https://192.168.100.18:22000/chatFilesShare',
+                thumbnailWidth: 100,
+                thumbnailHeight:100,
+                maxFiles:10,
+                maxFilesize: 20,
+                chunking:true,
+                headers: { "My-Awesome-Header": "header value" }
+            },
+            files:[],
+            formDatas:{},
+            replyBox:false,
+            chatreplydata:{}
             }
     
         },
@@ -4125,7 +4096,28 @@ export default {
                  $('.chat-main .active .details h6').html(data.message);
               }
                
-              $(".messages").animate({ scrollTop: 5000 }, "fast");
+              $(".messages").animate({ scrollTop: 6500 }, "fast");
+            },
+
+             receiveupdatechatmsg(updatedata) {
+               const data = updatedata;
+              const post = this.friendchat.filter((obj)=>{
+                return updatedata.chatid === obj._id;
+              }).pop();
+              post.message = data.message;
+             
+            },
+
+             receiveid(data) {
+               console.log(data);
+              this.$set(this.friendchat[this.friendchat.length-1],'_id',data._id);
+              console.log(this.friendchat[this.friendchat.length-1]);
+            },
+
+              groupreceiveid(data) {
+               console.log(data);
+              this.$set(this.groupchatdata[this.groupchatdata.length-1],'_id',data._id);
+              console.log(this.groupchatdata[this.groupchatdata.length-1]);
             },
           reciverdeletemsg(data){
              $('#receiver'+data).html('message deleted');
@@ -4148,7 +4140,13 @@ export default {
             receivegroupmsg(data){
                console.log(data);
                this.groupchatdata.push(data);
-                $(".messages").animate({ scrollTop: 5000 }, "fast");
+                $(".messages").animate({ scrollTop: 6000 }, "fast");
+            },
+            
+              groupreceiveid(data) {
+               console.log(data);
+              this.$set(this.groupchatdata[this.groupchatdata.length-1],'_id',data._id);
+              console.log(this.groupchatdata[this.groupchatdata.length-1]);
             },
           },
 
@@ -4162,6 +4160,7 @@ export default {
                 }
               },
             message(){
+              //this.removecross();
                 if(this.message.length > 0) {
                    this.$socket.emit('msgtyping', this.singlefriend);
 
@@ -4181,6 +4180,7 @@ export default {
       this.$session.destroy()
       this.$router.push('/login')
     },
+
     onCopy: function (e) {
           
               this.$toasted.success(  'copied text : <h4> ' + e.text+'</h4>', { 
@@ -4189,13 +4189,124 @@ export default {
                  duration : 5000
                })
         },
+
         onError: function (e) {
           alert('Failed to copy texts')
         },
+
         copymsg(msg){
               this.messagecopy=msg;
         },
+
+      isToday(date) {
+            return moment(date).fromNow();
+        },
+ feedbackDictation() {
+
+var recognition = new webkitSpeechRecognition();
+
+
+            var recognition = new webkitSpeechRecognition();
+             console.log(recognition);
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.lang = 'ko';
+            recognition.start();
+
+            recognition.onresult = function(e) {
+              alert(e.results[0][0].transcript);
+                document.getElementById('transcript11').value
+                                        = e.results[0][0].transcript;
+
+                recognition.stop();
+                //document.getElementById('labnol').submit();
+            };
+
+            recognition.onerror = function(e) {
+                recognition.stop();
+            }
+
+            
+          },
+
+          dragfileupload (file, xhr, formData) {
+            console.log(this.singlefriend);
+            formData.append('senderId', this.c_user._id);
+            formData.append('senderName', this.c_user.name);
+            formData.append('friendId', this.singlefriend._id);
+
+        
+      },
+
+afterComplete(file, response){
+  console.log(file);
+  console.log(response.data);
   
+        this.msgObj = {
+                      _id:response.data._id,
+                      chatType: 0,
+                      isSeen: 0,
+                      isGroup: 0,
+                      messageType: response.data.messageType,
+                      senderId: {_id:this.c_user._id},
+                      senderImage: '',
+                      receiverImage: '',
+                      receiverId: {_id:this.singlefriend._id},
+                      senderName: this.c_user.name,
+                      message: response.file[0].originalname,
+                      createdAt:new Date()
+                      };
+                      
+        
+                                    
+        
+      
+                    this.$socket.emit('sendmsg', this.msgObj );
+                    // this.$socket.emit('sendmsg', response.data )
+                     this.$refs.myVueDropzone.removeFile(file);
+                      $("#dropzone").css("display", "none");
+    },
+
+     uploadfile(event) {
+            console.log(event.target.value)
+            let files = this.$refs.myFiles.files[0];
+           
+            let formDatas = new FormData();
+            formDatas.append('file', files);
+            formDatas.append('senderId', this.c_user._id);
+            formDatas.append('senderName', this.c_user.name);
+            formDatas.append('friendId', this.singlefriend._id);
+            console.log(formDatas);
+             let config = {
+                header : {
+                'Content-Type' : 'multipart/form-data'
+              }
+           }
+             axios.post('/chatFilesShare' ,formDatas,config).then((response) =>{
+                   console.log(response.data);
+                         this.msgObj = {
+                              _id:response.data.data._id,
+                              chatType: 0,
+                              isSeen: 0,
+                              isGroup: 0,
+                              messageType: response.data.data.messageType,
+                              senderId: {_id:this.c_user._id},
+                              senderImage: '',
+                              receiverImage: '',
+                              receiverId: {_id:this.singlefriend._id},
+                              senderName: this.c_user.name,
+                              message: response.data.file[0].originalname,
+                              createdAt:new Date()
+                              };
+                              
+                           this.$socket.emit('sendmsg', this.msgObj );
+                        }, function (err) {
+                          console.log('err', err);
+                          alert('error');
+                        })
+        },
+
        getfriends(){
             axios.get('/getUsers/'+this.c_user._id+'/0/5d4c07fb030f5d0600bf5c03')
             .then((responce) => this.friendsdata=responce.data.usersList)
@@ -4203,8 +4314,14 @@ export default {
         },
 
       startchat(friend){
+        this.message='';
+       this.editChatid='';
+       this.onEditclear=false;
+       this.onChat=true;
+       $('.message-input').css("height", "96px");
+        this.replyBox=false;
         console.log($(document).height() );
-         $(".messages").animate({ scrollTop: 5000 }, "fast");
+         $(".messages").animate({ scrollTop: 6000 }, "fast");
           this.singlefriend = friend;
           $('.init').removeClass("active");
           $('#friend'+friend._id).addClass("active");
@@ -4224,7 +4341,71 @@ export default {
 
          chat: function(e) {
        
-                   this.msgObj = {
+                    if(this.editChatid){
+
+                       this.msgObj = {
+                 
+                     message: this.message,
+                     chatid:this.editChatid
+                     
+                    };
+                    console.log(this.msgObj);
+                    
+                     this.$socket.emit('updatechatmsg', this.msgObj )
+                  
+                       axios.post('/updateChat/'+this.editChatid ,{
+                       msgData :this.msgObj
+                       }).then(response => {
+                      
+                       }, function (err) {
+                          console.log('err', err);
+                          alert('error');
+                        })
+                     
+                       this.message='';
+                       this.editChatid='';
+                       $('#send-msg').addClass('disabled').attr("disabled", "disabled");
+                    }
+
+                    else if(this.chatreplydata){
+      
+                          this.msgObj = {
+                          chatType: 0,
+                          commentId: this.chatreplydata._id,
+                          messageType: 0,
+                          senderId: {_id:this.c_user._id},
+                          receiverId: {_id:this.singlefriend._id},
+                          senderName: this.c_user.name,
+                          message: this.message,
+                          createdAt:new Date(),
+                          chatType: 1
+                          };
+                          
+                          this.$socket.emit('sendmsg', this.msgObj )
+                        
+                            axios.post('/chat' ,{
+                            msgData :this.msgObj ,
+                            selectedUserData:this.c_user
+                            }).then(response => {
+                              this.$socket.emit('sendid', response.data )
+                              $('.message-input').css("height", "96px");
+                                  this.replyBox=false;
+                                  this.chatreplydata="";
+                              $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+                              
+                            }, function (err) {
+                                console.log('err', err);
+                                alert('error');
+                              })
+                            $(".messages").animate({ scrollTop: 6000 }, "fast");
+                            this.message='';
+                            $('#send-msg').addClass('disabled').attr("disabled", "disabled");
+                    }
+
+                    else{
+
+                    
+                    this.msgObj = {
                      chatType: 0,
                      isSeen: 0,
                      isGroup: 0,
@@ -4234,16 +4415,17 @@ export default {
                      receiverImage: '',
                      receiverId: {_id:this.singlefriend._id},
                      senderName: this.c_user.name,
-                     message: this.message
-                     };
-
-                    // this.$socket.emit('sendmsg', this.msgObj )
+                     message: this.message,
+                     createdAt:new Date()
+                    };
+                    
+                     this.$socket.emit('sendmsg', this.msgObj )
                   
                        axios.post('/chat' ,{
                        msgData :this.msgObj ,
-                       selectedUserData:this.singlefriend._id
+                       selectedUserData:this.c_user
                        }).then(response => {
-                        this.$socket.emit('sendmsg', response.data )
+                        this.$socket.emit('sendid', response.data )
                          
                          $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
                         
@@ -4251,9 +4433,39 @@ export default {
                           console.log('err', err);
                           alert('error');
                         })
-                       $(".messages").animate({ scrollTop: 5000 }, "fast");
+                       $(".messages").animate({ scrollTop: 6000 }, "fast");
                        this.message='';
+                       $('#send-msg').addClass('disabled').attr("disabled", "disabled");
+                    }
+                  
          },
+
+      eidtchat(id,message){
+            this.message=message;
+            this.editChatid=id;
+            
+            this.$nextTick(function(){
+              this.$refs.afterClick.focus();
+            });
+            this.onEditclear=true;
+            this.onChat=false;
+            
+          },
+
+           clearchat(){
+            this.onEditclear=false;
+            this.onChat=true;
+            this.message='';
+             this.editChatid='';
+         },
+
+         removecross(){
+
+              this.onEditclear=false;
+              this.onChat=true;
+              $('#send-msg').addClass('disabled').attr("disabled", "disabled")
+         },
+
     msgdelete(id){
          this.$socket.emit('senderdeletemsg',id);
          
@@ -4264,11 +4476,22 @@ export default {
                 .catch((error) => console.log(error));
                 
     },
+    quote(chatdata){
+      this.chatreplydata=chatdata;
+      $('.message-input').css("height", "140px");
+        this.replyBox=true;
+    },
+    closeReplybox(){
+      $('.message-input').css("height", "96px");
+        this.replyBox=false;
+    },
         getgroups(){
                axios.get('/getCreatedGroups/'+this.c_user._id+'/5d4c07fb030f5d0600bf5c03')
                 .then((responce) => this.groups=responce.data)
                 .catch((error) => console.log(error));
                 $('#group_chat').addClass("active");
+                $('.message-input').css("height", "96px");
+                this.replyBox=false;
         },
 
         startgroupchat(group){
@@ -4284,7 +4507,7 @@ export default {
            $('#startgroupchat').addClass("active");
             $('#mainchatpage').remove();
             $('.group_chat_open').addClass("active");
-            $(".messages").animate({ scrollTop: 5000 }, "fast");
+            $(".messages").animate({ scrollTop: 6000 }, "fast");
             
         $('.chitchat-container').toggleClass("mobile-menu");
         },
@@ -4305,6 +4528,7 @@ export default {
                     axios.post('/groupChat' ,this.groupmsgObj).then(function (response) {
                         
                          console.log(response.data);
+                         this.$socket.emit('groupsendid', response.data )
                          
                          $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
                         
@@ -4312,9 +4536,10 @@ export default {
                           console.log('err', err);
                           alert('error');
                         })
-                       $(".messages").animate({ scrollTop: 5000 }, "fast");
+                       $(".messages").animate({ scrollTop: 6000 }, "fast");
                        this.groupmessage='';
          },
+        
 
  favourite(){
         
@@ -4434,17 +4659,45 @@ notification(){
          msg_setting(id){
            $('#msg-setting'+id).siblings('#msg-dropdown'+id).toggle();
          },
-
+         
+      
 
         },
-        mounted() {
+
+
+   mounted() {
     
           this.c_user=this.$session.get('c_user');
           console.log(this.c_user.name);
           this.getfriends();
          /*=====================
-      02. Background Image js
+      02. Drag and drop
       ==========================*/
+     
+     var dropZone = document.getElementById('dropzone');
+
+      function showDropZone() {
+        dropZone.style.display = "block";
+      
+      }
+      function hideDropZone() {
+        // dropZone.style.display = "none";
+      }
+
+      function allowDrag(e) {
+          if (true) {  // Test that the item being dragged is a valid one
+              e.dataTransfer.dropEffect = 'copy';
+              e.preventDefault();
+          }
+      }
+
+      // 1
+      window.addEventListener('dragenter', function(e) {
+          showDropZone();
+      });
+
+
+ 
       $(".bg-top").parent().addClass('b-top');
       $(".bg-bottom").parent().addClass('b-bottom');
       $(".bg-center").parent().addClass('b-center');
@@ -4991,5 +5244,24 @@ li {
 }
 a {
   color: #42b983;
+}
+.dropzone {
+box-sizing: border-box;
+    display: none;
+    position: absolute;
+    width: 92%;
+    height: 89%;
+    z-index: 99999;
+    background: #80808066;
+    border: 11px dashed #60a7dc;
+}
+.replybox{
+    width: 63%;
+    height: auto;
+    background: rgb(224, 221, 221);
+    margin-left: 121px;
+    border-top-right-radius: 13px;
+    border-top-left-radius: 13px;
+    border-bottom: 2px solid #9c979747;
 }
 </style>
