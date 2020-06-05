@@ -46,22 +46,22 @@
                   <a class="icon-btn btn-outline-light button-effect pull-right mainnav"  ><i class="ti-layout-grid2"></i></a></div>
               </div>
             </div>
-            <carousel :nav="false">
-              <div style="padding: 3px;">
+            <carousel :nav="false" :dots="false">
+              <div style="padding: 13px;">
             <div class="dot-btn dot-danger grow"></div>
             <img src="https://placeimg.com/200/200/any?1">
              </div>
 
-             <div style="padding: 3px;">
+             <div style="padding: 13px;">
               <div class="dot-btn dot-success grow"></div>
             <img src="https://placeimg.com/200/200/any?2">
           </div>
 
-          <div style="padding: 3px;">
+          <div style="padding: 13px;">
             <div class="dot-btn dot-danger grow"></div>
             <img src="https://placeimg.com/200/200/any?3">
           </div>
-          <div style="padding: 3px;">
+          <div style="padding: 13px;">
             <div class="dot-btn dot-danger grow"></div>
             <img src="https://placeimg.com/200/200/any?4">
           </div>
@@ -133,7 +133,7 @@
                     </ul>
                     <div class="tab-content" id="myTabContent1">
                       <div class="tab-pane fade show active" id="direct" role="tabpanel" aria-labelledby="direct-tab"> 
-                        <ul class="chat-main" v-for="friends in friendsdata" v-if="friends._id != c_user._id">
+                        <ul class="chat-main" v-for="friends in orderedUsers" v-if="friends._id != c_user._id">
                           <li class="init"  @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                             <div class="chat-box">
                               <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar"/></div>
@@ -168,8 +168,8 @@
                                 <h6>Lorem Ipsum is simply dummy text the printing and typesetting industry.</h6>
                               </div>
                               <div class="date-status">
-                                <ul class="grop-icon" v-for="groupuser in group.members">
-                                  <li><a class="group-tp" href="#" :data-tippy-content="groupuser.name"> <img src="../assets/images/contact/1.jpg" alt="group-icon-img"/></a></li>
+                                <ul class="grop-icon" >
+                                  <li><a class="group-tp" href="#" data-tippy-content=""> ({{group.members.length }})</a></li>
                                   
                                 </ul>
 
@@ -1842,15 +1842,15 @@
                             </div>
                             
                             <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 || chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }} {{chat.chatType}}</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 || chat.chatType == 1" :id="'sender'+chat._id">{{chat.commentId.message}}
-                            {{ chat.message }} {{chat.chatType}}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id"><span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br>
+                            {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://192.168.100.21:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.22:22000/images/chatImages/'+chat.message">
                                </a>
                             
-                             <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                             <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                          
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -1884,20 +1884,26 @@
                           <li class="msg-setting-main">
                               
                              <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2" :id="'receiver'+chat._id">{{ chat.message }}</h5>
+                           <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id"><span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br>
+                            {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://192.168.100.21:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.22:22000/images/chatImages/'+chat.message">
                                </a>
-                            <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-                            <div class="msg-dropdown-main">
-                              <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                              <div class="msg-dropdown"> 
+                            <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                              <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)"><i class="ti-more-alt"></i></div>
+                              <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;"> 
                                 <ul>
-                                  <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                  <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                  <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                  <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                  <!--<li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="eidtchat(chat._id,chat.message)"><i class="fa fa-pencil" ></i>edit</a></li>-->
+                                  <li><a href="#" @click="quote(chat)"><i class="fa fa-share" ></i>Quote</a></li>
+                                  
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy"
+                                      v-clipboard:success="onCopy"
+                                      v-clipboard:error="onError"><i class="fa fa-clone"></i>copy</a></li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                  <!--<li><a href="#" @click="msgdelete(chat._id)"><i class="ti-trash"></i>delete</a></li>-->
                                 </ul>
                               </div>
                             </div>
@@ -4023,6 +4029,7 @@ import tippy from 'tippy.js';
 import Toasted from 'vue-toasted';
 import 'tippy.js/dist/tippy.css';
 import moment from 'moment'; 
+import _ from 'lodash';   
 import vueDropzone from 'vue2-dropzone';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
@@ -4060,7 +4067,7 @@ export default {
               onEditclear: false,
               onChat: true,
                dropzoneOptions: {
-                url: 'https://192.168.100.21:22000/chatFilesShare',
+                url: 'https://192.168.100.22:22000/chatFilesShare',
                 thumbnailWidth: 100,
                 thumbnailHeight:100,
                 maxFiles:10,
@@ -4068,10 +4075,11 @@ export default {
                 chunking:true,
                 headers: { "My-Awesome-Header": "header value" }
             },
-            files:[],
+           
             formDatas:{},
             replyBox:false,
-            chatreplydata:{}
+            chatreplydata:{},
+            userdec:{},
             }
     
         },
@@ -4151,7 +4159,11 @@ export default {
               console.log(this.groupchatdata[this.groupchatdata.length-1]);
             },
           },
-
+        computed: {
+          orderedUsers: function () {
+            return _.orderBy(this.friendsdata, 'updatedByMsg','desc')
+          }
+        },
         watch:{
             groupmessage(){
          
@@ -4272,10 +4284,10 @@ afterComplete(file, response){
 
      uploadfile(event) {
             console.log(event.target.value)
-            let files = this.$refs.myFiles.files[0];
+            let filesdata = this.$refs.myFiles.files[0];
            
             let formDatas = new FormData();
-            formDatas.append('file', files);
+            formDatas.append('file', filesdata);
             formDatas.append('senderId', this.c_user._id);
             formDatas.append('senderName', this.c_user.name);
             formDatas.append('friendId', this.singlefriend._id);
@@ -4329,6 +4341,7 @@ afterComplete(file, response){
           $('.init').removeClass("active");
           $('#friend'+friend._id).addClass("active");
           $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
+           
            axios.get('/getChat/'+this.c_user._id+'/'+friend._id+'/50')
             .then((responce) => this.friendchat=responce.data)
             .catch((error) => console.log(error));
@@ -4426,19 +4439,49 @@ afterComplete(file, response){
                   
                        axios.post('/chat' ,{
                        msgData :this.msgObj ,
-                       selectedUserData:this.c_user
+                       selectedUserData:this.singlefriend._id
                        }).then(response => {
                         this.$socket.emit('sendid', response.data )
-                         
-                         $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
                         
+                          
+                           this.userdec = this.friendsdata.filter((obj)=>{
+                            return this.singlefriend._id === obj._id;
+                          }).pop();
+                          this.userdec.updatedByMsg = new Date().toISOString();
+                         
+                             setTimeout(()=>{
+                                    const id = $(".active.init").attr("id");
+                                   
+                             if(id != 'friend'+this.singlefriend._id){
+                                 $('.init').removeClass("active");
+                                setTimeout(()=>{
+                               
+                                $('#friend'+this.singlefriend._id).addClass("active");
+                                      setTimeout(()=>{
+                                      
+                                      $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+                                     },200);
+                               
+                                    },1);
+
+                                    
+                               }
+                                },0);
+                           
+                      
+                          
+                         
                        }, function (err) {
                           console.log('err', err);
                           alert('error');
                         })
+                        console.log(this.singlefriend._id);
+                         
+                        
                        $(".messages").animate({ scrollTop: 6000 }, "fast");
                        this.message='';
                        $('#send-msg').addClass('disabled').attr("disabled", "disabled");
+                        
                     }
                   
          },
@@ -4483,6 +4526,9 @@ afterComplete(file, response){
       this.chatreplydata=chatdata;
       $('.message-input').css("height", "140px");
         this.replyBox=true;
+        this.$nextTick(function(){
+              this.$refs.afterClick.focus();
+            });
     },
     closeReplybox(){
       $('.message-input').css("height", "96px");
@@ -5094,7 +5140,7 @@ notification(){
         $(".emojis-sub-contain ul li").click(function () {
             var number = $(this).html();            
             $("#setemoj").focus().val(function() {
-               return this.value + number;
+               return this.value + number+' ';
                $(".messages").animate({
                 scrollTop: $(document).height()
             }, "fast");
@@ -5266,5 +5312,25 @@ box-sizing: border-box;
     border-top-right-radius: 13px;
     border-top-left-radius: 13px;
     border-bottom: 2px solid #9c979747;
+}
+@media screen and (max-width: 480px) {
+  .replybox{
+  width: 57%;
+    height: auto;
+    background: rgb(224, 221, 221);
+    margin-left: 72px;
+    border-top-right-radius: 13px;
+    border-top-left-radius: 13px;
+    border-bottom: 2px solid #9c979747;
+}
+/*#mainnav{
+  display:none !important;
+}
+.app-list{
+  display:none !important;
+}
+.sidebar-toggle .main-nav.on ~ .chitchat-main .messages .contact-details {
+    width: 93.5vw !important;
+}*/
 }
 </style>

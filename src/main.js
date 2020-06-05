@@ -11,7 +11,7 @@ import VueClipboard from 'vue-clipboard2';
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //window.axios.defaults.baseURL = 'https://peekvideochat.com:22000/';
-window.axios.defaults.baseURL = 'https://192.168.100.21:22000/';
+window.axios.defaults.baseURL = 'https://192.168.100.22:22000/';
 window.axios.defaults.withCredentials = true
 import { MyVuexStore } from './my-vuex-store.js';
 //import {ApiService} from './services/api.service.js';
