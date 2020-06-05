@@ -1842,13 +1842,15 @@
                             </div>
                             
                             <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 || chat.commentId" :id="'sender'+chat._id">{{chat.commentId}}{{ chat.message }}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 || chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }} {{chat.chatType}}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 || chat.chatType == 1" :id="'sender'+chat._id">{{chat.commentId.message}}
+                            {{ chat.message }} {{chat.chatType}}</h5>
                             <br>
-                            <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://192.168.100.18:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.21:22000/images/chatImages/'+chat.message">
                                </a>
                             
-                             <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                             <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                          
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -1884,10 +1886,10 @@
                              <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2" :id="'receiver'+chat._id">{{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://192.168.100.18:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.21:22000/images/chatImages/'+chat.message">
                                </a>
-                            <a :href="'https://192.168.100.18:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.21:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main">
                               <div class="msg-setting"><i class="ti-more-alt"></i></div>
                               <div class="msg-dropdown"> 
@@ -4058,7 +4060,7 @@ export default {
               onEditclear: false,
               onChat: true,
                dropzoneOptions: {
-                url: 'https://192.168.100.18:22000/chatFilesShare',
+                url: 'https://192.168.100.21:22000/chatFilesShare',
                 thumbnailWidth: 100,
                 thumbnailHeight:100,
                 maxFiles:10,
@@ -4109,7 +4111,7 @@ export default {
             },
 
              receiveid(data) {
-               console.log(data);
+               
               this.$set(this.friendchat[this.friendchat.length-1],'_id',data._id);
               console.log(this.friendchat[this.friendchat.length-1]);
             },
@@ -4318,6 +4320,7 @@ afterComplete(file, response){
        this.editChatid='';
        this.onEditclear=false;
        this.onChat=true;
+       this.chatreplydata="";
        $('.message-input').css("height", "96px");
         this.replyBox=false;
         console.log($(document).height() );
@@ -4370,8 +4373,8 @@ afterComplete(file, response){
                     else if(this.chatreplydata){
       
                           this.msgObj = {
-                          chatType: 0,
-                          commentId: this.chatreplydata._id,
+                          
+                          commentId:{_id:this.chatreplydata._id,message:this.chatreplydata.message} ,
                           messageType: 0,
                           senderId: {_id:this.c_user._id},
                           receiverId: {_id:this.singlefriend._id},
