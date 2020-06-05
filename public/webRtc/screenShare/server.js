@@ -16,12 +16,12 @@ Object.keys(ifaces).forEach(function (ifname) {
     });
 });
 var siteLink = 'https://localhost:9559/';
-if (serverIpAdd.includes('58.229.208.176')) { //Job callme
+if (serverIpAdd.includes('138.68.27.231')) { //Job callme
     options = {
         key: sslConfig.keyJcm,
         cert: sslConfig.certJcm,
     };
-    siteLink = 'https://www.jobcallme.com:9559/';
+    siteLink = 'https://www.peekvideochat.com:9559/';
 } else if (serverIpAdd.includes('192.168.1.10') || serverIpAdd.includes('127.0.0.1')) { // Peek let 
     options = {
         key: sslConfig.keyPl,

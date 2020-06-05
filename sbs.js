@@ -28,8 +28,8 @@ Object.keys(ifaces).forEach(function (ifname) {
 	});
 });
 
- 
-if (serverIpAdd.includes('58.229.208.176')) { //Job callme
+
+if (serverIpAdd.includes('138.68.27.231')) { 
 	keysOpt = {
 		key: sslConfig.keyJcm,
 		cert: sslConfig.certJcm,
@@ -94,7 +94,7 @@ var authUser;
 //*****
 
 const corsOptions = {
-	origin: ["http://192.168.43.78:8080"], //the port my react app is running on. https://alllinkshare.com   / https://searchbysearch.com
+	origin: ["http://192.168.43.78:8080","https://peekvideochat.com", "192.168.10.1","http://192.168.100.26:8080"], //the port my react app is running on. https://alllinkshare.com   / https://searchbysearch.com
 	credentials: true,
 };
 
@@ -261,6 +261,8 @@ io.on('connection', function (socket) {
 		io.emit('updateChatAll', coversation);
 	});
 	socket.on('checkmsg', function (chat) {
+		console.log("chat socket called");
+		console.log(chat);
 		io.emit('remsg', chat);
 	});
 

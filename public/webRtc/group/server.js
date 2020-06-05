@@ -28,12 +28,12 @@ Object.keys(ifaces).forEach(function (ifname) {
 });
 
 var siteLink = 'https://localhost:8080/';
-if (serverIpAdd.includes('58.229.208.176')) { //Job callme
+if (serverIpAdd.includes('138.68.27.231')) { 
     options = {
         key: sslConfig.keyJcm,
         cert: sslConfig.certJcm,
     };
-    siteLink = 'https://www.jobcallme.com:8080/';
+    siteLink = 'https://www.peekvideochat.com:8080/';
 }
 else if (serverIpAdd.includes('192.168.1.10')) { // Peek let 
     options = {

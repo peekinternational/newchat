@@ -41,12 +41,12 @@ Object.keys(ifaces).forEach(function (ifname) {
 
 
 var siteLink = 'https://localhost:8444/';
-if (serverIpAdd.includes('58.229.208.176')) { //Job callme
+if (serverIpAdd.includes('138.68.27.231')) { //Job callme
 	options = {
 		key: sslConfig.keyJcm,
 		cert: sslConfig.certJcm,
 	};
-	siteLink = 'https://www.jobcallme.com:8444/';
+	siteLink = 'https://www.peekvideochat.com:8444/';
 }
 else if (serverIpAdd.includes('192.168.1.10')) { // Peek let 
 	options = {

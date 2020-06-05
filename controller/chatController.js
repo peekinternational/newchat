@@ -222,7 +222,7 @@ module.exports = function (io, saveUser) {
   };
 
   router.chat = function (req, res) {
-
+console.log(req.body);
     var chatType = req.body.msgData.chatType;
     var sender = req.body.msgData.senderId;
     var name = req.body.msgData.senderName;
