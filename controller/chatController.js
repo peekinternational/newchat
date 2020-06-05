@@ -22,10 +22,10 @@ passport.use(new LocalStrategy({
   usernameField: 'name',
   passwordField: 'password',
 }, (name, password, done) => {
-  //console.log('passport name: '+ name);
+  console.log('passport name: '+ name);
   userModel.findOne({ name })
     .then((user) => {
-    //  console.log("passport: 1");
+      console.log("passport: 1");
       console.log(user);
      
         return done(null, user);
@@ -511,6 +511,7 @@ console.log(req.body);
 
 
   router.login = function (req, res, next) { 
+  console.log(req.body);
     if (!req.body.name) {
       return res.status(422).json({
         errors: {
@@ -544,7 +545,8 @@ console.log(req.body);
 
   router.updateChat = function (req, res) {
     var chatId = req.params.id;
-    var message = req.body.message;
+    var message = req.body.msgData.message;
+	console.log(req.body.message + ' '+ req.params.id);
     chatModel.findByIdAndUpdate(
       chatId,
       { message: message },
@@ -604,6 +606,8 @@ console.log(req.body);
   };
 
   router.addfiles = function (req, res, next) {
+	 
+	  console.log(req.files);
     let isFileImage = 1;
 
     for (var i = 0; i < req.files.length; i++) {
@@ -621,9 +625,11 @@ console.log(req.body);
       });
       newchat.save(function (err, data) {
         if (err) throw err;
+		res.json({'file': req.files, 'data': data});
       });
+	  
     }
-    res.send(req.files);
+   // res.send(req.files);
   };
 
   router.groupFilesShare = function (req, res, next) {
