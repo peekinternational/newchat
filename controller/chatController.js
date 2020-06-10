@@ -281,8 +281,11 @@ module.exports = function (io, saveUser) {
       if (err) throw err;
 
       if (chatType != 2 && req.body.selectedUserData) {
+		  console.log(req.body.selectedUserData);
+console.log(chatType);
         let date_ob = new Date();
-        userModel.update(
+		console.log(date_ob);
+        userModel.updateOne(
           { _id: req.body.selectedUserData._id },
           { $set: { updatedByMsg: date_ob } }
         )
@@ -399,12 +402,13 @@ module.exports = function (io, saveUser) {
           .populate("commentId")
           .lean()
           .exec(function (err, data) {
+			  console.log(data);
             if (err) throw err;
             data.reverse();
             userModel
               .update({ _id: sender }, { $set: { chatWithRefId: receiver } })
               .exec();
-
+  console.log(data);
             res.json(data);
           });
       });
