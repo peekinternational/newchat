@@ -94,7 +94,7 @@ var authUser;
 //*****
 
 const corsOptions = {
-	origin: ["http://192.168.43.78:8080","http://192.168.100.18:8080"], //the port my react app is running on. https://alllinkshare.com   / https://searchbysearch.com
+	origin: ["http://192.168.43.78:8080","http://192.168.100.21:8080"], //the port my react app is running on. https://alllinkshare.com   / https://searchbysearch.com
 	credentials: true,
 };
 
