@@ -1931,7 +1931,7 @@
               
               </ul>
             </div>
-           <span v-if="typing == true" class="">{{ singlefriend.name }} is typing</span>
+           <span v-if="typing == true" class="">{{ singlefriend.name }} is typing ...</span>
      
           </div>
          
