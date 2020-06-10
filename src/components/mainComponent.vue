@@ -136,7 +136,10 @@
                         <ul class="chat-main" v-for="friends in orderedUsers" v-if="friends._id != c_user._id">
                           <li class="init"  @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                             <div class="chat-box">
-                              <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar"/></div>
+                              <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }"  >
+                                <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar"/></div>
+                                <div v-else class="profile offline"  >
+                                <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar"/></div>
                               <div class="details" style="padding-left: 73px;">
                                 <h5>{{friends.name}}</h5>
                                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
@@ -1769,11 +1772,23 @@
                 <div class="col-7">
                   <div class="media left">
                     <div class="media-left mr-3">
-                      <div class="profile online menu-trigger"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
+
+                      <div v-if="singlefriend.onlineStatus == 1" class="profile menu-trigger" v-bind:class="{ online: singlefriend.pStatus == 0, unreachable : singlefriend.pStatus == 1, busy: singlefriend.pStatus == 2, offline: singlefriend.pStatus == 3, offline: singlefriend.pStatus == 4 }">
+                        <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div v-else class="profile offline menu-trigger">
+                        <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
                     </div>
+                    
                     <div class="media-body">
                       <h5>{{singlefriend.name}}</h5>
-                      <div class="badge badge-success">Active</div>
+
+                      <div v-if="singlefriend.onlineStatus == 1 && singlefriend.pStatus == 0" class="badge badge-success">Online</div>
+                      <div v-if="singlefriend.onlineStatus == 1 && singlefriend.pStatus == 1" class="badge badge-warning">Away</div>
+                      <div v-if="singlefriend.onlineStatus == 1 && singlefriend.pStatus == 2" class="badge badge-danger">Busy</div>
+                      <div v-if="singlefriend.onlineStatus == 1 && singlefriend.pStatus == 3" class="badge badge-dark">Invisible</div>
+                      <div v-if="singlefriend.onlineStatus == 1 && singlefriend.pStatus == 4" class="badge badge-secondary">Offline</div>
+                      <div v-if="singlefriend.onlineStatus == 0" class="badge badge-light">Offline</div>
+
                     </div>
                     <div class="media-right">
                       <ul>
@@ -1823,15 +1838,17 @@
               <ul class="chatappend" v-for="chat in friendchat"> 
                 <li class="replies"  style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
                   <div class="media">
-                    <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
+                    <div class="profile mr-4">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar"/></div>
                     <div class="media-body">
                       <div class="contact-name">
                         <h5>{{ c_user.name}}</h5>
                         <h6>{{isToday(chat.createdAt)}}</h6>
+                        <h6><i class="fa fa-check"></i></h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
                             <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
-                              <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)"><i class="ti-more-alt"></i></div>
+                              <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)"><i class="ti-more-alt"></i>  </div><img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="chat.isSeen == 1" style="width: 20px;"/>
                               <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;"> 
                                 <ul>
                                   <li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="eidtchat(chat._id,chat.message)"><i class="fa fa-pencil" ></i>edit</a></li>
@@ -1851,11 +1868,11 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id"><span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br>
                             {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://192.168.43.78:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.22:22000/images/chatImages/'+chat.message">
                                </a>
                             
-                             <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                             <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                          
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -1893,10 +1910,10 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id"><span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br>
                             {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://192.168.43.78:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.100.22:22000/images/chatImages/'+chat.message">
                                </a>
-                            <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.22:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)"><i class="ti-more-alt"></i></div>
                               <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;"> 
@@ -4075,7 +4092,7 @@ export default {
               onEditclear: false,
               onChat: true,
                dropzoneOptions: {
-                url: 'https://192.168.43.78:22000/chatFilesShare',
+                url: 'https://192.168.100.22:22000/chatFilesShare',
                 thumbnailWidth: 100,
                 thumbnailHeight:100,
                 maxFiles:10,
@@ -4083,7 +4100,7 @@ export default {
                 chunking:true,
                 headers: { "My-Awesome-Header": "header value" }
             },
-           
+        
             formDatas:{},
             replyBox:false,
             chatreplydata:{},
@@ -4201,8 +4218,15 @@ export default {
 
 
    logout: function () {
-      this.$session.destroy()
-      this.$router.push('/login')
+     
+           axios.post('/externalLogout/'+this.c_user._id)
+            .then((responce) => {
+              this.$session.destroy();
+              this.$router.push('/login')
+            })
+            .catch((error) => console.log(error));
+      
+      
     },
 
     onCopy: function (e) {
