@@ -46,7 +46,7 @@
                   <a class="icon-btn btn-outline-light button-effect pull-right mainnav"  ><i class="ti-layout-grid2"></i></a></div>
               </div>
             </div>
-            <carousel :nav="false" :dots="false">
+            <!-- <carousel :nav="false" :dots="false">
               <div style="padding: 13px;">
             <div class="dot-btn dot-danger grow"></div>
             <img src="https://placeimg.com/200/200/any?1">
@@ -65,8 +65,8 @@
             <div class="dot-btn dot-danger grow"></div>
             <img src="https://placeimg.com/200/200/any?4">
           </div>
-        </carousel>
-            <div class="recent-slider recent-chat owl-carousel owl-theme">
+        </carousel> -->
+            <!-- <div class="recent-slider recent-chat owl-carousel owl-theme">
               <div class="item">
                 <div class="recent-box">
                   <div class="dot-btn dot-danger grow"></div>
@@ -91,9 +91,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
-          <div class="chat custom-scroll">
+          <div class="chat custom-scroll" style="margin-top: 0px;">
             <ul class="chat-cont-setting">
               <li> <a href="#" data-toggle="modal" data-target="#msgchatModal"><span>new chat</span>
                   <div class="icon-btn btn-outline-primary button-effect btn-sm"> <message-square-icon size="1.5x" class="custom-class"></message-square-icon></i></div></a></li>
@@ -118,13 +118,13 @@
                 </div>
               </div>
             </div>
-            <div class="theme-tab tab-sm chat-tabs">     
+            <div class="theme-tab tab-sm chat-tabs" style="padding:0px">     
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" data-to="chat-content"><a class="nav-link button-effect active" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="true" data-intro="Start chat"> <message-square-icon size="1.5x" class="custom-class"></message-square-icon> </i>Chat</a></li>
                 <li class="nav-item" data-to="call-content"><a class="nav-link button-effect" id="call-tab" data-toggle="tab" href="#call" role="tab" aria-controls="call" aria-selected="false"><phone-icon size="1.5x" class="custom-class"></phone-icon>Call</a></li>
                 <li class="nav-item" data-to="contact-content"><a class="nav-link button-effect" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false"> <users-icon size="1.5x" class="custom-class"></users-icon> Contact</a></li>
               </ul>
-              <div class="tab-content" id="myTabContent">
+              <div class="tab-content" id="myTabContent" style="padding:20px">
                 <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab"> 
                   <div class="theme-tab">       
                     <ul class="nav nav-tabs" id="myTab1" role="tablist">
@@ -142,7 +142,7 @@
                                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
                               </div>
                               <div class="date-status"><i class="ti-pin2"></i>
-                                <h6>22/10/19</h6>
+                                <h6>{{isToday(friends.updatedByMsg)}}</h6>
                                 <h6 class="font-success status"> Seen</h6>
                               </div>
                             </div>
@@ -1813,7 +1813,12 @@
             </div>
             
               <vue-dropzone ref="myVueDropzone" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"></vue-dropzone>
-          
+          <loading :active.sync="isLoading" 
+              :can-cancel="true" 
+              :on-cancel="onCancel"
+              :is-full-page="fullPage">
+                
+              </loading>
             <div class="contact-chat  " >
               <ul class="chatappend" v-for="chat in friendchat"> 
                 <li class="replies"  style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
@@ -1846,11 +1851,11 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id"><span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br>
                             {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.43.78:22000/images/chatImages/'+chat.message">
                                </a>
                             
-                             <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                             <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                          
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -1888,10 +1893,10 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id"><span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br>
                             {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                               <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                               <img :src="'https://192.168.43.78:22000/images/chatImages/'+chat.message">
                                </a>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.43.78:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" ><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)"><i class="ti-more-alt"></i></div>
                               <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;"> 
@@ -4032,6 +4037,9 @@ import moment from 'moment';
 import _ from 'lodash';   
 import vueDropzone from 'vue2-dropzone';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+import Loading from 'vue-loading-overlay';
+    // Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 import ApiService from '../services/api.service.js';
 
@@ -4040,7 +4048,7 @@ import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-   components: { vueDropzone,carousel,PhoneIncomingIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon,ArrowLeftIcon  },
+   components: {Loading, vueDropzone,carousel,PhoneIncomingIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon,ArrowLeftIcon  },
       props:[],
         data(){
             return{
@@ -4067,7 +4075,7 @@ export default {
               onEditclear: false,
               onChat: true,
                dropzoneOptions: {
-                url: 'https://peekvideochat.com:22000/chatFilesShare',
+                url: 'https://192.168.43.78:22000/chatFilesShare',
                 thumbnailWidth: 100,
                 thumbnailHeight:100,
                 maxFiles:10,
@@ -4080,6 +4088,8 @@ export default {
             replyBox:false,
             chatreplydata:{},
             userdec:{},
+            isLoading: false,
+            fullPage: true
             }
     
         },
@@ -4213,7 +4223,7 @@ export default {
         },
 
       isToday(date) {
-            return moment(date).fromNow();
+            return moment(date).calendar();
         },
  feedbackDictation() {
 
@@ -4269,7 +4279,7 @@ afterComplete(file, response){
                       receiverId: {_id:this.singlefriend._id},
                       senderName: this.c_user.name,
                       message: response.file[0].originalname,
-                      createdAt:new Date()
+                      createdAt:new Date().toISOString(),
                       };
                       
         
@@ -4311,7 +4321,7 @@ afterComplete(file, response){
                               receiverId: {_id:this.singlefriend._id},
                               senderName: this.c_user.name,
                               message: response.data.file[0].originalname,
-                              createdAt:new Date()
+                              createdAt:new Date().toISOString(),
                               };
                               
                            this.$socket.emit('sendmsg', this.msgObj );
@@ -4328,6 +4338,7 @@ afterComplete(file, response){
         },
 
       startchat(friend){
+        this.isLoading = true;
         this.message='';
        this.editChatid='';
        this.onEditclear=false;
@@ -4345,7 +4356,9 @@ afterComplete(file, response){
            axios.get('/getChat/'+this.c_user._id+'/'+friend._id+'/50')
             .then((responce) => this.friendchat=responce.data)
             .catch((error) => console.log(error));
-           
+           setTimeout(() => {
+                  this.isLoading = false
+                },400)
             $('#mainchatpage').remove();
             
             $('#group_chat').remove();
@@ -4393,7 +4406,7 @@ afterComplete(file, response){
                           receiverId: {_id:this.singlefriend._id},
                           senderName: this.c_user.name,
                           message: this.message,
-                          createdAt:new Date(),
+                          createdAt:new Date().toISOString(),
                           chatType: 1
                           };
                           
@@ -4432,7 +4445,7 @@ afterComplete(file, response){
                      receiverId: {_id:this.singlefriend._id},
                      senderName: this.c_user.name,
                      message: this.message,
-                     createdAt:new Date()
+                     createdAt:new Date().toISOString(),
                     };
                     
                      this.$socket.emit('sendmsg', this.msgObj )
