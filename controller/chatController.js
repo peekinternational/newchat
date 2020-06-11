@@ -279,11 +279,13 @@ console.log(req.body);
 
     newMessage.save(function (err, data) {
       if (err) throw err;
-
+    
       if (chatType != 2 && req.body.selectedUserData) {
+        console.log("updating updatedByMsg...");
+        console.log(req.body.selectedUserData);
         let date_ob = new Date();
-        userModel.update(
-          { _id: req.body.selectedUserData._id },
+        userModel.updateOne(
+          { _id: req.body.selectedUserData },
           { $set: { updatedByMsg: date_ob } }
         )
           .exec();
