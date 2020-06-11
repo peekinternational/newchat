@@ -16,11 +16,21 @@ io.on('connection', function (socket) {
 	});
 
 //////// send and receive chatmsgid //////////   
+      socket.on('lastchatobj_send', (data) => {
+		console.log(data);
+		io.emit('lastchatobj_receive',data);
+	});
+
+	//////// send and receive chatmsgid //////////   
       socket.on('sendid', (data) => {
 		console.log(data);
 		io.emit('receiveid',data);
 	});
 
+socket.on('updateUserSelection', (data) => {
+	console.log(data);
+		io.emit('receiverUserStatus', data);
+	});
 //////// update chatmsg //////////   
       socket.on('updatechatmsg', (data) => {
 		console.log(data);
