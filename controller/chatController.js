@@ -27,6 +27,11 @@ passport.use(new LocalStrategy({
     .then((user) => {
       console.log("passport: 1");
       console.log(user);
+	  userModel.update({
+		'_id': user._id
+	}, {
+		'onlineStatus': 1
+	}).exec();
      
         return done(null, user);
       
@@ -105,7 +110,7 @@ module.exports = function (io, saveUser) {
 
   router.getUsers = function (req, res) {
     function chatModelFunc(data) {
-     // console.log(data);
+     console.log(data);
       for (let i = 0; i < data.length; i++) {
        // if(data[i]) {
           chatModel
@@ -114,7 +119,7 @@ module.exports = function (io, saveUser) {
             receiverId: req.params.userId,
             isSeen: 0
           })
-          .count()
+          .countDocuments()
           .exec(function (err, count) {
             data[i]["usCount"] = count;
             if (i == data.length - 1) res.json({ usersList: data });
@@ -286,7 +291,7 @@ console.log(chatType);
         let date_ob = new Date();
 		console.log(date_ob);
         userModel.updateOne(
-          { _id: req.body.selectedUserData._id },
+          { _id: req.body.selectedUserData },
           { $set: { updatedByMsg: date_ob } }
         )
           .exec();
@@ -347,7 +352,7 @@ console.log(chatType);
 
   router.chatWithId = function (req, res) {
     var sender = req.params._id;
-    userModel.update({ _id: sender }, { $set: { chatWithRefId: "" } }).exec();
+    userModel.updateOne({ _id: sender }, { $set: { chatWithRefId: "" } }).exec();
   };
 
   // router.getgroupchat = function (req, res) {
@@ -406,7 +411,7 @@ console.log(chatType);
             if (err) throw err;
             data.reverse();
             userModel
-              .update({ _id: sender }, { $set: { chatWithRefId: receiver } })
+              .updateOne({ _id: sender }, { $set: { chatWithRefId: receiver } })
               .exec();
   console.log(data);
             res.json(data);
@@ -528,7 +533,13 @@ console.log(chatType);
       if (err) {
         return next(err);
       }
+	  userModel.update({
+		'_id': req.params.userId
+	}, {
+		'onlineStatus': 1
+	}).exec();
       if (passportUser) {
+		  
         const user = passportUser;
         user.token = passportUser.generateJWT();
         return res.json({ user: user.toAuthJSON() });
