@@ -5417,11 +5417,10 @@ export default {
         thumbnailWidth: 100,
         thumbnailHeight: 100,
         maxFiles: 10,
-        maxFilesize: 20,
+        maxFilesize: 420,
         chunking: true,
         headers: { "My-Awesome-Header": "header value" }
       },
-
       formDatas: {},
       replyBox: false,
       chatreplydata: {},
@@ -5438,7 +5437,7 @@ export default {
     }
   },
 
-  sockets: {
+   sockets: {
     connect: function() {
       console.log('socket connected successfully')
     },
@@ -5551,6 +5550,22 @@ export default {
       console.log(data);
       this.typing = false;
     },
+    
+changestatuslogin(data) {
+      console.log(data);
+      const post = this.friendsdata.filter((obj) => {
+        return data === obj._id;
+      }).pop();
+      post.onlineStatus = 1;
+    },
+    
+    changestatuslogout(data) {
+      console.log(data);
+      const post = this.friendsdata.filter((obj) => {
+        return data === obj._id;
+      }).pop();
+      post.onlineStatus = 0;
+    },
 
   },
 
@@ -5593,6 +5608,7 @@ export default {
 
       axios.post('/externalLogout/' + this.c_user._id)
         .then((responce) => {
+          this.$socket.emit('logout', this.c_user._id);
           this.$session.destroy();
           this.$router.push('/login')
         })
@@ -5649,142 +5665,6 @@ export default {
 
     },
 
-    dragfileupload(file, xhr, formData) {
-      console.log(this.singlefriend);
-      formData.append('senderId', this.c_user._id);
-      formData.append('senderName', this.c_user.name);
-      formData.append('friendId', this.singlefriend._id);
-
-
-    },
-
-    afterComplete(file, response) {
-      console.log(file);
-      console.log(response.data);
-
-      this.msgObj = {
-        _id: response.data._id,
-        chatType: 0,
-        isSeen: 0,
-        isGroup: 0,
-        messageType: response.data.messageType,
-        senderId: { _id: this.c_user._id },
-        senderImage: '',
-        receiverImage: '',
-        receiverId: { _id: this.singlefriend._id },
-        senderName: this.c_user.name,
-        message: response.file[0].originalname,
-        createdAt: new Date().toISOString(),
-      };
-      if (this.singlefriend.chatWithRefId == this.c_user._id) {
-        // alert('dasdasdas');
-        this.$set(this.msgObj, 'isSeen', 1);
-      }
-
-      console.log(this.msgObj);
-      this.isSeen = false;
-      this.friendchat.push(this.msgObj);
-      this.$socket.emit('sendmsg', this.msgObj);
-      this.userdec = this.friendsdata.filter((obj) => {
-        return this.singlefriend._id === obj._id;
-      }).pop();
-
-      this.userdec.updatedByMsg = new Date().toISOString();
-
-
-      setTimeout(() => {
-        const id = $(".active.init").attr("id");
-
-        if (id != 'friend' + this.singlefriend._id) {
-          $('.init').removeClass("active");
-          setTimeout(() => {
-
-            $('#friend' + this.singlefriend._id).addClass("active");
-            setTimeout(() => {
-
-              $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
-            }, 200);
-
-          }, 1);
-
-
-        }
-      }, 0);
-      // this.$socket.emit('sendmsg', response.data )
-      this.$refs.myVueDropzone.removeFile(file);
-      $("#dropzone").css("display", "none");
-    },
-
-    uploadfile(event) {
-      console.log(event.target.value)
-      let filesdata = this.$refs.myFiles.files[0];
-
-      let formDatas = new FormData();
-      formDatas.append('file', filesdata);
-      formDatas.append('senderId', this.c_user._id);
-      formDatas.append('senderName', this.c_user.name);
-      formDatas.append('friendId', this.singlefriend._id);
-      console.log(formDatas);
-      let config = {
-        header: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-      axios.post('/chatFilesShare', formDatas, config).then((response) => {
-        console.log(response.data);
-        this.msgObj = {
-          _id: response.data.data._id,
-          chatType: 0,
-          isSeen: 0,
-          isGroup: 0,
-          messageType: response.data.data.messageType,
-          senderId: { _id: this.c_user._id },
-          senderImage: '',
-          receiverImage: '',
-          receiverId: { _id: this.singlefriend._id },
-          senderName: this.c_user.name,
-          message: response.data.file[0].originalname,
-          createdAt: new Date().toISOString(),
-        };
-        if (this.singlefriend.chatWithRefId == this.c_user._id) {
-          // alert('dasdasdas');
-          this.$set(this.msgObj, 'isSeen', 1);
-        }
-
-        console.log(this.msgObj);
-        this.isSeen = false;
-        this.friendchat.push(this.msgObj);
-        this.$socket.emit('sendmsg', this.msgObj);
-        this.userdec = this.friendsdata.filter((obj) => {
-          return this.singlefriend._id === obj._id;
-        }).pop();
-        this.userdec.updatedByMsg = new Date().toISOString();
-
-
-        setTimeout(() => {
-          const id = $(".active.init").attr("id");
-
-          if (id != 'friend' + this.singlefriend._id) {
-            $('.init').removeClass("active");
-            setTimeout(() => {
-
-              $('#friend' + this.singlefriend._id).addClass("active");
-              setTimeout(() => {
-
-                $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
-              }, 200);
-
-            }, 1);
-
-
-          }
-        }, 0);
-      }, function(err) {
-        console.log('err', err);
-        alert('error');
-      })
-    },
-
     emptyChatWithId() {
       axios.get('/emptyChatWithId/' + this.c_user._id)
         .then(responce => {
@@ -5797,59 +5677,68 @@ export default {
       axios.get('/getUsers/' + this.c_user._id + '/0/5d4c07fb030f5d0600bf5c03')
         .then(responce => {
           this.friendsdata = responce.data.usersList;
+          setTimeout(() => {
+               this.$socket.emit('login', this.c_user._id);
+              }, 2000);
+         
           console.log(this.friendsdata);
         })
         .catch((error) => console.log(error));
     },
 
+
+
+///////////////////////////////////////  START CHAT SECTION //////////////////////////////////////
+
+
     startchat(friend) {
-      this.isLoading = true;
-      this.message = '';
-      this.editChatid = '';
-      this.onEditclear = false;
-      this.onChat = true;
-      this.chatreplydata = "";
-      $('.message-input').css("height", "96px");
-      this.replyBox = false;
-      console.log($(document).height());
-      $(".messages").animate({ scrollTop: 6000 }, "fast");
-      this.singlefriend = friend;
-      this.$socket.emit('updateUserSelection', {
-        selectedUser: this.singlefriend._id,
-        userId: this.c_user._id
-      });
-      const post = this.friendsdata.filter((obj) => {
-        return this.singlefriend._id === obj._id;
-      }).pop();
-      post.usCount = 0;
-      //console.log(post);
-      // this.$set(this.singlefriend,'chatWithRefId',this.c_user._id);
-      $('.init').removeClass("active");
-      $('#friend' + friend._id).addClass("active");
-      $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
+            this.isLoading = true;
+            this.message = '';
+            this.editChatid = '';
+            this.onEditclear = false;
+            this.onChat = true;
+            this.chatreplydata = "";
+            $('.message-input').css("height", "96px");
+            this.replyBox = false;
+            console.log($(document).height());
+            $(".messages").animate({ scrollTop: 6000 }, "fast");
+            this.singlefriend = friend;
+            this.$socket.emit('updateUserSelection', {
+              selectedUser: this.singlefriend._id,
+              userId: this.c_user._id
+            });
+            const post = this.friendsdata.filter((obj) => {
+              return this.singlefriend._id === obj._id;
+            }).pop();
+            post.usCount = 0;
+            //console.log(post);
+            // this.$set(this.singlefriend,'chatWithRefId',this.c_user._id);
+            $('.init').removeClass("active");
+            $('#friend' + friend._id).addClass("active");
+            $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
 
-      axios.get('/getChat/' + this.c_user._id + '/' + friend._id + '/50')
-        .then(responce => {
-          this.friendchat = responce.data;
-          this.$socket.emit('lastchatobj_send', this.friendchat[this.friendchat.length - 1]);
+            axios.get('/getChat/' + this.c_user._id + '/' + friend._id + '/50')
+              .then(responce => {
+                this.friendchat = responce.data;
+                this.$socket.emit('lastchatobj_send', this.friendchat[this.friendchat.length - 1]);
 
-          if (this.friendchat[this.friendchat.length - 1].isSeen == 1) {
-            this.isSeen = true;
-          } else {
-            this.isSeen = false;
-          }
+                if (this.friendchat[this.friendchat.length - 1].isSeen == 1) {
+                  this.isSeen = true;
+                } else {
+                  this.isSeen = false;
+                }
 
         })
         .catch((error) => console.log(error));
-      setTimeout(() => {
-        this.isLoading = false
-      }, 400)
-      $('#mainchatpage').remove();
+          setTimeout(() => {
+            this.isLoading = false
+          }, 400)
+          $('#mainchatpage').remove();
 
-      $('#group_chat').remove();
-      $('#startchat').addClass("active");
+          $('#group_chat').remove();
+          $('#startchat').addClass("active");
 
-      $('.chitchat-container').toggleClass("mobile-menu");
+          $('.chitchat-container').toggleClass("mobile-menu");
 
     },
 
@@ -6026,6 +5915,144 @@ export default {
 
     },
 
+
+    dragfileupload(file, xhr, formData) {
+      console.log(this.singlefriend);
+      formData.append('senderId', this.c_user._id);
+      formData.append('senderName', this.c_user.name);
+      formData.append('friendId', this.singlefriend._id);
+
+
+    },
+
+    afterComplete(file, response) {
+      console.log(file);
+      console.log(response.data);
+
+      this.msgObj = {
+        _id: response.data._id,
+        chatType: 0,
+        isSeen: 0,
+        isGroup: 0,
+        messageType: response.data.messageType,
+        senderId: { _id: this.c_user._id },
+        senderImage: '',
+        receiverImage: '',
+        receiverId: { _id: this.singlefriend._id },
+        senderName: this.c_user.name,
+        message: response.file[0].originalname,
+        createdAt: new Date().toISOString(),
+      };
+      if (this.singlefriend.chatWithRefId == this.c_user._id) {
+        // alert('dasdasdas');
+        this.$set(this.msgObj, 'isSeen', 1);
+      }
+
+      console.log(this.msgObj);
+      this.isSeen = false;
+      this.friendchat.push(this.msgObj);
+      this.$socket.emit('sendmsg', this.msgObj);
+      this.userdec = this.friendsdata.filter((obj) => {
+        return this.singlefriend._id === obj._id;
+      }).pop();
+
+      this.userdec.updatedByMsg = new Date().toISOString();
+
+
+      setTimeout(() => {
+        const id = $(".active.init").attr("id");
+
+        if (id != 'friend' + this.singlefriend._id) {
+          $('.init').removeClass("active");
+          setTimeout(() => {
+
+            $('#friend' + this.singlefriend._id).addClass("active");
+            setTimeout(() => {
+
+              $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+            }, 200);
+
+          }, 1);
+
+
+        }
+      }, 0);
+      // this.$socket.emit('sendmsg', response.data )
+      this.$refs.myVueDropzone.removeFile(file);
+      $("#dropzone").css("display", "none");
+    },
+
+    uploadfile(event) {
+      console.log(event.target.value)
+      let filesdata = this.$refs.myFiles.files[0];
+
+      let formDatas = new FormData();
+      formDatas.append('file', filesdata);
+      formDatas.append('senderId', this.c_user._id);
+      formDatas.append('senderName', this.c_user.name);
+      formDatas.append('friendId', this.singlefriend._id);
+      console.log(formDatas);
+      let config = {
+        header: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      axios.post('/chatFilesShare', formDatas, config).then((response) => {
+        console.log(response.data);
+        this.msgObj = {
+          _id: response.data.data._id,
+          chatType: 0,
+          isSeen: 0,
+          isGroup: 0,
+          messageType: response.data.data.messageType,
+          senderId: { _id: this.c_user._id },
+          senderImage: '',
+          receiverImage: '',
+          receiverId: { _id: this.singlefriend._id },
+          senderName: this.c_user.name,
+          message: response.data.file[0].originalname,
+          createdAt: new Date().toISOString(),
+        };
+        if (this.singlefriend.chatWithRefId == this.c_user._id) {
+          // alert('dasdasdas');
+          this.$set(this.msgObj, 'isSeen', 1);
+        }
+
+        console.log(this.msgObj);
+        this.isSeen = false;
+        this.friendchat.push(this.msgObj);
+        this.$socket.emit('sendmsg', this.msgObj);
+        this.userdec = this.friendsdata.filter((obj) => {
+          return this.singlefriend._id === obj._id;
+        }).pop();
+        this.userdec.updatedByMsg = new Date().toISOString();
+
+
+        setTimeout(() => {
+          const id = $(".active.init").attr("id");
+
+          if (id != 'friend' + this.singlefriend._id) {
+            $('.init').removeClass("active");
+            setTimeout(() => {
+
+              $('#friend' + this.singlefriend._id).addClass("active");
+              setTimeout(() => {
+
+                $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+              }, 200);
+
+            }, 1);
+
+
+          }
+        }, 0);
+      }, function(err) {
+        console.log('err', err);
+        alert('error');
+      })
+    },
+
+
     eidtchat(id, message) {
       this.message = message;
       this.editChatid = id;
@@ -6070,10 +6097,15 @@ export default {
         this.$refs.afterClick.focus();
       });
     },
+
     closeReplybox() {
       $('.message-input').css("height", "96px");
       this.replyBox = false;
     },
+
+  ///////////////////////////////////////  END CHAT SECTION //////////////////////////////////////
+
+  ///////////////////////////////////////  START GROUP SECTION //////////////////////////////////////
     getgroups() {
       axios.get('/getCreatedGroups/' + this.c_user._id + '/5d4c07fb030f5d0600bf5c03')
         .then((responce) => this.groups = responce.data)
@@ -6084,21 +6116,21 @@ export default {
     },
 
     startgroupchat(group) {
-      this.singlegroup = group;
-      console.log(group._id);
-      $('#group_chat').removeClass("active");
-      //$('#friend'+friend._id).addClass("active");
-      // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-      axios.get('/getGroupChat/' + group._id + '/50')
-        .then((responce) => this.groupchatdata = responce.data)
-        .catch((error) => console.log(error));
-      $('#startchat').removeClass("active");
-      $('#startgroupchat').addClass("active");
-      $('#mainchatpage').remove();
-      $('.group_chat_open').addClass("active");
-      $(".messages").animate({ scrollTop: 6000 }, "fast");
+          this.singlegroup = group;
+          console.log(group._id);
+          $('#group_chat').removeClass("active");
+          //$('#friend'+friend._id).addClass("active");
+          // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
+          axios.get('/getGroupChat/' + group._id + '/50')
+            .then((responce) => this.groupchatdata = responce.data)
+            .catch((error) => console.log(error));
+          $('#startchat').removeClass("active");
+          $('#startgroupchat').addClass("active");
+          $('#mainchatpage').remove();
+          $('.group_chat_open').addClass("active");
+          $(".messages").animate({ scrollTop: 6000 }, "fast");
 
-      $('.chitchat-container').toggleClass("mobile-menu");
+          $('.chitchat-container').toggleClass("mobile-menu");
     },
 
     groupchat: function(e) {
@@ -6129,6 +6161,7 @@ export default {
       this.groupmessage = '';
     },
 
+///////////////////////////////////////  END GROUP SECTION //////////////////////////////////////
 
     favourite() {
 
@@ -6261,6 +6294,7 @@ export default {
 
     this.getfriends();
     this.emptyChatWithId();
+     
     /*=====================
  02. Drag and drop
  ==========================*/

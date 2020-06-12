@@ -69,6 +69,19 @@ socket.on('updateUserSelection', (data) => {
 		console.log(data);
 		io.emit('groupreceiveid',data);
 	});
+
+ //////// LOGIN AND LOUT ////////// 
+	
+ socket.on('login', (data) => {
+		console.log(data);
+		io.emit('changestatuslogin',data);
+	});
+	
+socket.on('logout', (data) => {
+		console.log(data);
+		io.emit('changestatuslogout',data);
+	});
+
     socket.on('disconnect', function() {
         
         console.log('disconnect');

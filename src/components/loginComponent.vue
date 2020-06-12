@@ -127,8 +127,10 @@ export default {
 
                 console.log(response);
                   if (response.data != '' ) {
+                    
                     this.$session.start()
                     this.$session.set('c_user', response.data.user)
+                   
                     this.$session.set('jwt', response.data.user.token)
                     Vue.http.headers.common['Authorization'] = 'Bearer ' + response.data.user.token
                     this.$router.push('/')

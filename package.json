@@ -30,6 +30,7 @@
     "socket.io-client": "^2.3.0",
     "switchery": "github:abpetkov/switchery",
     "tippy.js": "^6.2.3",
+    "v-offline": "^1.2.1",
     "vee-validate": "^2.0.3",
     "vue": "^2.6.11",
     "vue-chat-scroll-top-scroll": "^1.0.3",
