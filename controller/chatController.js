@@ -27,6 +27,11 @@ passport.use(new LocalStrategy({
     .then((user) => {
       console.log("passport: 1");
       console.log(user);
+	  userModel.update({
+		'_id': user._id
+	}, {
+		'onlineStatus': 1
+	}).exec();
      
         return done(null, user);
       
@@ -105,7 +110,7 @@ module.exports = function (io, saveUser) {
 
   router.getUsers = function (req, res) {
     function chatModelFunc(data) {
-     // console.log(data);
+     console.log(data);
       for (let i = 0; i < data.length; i++) {
        // if(data[i]) {
           chatModel
@@ -281,8 +286,7 @@ console.log(req.body);
       if (err) throw err;
     
       if (chatType != 2 && req.body.selectedUserData) {
-        console.log("updating updatedByMsg...");
-        console.log(req.body.selectedUserData);
+
         let date_ob = new Date();
 
         userModel.updateOne(
@@ -403,12 +407,13 @@ console.log(req.body);
           .populate("commentId")
           .lean()
           .exec(function (err, data) {
+			  console.log(data);
             if (err) throw err;
             data.reverse();
             userModel
               .updateOne({ _id: sender }, { $set: { chatWithRefId: receiver } })
               .exec();
-
+  console.log(data);
             res.json(data);
           });
       });
@@ -528,7 +533,13 @@ console.log(req.body);
       if (err) {
         return next(err);
       }
+	  userModel.update({
+		'_id': req.params.userId
+	}, {
+		'onlineStatus': 1
+	}).exec();
       if (passportUser) {
+		  
         const user = passportUser;
         user.token = passportUser.generateJWT();
         return res.json({ user: user.toAuthJSON() });

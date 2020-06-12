@@ -345,6 +345,13 @@ app.post('/gCallStatus', (req, res) => {
 
 app.post('/externalLogout/:userId', (req, res) => {
 	//console.log("externalLogout SBS");
+	console.log("... externalLogout ...");
+	console.log(req.params);
+	userModel.update({
+		'_id': req.params.userId
+	}, {
+		'onlineStatus': 0
+	}).exec();
 	io.emit('_externalLogout', req.params); 
 	res.status(200).json({});
 })
