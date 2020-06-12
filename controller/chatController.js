@@ -114,7 +114,7 @@ module.exports = function (io, saveUser) {
             receiverId: req.params.userId,
             isSeen: 0
           })
-          .count()
+          .countDocuments()
           .exec(function (err, count) {
             data[i]["usCount"] = count;
             if (i == data.length - 1) res.json({ usersList: data });
@@ -284,8 +284,10 @@ console.log(req.body);
         console.log("updating updatedByMsg...");
         console.log(req.body.selectedUserData);
         let date_ob = new Date();
+
         userModel.updateOne(
           { _id: req.body.selectedUserData },
+
           { $set: { updatedByMsg: date_ob } }
         )
           .exec();
@@ -346,7 +348,7 @@ console.log(req.body);
 
   router.chatWithId = function (req, res) {
     var sender = req.params._id;
-    userModel.update({ _id: sender }, { $set: { chatWithRefId: "" } }).exec();
+    userModel.updateOne({ _id: sender }, { $set: { chatWithRefId: "" } }).exec();
   };
 
   // router.getgroupchat = function (req, res) {
@@ -404,7 +406,7 @@ console.log(req.body);
             if (err) throw err;
             data.reverse();
             userModel
-              .update({ _id: sender }, { $set: { chatWithRefId: receiver } })
+              .updateOne({ _id: sender }, { $set: { chatWithRefId: receiver } })
               .exec();
 
             res.json(data);
