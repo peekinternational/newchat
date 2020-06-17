@@ -95,8 +95,8 @@ var authUser;
 
 const corsOptions = {
 
-
 	origin: ["http://192.168.43.78:8080","https://peekvideochat.com", "192.168.10.1","http://192.168.100.26:8080"], //the port my react app is running on. https://alllinkshare.com   / https://searchbysearch.com
+
 
 	credentials: true,
 };

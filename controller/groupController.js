@@ -63,18 +63,18 @@ module.exports = function (io, saveUser) {
       .find({ status: 1, projectId: req.params.projectId })
       .populate("members")
       .exec(function (err, groups) {
-        var tempGroups = [];
-        if (err) return console.log(err);
+       // var tempGroups = [];
+      //  if (err) return console.log(err);
 
-        var i = 0, j = 0;
-        for (i; i < groups.length; i++) {
-          j = 0
-          for (j; j < groups[i].members.length; j++) {
-            if (req.params.userId == groups[i].members[j]._id) tempGroups.push(groups[i]);
-          }
-        }
+      //  var i = 0, j = 0;
+      //  for (i; i < groups.length; i++) {
+      //    j = 0
+      //    for (j; j < groups[i].members.length; j++) {
+       //     if (req.params.userId == groups[i].members[j]._id) tempGroups.push(groups[i]);
+       //   }
+       // }
 
-        res.send(tempGroups); // send groups list
+        res.send(groups); // send groups list
       });
   };
 

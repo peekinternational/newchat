@@ -352,7 +352,9 @@ console.log(req.body);
 
   router.chatWithId = function (req, res) {
     var sender = req.params._id;
+	console.log(sender+'reffffffffffffffffffffffffffffffffffffffffff');
     userModel.updateOne({ _id: sender }, { $set: { chatWithRefId: "" } }).exec();
+	res.json({ status: true});
   };
 
   // router.getgroupchat = function (req, res) {
@@ -622,8 +624,7 @@ console.log(req.body);
 
   router.addfiles = function (req, res, next) {
 	 
-	  console.log(req.files);
-    let isFileImage = 1;
+	 let isFileImage = 1;
 
     for (var i = 0; i < req.files.length; i++) {
       if (isImage("./images/chatImages/" + req.files[i].originalname)) {
@@ -632,17 +633,30 @@ console.log(req.body);
         isFileImage = 2;
       }
 
-      var newchat = new chatModel({
-        senderId: req.body.senderId,
-        receiverId: req.body.friendId,
-        message: req.files[i].originalname,
-        messageType: isFileImage
-      });
+      if (req.body.isGroup == 0){
+		  console.log('one to one');
+        var newchat = new chatModel({
+          senderId: req.body.senderId,
+          receiverId: req.body.friendId,
+          message: req.files[i].originalname,
+          messageType: isFileImage
+        });
+      }
+      else{
+		  console.log('group');
+        var newchat = new chatModel({
+          groupId: req.body.groupId,
+          senderId: req.body.senderId,
+          isGroup: 1,
+          message: req.files[i].originalname,
+          messageType: isFileImage
+        });
+      }
+
       newchat.save(function (err, data) {
         if (err) throw err;
-		res.json({'file': req.files, 'data': data});
+        res.json({ 'file': req.files, 'data': data });
       });
-	  
     }
    // res.send(req.files);
   };
