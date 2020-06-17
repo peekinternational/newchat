@@ -150,7 +150,7 @@
               </li>
               <li>
                 <a href="#" data-toggle="modal" data-target="#exampleModalCenter">
-                  <span>new Contact</span>
+                  <span>new Group</span>
                   <div class="icon-btn btn-outline-danger button-effect btn-sm">
                     <users-icon size="1.5x" class="custom-class"></users-icon>
                   </div>
@@ -243,7 +243,7 @@
                             </div>
                           </div>
                         </div>
-                        <ul class="group-main" v-for="group in groups">
+                        <ul class="group-main" v-for="group in orderedGroups">
                           <li class="group_chat" id="group_data" data-to="group_chat" @click="startgroupchat(group)" style="cursor: pointer;">
                             <div class="group-box">
                               <div class="profile"><img class="bg-img" src="../assets/images/avtar/teq.jpg" alt="Avatar" /></div>
@@ -1982,6 +1982,7 @@
                 </div>
               </div>
             </div>
+             <vue-dropzone ref="mygroupVueDropzone" id="groupdropzone" @vdropzone-success="groupComplete" v-on:vdropzone-sending="draggroupfileupload" :options="dropzoneOptions"></vue-dropzone>
             <div class="contact-chat">
               <ul class="chatappend" v-for="g_chat in groupchatdata" v-if="g_chat.groupId == singlegroup._id">
 
@@ -1994,32 +1995,45 @@
                         <h6>{{isToday(g_chat.createdAt)}}</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
-                            <h5>{{g_chat.message}} </h5>
-                            <div class="msg-dropdown-main">
-                              <div class="msg-setting">
+                            
+                            <div class="msg-dropdown-main" v-if="g_chat.isDeleted != 1">
+                              <div class="msg-setting" :id="'msg-setting'+g_chat._id" @click="msg_setting(g_chat._id)">
                                 <i class="ti-more-alt"></i>
                               </div>
-                              <div class="msg-dropdown">
+
+                              <div class="msg-dropdown" :id="'msg-dropdown'+g_chat._id" style="z-index: 99999;">
                                 <ul>
-                                  <li>
-                                    <a href="#">
-                                      <i class="fa fa-share"></i>forward</a>
+                                  <li v-if="g_chat.messageType != 1 && g_chat.messageType != 2">
+                                    <a href="#" @click="editgroupchat(g_chat._id,g_chat.message)">
+                                      <i class="fa fa-pencil"></i>edit</a>
                                   </li>
                                   <li>
-                                    <a href="#">
+                                    <a href="#" @click="groupquote(g_chat)">
+                                      <i class="fa fa-share"></i>Quote</a>
+                                  </li>
+
+                                  <li v-if="g_chat.messageType != 1 && g_chat.messageType != 2">
+                                    <a href="#" @click="copymsg(g_chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
                                       <i class="fa fa-clone"></i>copy</a>
                                   </li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
                                   <li>
-                                    <a href="#">
-                                      <i class="fa fa-star-o"></i>rating</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
+                                    <a href="#" @click="groupmsgdelete(g_chat._id)">
                                       <i class="ti-trash"></i>delete</a>
                                   </li>
                                 </ul>
                               </div>
                             </div>
+                             <h5 v-if="g_chat.isDeleted == 1" :id="'groupsender'+g_chat._id">message deleted</h5>
+                            <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 0" :id="'groupsender'+g_chat._id">{{ g_chat.message }}</h5>
+                            <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'groupsender'+g_chat._id">
+                              <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
+                            <br>
+                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            </a>
+
+                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                           </li>
                           <!--    <li class="msg-setting-main">
                                 <h5> it should from elite auther &#128519;</h5>
@@ -2050,61 +2064,19 @@
                         <h6>{{isToday(g_chat.createdAt)}}</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
-                            <div class="msg-dropdown-main">
-                              <div class="msg-setting">
-                                <i class="ti-more-alt"></i>
-                              </div>
-                              <div class="msg-dropdown">
-                                <ul>
-                                  <li>
-                                    <a href="#">
-                                      <i class="fa fa-share"></i>forward</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i class="fa fa-clone"></i>copy</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i class="fa fa-star-o"></i>rating</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i class="ti-trash"></i>delete</a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                            <h5>{{g_chat.message}}</h5>
-                          </li>
-                          <li class="msg-setting-main">
-                            <div class="msg-dropdown-main">
-                              <div class="msg-setting">
-                                <i class="ti-more-alt"></i>
-                              </div>
-                              <div class="msg-dropdown">
-                                <ul>
-                                  <li>
-                                    <a href="#">
-                                      <i class="fa fa-share"></i>forward</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i class="fa fa-clone"></i>copy</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i class="fa fa-star-o"></i>rating</a>
-                                  </li>
-                                  <li>
-                                    <a href="#">
-                                      <i class="ti-trash"></i>delete</a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
+                            
+                             <h5 v-if="g_chat.isDeleted == 1" :id="'sender'+g_chat._id">message deleted</h5>
+                            <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 0" :id="'sender'+g_chat._id">{{ g_chat.message }}</h5>
+                            <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'sender'+g_chat._id">
+                              <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
+                            <br>
+                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            </a>
 
+                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                           </li>
+                       
                         </ul>
                       </div>
                     </div>
@@ -2114,9 +2086,21 @@
               </ul>
             </div>
           </div>
-
+      <VEmojiPicker @select="selectEmoji"
+        class=""
+        v-bind:class="{activeemoji: isActive}"  v-if="isActive" />
           <div class="message-input">
-
+         <div class="replybox" v-if="groupreplyBox == true">
+              <p style="padding: 7px; margin: 0;">‘‘{{groupchatreplydata.message}}’’
+                <span style="float:right;cursor: pointer;" @click="closegroupReplybox()">
+                  <x-icon size="1.5x" class="custom-class"></x-icon>
+                </span>
+                <br>
+                <span style="margin-left: 6px;">
+                  {{isToday(groupchatreplydata.createdAt)}}
+                </span>
+              </p>
+            </div>
             <div class="wrap emojis-main">
               <!--<a class="icon-btn btn-outline-primary button-effect mr-3 toggle-sticker outside"  >
                     <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2158px" height="2148px" viewbox="0 0 2158 2148" enable-background="new 0 0 2158 2148" xml:space="preserve">
@@ -2126,62 +2110,30 @@
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.271,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
                       <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
                     </svg></a>-->
+                  
               <div class="dot-btn dot-primary mr-3">
-                <a class="icon-btn btn-outline-primary button-effect toggle-emoji">
+                <a class="icon-btn btn-outline-primary button-effect" @click="showGroupemoji">
                   <smile-icon size="1.5x" class="custom-class"></smile-icon>
                 </a>
               </div>
-              <div class="contact-poll">
-                <a class="icon-btn btn-outline-primary mr-4 outside" href="#">
-                  <i class="fa fa-plus"></i>
-                </a>
-                <div class="contact-poll-content">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <i data-feather="image"></i>gallery</a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i data-feather="camera"></i>camera</a>
-                    </li>
-                    <li>
-                      <a data-toggle="modal" data-target="#snippetModal">
-                        <i data-feather="code"> </i>Code Snippest</a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i data-feather="user"> </i>contact</a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i data-feather="map-pin"> </i>location</a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i data-feather="clipboard"> </i>document</a>
-                    </li>
-                    <li>
-                      <a data-toggle="modal" data-target="#pollModal">
-                        <i data-feather="bar-chart-2"> </i>poll</a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i data-feather="paperclip"> </i>attach</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+           
+              <label class="icon-btn btn-outline-primary mr-4" for="groupfileupload">
+                <i class="fa fa-plus"></i>
+              </label>
+              <input type="file" id="groupfileupload" ref="groupmyFiles" style="display:none" @change="groupuploadfile($event)" multiple>
+ 
 
-              <input class="setemoj" id="groupsetemoj" type="text" @keyup.enter="groupchat()" v-model="groupmessage" placeholder="Write your message..." />
+              <input class="setemoj" id="groupsetemoj" ref="groupafterClick" type="text" v-on:keyup="groupremovecross()" @keyup.enter="groupchat()" v-model="groupmessage" placeholder="Write your message..." />
               <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#" @click="feedbackDictation()">
                 <mic-icon size="1.5x" class="custom-class"></mic-icon>
               </a>
-              <button class="submit icon-btn btn-primary" @click="groupchat()" id="send-groupmsg" :disabled="not_working">
+              <button class="submit icon-btn btn-primary" v-show="ongroupChat" @click="groupchat()" id="send-groupmsg" :disabled="not_working">
                 <send-icon size="1.5x" class="custom-class"></send-icon>
               </button>
-
-              <div class="emojis-contain" id="emojiscontain">
+              <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditgroupclear" @click="cleargroupchat()">
+                  <x-icon size="1.5x" class="custom-class"></x-icon>
+                  </button>
+              <!--<div class="emojis-contain" id="emojiscontain">
                 <div class="groupemojis-sub-contain custom-scroll">
                   <ul>
                     <li>&#128512;</li>
@@ -2249,7 +2201,7 @@
                     <li>&#128579; </li>
                   </ul>
                 </div>
-              </div>
+              </div>-->
               <div class="sticker-contain">
                 <div class="sticker-sub-contain custom-scroll">
                   <ul>
@@ -2645,10 +2597,12 @@
               </ul>
               <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendchat.length > 0" style="width: 20px;float:right" />
             </div>
-            <span v-if="typing == true" class="">{{ singlefriend.name }} is typing ...</span>
+            <span v-if="typing == true && singlefriend.chatWithRefId == c_user._id" class="">{{ singlefriend.name }} is typing ...</span>
 
           </div>
-
+       <VEmojiPicker @select="selectchatEmoji"
+          class=""
+          v-bind:class="{activeChatemoji: ischatemojiActive}"  v-if="ischatemojiActive" />
           <div class="message-input">
             <div class="replybox" v-if="replyBox == true">
               <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
@@ -2671,7 +2625,7 @@
                       <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
                     </svg></a>-->
               <div class="dot-btn dot-primary mr-3">
-                <a class="icon-btn btn-outline-primary button-effect toggle-emoji">
+                <a class="icon-btn btn-outline-primary button-effect " @click="showChatemoji">
                   <smile-icon size="1.5x" class="custom-class"></smile-icon>
                 </a>
               </div>
@@ -2704,7 +2658,7 @@
               <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
                 <x-icon size="1.5x" class="custom-class"></x-icon>
               </button>
-              <div class="emojis-contain" id="emojiscontain">
+              <!--<div class="emojis-contain" id="emojiscontain">
                 <div class="emojis-sub-contain custom-scroll">
                   <ul>
                     <li>&#128512;</li>
@@ -2772,8 +2726,8 @@
                     <li>&#128579; </li>
                   </ul>
                 </div>
-              </div>
-              <div class="sticker-contain">
+              </div>-->
+              <!--<div class="sticker-contain">
                 <div class="sticker-sub-contain custom-scroll">
                   <ul>
                     <li>
@@ -2910,7 +2864,7 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div>-->
             </div>
           </div>
         </div>
@@ -4548,7 +4502,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h2 class="modal-title">
-              Add Contact</h2>
+              Create Group</h2>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -4556,18 +4510,26 @@
           <div class="modal-body">
             <form class="default-form">
               <div class="form-group">
-                <h5>Email or Username</h5>
-                <input class="form-control" id="exampleInputEmail1" type="text" placeholder="Josephin water" />
+                <h5>Group Name</h5>
+                <input class="form-control" id="exampleInputEmail1" v-model="groupName" type="text" placeholder="Enter Group Name" />
               </div>
               <div class="form-group mb-0">
                 <h5>Contact number</h5>
-                <input class="form-control" id="examplemsg" type="number" placeholder="12345678912" />
+                <div class="showmembers">
+                  <div class="groupmembers" v-for="(members, index) in friendsdata" v-if="members._id != c_user._id">
+                 
+                 <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /> {{members.name}} 
+                 <span class="btn btn-sm btn-success showAdd" :id="'member'+members._id" style="padding: 4px 7px;float:right;cursor: pointer;" @click="addGroupmemners(members._id)">Add</span> 
+                 <span class="btn btn-sm btn-danger hideRemove" :id="'memberRm'+members._id" style="padding: 4px 7px;float:right;cursor: pointer;display:none" @click="removeGroupmemners(members._id,index)">Remove</span>
+                </div>
+
+                </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
             <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary button-effect btn-sm" type="button">Add contact</button>
+            <button id="groupbtn" class="btn btn-primary button-effect btn-sm disabled"  type="button" @click="createGroup()" :disabled="havegroup">Create Group</button>
           </div>
         </div>
       </div>
@@ -5378,15 +5340,14 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 import Loading from 'vue-loading-overlay';
 // Import stylesheet
 import 'vue-loading-overlay/dist/vue-loading.css';
-
+import VEmojiPicker from 'v-emoji-picker';
 import ApiService from '../services/api.service.js';
-
 import { AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-  components: { Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+  components: {VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
   props: [],
   data() {
     return {
@@ -5412,6 +5373,9 @@ export default {
       editChatid: '',
       onEditclear: false,
       onChat: true,
+      editgroupChatid: '',
+      onEditgroupclear: false,
+      ongroupChat: true,
       dropzoneOptions: {
         url: 'https://peekvideochat.com:22000/chatFilesShare',
         thumbnailWidth: 100,
@@ -5424,10 +5388,20 @@ export default {
       formDatas: {},
       replyBox: false,
       chatreplydata: {},
+      groupreplyBox: false,
+      groupchatreplydata: {},
+      groupformDatas: {},
       userdec: {},
       isLoading: false,
       fullPage: true,
       isSeen: false,
+      isActive:false,
+      ischatemojiActive:false,
+      multiplemembers:[],
+      havegroup:false,
+      groupName:'',
+      addgroupData:{}
+
     }
 
   },
@@ -5451,25 +5425,33 @@ export default {
 
     receivemsg(data) {
       //this.c_user._id == data.receiverId._id &&
+      const post = this.friendsdata.filter((obj) => {
+            return data.senderId._id === obj._id;
+          }).pop();
+          
+          console.log(post);
       if (this.c_user._id == data.receiverId._id && this.singlefriend._id == data.senderId._id) {
 
         this.friendchat.push(data);
         $('.chat-main .active .details h6').html(data.message);
         $(".messages").animate({ scrollTop: 6500 }, "fast");
+        
+          
+
         console.log(this.singlefriend.chatWithRefId + '==' + this.c_user._id);
         if (this.singlefriend.chatWithRefId == this.c_user._id) {
           this.isSeen = true;
+          console.log('seen');
         }
-        else {
-          console.log('unssssssssssssssssssssssssssssssssssse');
-          this.isSeen = false;
-          const post = this.friendsdata.filter((obj) => {
-            return this.singlefriend._id === obj._id;
-          }).pop();
-          post.usCount += 1;
-          console.log(post);
-        }
+        
       }
+      else if(post._id == data.senderId._id && data.senderId._id != this.c_user._id) {
+          console.log('unseendddddddddddddddddd');
+          this.isSeen = false;
+          post.usCount += 1;
+           //$('.chat-main .details h6').html(data.message);
+        }
+
     },
 
     receiverUserStatus(data) {
@@ -5492,13 +5474,14 @@ export default {
     },
 
     receiveid(data) {
-
+console.log(data._id);
       this.$set(this.friendchat[this.friendchat.length - 1], '_id', data._id);
-      console.log(this.friendchat[this.friendchat.length - 1]);
+     // console.log(this.friendchat[this.friendchat.length - 1]);
     },
 
     lastchatobj_receive(data) {
       console.log(data);
+
       if (data.isSeen == 1) {
         this.isSeen = true;
       } else {
@@ -5509,6 +5492,12 @@ export default {
     //////////////////////END CHAT SECTION////////////////////////
 
     ///////////////////////GROUP SECTION/////////////////////////
+
+
+ receiveGroups(data) {
+
+      this.groups.push(data);
+    },
 
     groupreceiveid(data) {
       console.log(data);
@@ -5529,7 +5518,14 @@ export default {
       this.$set(this.groupchatdata[this.groupchatdata.length - 1], '_id', data._id);
       console.log(this.groupchatdata[this.groupchatdata.length - 1]);
     },
+     receiveupdateGroupchatmsg(updatedata) {
+      const data = updatedata;
+      const post = this.groupchatdata.filter((obj) => {
+        return updatedata.chatid === obj._id;
+      }).pop();
+      post.message = data.message;
 
+    },
     //////////////////////////END GROUP SEECTION ///////////////
 
     reciverdeletemsg(data) {
@@ -5538,10 +5534,14 @@ export default {
     },
 
     starttyping(data) {
-
-      if (data._id == this.c_user._id) {
+const post = this.friendsdata.filter((obj) => {
+            return this.singlefriend._id === obj._id;
+          }).pop();
+          
+         // console.log(post);
+      if (post._id == this.singlefriend._id && this.singlefriend.chatWithRefId == this.c_user._id) {
         this.typing = true;
-        console.log(data);
+       // console.log(post);
       }
 
     },
@@ -5573,6 +5573,10 @@ changestatuslogin(data) {
   computed: {
     orderedUsers: function() {
       return _.orderBy(this.friendsdata, 'updatedByMsg', 'desc')
+    },
+
+    orderedGroups: function() {
+      return _.orderBy(this.groups, 'createdAt', 'desc')
     }
   },
 
@@ -5585,6 +5589,16 @@ changestatuslogin(data) {
       } else {
         this.not_working = true;
       }
+    },
+    groupName(){
+
+  if (this.groupName.length > 0) {
+          this.havegroup = false;
+          $('#groupbtn').removeClass('disabled');
+        } else {
+        this.havegroup = true;
+      }
+
     },
 
 
@@ -5603,6 +5617,35 @@ changestatuslogin(data) {
 
   methods: {
 
+selectEmoji(emoji) {
+     // console.log(emoji.data)
+      //this.emoj.push(emoji.data);
+      this.groupmessage += emoji.data;
+      console.log(this.groupmessage);
+      
+        this.not_working = false;
+        $('#send-groupmsg').removeClass('disabled').attr("disabled", "");
+      
+    },
+
+    selectchatEmoji(emoji) {
+     // console.log(emoji.data)
+      //this.emoj.push(emoji.data);
+      this.message += emoji.data;
+      console.log(this.message);
+      
+        $('#send-msg').removeClass('disabled').attr("disabled", false);
+      
+    },
+
+    showGroupemoji(){
+       this.isActive = !this.isActive;
+    },
+
+    showChatemoji(){
+       this.ischatemojiActive = !this.ischatemojiActive;
+    },
+
 
     logout: function() {
 
@@ -5619,9 +5662,9 @@ changestatuslogin(data) {
 
     onCopy: function(e) {
 
-      this.$toasted.success('copied text : <h4> ' + e.text + '</h4>', {
+      this.$toasted.success('copied to clipboard', {
         theme: "toasted-primary",
-        position: "top-right",
+        position: "bottom-center",
         duration: 5000
       })
     },
@@ -5715,8 +5758,8 @@ changestatuslogin(data) {
             // this.$set(this.singlefriend,'chatWithRefId',this.c_user._id);
             $('.init').removeClass("active");
             $('#friend' + friend._id).addClass("active");
-            $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-
+            //$(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
+              this.friendchat ={};
             axios.get('/getChat/' + this.c_user._id + '/' + friend._id + '/50')
               .then(responce => {
                 this.friendchat = responce.data;
@@ -5743,7 +5786,7 @@ changestatuslogin(data) {
     },
 
     chat: function(e) {
-
+      this.ischatemojiActive=false;
       if (this.editChatid) {
 
         this.msgObj = {
@@ -5851,20 +5894,27 @@ changestatuslogin(data) {
           message: this.message,
           createdAt: new Date().toISOString(),
         };
-        // this.friendchat.push(this.msgObj);
-        if (this.singlefriend.chatWithRefId == this.c_user._id) {
-          // alert('dasdasdas');
-          this.$set(this.msgObj, 'isSeen', 1);
-        }
 
-        console.log(this.msgObj);
-        this.isSeen = false;
-        this.friendchat.push(this.msgObj);
-        this.$socket.emit('sendmsg', this.msgObj)
-        const post = this.friendsdata.filter((obj) => {
+         if (this.singlefriend.chatWithRefId == this.c_user._id) {
+           this.$set(this.msgObj, 'isSeen', 1);
+          this.isSeen = true;
+          console.log('seenddddddddd');
+            const post = this.friendsdata.filter((obj) => {
           return this.singlefriend._id === obj._id;
         }).pop();
         post.usCount = 0;
+        }
+        else {
+          console.log('unseen');
+          this.isSeen = false;
+         
+        }
+       
+        //console.log(this.msgObj);
+      //  this.isSeen = false;
+        this.friendchat.push(this.msgObj);
+        this.$socket.emit('sendmsg', this.msgObj)
+      
         axios.post('/chat', {
           msgData: this.msgObj,
           selectedUserData: this.singlefriend._id
@@ -5921,6 +5971,7 @@ changestatuslogin(data) {
       formData.append('senderId', this.c_user._id);
       formData.append('senderName', this.c_user.name);
       formData.append('friendId', this.singlefriend._id);
+      formData.append('isGroup', 0);
 
 
     },
@@ -5980,6 +6031,7 @@ changestatuslogin(data) {
       // this.$socket.emit('sendmsg', response.data )
       this.$refs.myVueDropzone.removeFile(file);
       $("#dropzone").css("display", "none");
+      $("#groupdropzone").css("display", "none");
     },
 
     uploadfile(event) {
@@ -5991,6 +6043,7 @@ changestatuslogin(data) {
       formDatas.append('senderId', this.c_user._id);
       formDatas.append('senderName', this.c_user.name);
       formDatas.append('friendId', this.singlefriend._id);
+      formDatas.append('isGroup', 0);
       console.log(formDatas);
       let config = {
         header: {
@@ -6108,8 +6161,15 @@ changestatuslogin(data) {
   ///////////////////////////////////////  START GROUP SECTION //////////////////////////////////////
     getgroups() {
       axios.get('/getCreatedGroups/' + this.c_user._id + '/5d4c07fb030f5d0600bf5c03')
-        .then((responce) => this.groups = responce.data)
-        .catch((error) => console.log(error));
+        .then(responce => {
+
+          this.groups = responce.data;
+          console.log(responce.data);
+          
+          }, function(err) {
+          console.log('err', err);
+          alert('error');
+        });
       $('#group_chat').addClass("active");
       $('.message-input').css("height", "96px");
       this.replyBox = false;
@@ -6118,6 +6178,8 @@ changestatuslogin(data) {
     startgroupchat(group) {
           this.singlegroup = group;
           console.log(group._id);
+          this.groupchatreplydata="";
+          this.editgroupChatid="";
           $('#group_chat').removeClass("active");
           //$('#friend'+friend._id).addClass("active");
           // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
@@ -6134,7 +6196,70 @@ changestatuslogin(data) {
     },
 
     groupchat: function(e) {
+      this.isActive=false;
+       if (this.editgroupChatid) {
 
+        this.msgObj = {
+
+          message: this.groupmessage,
+          chatid: this.editgroupChatid
+
+        };
+        console.log(this.msgObj);
+
+       this.$socket.emit('updateGroupchatmsg', this.msgObj)
+
+        axios.post('/updateChat/' + this.editgroupChatid, {
+          msgData: this.msgObj
+        }).then(response => {
+
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+
+        this.groupmessage = '';
+        this.editgroupChatid = '';
+        $('#send-msg').addClass('disabled').attr("disabled", "disabled");
+      }
+
+    else if (this.groupchatreplydata) {
+
+ this.groupmsgObj = {
+
+          commentId: { _id: this.groupchatreplydata._id, message: this.groupchatreplydata.message },
+          messageType: 0,
+          senderId: { _id: this.c_user._id, name: this.c_user.name },
+          senderName: this.c_user.name,
+          message: this.groupmessage,
+          groupId: this.singlegroup._id,
+          createdAt: new Date().toISOString(),
+          chatType: 1,
+          isGroup: 1,
+        };
+
+            this.$socket.emit('sendgroupmsg', this.groupmsgObj);
+
+          axios.post('/groupChat', this.groupmsgObj).then(response => {
+
+            console.log(response.data);
+            this.$socket.emit('groupsendid', response.data)
+         $('.message-input').css("height", "96px");
+          this.groupreplyBox = false;
+          this.groupchatreplydata='';
+            $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+
+          }, function(err) {
+            console.log('err', err);
+            alert('error');
+          })
+          $(".messages").animate({ scrollTop: 6000 }, "fast");
+          this.groupmessage = '';
+          
+          
+    }
+
+     else{
       this.groupmsgObj = {
         chatType: 0,
         isGroup: 1,
@@ -6143,7 +6268,7 @@ changestatuslogin(data) {
         message: this.groupmessage,
         groupId: this.singlegroup._id
       };
-
+      console.log(this.groupmsgObj);
       this.$socket.emit('sendgroupmsg', this.groupmsgObj);
 
       axios.post('/groupChat', this.groupmsgObj).then(function(response) {
@@ -6159,7 +6284,265 @@ changestatuslogin(data) {
       })
       $(".messages").animate({ scrollTop: 6000 }, "fast");
       this.groupmessage = '';
+      }
     },
+
+    
+    editgroupchat(id, message) {
+     
+      this.groupmessage = message;
+      this.editgroupChatid = id;
+
+      this.$nextTick(function() {
+        this.$refs.groupafterClick.focus();
+      });
+      this.onEditgroupclear = true;
+      this.ongroupChat = false;
+
+    },
+
+    cleargroupchat() {
+      this.onEditgroupclear = false;
+      this.ongroupChat = true;
+      this.groupmessage = '';
+      this.editgroupChatid = '';
+    },
+
+    groupremovecross() {
+
+      this.onEditgroupclear = false;
+      this.ongroupChat = true;
+      $('#send-msg').addClass('disabled').attr("disabled", "disabled")
+    },
+
+    groupmsgdelete(id) {
+      this.$socket.emit('senderdeletemsg', id);
+
+      $('#groupsender' + id).html('message deleted');
+      console.log(id);
+      axios.get('/deleteMsg/' + id + '/0')
+        .then((responce) => console.log(responce))
+        .catch((error) => console.log(error));
+
+    },
+     groupquote(chatdata) {
+
+      this.groupchatreplydata = chatdata;
+      $('.message-input').css("height", "140px");
+      this.groupreplyBox = true;
+      this.$nextTick(function() {
+        this.$refs.groupafterClick.focus();
+      });
+    },
+
+     closegroupReplybox() {
+      $('.message-input').css("height", "96px");
+      this.groupreplyBox = false;
+    },
+
+     draggroupfileupload(file, xhr, formData) {
+       console.log('gggggggggggggggggggggggggggggggggggggg');
+      console.log(this.singlegroup);
+      formData.append('senderId', this.c_user._id);
+      formData.append('senderName', this.c_user.name);
+      formData.append('groupId', this.singlegroup._id);
+      formData.append('isGroup', 1);
+
+
+    },
+
+    groupComplete(file, response) {
+      console.log(file);
+      console.log(response.data);
+
+      this.groupmsgObj = {
+        _id: response.data._id,
+        chatType: 0,
+        isGroup: 1,
+        messageType: 1,
+        senderId: { _id: this.c_user._id, name: this.c_user.name },
+        senderName: this.c_user.name,
+        message: response.file[0].originalname,
+        groupId: this.singlegroup._id, 
+        createdAt: new Date().toISOString(),
+      };
+      // if (this.singlefriend.chatWithRefId == this.c_user._id) {
+      //   // alert('dasdasdas');
+      //   this.$set(this.groupmsgObj, 'isSeen', 1);
+      // }
+
+      // console.log(this.groupmsgObj);
+      // this.isSeen = false;
+      // this.groupchatdata.push(this.groupmsgObj);
+      this.$socket.emit('sendgroupmsg', this.groupmsgObj);
+      // this.userdec = this.groupchatdata.filter((obj) => {
+      //   return this.singlefriend._id === obj._id;
+      // }).pop();
+
+      // this.userdec.updatedByMsg = new Date().toISOString();
+
+
+      // setTimeout(() => {
+      //   const id = $(".active.init").attr("id");
+
+      //   if (id != 'friend' + this.singlefriend._id) {
+      //     $('.init').removeClass("active");
+      //     setTimeout(() => {
+
+      //       $('#friend' + this.singlefriend._id).addClass("active");
+      //       setTimeout(() => {
+
+      //         $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+      //       }, 200);
+
+      //     }, 1);
+
+
+      //   }
+      // }, 0);
+      // this.$socket.emit('sendmsg', response.data )
+      this.$refs.mygroupVueDropzone.removeFile(file);
+      $("#groupdropzone").css("display", "none");
+      $("#dropzone").css("display", "none");
+    },
+
+ groupuploadfile(event) {
+      console.log(event.target.value)
+      let groupfilesdata = this.$refs.groupmyFiles.files[0];
+
+      let groupformDatas = new FormData();
+      groupformDatas.append('file', groupfilesdata);
+      groupformDatas.append('senderId', this.c_user._id);
+      groupformDatas.append('senderName', this.c_user.name);
+      groupformDatas.append('groupId', this.singlegroup._id);
+      groupformDatas.append('isGroup', 1);
+      console.log(groupformDatas);
+      let config = {
+        header: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      axios.post('/chatFilesShare', groupformDatas, config).then((response) => {
+        console.log(response.data);
+       this.groupmsgObj = {
+        _id: response.data.data._id,
+        chatType: 0,
+        isGroup: 1,
+        messageType: 1,
+        senderId: { _id: this.c_user._id, name: this.c_user.name },
+        senderName: this.c_user.name,
+        message: response.data.file[0].originalname,
+        groupId: this.singlegroup._id, 
+        createdAt: new Date().toISOString(),
+      };
+        // if (this.singlefriend.chatWithRefId == this.c_user._id) {
+        //   // alert('dasdasdas');
+        //   this.$set(this.msgObj, 'isSeen', 1);
+        // }
+
+        // console.log(this.msgObj);
+        // this.isSeen = false;
+        // this.friendchat.push(this.msgObj);
+       this.$socket.emit('sendgroupmsg', this.groupmsgObj);
+        // this.userdec = this.friendsdata.filter((obj) => {
+        //   return this.singlefriend._id === obj._id;
+        // }).pop();
+        // this.userdec.updatedByMsg = new Date().toISOString();
+
+
+        // setTimeout(() => {
+        //   const id = $(".active.init").attr("id");
+
+        //   if (id != 'friend' + this.singlefriend._id) {
+        //     $('.init').removeClass("active");
+        //     setTimeout(() => {
+
+        //       $('#friend' + this.singlefriend._id).addClass("active");
+        //       setTimeout(() => {
+
+        //         $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+        //       }, 200);
+
+        //     }, 1);
+
+
+        //   }
+        // }, 0);
+      }, function(err) {
+        console.log('err', err);
+        alert('error');
+      })
+    },
+
+/////////////////////////////////////// CREATE GROUP ////////////////////////////////////////////
+
+addGroupmemners(id){
+  console.log(id);
+  this.multiplemembers.push(id);
+  $('#member'+id).hide();
+  $('#memberRm'+id).show();
+  console.log(this.multiplemembers);
+},
+
+removeGroupmemners(id,index){
+  console.log(index);
+  if(this.multiplemembers[index] === id) { 
+     
+        this.multiplemembers.splice(index, 1)
+      } else {
+        let found = this.multiplemembers.indexOf(id)
+        this.multiplemembers.splice(found, 1)
+      }
+  $('#memberRm'+id).hide();
+   $('#member'+id).show();
+   console.log(this.multiplemembers);
+},
+
+createGroup(){
+  
+  if(this.multiplemembers){
+
+this.multiplemembers.push(this.c_user._id);
+      this.addgroupData = {
+        name: this.groupName, 
+        members: this.multiplemembers, 
+        creatorUserId: this.c_user._id,
+        projectId: '5d4c07fb030f5d0600bf5c03', 
+        status: 1
+      };
+       axios.post('/createUserGroup', {
+          groupData: this.addgroupData,
+          userId:this.c_user._id
+        }).then(response => {
+          this.$socket.emit('getGroups', response.data);
+          console.log(response);
+          this.$toasted.success('Group Create Successfully', {
+              theme: "toasted-primary",
+              position: "top-center",
+              duration: 5000
+            })
+           setTimeout(() => {
+
+            $('#exampleModalCenter').modal('hide')
+           $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
+             
+              }, 5000);
+
+              this.groupName='';
+              this.multiplemembers=[];
+              $('.hideRemove').hide();
+              $('.showAdd').show();
+
+
+           
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+  }
+
+
+},
 
 ///////////////////////////////////////  END GROUP SECTION //////////////////////////////////////
 
@@ -6321,7 +6704,29 @@ changestatuslogin(data) {
       showDropZone();
     });
 
+////////////////Group chat dropzone //////////////////////
 
+  var groupdropZone = document.getElementById('groupdropzone');
+
+    function showgroupDropZone() {
+      groupdropZone.style.display = "block";
+
+    }
+    function hideDropZone() {
+      // dropZone.style.display = "none";
+    }
+
+    function allowDrag(e) {
+      if (true) {  // Test that the item being dragged is a valid one
+        e.dataTransfer.dropEffect = 'copy';
+        e.preventDefault();
+      }
+    }
+
+    // 1
+    window.addEventListener('dragenter', function(e) {
+      showgroupDropZone();
+    });
 
     $(".bg-top").parent().addClass('b-top');
     $(".bg-bottom").parent().addClass('b-bottom');
@@ -6895,7 +7300,37 @@ a {
   border-top-left-radius: 13px;
   border-bottom: 2px solid #9c979747;
 }
-
+.activeemoji{
+z-index: 9999;
+    position: absolute;
+    bottom: 0px;
+}
+.activeChatemoji{
+z-index: 9999;
+    position: absolute;
+    bottom: 0px;
+}
+.default-form .showmembers {
+    -webkit-appearance: none;
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 12px 20px;
+    text-transform: capitalize;
+    font-size: 15px;
+    line-height: 1;
+    background-color: transparent;
+    height: 290px;
+    border-radius: 15px;
+    color: #647589;
+    border: none;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAApklEQ…94lRwOjAlwmbMEVRNr2FNyJyUExZp+ZRXMKADDiTMhwAv5Mx4HKASKogAAAABJRU5ErkJggg==) #eff7fe no-repeat scroll 94% center;
+    margin-bottom: 30px;
+    overflow-x: hidden;
+}
+.groupmembers{
+  padding-top: 12px;
+    padding-bottom: 12px;
+}
 @media screen and (max-width: 480px) {
   .replybox {
     width: 57%;

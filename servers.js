@@ -59,15 +59,25 @@ socket.on('updateUserSelection', (data) => {
     });
 
 //////////group chat /////////
+socket.on('getGroups', (data) => {
+		console.log(data);
+		io.emit('receiveGroups',data);
+	});
+
  socket.on('sendgroupmsg', (data) => {
 		console.log(data);
 		io.emit('receivegroupmsg',data);
 	});
 
-//////// send and receive groupchatmsgid //////////   
+  
       socket.on('groupsendid', (data) => {
 		console.log(data);
 		io.emit('groupreceiveid',data);
+	});
+
+	   socket.on('updateGroupchatmsg', (data) => {
+		console.log(data);
+		io.emit('receiveupdateGroupchatmsg',data);
 	});
 
  //////// LOGIN AND LOUT ////////// 
