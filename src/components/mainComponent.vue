@@ -2040,11 +2040,11 @@
                           <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'groupsender'+g_chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                           <br>
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                            <img :src="'https://192.168.100.27:22000/images/chatImages/'+g_chat.message">
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                            <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
                           </a>
 
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                         </li>
                         <!--    <li class="msg-setting-main">
                               <h5> it should from elite auther &#128519;</h5>
@@ -2081,11 +2081,11 @@
                           <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'sender'+g_chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                           <br>
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                            <img :src="'https://192.168.100.27:22000/images/chatImages/'+g_chat.message">
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                            <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
                           </a>
 
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                         </li>
                       
                       </ul>
@@ -2515,11 +2515,11 @@
                           <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                           <br>
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                            <img :src="'https://192.168.100.27:22000/images/chatImages/'+chat.message">
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                            <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
                           </a>
 
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
 
                         </li>
                         <!-- <li class="msg-setting-main">
@@ -2558,10 +2558,10 @@
                           <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                           <br>
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                            <img :src="'https://192.168.100.27:22000/images/chatImages/'+chat.message">
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                            <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
                           </a>
-                          <a :href="'https://192.168.100.27:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                          <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                           <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                             <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                               <i class="ti-more-alt"></i>
@@ -5441,7 +5441,7 @@ data() {
     onEditgroupclear: false,
     ongroupChat: true,
     dropzoneOptions: {
-      url: 'https://192.168.100.27:22000/chatFilesShare',
+      url: 'https://peekvideochat.com:22000/chatFilesShare',
       thumbnailWidth: 100,
       thumbnailHeight: 100,
       maxFiles: 10,
