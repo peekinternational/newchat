@@ -80,6 +80,21 @@ socket.on('getGroups', (data) => {
 		io.emit('receiveupdateGroupchatmsg',data);
 	});
 
+	  socket.on('updateGroupTitle', (data) => {
+		console.log(data);
+		io.emit('receiveGroupTitle',data);
+	});
+
+	 socket.on('deleteGroup', (data) => {
+		console.log(data);
+		io.emit('receivedeleteGroup',data);
+	});
+
+	socket.on('updateMembers', (data) => {
+		console.log(data);
+		io.emit('receiveupdateMembers',data);
+	});
+
  //////// LOGIN AND LOUT ////////// 
 	
  socket.on('login', (data) => {
