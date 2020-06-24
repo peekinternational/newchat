@@ -1891,7 +1891,7 @@
 
         <!--  Groupchat -->
         <div class="chat-content tabto" id="startgroupchat">
-          <div class="messages custom-scroll group_chat_open">
+          <div id="group_chat_open" class="messages custom-scroll group_chat_open">
             <div class="contact-details">
               <div class="row">
                 <div class="col">
@@ -2040,11 +2040,11 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'groupsender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                           </li>
                           <!--    <li class="msg-setting-main">
                                 <h5> it should from elite auther &#128519;</h5>
@@ -2081,11 +2081,11 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'sender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                          
                          <div class="msg-dropdown-main" v-if="g_chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+g_chat._id" @click="msg_setting(g_chat._id)">
@@ -2538,11 +2538,11 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
 
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -2581,10 +2581,10 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+chat.message">
                             </a>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                                 <i class="ti-more-alt"></i>
@@ -2693,213 +2693,7 @@
               <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
                 <x-icon size="1.5x" class="custom-class"></x-icon>
               </button>
-              <!--<div class="emojis-contain" id="emojiscontain">
-                <div class="emojis-sub-contain custom-scroll">
-                  <ul>
-                    <li>&#128512;</li>
-                    <li>&#128513;</li>
-                    <li>&#128514;</li>
-                    <li>&#128515;</li>
-                    <li>&#128516;</li>
-                    <li>&#128517;</li>
-                    <li>&#128518;</li>
-                    <li>&#128519;</li>
-                    <li>&#128520;</li>
-                    <li>&#128521;</li>
-                    <li>&#128522;</li>
-                    <li>&#128523;</li>
-                    <li>&#128524;</li>
-                    <li>&#128525;</li>
-                    <li>&#128526;</li>
-                    <li>&#128527;</li>
-                    <li>&#128528;</li>
-                    <li>&#128529;</li>
-                    <li>&#128530;</li>
-                    <li>&#128531;</li>
-                    <li>&#128532;</li>
-                    <li>&#128533;</li>
-                    <li>&#128534;</li>
-                    <li>&#128535;</li>
-                    <li>&#128536;</li>
-                    <li>&#128537;</li>
-                    <li>&#128538;</li>
-                    <li>&#128539;</li>
-                    <li>&#128540;</li>
-                    <li>&#128541;</li>
-                    <li>&#128542;</li>
-                    <li>&#128543;</li>
-                    <li>&#128544;</li>
-                    <li>&#128545;</li>
-                    <li>&#128546;</li>
-                    <li>&#128547;</li>
-                    <li>&#128549;</li>
-                    <li>&#128550;</li>
-                    <li>&#128551;</li>
-                    <li>&#128552;</li>
-                    <li>&#128553;</li>
-                    <li>&#128554;</li>
-                    <li>&#128555;</li>
-                    <li>&#128557;</li>
-                    <li>&#128558;</li>
-                    <li>&#128559;</li>
-                    <li>&#128560;</li>
-                    <li>&#128561;</li>
-                    <li>&#128562;</li>
-                    <li>&#128563;</li>
-                    <li>&#128564;</li>
-                    <li>&#128565;</li>
-                    <li>&#128566;</li>
-                    <li>&#128567;</li>
-                    <li>&#128568;</li>
-                    <li>&#128569;</li>
-                    <li>&#128570;</li>
-                    <li>&#128571;</li>
-                    <li>&#128572;</li>
-                    <li>&#128573;</li>
-                    <li>&#128574;</li>
-                    <li>&#128576; </li>
-                    <li>&#128579; </li>
-                  </ul>
-                </div>
-              </div>-->
-              <!--<div class="sticker-contain">
-                <div class="sticker-sub-contain custom-scroll">
-                  <ul>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/1.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/2.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/3.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/3.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/4.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/5.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/6.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/7.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/8.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/9.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/10.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/11.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/12.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/13.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/14.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/15.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/16.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/17.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/18.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/19.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/20.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/21.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/22.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/23.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/24.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/25.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/26.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/27.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/28.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/29.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/30.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/31.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/32.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/33.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/34.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/35.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/36.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/37.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/38.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/39.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/40.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/41.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/42.gif" alt="sticker" /></a>
-                    </li>
-                    <li>
-                      <a href="#"><img class="img-fluid" src="../assets/images/sticker/43.gif" alt="sticker" /></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>-->
+              
             </div>
           </div>
         </div>
@@ -5466,7 +5260,7 @@ export default {
       onEditgroupclear: false,
       ongroupChat: true,
       dropzoneOptions: {
-        url: 'https://peekvideochat.com:22000/chatFilesShare',
+        url: 'https://192.168.100.20:22000/chatFilesShare',
         thumbnailWidth: 100,
         thumbnailHeight: 100,
         maxFiles: 10,
@@ -5528,7 +5322,7 @@ export default {
             return data.msgData.senderId._id === obj._id;
           }).pop();
           
-           console.log(data.msgData.receiverId._id +'=='+ data.selectFrienddata);
+          // console.log(data.msgData.receiverId._id +'=='+ data.selectFrienddata);
       if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
 
         this.friendchat.push(data.msgData);
@@ -5545,14 +5339,14 @@ export default {
         }
         
       }
-      else if(post._id == data.selectFrienddata){
-        console.log(post._id +'=='+ data.selectFrienddata._id);
+      else if(this.c_user._id == data.selectFrienddata){
+        
                   const fdata = this.friendsdata.filter((obj) => {
                       return data.userId === obj._id;
                     }).pop();
-
+               
                   this.isSeen = false;
-                fdata.usCount += 1;
+                  fdata.usCount += 1;
                   
                 }
      
@@ -5579,9 +5373,11 @@ export default {
     },
 
     receiveid(data) {
-
-      this.$set(this.friendchat[this.friendchat.length - 1], '_id', data._id);
-     // console.log(this.friendchat[this.friendchat.length - 1]);
+    if(this.singlefriend.chatWithRefId == this.c_user._id){
+    this.$set(this.friendchat[this.friendchat.length - 1], '_id', data._id);
+        // console.log(this.friendchat[this.friendchat.length - 1]);
+    }
+      
     },
 
     lastchatobj_receive(data) {
@@ -5602,6 +5398,7 @@ export default {
  receiveGroups(data) {
 
       this.groups.push(data);
+      
     },
 
     groupreceiveid(data) {
@@ -5615,7 +5412,8 @@ export default {
     receivegroupmsg(data) {
       console.log(data);
       this.groupchatdata.push(data);
-      $(".messages").animate({ scrollTop: 6000 }, "fast");
+      var container = this.$el.querySelector("#group_chat_open");
+      $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
     },
 
     groupreceiveid(data) {
@@ -5898,7 +5696,7 @@ selectEmoji(emoji) {
 
 
     startchat(friend) {
-      var container = this.$el.querySelector("#chating");
+            var container = this.$el.querySelector("#chating");
             $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
             this.isLoading = true;
             this.message = '';
@@ -5932,8 +5730,8 @@ selectEmoji(emoji) {
                 this.friendchat = responce.data;
                 console.log(this.friendchat);
                 this.$socket.emit('lastchatobj_send', this.friendchat[this.friendchat.length - 1]);
-         var container = this.$el.querySelector("#chating");
-            $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
+                var container = this.$el.querySelector("#chating");
+                $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
                 if (this.friendchat[this.friendchat.length - 1].isSeen == 1) {
                   this.isSeen = true;
                 } else {
@@ -5948,6 +5746,8 @@ selectEmoji(emoji) {
           $('#mainchatpage').remove();
 
           $('#group_chat').remove();
+          var container = this.$el.querySelector("#chating");
+          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
           $('#startchat').addClass("active");
 
           $('.chitchat-container').toggleClass("mobile-menu");
@@ -6092,7 +5892,7 @@ selectEmoji(emoji) {
               userId: this.c_user._id,
               msgData:this.msgObj
             })
-      
+       this.$socket.emit('stopTyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
         axios.post('/chat', {
           msgData: this.msgObj,
           selectedUserData: this.singlefriend._id
@@ -6137,6 +5937,7 @@ selectEmoji(emoji) {
 
        var container = this.$el.querySelector("#chating");
          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+          
         this.message = '';
         $('#send-msg').addClass('disabled').attr("disabled", "disabled");
 
@@ -6383,6 +6184,8 @@ if(this.onEditclear == true){
           this.shownewmembers=false;
           this.showmembers=true;
           $('#group_chat').removeClass("active");
+          var container = this.$el.querySelector("#group_chat_open");
+         $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
           //$('#friend'+friend._id).addClass("active");
           // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
           axios.get('/getGroupChat/' + group._id + '/50')
@@ -6392,7 +6195,8 @@ if(this.onEditclear == true){
           $('#startgroupchat').addClass("active");
           $('#mainchatpage').remove();
           $('.group_chat_open').addClass("active");
-          $(".messages").animate({ scrollTop: 6000 }, "fast");
+          var container = this.$el.querySelector("#group_chat_open");
+         $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
 
           $('.chitchat-container').toggleClass("mobile-menu");
     },
@@ -6449,13 +6253,14 @@ if(this.onEditclear == true){
          $('.message-input').css("height", "96px");
           this.groupreplyBox = false;
           this.groupchatreplydata='';
-            $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+            //$('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
 
           }, function(err) {
             console.log('err', err);
             alert('error');
           })
-          $(".messages").animate({ scrollTop: 6000 }, "fast");
+          var container = this.$el.querySelector("#group_chat_open");
+         $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
           this.groupmessage = '';
           
           
@@ -6478,13 +6283,14 @@ if(this.onEditclear == true){
         console.log(response.data);
         this.$socket.emit('groupsendid', response.data)
 
-        $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+      //  $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
 
       }, function(err) {
         console.log('err', err);
         alert('error');
       })
-      $(".messages").animate({ scrollTop: 6000 }, "fast");
+      var container = this.$el.querySelector("#group_chat_open");
+      $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
       this.groupmessage = '';
       }
     },
@@ -6543,7 +6349,7 @@ if(this.onEditclear == true){
     },
 
      draggroupfileupload(file, xhr, formData) {
-       console.log('gggggggggggggggggggggggggggggggggggggg');
+    //   console.log('gggggggggggggggggggggggggggggggggggggg');
       console.log(this.singlegroup);
       formData.append('senderId', this.c_user._id);
       formData.append('senderName', this.c_user.name);
@@ -6554,8 +6360,8 @@ if(this.onEditclear == true){
     },
 
     groupComplete(file, response) {
-      console.log(file);
-      console.log(response.data);
+     // console.log(file);
+      //console.log(response.data);
 
       this.groupmsgObj = {
         _id: response.data._id,
@@ -6577,6 +6383,8 @@ if(this.onEditclear == true){
       // this.isSeen = false;
       // this.groupchatdata.push(this.groupmsgObj);
       this.$socket.emit('sendgroupmsg', this.groupmsgObj);
+      var container = this.$el.querySelector("#group_chat_open");
+      $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
       // this.userdec = this.groupchatdata.filter((obj) => {
       //   return this.singlefriend._id === obj._id;
       // }).pop();
@@ -6609,7 +6417,7 @@ if(this.onEditclear == true){
     },
 
  groupuploadfile(event) {
-      console.log(event.target.value)
+     // console.log(event.target.value)
       let groupfilesdata = this.$refs.groupmyFiles.files[0];
 
       let groupformDatas = new FormData();
@@ -6625,7 +6433,7 @@ if(this.onEditclear == true){
         }
       }
       axios.post('/chatFilesShare', groupformDatas, config).then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
        this.groupmsgObj = {
         _id: response.data.data._id,
         chatType: 0,
@@ -6646,6 +6454,8 @@ if(this.onEditclear == true){
         // this.isSeen = false;
         // this.friendchat.push(this.msgObj);
        this.$socket.emit('sendgroupmsg', this.groupmsgObj);
+       var container = this.$el.querySelector("#group_chat_open");
+       $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
         // this.userdec = this.friendsdata.filter((obj) => {
         //   return this.singlefriend._id === obj._id;
         // }).pop();
@@ -6933,8 +6743,8 @@ if(this.multipleneewmembers){
         
               }
           }
-console.log(this.singlegroup);
-this.$socket.emit('updateMembers', this.singlegroup);
+         console.log(this.singlegroup);
+         this.$socket.emit('updateMembers', this.singlegroup);
           this.multipleneewmembers=[];
           console.log(this.nonGroupUsers);
           this.$toasted.success('New Members Add Successfully', {
@@ -6960,6 +6770,8 @@ this.$socket.emit('updateMembers', this.singlegroup);
           console.log('err', err);
           alert('error');
         })
+        $('.hideRemove').hide();
+        $('.showAdd').show();
   }
 
 
