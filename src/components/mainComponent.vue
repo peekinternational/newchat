@@ -2040,11 +2040,11 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'groupsender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                           </li>
                           <!--    <li class="msg-setting-main">
                                 <h5> it should from elite auther &#128519;</h5>
@@ -2081,11 +2081,34 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'sender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                         
+                         <div class="msg-dropdown-main" v-if="g_chat.isDeleted != 1">
+                              <div class="msg-setting" :id="'msg-setting'+g_chat._id" @click="msg_setting(g_chat._id)">
+                                <i class="ti-more-alt"></i>
+                              </div>
+
+                              <div class="msg-dropdown" :id="'msg-dropdown'+g_chat._id" style="z-index: 99999;">
+                                <ul>
+                                  
+                                  <li>
+                                    <a href="#" @click="groupquote(g_chat)">
+                                      <i class="fa fa-share"></i>Quote</a>
+                                  </li>
+
+                                  <li v-if="g_chat.messageType != 1 && g_chat.messageType != 2">
+                                    <a href="#" @click="copymsg(g_chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                      <i class="fa fa-clone"></i>copy</a>
+                                  </li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                  
+                                </ul>
+                              </div>
+                            </div>
                           </li>
                        
                         </ul>
@@ -2118,7 +2141,7 @@
                       <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.271,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.201,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
                       <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
                     </svg></a>-->
                   
@@ -2463,7 +2486,7 @@
               </div>
             </div>
             <!-------- Dropzone ------>
-            <vue-dropzone ref="myVueDropzone" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"></vue-dropzone>
+            <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions">
             <!-------- end -------->
             <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
 
@@ -2515,11 +2538,11 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
 
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -2558,10 +2581,10 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.20:22000/images/chatImages/'+chat.message">
                             </a>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.20:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                                 <i class="ti-more-alt"></i>
@@ -2608,6 +2631,7 @@
               </ul>
               <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendchat.length > 0" style="width: 20px;float:right" />
             </div>
+            </vue-dropzone>
             <span v-show="typing" class="">{{ singlefriend.name }} is typing ...</span>
 
           </div>
@@ -2632,7 +2656,7 @@
                       <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.271,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.201,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
                       <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
                     </svg></a>-->
               <div class="dot-btn dot-primary mr-3">
@@ -5400,6 +5424,7 @@ import 'tippy.js/dist/tippy.css';
 import moment from 'moment';
 import _ from 'lodash';
 import vueDropzone from 'vue2-dropzone';
+//import Dropzone from "dropzone";
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 import Loading from 'vue-loading-overlay';
 // Import stylesheet
@@ -5441,7 +5466,7 @@ export default {
       onEditgroupclear: false,
       ongroupChat: true,
       dropzoneOptions: {
-        url: 'https://peekvideochat.com:22000/chatFilesShare',
+        url: 'https://192.168.100.20:22000/chatFilesShare',
         thumbnailWidth: 100,
         thumbnailHeight: 100,
         maxFiles: 10,
@@ -5473,6 +5498,7 @@ export default {
       shownewmembers:false,
       nonGroupUsers:[],
       userid:'',
+      dragAndDropCapable: false,
 
     }
 
@@ -5529,12 +5555,7 @@ export default {
                 fdata.usCount += 1;
                   
                 }
-      // else if(post._id == data.msgData.senderId._id && data.msgData.senderId._id != this.c_user._id) {
-      //     console.log('unseendddddddddddddddddd');
-      //     this.isSeen = false;
-      //     post.usCount += 1;
-      //      //$('.chat-main .details h6').html(data.message);
-      //   }
+     
 
     },
 
@@ -5558,7 +5579,7 @@ export default {
     },
 
     receiveid(data) {
-console.log(data._id);
+
       this.$set(this.friendchat[this.friendchat.length - 1], '_id', data._id);
      // console.log(this.friendchat[this.friendchat.length - 1]);
     },
@@ -5634,12 +5655,16 @@ console.log(data._id);
                                 let memberIndex = this.groups.indexOf(this.groups[l].members[m]);
                                 this.groups[l].members.splice(memberIndex, 1);
 
-                                if (this.c_user._id != data.userId) $('#editGroupModal').hide();
-
+                                if (this.c_user._id != data.userId) 
+                                $('#showGroupsMembers').modal('hide')
+                                $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
+                                $('#startgroupchat').removeClass('active');
                                 // if user leaves group
                                 if (this.c_user._id == data.memberId) {
                                   console.log('c');
-                                    $('#editGroupModal').hide();
+                                    $('#showGroupsMembers').modal('hide')
+                                    $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
+                                    $('#startgroupchat').removeClass('active');
                                     let groupIndex = this.groups.indexOf(this.groups[l]);
                                     this.groups.splice(groupIndex, 1);
                                     break;
@@ -5917,7 +5942,7 @@ selectEmoji(emoji) {
         .catch((error) => console.log(error));
           setTimeout(() => {
             this.isLoading = false
-          }, 400)
+          }, 1000)
           $('#mainchatpage').remove();
 
           $('#group_chat').remove();
@@ -5981,15 +6006,15 @@ selectEmoji(emoji) {
               userId: this.c_user._id,
               msgData:this.msgObj
             })
-
+        $('.message-input').css("height", "96px");
+          this.replyBox = false;
+          this.chatreplydata = "";
         axios.post('/chat', {
           msgData: this.msgObj,
           selectedUserData: this.singlefriend._id
         }).then(response => {
           this.$socket.emit('sendid', response.data)
-          $('.message-input').css("height", "96px");
-          this.replyBox = false;
-          this.chatreplydata = "";
+          
           this.userdec = this.friendsdata.filter((obj) => {
             return this.singlefriend._id === obj._id;
           }).pop();
@@ -6156,7 +6181,11 @@ selectEmoji(emoji) {
       this.friendchat.push(this.msgObj);
       var container = this.$el.querySelector("#chating");
        $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-      this.$socket.emit('sendmsg', this.msgObj);
+      this.$socket.emit('sendmsg', {
+              selectFrienddata: this.singlefriend._id,
+              userId: this.c_user._id,
+              msgData:this.msgObj
+            })
       this.userdec = this.friendsdata.filter((obj) => {
         return this.singlefriend._id === obj._id;
       }).pop();
@@ -6230,7 +6259,11 @@ selectEmoji(emoji) {
         this.friendchat.push(this.msgObj);
         var container = this.$el.querySelector("#chating");
         $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-        this.$socket.emit('sendmsg', this.msgObj);
+        this.$socket.emit('sendmsg', {
+              selectFrienddata: this.singlefriend._id,
+              userId: this.c_user._id,
+              msgData:this.msgObj
+            })
         this.userdec = this.friendsdata.filter((obj) => {
           return this.singlefriend._id === obj._id;
         }).pop();
@@ -6438,7 +6471,7 @@ if(this.onEditclear == true){
       console.log(this.groupmsgObj);
       this.$socket.emit('sendgroupmsg', this.groupmsgObj);
 
-      axios.post('/groupChat', this.groupmsgObj).then(function(response) {
+      axios.post('/groupChat', this.groupmsgObj).then(response => {
 
         console.log(response.data);
         this.$socket.emit('groupsendid', response.data)
@@ -7049,8 +7082,7 @@ this.$socket.emit('updateMembers', this.singlegroup);
     msg_setting(id) {
       $('#msg-setting' + id).siblings('#msg-dropdown' + id).toggle();
     },
-
-
+   
 
   },
 
@@ -7062,55 +7094,28 @@ this.$socket.emit('updateMembers', this.singlegroup);
 
     this.getfriends();
     this.emptyChatWithId();
-     
-    /*=====================
- 02. Drag and drop
- ==========================*/
-
-    var dropZone = document.getElementById('dropzone');
-
-    function showDropZone() {
-      dropZone.style.display = "block";
-
-    }
-    function hideDropZone() {
-      // dropZone.style.display = "none";
-    }
-
-    function allowDrag(e) {
-      if (true) {  // Test that the item being dragged is a valid one
-        e.dataTransfer.dropEffect = 'copy';
-        e.preventDefault();
+ 
+    document.addEventListener('dragenter', function(e) {
+      console.log(e.target);
+      if(e.target.className == 'message-input' || e.target.className == 'wrap emojis-main' || e.target.className == 'setemoj' || e.target.className == ' messages custom-scroll active messageschat'){
+        $("#dropzone").css("display", "block");
       }
-    }
-
-    // 1
-    window.addEventListener('dragenter', function(e) {
-      showDropZone();
+      else{
+        $("#dropzone").css("display", "none");
+      }
+      
     });
 
 ////////////////Group chat dropzone //////////////////////
 
-  var groupdropZone = document.getElementById('groupdropzone');
-
-    function showgroupDropZone() {
-      groupdropZone.style.display = "block";
-
-    }
-    function hideDropZone() {
-      // dropZone.style.display = "none";
-    }
-
-    function allowDrag(e) {
-      if (true) {  // Test that the item being dragged is a valid one
-        e.dataTransfer.dropEffect = 'copy';
-        e.preventDefault();
-      }
-    }
-
     // 1
-    window.addEventListener('dragenter', function(e) {
-      showgroupDropZone();
+    document.addEventListener('dragenter', function(e) {
+      if(e.target.className == 'message-input' || e.target.className == 'wrap emojis-main' || e.target.className == 'setemoj' || e.target.className == 'messages custom-scroll group_chat_open active'){
+      $("#groupdropzone").css("display", "block");
+    }
+     else{
+        $("#groupdropzone").css("display", "none");
+      }
     });
 
     $(".bg-top").parent().addClass('b-top');
