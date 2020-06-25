@@ -6302,7 +6302,7 @@ removeGroupmemners(id,index){
 
 createGroup(){
   
-  if(this.multiplemembers){
+  if(this.multiplemembers && this.groupName){
 
 this.multiplemembers.push(this.c_user._id);
       this.addgroupData = {
