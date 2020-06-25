@@ -6342,7 +6342,13 @@ this.multiplemembers.push(this.c_user._id);
           alert('error');
         })
   }
-
+else{
+    this.$toasted.success('Enter Group Name', {
+              theme: "toasted-primary",
+              position: "top-center",
+              duration: 2000
+            })
+ }
 
 },
 
@@ -6357,7 +6363,7 @@ editGroup(){
 
   editGroupTitle(){
 
- 
+ if(this.singlegroup.name){
         console.log(this.msgObj);
 
        this.$socket.emit('updateGroupTitle',this.singlegroup);
@@ -6372,6 +6378,13 @@ editGroup(){
           console.log('err', err);
           alert('error');
         })
+ }else{
+    this.$toasted.success('Enter Group Name', {
+              theme: "toasted-primary",
+              position: "top-center",
+              duration: 2000
+            })
+ }
   },
 
   deleteGroup(){
