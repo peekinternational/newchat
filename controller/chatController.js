@@ -108,97 +108,55 @@ module.exports = function (io, saveUser) {
     });
   };
 
-  router.getUsers = function (req, res) {
-    function chatModelFunc(data) {
-     console.log(data);
-      for (let i = 0; i < data.length; i++) {
-       // if(data[i]) {
-          chatModel
-          .find({
-            senderId: data[i]._id,
-            receiverId: req.params.userId,
-            isSeen: 0
-          })
-          .countDocuments()
-          .exec(function (err, count) {
-            data[i]["usCount"] = count;
-            if (i == data.length - 1) res.json({ usersList: data });
-          });
-      //  }
-      }
-      if (data.length == 0) res.json({ usersList: data });
-    }
-
+  router.getUsers = async function (req, res) {
     if (req.params.allList == 0) {
-      var friendIds = [];
-      friendModel
-        .find({ userId: req.params.userId, status: 1 }, { friendId: true })
-        .populate({
-          path: "friendId",
-          populate: {
-            path: "projectId",
-            select: "_id, status",
-            match: {
-              status: 1
-            }
-          }
-        })
+      var friendIdData = await friendModel.find({
+        $or: [
+          { userId: req.params.userId },
+          { friendId: req.params.userId }
+        ]
+      })
+        .populate({ path: 'friendId', select: '_id status seenStatus pStatus onlineStatus name chatWithRefId email country phone user_image userId projectId updatedByMsg createdAt UpdatedAt', match: { status: 1 } })
+        .populate({ path: 'userId', select: '_id status seenStatus pStatus onlineStatus name chatWithRefId email country phone user_image userId projectId updatedByMsg createdAt UpdatedAt', match: { status: 1 } })
         .lean()
-        .exec(function (err, UserIdData) {
-          // now check the userId in friendId column and populate user data
-          friendModel
-            .find({ friendId: req.params.userId, status: 1 }, { userId: true })
-            .populate({
-              path: "userId",
-              populate: {
-                path: "projectId",
-                select: "_id, status",
-                match: {
-                  status: 1
-                }
-              }
-            })
-            .lean()
-            .exec(function (err, friendsIdData) {
-              friendsIdData.forEach(val => {
-                if (val.userId && val.userId.projectId)
-                  friendIds.push(val.userId);
-              });
-              UserIdData.forEach(val => {
-                if (val.friendId && val.friendId.projectId)
-                  friendIds.push(val.friendId);
-              });
+        .exec();
 
-              //-----------------------------------------------
-              userModel
-                .findOne(
-                  { _id: req.params.userId, isAdmin: { $ne: 1 }, status: 1 },
-                  {}
-                )
-                .sort({ updatedByMsg: -1 })
-                .lean()
-                .exec(function (err, data) {
-                  friendIds.push(data);
-                  chatModelFunc(friendIds);
-                });
-            });
-        });
-    } else
-      userModel
-        .find(
-          {
-            _id: { $ne: req.params.userId },
-            isAdmin: { $ne: 1 },
-            status: 1,
-            projectId: req.params.projectId
-          },
-          {},
-          { sort: "-updatedAt" }
-        )
+      friendData = [];
+      for (let i = 0; i < friendIdData.length; i++) {
+        if (friendIdData[i].friendId._id != req.params.userId)
+          friendData.push(friendIdData[i].friendId);
+        else if (friendIdData[i].userId._id != req.params.userId)
+          friendData.push(friendIdData[i].userId);
+
+        var unreadMsgCount = await chatModel.find({ senderId: friendData[i]._id, receiverId: req.params.userId, isSeen: 0 }).count().lean().exec();
+        friendData[i]["usCount"] = unreadMsgCount;
+
+        var latestMsg = await chatModel.findOne({
+          $or: [
+            { senderId: friendData[i]._id, receiverId: req.params.userId },
+            { senderId: req.params.userId, receiverId: friendData[i]._id }
+          ]
+        }, {}, { sort: { 'createdAt': -1 } }).lean().exec();
+
+        friendData[i]["latestMsg"] = latestMsg;
+         if (i == friendIdData.length - 1) {
+          var myselfData = await userModel.findOne({'_id': req.params.userId }, {password: false}).lean().exec();
+          friendData.push(myselfData);
+          res.json({ 'usersList': friendData });
+        }  
+      }
+    } else {
+      userModel.find({
+        _id: { $ne: req.params.userId },
+        isAdmin: { $ne: 1 },
+        status: 1,
+        projectId: req.params.projectId
+      }, {}, { sort: "-updatedAt" })
         .lean()
         .exec(function (err, data) {
           chatModelFunc(data);
         });
+    }
   };
 
   router.addGroup = function (req, res) {
