@@ -9,19 +9,10 @@
 </template>
 
 <style>
-  
-  @import './assets/css/magnific-popup.css';
   @import './assets/css/style.css';
+  @import './assets/css/magnific-popup.css';
   @import './assets/css/tour.css';
-  @import './assets/js/ckeditor/skins/moono-lisa/editor.css?t=HBDD';
-  @import './assets/js/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css';
- @import './assets/css/date-picker.css';
-  @import './assets/js/ckeditor/plugins/tableselection/styles/tableselection.css';
-  @import './assets/js/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css';
-  @import './assets/js/ckeditor/plugins/copyformatting/styles/copyformatting.css';
-  
-
-
+  @import './assets/css/date-picker.css';
 </style>
 
 <script>

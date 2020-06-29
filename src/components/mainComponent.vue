@@ -1900,7 +1900,35 @@
                 <div class="col">
                   <div class="media left">
                     <div class="media-left mr-3">
-                      <div class="profile menu-trigger">
+                     
+                    <ul>
+                        <!--<li>
+                          <a class="icon-btn btn-light button-effect mute" href="#">
+                            <i class="fa fa-volume-up"></i>
+                          </a>
+                        </li>-->
+                        <!--<li>
+                          <a class="icon-btn btn-light search search-right" href="#">
+                            <search-icon size="1.5x" class="custom-class"></search-icon>
+                          </a>
+                          </a>
+                          <form class="form-inline search-form">
+                            <div class="form-group">
+                              <input class="form-control-plaintext" type="search" placeholder="Search.." />
+                              <div class="icon-close close-search"> </div>
+                            </div>
+                          </form>
+                        </li>-->
+                        <li>
+                          <a class="icon-btn btn-light button-effect mobile-sidebar" href="#">
+                            <arrow-left-icon size="1.5x" class="custom-class"></arrow-left-icon>
+                          </a>
+                        </li>
+                      </ul>
+                  
+                    </div>
+                    <div class="media-right" style="padding-right: 14px;">
+                     <div class="profile menu-trigger">
                         <img class="bg-img" src="../assets/images/avtar/teq.jpg" alt="Avatar" /></div>
                     </div>
                     <div class="media-body">
@@ -1913,32 +1941,7 @@
                       </a>
                       
                     </div>
-                    <div class="media-right">
-                      <ul>
-                        <!--<li>
-                          <a class="icon-btn btn-light button-effect mute" href="#">
-                            <i class="fa fa-volume-up"></i>
-                          </a>
-                        </li>-->
-                        <li>
-                          <a class="icon-btn btn-light search search-right" href="#">
-                            <search-icon size="1.5x" class="custom-class"></search-icon>
-                          </a>
-                          </a>
-                          <form class="form-inline search-form">
-                            <div class="form-group">
-                              <input class="form-control-plaintext" type="search" placeholder="Search.." />
-                              <div class="icon-close close-search"> </div>
-                            </div>
-                          </form>
-                        </li>
-                        <li>
-                          <a class="icon-btn btn-light button-effect mobile-sidebar" href="#">
-                            <arrow-left-icon size="1.5x" class="custom-class"></arrow-left-icon>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
+                    
                   </div>
                 </div>
                 <div class="col">
@@ -5083,6 +5086,7 @@ export default {
       nonGroupUsers:[],
       userid:'',
       dragAndDropCapable: false,
+      windowHeight:0,
 
     }
 
@@ -5525,6 +5529,12 @@ usertab(){
             // this.$set(this.singlefriend,'chatWithRefId',this.c_user._id);
             $('.init').removeClass("active");
             $('#friend' + friend._id).addClass("active");
+
+             if(screen.width < 600){
+                $('#rightside').removeClass('active');
+               // $('#rightside').addClass('off');
+              }
+
             //$(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
               this.friendchat ={};
             axios.get('/getChat/' + this.c_user._id + '/' + friend._id + '/50')
@@ -6734,12 +6744,17 @@ if(this.multipleneewmembers){
 
 
   mounted() {
+ 
 
     this.c_user = this.$session.get('c_user');
     console.log(this.c_user.name);
 
     this.getfriends();
     this.emptyChatWithId();
+    if(screen.width < 600){
+      $('.main-nav').removeClass('on');
+      $('.main-nav').addClass('off');
+    }
 
  ////////////////Chat dropzone //////////////////////
 
@@ -7402,5 +7417,11 @@ img.emojione {
 .sidebar-toggle .main-nav.on ~ .chitchat-main .messages .contact-details {
     width: 93.5vw !important;
 }*/
+li.sent h5 {
+    margin-left: 15px;
+}
+div#EmojiPicker {
+    margin-bottom: 35px;
+}
 }
 </style>
