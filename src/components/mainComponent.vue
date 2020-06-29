@@ -203,7 +203,7 @@
                   <div class="theme-tab">
                     <ul class="nav nav-tabs" id="myTab1" role="tablist">
                       <li class="nav-item">
-                        <a class="nav-link button-effect active" id="direct-tab" data-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a>
+                        <a class="nav-link button-effect active" @click="usertab()" id="direct-tab" data-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link button-effect" @click="getgroups()" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" data-to="group_chat">Group</a>
@@ -220,7 +220,10 @@
                                 <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                               <div class="details"  style="padding-left: 73px;">
                                 <h5>{{friends.name}}</h5>
-                                <h6 :id="'f_typing'+friends._id">Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
+                                <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+                                <h6 v-else>Start Chat</h6>
+                                
+
                               </div>
                               <div class="date-status">
                                 <i class="ti-pin2"></i>
@@ -247,7 +250,7 @@
                           </div>
                         </div>
                         <ul class="group-main" v-for="(group,index) in orderedGroups">
-                          <li class="group_chat" id="group_data" data-to="group_chat" @click="startgroupchat(group,index)" style="cursor: pointer;">
+                          <li class="group_chat" :id="'group_data'+group._id" data-to="group_chat" @click="startgroupchat(group,index)" style="cursor: pointer;">
                             <div class="group-box">
                               <div class="profile"><img class="bg-img" src="../assets/images/avtar/teq.jpg" alt="Avatar" /></div>
                               <div class="details" style="padding-left: 66px;padding-top: 0px;">
@@ -5104,22 +5107,27 @@ export default {
 
     receivemsg(data) {
       //this.c_user._id == data.receiverId._id &&
-      console.log(data);
-      const post = this.friendsdata.filter((obj) => {
-            return data.msgData.senderId._id === obj._id;
-          }).pop();
-          
-          // console.log(data.msgData.receiverId._id +'=='+ data.selectFrienddata);
+     console.log(data);
+
+     $('#f_typing'+data.userId).html(data.msgData.message);
+     $('#f_typing'+data.selectFrienddata).html(data.msgData.message);
+      if(data.msgData.senderId._id == this.c_user._id){
+                const frienddata = this.friendsdata.filter((objs) => {
+                  return this.singlefriend._id === objs._id;
+                }).pop();
+                frienddata.latestMsg.message=data.msgData.message;
+              
+      }
+ 
+     
+      
       if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
 
         this.friendchat.push(data.msgData);
-         $('#f_typing'+data.msgData.receiverId._id).html(data.msgData.message);
+        // $('#f_typing'+data.msgData.receiverId._id).html(data.msgData.message);
         var container = this.$el.querySelector("#chating");
          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-        
-          
-
-        console.log(post._id +'=='+ data.msgData.senderId._id  +' && '+  data.msgData.senderId._id +' != '+ this.c_user._id);
+    
         if (this.singlefriend.chatWithRefId == this.c_user._id) {
           this.isSeen = true;
           console.log('seen');
@@ -5138,6 +5146,7 @@ export default {
                 }
      
 
+       
     },
 
     receiverUserStatus(data) {
@@ -5273,7 +5282,7 @@ export default {
             return data.selectFrienddata._id === obj._id;
           }).pop();
           
-            console.log();
+            console.log(post);
                 if (this.singlefriend._id== data.UserId && post._id == data.selectFrienddata._id) {
                     this.typing = true;
                     
@@ -5281,7 +5290,7 @@ export default {
                   const fdata = this.friendsdata.filter((obj) => {
                       return data.UserId === obj._id;
                     }).pop();
-                  console.log(fdata);
+                 // console.log(fdata);
                   $('#f_typing'+data.UserId).html('<span style="color: green;">is typing ...</span>');
                   this.typing = false;
                   
@@ -5293,7 +5302,7 @@ export default {
     stoptyping(data) {
       console.log(data);
       this.typing = false;
-       $('#f_typing'+data.UserId).html('');
+     $('#f_typing'+data.UserId).html(data.selectFrienddata.latestMsg.message);
     },
     
 changestatuslogin(data) {
@@ -5348,7 +5357,7 @@ changestatuslogin(data) {
 
 message: _.debounce(function () {
     	 this.$socket.emit('stopTyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
-    }, 4000),
+    }, 1500),
   
     // message() {
     //   //this.removecross();
@@ -5372,7 +5381,7 @@ selectEmoji(emoji) {
       console.log(this.groupmessage);
       
         this.not_working = false;
-        $('#send-groupmsg').removeClass('disabled').attr("disabled", "");
+        $('#send-groupmsg').removeClass('disabled').attr("disabled", false);
       
     },
 
@@ -5465,6 +5474,7 @@ selectEmoji(emoji) {
     },
 
     getfriends() {
+       
       axios.get('/getUsers/' + this.c_user._id + '/0/5d4c07fb030f5d0600bf5c03')
         .then(responce => {
           this.friendsdata = responce.data.usersList;
@@ -5475,14 +5485,20 @@ selectEmoji(emoji) {
           console.log(this.friendsdata);
         })
         .catch((error) => console.log(error));
+        $('.message-input').hide();
     },
 
-
+usertab(){
+  $('.init').removeClass('active');
+  $('.message-input').hide();
+  $('#startchat').removeClass('active');
+},
 
 ///////////////////////////////////////  START CHAT SECTION //////////////////////////////////////
 
 
     startchat(friend) {
+           $('.message-input').show();
             var container = this.$el.querySelector("#chating");
             $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
             this.isLoading = true;
@@ -5621,7 +5637,7 @@ selectEmoji(emoji) {
                 $('#friend' + this.singlefriend._id).addClass("active");
                 setTimeout(() => {
 
-                  $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+               //   $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
                 }, 200);
 
               }, 1);
@@ -5704,7 +5720,7 @@ selectEmoji(emoji) {
                 $('#friend' + this.singlefriend._id).addClass("active");
                 setTimeout(() => {
 
-                  $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+                 // $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
                 }, 200);
 
               }, 1);
@@ -5794,7 +5810,7 @@ selectEmoji(emoji) {
             $('#friend' + this.singlefriend._id).addClass("active");
             setTimeout(() => {
 
-              $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+             // $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
             }, 200);
 
           }, 1);
@@ -5871,7 +5887,7 @@ selectEmoji(emoji) {
               $('#friend' + this.singlefriend._id).addClass("active");
               setTimeout(() => {
 
-                $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
+               // $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
               }, 200);
 
             }, 1);
@@ -5954,12 +5970,21 @@ if(this.onEditclear == true){
           console.log('err', err);
           alert('error');
         });
+
+      
       $('#group_chat').addClass("active");
+      $('.group_chat').removeClass("active");
       $('.message-input').css("height", "96px");
+      $('.message-input').hide();
       this.replyBox = false;
     },
 
     startgroupchat(group,index) {
+          $('.message-input').show();
+          $('.group_chat').removeClass("active");
+          $('#group_data'+group._id).addClass("active");
+           $('#group_chat').removeClass("active");
+           
           this.singlegroup = group;
           this.groupIndex=index;
           console.log(this.groupIndex);
@@ -5971,7 +5996,7 @@ if(this.onEditclear == true){
           this.multipleneewmembers=[];
           this.shownewmembers=false;
           this.showmembers=true;
-          $('#group_chat').removeClass("active");
+         
           var container = this.$el.querySelector("#group_chat_open");
          $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
           //$('#friend'+friend._id).addClass("active");
@@ -6278,27 +6303,7 @@ if(this.onEditclear == true){
 
 /////////////////////////////////////// CREATE GROUP ////////////////////////////////////////////
 
-addGroupmemners(id){
-  console.log(id);
-  this.multiplemembers.push(id);
-  $('#member'+id).hide();
-  $('#memberRm'+id).show();
-  console.log(this.multiplemembers);
-},
 
-removeGroupmemners(id,index){
-  console.log(index);
-  if(this.multiplemembers[index] === id) { 
-     
-        this.multiplemembers.splice(index, 1)
-      } else {
-        let found = this.multiplemembers.indexOf(id)
-        this.multiplemembers.splice(found, 1)
-      }
-  $('#memberRm'+id).hide();
-   $('#member'+id).show();
-   console.log(this.multiplemembers);
-},
 
 createGroup(){
   
@@ -6318,6 +6323,7 @@ this.multiplemembers.push(this.c_user._id);
         }).then(response => {
           this.$socket.emit('getGroups', response.data);
           console.log(response);
+          $('.chat-cont-setting').removeClass('open')
           this.$toasted.success('Group Create Successfully', {
               theme: "toasted-primary",
               position: "top-center",
@@ -6352,6 +6358,7 @@ else{
 
 },
 
+
 editGroup(){
 
     this.showGrouptitle= false;
@@ -6360,6 +6367,28 @@ editGroup(){
         this.$refs.groupTitle.focus();
       });
   },
+
+addGroupmemners(id){
+  console.log(id);
+  this.multiplemembers.push(id);
+  $('#member'+id).hide();
+  $('#memberRm'+id).show();
+  console.log(this.multiplemembers);
+},
+
+removeGroupmemners(id,index){
+  console.log(index);
+  if(this.multiplemembers[index] === id) { 
+     
+        this.multiplemembers.splice(index, 1)
+      } else {
+        let found = this.multiplemembers.indexOf(id)
+        this.multiplemembers.splice(found, 1)
+      }
+  $('#memberRm'+id).hide();
+   $('#member'+id).show();
+   console.log(this.multiplemembers);
+},
 
   editGroupTitle(){
 
