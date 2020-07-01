@@ -778,7 +778,10 @@ console.log(chatType);
           res.json({ status: false, message: 'Update failed' });
       }
   }
-
+router.getSingleUser = async function (req, res){
+    var userData = await userModel.findById(req.params.userId, {password: false});
+    res.json(userData);
+  }
   router.stopViewer = (req, res) => {
 
       let newMessage = new chatModel(req.body.leftMsg);
