@@ -154,7 +154,7 @@ module.exports = function (io, saveUser) {
       }, {}, { sort: "-updatedAt" })
         .lean()
         .exec(function (err, data) {
-          chatModelFunc(data);
+          res.json({ 'usersList': data });
         });
     }
   };

@@ -83,7 +83,6 @@ function presenter() {
 			onicecandidate : onIceCandidate
 	    }
 
-		console.log('presenter ',video);
 		webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
 			if(error) return onError(error);
 
@@ -158,7 +157,8 @@ function dispose() {
 }
 
 function sendMessage(message) {
-	var jsonMessage = JSON.stringify(message); 
+	var jsonMessage = JSON.stringify(message);
+	console.log('Sending message: ' + jsonMessage);
 	ws.send(jsonMessage);
 }
 
