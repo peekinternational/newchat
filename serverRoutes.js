@@ -94,4 +94,5 @@ module.exports = function (app, io, saveUser) {
     app.post('/leaveCallGroup', groupCon.leaveCallGroup);
     app.post('/getCallGroups', groupCon.getCallGroups);
     app.post('/updateGroupCallStatus', groupCon.updateGroupCallStatus);
+	app.get('/getSingleUser/:userId', chatCon.getSingleUser);
 }
