@@ -5945,7 +5945,7 @@ if(this.onEditclear == true){
 
     msgdelete(data) {
       this.$socket.emit('senderdeletemsg', data._id);
-
+console.log(data);
       $('#sender' + data._id).html('message deleted');
       console.log(data._id);
       axios.get('/deleteMsg/' + data._id + '/0')
