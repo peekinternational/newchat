@@ -2046,11 +2046,11 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'groupsender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.25:22000/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                           </li>
                           <!--    <li class="msg-setting-main">
                                 <h5> it should from elite auther &#128519;</h5>
@@ -2087,11 +2087,11 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'sender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.25:22000/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                          
                          <div class="msg-dropdown-main" v-if="g_chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+g_chat._id" @click="msg_setting(g_chat._id)">
@@ -2147,7 +2147,7 @@
                       <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.201,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.211,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.211,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.201,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.251,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.251,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
                       <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
                     </svg></a>-->
                   
@@ -2326,7 +2326,7 @@
                                   </li>
                                   <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
                                   <li>
-                                    <a href="#" @click="msgdelete(chat._id)">
+                                    <a href="#" @click="msgdelete(chat)">
                                       <i class="ti-trash"></i>delete</a>
                                   </li>
                                 </ul>
@@ -2338,11 +2338,11 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.25:22000/images/chatImages/'+chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
 
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -2381,10 +2381,10 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="'https://192.168.100.25:22000/images/chatImages/'+chat.message">
                             </a>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="'https://192.168.100.25:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                                 <i class="ti-more-alt"></i>
@@ -4406,7 +4406,7 @@
               <h6>log angelina california</h6>
               <ul>
                 <li>
-                  <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" data-toggle="modal" data-target="#audiorcvcall" data-dismiss="modal">
+                  <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="o2oopenwindow()"  data-dismiss="modal">
                     <phone-icon size="1.5x" class="custom-class"></phone-icon>
                   </a>
                 </li>
@@ -5053,7 +5053,7 @@ export default {
       onEditgroupclear: false,
       ongroupChat: true,
       dropzoneOptions: {
-        url: 'https://peekvideochat.com:22000/chatFilesShare',
+        url: 'https://192.168.100.25:22000/chatFilesShare',
         thumbnailWidth: 100,
         thumbnailHeight: 100,
         maxFiles: 10,
@@ -5113,16 +5113,6 @@ export default {
       //this.c_user._id == data.receiverId._id &&
      console.log(data);
 
-     $('#f_typing'+data.userId).html(data.msgData.message);
-     $('#f_typing'+data.selectFrienddata).html(data.msgData.message);
-      if(data.msgData.senderId._id == this.c_user._id){
-                const frienddata = this.friendsdata.filter((objs) => {
-                  return this.singlefriend._id === objs._id;
-                }).pop();
-                frienddata.latestMsg.message=data.msgData.message;
-              
-      }
- 
      
       
       if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
@@ -5131,10 +5121,13 @@ export default {
         // $('#f_typing'+data.msgData.receiverId._id).html(data.msgData.message);
         var container = this.$el.querySelector("#chating");
          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-    
+      
         if (this.singlefriend.chatWithRefId == this.c_user._id) {
           this.isSeen = true;
           console.log('seen');
+           setTimeout(() => {
+                    $('#f_typing'+data.userId).html(data.msgData.message);
+                }, 2000);
         }
         
       }
@@ -5146,6 +5139,9 @@ export default {
                
                   this.isSeen = false;
                   fdata.usCount += 1;
+                   setTimeout(() => {
+                    $('#f_typing'+data.userId).html(data.msgData.message);
+                }, 2000);
                   
                 }
      
@@ -5276,7 +5272,7 @@ export default {
     //////////////////////////END GROUP SEECTION ///////////////
 
     reciverdeletemsg(data) {
-      $('#receiver' + data).html('message deleted');
+      $('#receiver' + data._id).html('message deleted');
 
     },
 
@@ -5377,6 +5373,9 @@ message: _.debounce(function () {
 
 
   methods: {
+    o2oopenwindow(id){
+          window.open('/o2o?data='+this.singlefriend._id, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1100,height=600');
+    },
 
 selectEmoji(emoji) {
      // console.log(emoji.data)
@@ -5581,7 +5580,7 @@ usertab(){
         console.log(this.msgObj);
 
         this.$socket.emit('updatechatmsg', this.msgObj)
-
+        
         axios.post('/updateChat/' + this.editChatid, {
           msgData: this.msgObj
         }).then(response => {
@@ -5622,6 +5621,7 @@ usertab(){
               userId: this.c_user._id,
               msgData:this.msgObj
             })
+        $('#f_typing'+this.singlefriend._id).html(this.msgObj.message);
         $('.message-input').css("height", "96px");
           this.replyBox = false;
           this.chatreplydata = "";
@@ -5706,6 +5706,7 @@ usertab(){
               userId: this.c_user._id,
               msgData:this.msgObj
             })
+             $('#f_typing'+this.singlefriend._id).html(this.msgObj.message);
        this.$socket.emit('stopTyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
         axios.post('/chat', {
           msgData: this.msgObj,
@@ -5942,12 +5943,12 @@ if(this.onEditclear == true){
      
     },
 
-    msgdelete(id) {
-      this.$socket.emit('senderdeletemsg', id);
+    msgdelete(data) {
+      this.$socket.emit('senderdeletemsg', data._id);
 
-      $('#sender' + id).html('message deleted');
-      console.log(id);
-      axios.get('/deleteMsg/' + id + '/0')
+      $('#sender' + data._id).html('message deleted');
+      console.log(data._id);
+      axios.get('/deleteMsg/' + data._id + '/0')
         .then((responce) => console.log(responce))
         .catch((error) => console.log(error));
 

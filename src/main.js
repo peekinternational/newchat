@@ -10,8 +10,8 @@ import VueClipboard from 'vue-clipboard2';
 
 window.axios = require('axios');
 //window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL = 'https://peekvideochat.com:22000/';
-//window.axios.defaults.baseURL = 'https://192.168.100.21:22000/';
+//window.axios.defaults.baseURL = 'https://peekvideochat.com:22000/';
+window.axios.defaults.baseURL = 'https://192.168.100.25:22000/';
 window.axios.defaults.withCredentials = true
 import { MyVuexStore } from './my-vuex-store.js';
 //import {ApiService} from './services/api.service.js';
@@ -35,6 +35,7 @@ Vue.use(VueSocketIO, SocketInstance, MyVuexStore)
 import Main from './components/mainComponent.vue';
 import Login from './components/loginComponent.vue';
 import Signup from './components/signupComponent.vue';
+import O2O from './components/o2oCallComponent.vue';
 
 // 2. Define some routes
 // Each route should map to a component. The "component" can
@@ -48,7 +49,8 @@ Vue.config.productionTip = false
 const routes = [
   { path: '/', component: Main },
   { path: '/login', component: Login },
-  { path: '/signup', component: Signup }
+  { path: '/signup', component: Signup },
+  { path: '/o2o', component: O2O },
 ]
 
 // 3. Create the router instance and pass the `routes` option
