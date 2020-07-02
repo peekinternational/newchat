@@ -8389,13 +8389,13 @@ div#EmojiPicker {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 60px);
+    height: calc(990vh - 60px);
 }
 .modelbefore {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(64vh - 36px);
+    height: calc(62vh - 36px);
 }
 .callChat{
   width: 30%;
