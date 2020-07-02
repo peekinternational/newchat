@@ -1,7 +1,7 @@
 var broadCastHtml = document.getElementById('broadCastVideo');
-
+var userData= JSON.parse(localStorage.getItem('userData'));
 function testing(){
-console.log(document.getElementById('chating'));
+   console.log(JSON.parse(localStorage.getItem('userData')));
 }
 window.webRtcO2MPeer='';
 function presenterResponse(message) {
@@ -45,9 +45,9 @@ function onOfferPresenter(error, offerSdp) {
     var message = {
         id: 'presenter',
         sdpOffer: offerSdp,
-        preId: user._id,  //change needed here
+        preId: userData._id,  //change needed here
         password: (prePassword) ? prePassword : 0,  //change needed here
-        preName: user.name  //change needed here
+        preName: userData.name  //change needed here
     };
     sendMessage(message);
 }
@@ -81,7 +81,7 @@ function onOfferViewer(error, offerSdp) {
     var message = {
         id: 'viewer',
         sdpOffer: offerSdp,
-        preId: localStorage.get("chatRefId")//$rootScope.connWdPreId  //change needed here
+        preId: userData.chatRefId //$rootScope.connWdPreId  //change needed here
     }
 
     sendMessage(message);
@@ -118,7 +118,7 @@ function dispose() {
 // }
 function sendMessage(message) {
 	var jsonMessage = JSON.stringify(message); 
-	window.ws.send(jsonMessage);
+	ws.send(jsonMessage);
 }
 
 function showSpinner() {
