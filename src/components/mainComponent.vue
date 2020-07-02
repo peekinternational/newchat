@@ -7423,16 +7423,16 @@ testing();
         if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
         let broadCastUrl = 'wss://' + webSocketIp + ':8444/one2many';
        // var ws = new WebSocket('wss://' + location.host + '/one2many');
-       window.ws = new WebSocket(broadCastUrl);
+       var ws = new WebSocket(broadCastUrl);
         window.presenterArr = [];
         
-        window.ws.on('open', function (){
+        ws.on('open', function (){
               console.log('O2M socket open'); 
             $interval(One2ManyCall.getPresenterData, 6000);
             One2ManyCall.getPresenterData(); //call on start and then it will repeat by interval
         })
 
-        window.ws.onmessage = function(message) {
+        ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
 	console.info('Received message: ' + message.data);
 	switch (parsedMessage.id) {
