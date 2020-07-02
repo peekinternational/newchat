@@ -4451,7 +4451,7 @@
 
     <!---------------------------------- O2O CALL MODEL ---------------------------------->
     <div class="videocallModel  viddiolog modal fade" :id="'videocall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modalbefore" id="modalcall" role="document">
+      <div class="modal-dialog modal-dialog-centered modelbefore" id="modalcall" role="document">
         <div class="modal-body">
           
           <div class="videocall beforeopenChat call-modal">
@@ -8385,13 +8385,13 @@ div#EmojiPicker {
     width: 70%;
     float: left;
 }
-.modalafter {
+.modelafter {
     display: flex;
     align-items: center;
     justify-content: center;
     height: calc(100vh - 60px);
 }
-.modalbefore {
+.modelbefore {
     display: flex;
     align-items: center;
     justify-content: center;
