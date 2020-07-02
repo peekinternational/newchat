@@ -8395,7 +8395,7 @@ div#EmojiPicker {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(67vh - 35px);
+    height: calc(64vh - 36px);
 }
 .callChat{
   width: 30%;
