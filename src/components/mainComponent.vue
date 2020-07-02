@@ -7574,6 +7574,9 @@ function onIceCandidate(candidate) {
 
 $('#broadcaststop').on('click', (evt) => {
         broadcaststop();
+        $('#showCallMin').hide();
+       $('#showcallModel'+this.singlefriend._id).show();
+       $('#startchat').addClass('active');
       });
 
 function broadcaststop() {
