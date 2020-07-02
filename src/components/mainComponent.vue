@@ -4482,7 +4482,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" @click="on2Callclose()" data-dismiss="modal" data-tippy-content="Hangup">
+                  <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" id="broadcaststop"  data-dismiss="modal" data-tippy-content="Hangup">
                     <phone-icon size="1.5x" class="custom-class"></phone-icon>
                   </a>
                 </li>
@@ -7572,7 +7572,11 @@ function onIceCandidate(candidate) {
     sendMessage(message);
 }
 
-function stop() {
+$('#broadcaststop').on('click', (evt) => {
+        broadcaststop();
+      });
+
+function broadcaststop() {
     if (webRtcO2MPeer) {  //change needed here
         var message = { 
             id: 'stop'
