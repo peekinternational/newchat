@@ -68,6 +68,7 @@
           <div class="recent">
             <div class="theme-title">
               <div class="media">
+                <button onclick="presenter()">click</button>
                 <div v-if="c_user">
 
                   
