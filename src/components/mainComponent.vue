@@ -5585,7 +5585,7 @@ export default {
       onEditgroupclear: false,
       ongroupChat: true,
       dropzoneOptions: {
-        url: 'https://192.168.100.25:22000/chatFilesShare',
+        url: this.hostname+'/chatFilesShare',
         thumbnailWidth: 100,
         thumbnailHeight: 100,
         maxFiles: 10,
