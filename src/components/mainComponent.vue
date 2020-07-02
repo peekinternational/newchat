@@ -7428,7 +7428,7 @@ if(this.multipleneewmembers){
         let broadCastUrl = 'wss://' + webSocketIp + ':8444/one2many';
        // var ws = new WebSocket('wss://' + location.host + '/one2many');
       var ws = new WebSocket(broadCastUrl);
-        window.presenterArr = [];
+        var presenterArr = [];
         
         ws.onopen= function (){
               console.log('O2M socket open'); 
@@ -7461,8 +7461,8 @@ if(this.multipleneewmembers){
                         parsedMessage.data.forEach(preData => {
                             if (preData.preId != this.c_user._id) presenterData.push(preData)
                         });
-                        window.presenterArr = presenterData;
-                        console.log('presenterArr ', window.presenterArr);
+                        presenterArr = presenterData;
+                        console.log('presenterArr ', presenterArr);
                         break;
 	default:
 		console.error('Unrecognized message', parsedMessage);
@@ -7485,7 +7485,7 @@ function presenterResponse(message) {
     } else {
         webRtcO2MPeer.processAnswer(message.sdpAnswer); //change needed here
         $('#bctest').text(message.data);  
-        window.presenterArr = message.data;  //change needed here
+        presenterArr = message.data;  //change needed here
     }
 }
 
