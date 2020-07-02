@@ -4451,7 +4451,7 @@
 
     <!---------------------------------- O2O CALL MODEL ---------------------------------->
     <div class="videocallModel  viddiolog modal fade" :id="'videocall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-dialog modal-dialog-centered modalbefore" id="modalcall" role="document">
         <div class="modal-body">
           
           <div class="videocall beforeopenChat call-modal">
@@ -7350,6 +7350,8 @@ if(this.multipleneewmembers){
 
           $('.videocall').removeClass('beforeopenChat');
           $('.videocall').addClass('afteropenChat');
+           $('#modalcall').removeClass('modelbefore');
+          $('#modalcall').addClass('modelafter');
           $('#contents').show();
           $('.chitchat-main .chat-content').css('opacity','1');
     },
@@ -7357,6 +7359,8 @@ if(this.multipleneewmembers){
       hideCallchat(){
           $('.videocall').addClass('beforeopenChat');
           $('.videocall').removeClass('afteropenChat');
+          $('#modalcall').removeClass('modelafter');
+          $('#modalcall').addClass('modelbefore');
           $('#contents').hide(); 
           $('#chatclose').hide();
           $('#chatopen').show();
@@ -8380,6 +8384,18 @@ div#EmojiPicker {
     display: block;
     width: 70%;
     float: left;
+}
+.modalafter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+}
+.modalbefore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(67vh - 35px);
 }
 .callChat{
   width: 30%;
