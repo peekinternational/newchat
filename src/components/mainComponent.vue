@@ -7423,27 +7423,28 @@ testing();
         if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
         let broadCastUrl = 'wss://' + webSocketIp + ':8444/one2many';
        // var ws = new WebSocket('wss://' + location.host + '/one2many');
-       var ws = new WebSocket(broadCastUrl);
+        ws = new WebSocket(broadCastUrl);
         window.presenterArr = [];
         
-        ws.on('open', function (){
+        ws.onopen= function (){
               console.log('O2M socket open'); 
-            $interval(One2ManyCall.getPresenterData, 6000);
-            One2ManyCall.getPresenterData(); //call on start and then it will repeat by interval
-        })
+          
+            setInterval( getPresenterData(), 6000);
+            getPresenterData(); //call on start and then it will repeat by interval
+        }
 
         ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
 	console.info('Received message: ' + message.data);
 	switch (parsedMessage.id) {
 	case 'presenterResponse':
-		One2ManyCall.presenterResponse(parsedMessage);
+		presenterResponse(parsedMessage);
 		break;
 	case 'viewerResponse':
-		One2ManyCall.viewerResponse(parsedMessage);
+		viewerResponse(parsedMessage);
 		break;
 	case 'stopCommunication':
-		One2ManyCall.dispose();
+		dispose();
 		break;
 	case 'iceCandidate':
 		 window.webRtcO2MPeer.addIceCandidate(parsedMessage.candidate)
