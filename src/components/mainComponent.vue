@@ -4454,7 +4454,9 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body">
           
-          <div class="videocall beforeopenChat call-modal"><img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
+          <div class="videocall beforeopenChat call-modal">
+            <video id="broadCastVideo" autoplay></video>
+            <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image"><img class="bg-img" src="../assets/images/avtar/big/videocall.jpg" alt="Avatar" /></div>
             <div class="media videocall-details">
               <div class="usersprof">
@@ -7474,14 +7476,14 @@ var userData= JSON.parse(localStorage.getItem('userData'));
 function testing(){
    console.log(JSON.parse(localStorage.getItem('userData')));
 }
-window.webRtcO2MPeer='';
+var webRtcO2MPeer='';
 function presenterResponse(message) {
     if (message.response != 'accepted') {
         var errorMsg = message.message ? message.message : 'Unknow error';
         console.warn('Call not accepted for the following reason: ' + errorMsg);
         dispose();
     } else {
-        window.webRtcO2MPeer.processAnswer(message.sdpAnswer); //change needed here
+        webRtcO2MPeer.processAnswer(message.sdpAnswer); //change needed here
         $('#bctest').text(message.data);  
         window.presenterArr = message.data;  //change needed here
     }
@@ -7493,18 +7495,18 @@ function viewerResponse(message) {
         console.warn('Call not accepted for the following reason: ' + errorMsg);
         dispose();
     } else {
-        window.webRtcO2MPeer.processAnswer(message.sdpAnswer);  //change needed here
+        webRtcO2MPeer.processAnswer(message.sdpAnswer);  //change needed here
     }
 }
 
 function presenter() {
-    if (!window.webRtcO2MPeer) {  //change needed here
+    if (!webRtcO2MPeer) {  //change needed here
         showSpinner(broadCastHtml);  //change needed here
         var options = {
             localVideo: broadCastHtml,  //change needed here
             onicecandidate: onIceCandidate
         }
-        window.webRtcO2MPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {  //change needed here
+        webRtcO2MPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {  //change needed here
             if (error) return onError(error);
             this.generateOffer(onOfferPresenter);
         });
@@ -7535,7 +7537,7 @@ function getPresenterData() {
 }
 
 function viewer() {
-    if (window.webRtcO2MPeer) {  //change needed here
+    if (webRtcO2MPeer) {  //change needed here
         showSpinner(broadCastHtml);  //change needed here
 
         var options = {
@@ -7543,7 +7545,7 @@ function viewer() {
             onicecandidate: onIceCandidate
         }
 
-        window.webRtcO2MPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {  //change needed here
+        webRtcO2MPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {  //change needed here
             if (error) return onError(error);
             this.generateOffer(onOfferViewer);
         });
@@ -7571,7 +7573,7 @@ function onIceCandidate(candidate) {
 }
 
 function stop() {
-    if (window.webRtcO2MPeer) {  //change needed here
+    if (webRtcO2MPeer) {  //change needed here
         var message = { 
             id: 'stop'
         }
@@ -7581,9 +7583,9 @@ function stop() {
 }
 
 function dispose() {
-    if (window.webRtcO2MPeer) {  //change needed here
-        window.webRtcO2MPeer.dispose();  //change needed here
-        window.webRtcO2MPeer = null;  //change needed here
+    if (webRtcO2MPeer) {  //change needed here
+        webRtcO2MPeer.dispose();  //change needed here
+        webRtcO2MPeer = null;  //change needed here
     }
     hideSpinner(broadCastHtml);  //change needed here
 }
