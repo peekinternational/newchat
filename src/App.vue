@@ -31,10 +31,10 @@ export default {
             }
         },
          mounted() {
-           
+           window.addEventListener('beforeunload', this.sendData)
         },
       created() {
-    window.addEventListener('beforeunload', this.sendData)
+    
   },
         methods: {
            sendData() {

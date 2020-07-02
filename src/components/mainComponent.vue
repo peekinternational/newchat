@@ -73,7 +73,7 @@
                   
                   <div v-if="c_user.onlineStatus == 1" class="profile" v-bind:class="{ online: c_user.pStatus == 0, unreachable : c_user.pStatus == 1, busy: c_user.pStatus == 2, offline: c_user.pStatus == 3, offline: c_user.pStatus == 4 }">
                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" /></div>
-                  <span style="font-size:16px"> {{c_user.name}}</span>
+                  <span style="font-size:16px"> {{c_user.name}} </span>
                 </div>
                 <div class="media-body">
                   <a class="icon-btn btn-outline-light button-effect pull-right mobile-back">
@@ -211,7 +211,17 @@
                     </ul>
                     <div class="tab-content" id="myTabContent1">
                       <div class="tab-pane fade show active" id="direct" role="tabpanel" aria-labelledby="direct-tab">
-                        <ul class="chat-main" v-for="friends in orderedUsers" v-if="friends._id != c_user._id">
+                        <div id="showCallMin" style="display:none">
+                          <h5>Incomming call</h5>
+                          <ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
+                            <a  href="#" data-toggle="modal" :data-target="'#videocall'+singlefriend._id" class="" style="font-size: 16px;line-height: 2;">
+                              {{ singlefriend.name }} </a>
+                              <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="on2Callclose()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
+                              </a></li>
+                              </ul>
+                          </div>
+
+                        <ul  v-for="friends in orderedUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
                           <li class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                             <div class="chat-box">
                               <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
@@ -2046,11 +2056,11 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'groupsender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                           </li>
                           <!--    <li class="msg-setting-main">
                                 <h5> it should from elite auther &#128519;</h5>
@@ -2087,11 +2097,11 @@
                             <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'sender'+g_chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message">
+                            <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+g_chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                            <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                          
                          <div class="msg-dropdown-main" v-if="g_chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+g_chat._id" @click="msg_setting(g_chat._id)">
@@ -2239,7 +2249,7 @@
                       </a>
                     </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#videocall">
+                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Video Call" data-toggle="modal" :data-target="'#videocall'+singlefriend._id">
                         <video-icon size="1.5x" class="custom-class"></video-icon>
                       </a>
                     </li>
@@ -2338,11 +2348,11 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+chat.message">
                             </a>
 
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
 
                           </li>
                           <!-- <li class="msg-setting-main">
@@ -2381,10 +2391,10 @@
                             <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
                               <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                             <br>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="'https://peekvideochat.com:22000/images/chatImages/'+chat.message">
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+chat.message">
                             </a>
-                            <a :href="'https://peekvideochat.com:22000/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                             <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                                 <i class="ti-more-alt"></i>
@@ -4417,14 +4427,33 @@
                 </li>
               </ul>
             </div>
+            <div class="center-con text-right">
+              <div class="title2">Josephin water</div>
+              <h6>log angelina california</h6>
+              <ul>
+                <li>
+                  <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="o2oopenwindow()"  data-dismiss="modal">
+                    <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                  </a>
+                </li>
+                <li>
+                  <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" data-dismiss="modal">
+                    <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="viddiolog modal fade" id="videocall" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!---------------------------------- O2O CALL MODEL ---------------------------------->
+    <div class="videocallModel  viddiolog modal fade" :id="'videocall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body">
-          <div class="videocall call-modal"><img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
+          
+          <div class="videocall beforeopenChat call-modal"><img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image"><img class="bg-img" src="../assets/images/avtar/big/videocall.jpg" alt="Avatar" /></div>
             <div class="media videocall-details">
               <div class="usersprof">
@@ -4436,8 +4465,284 @@
                 <h6>America ,California</h6>
               </div>
               <div id="basicUsage">00:00:00</div>
-              <div class="zoomcontent">
-                <a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()" data-tippy-content="Zoom Screen"><img src="../assets/images/logo/maximize.svg" alt="zoom screen" /></a>
+              <div class="zoomcontent minimizeclass" >
+                <a class="text-dark" href="#!"  @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
+                    <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
+                 </a>
+              </div>
+            </div>
+            <div class="center-con text-center">
+              <ul>
+                <li>
+                  <a class="icon-btn btn-light button-effect pause" href="#" data-tippy-content="Hold">
+                    <i class="ti-control-pause"></i>
+                  </a>
+                </li>
+                <li>
+                  <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" @click="on2Callclose()" data-dismiss="modal" data-tippy-content="Hangup">
+                    <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                  </a>
+                </li>
+                <li>
+                  <a class="icon-btn btn-light button-effect mic" href="#" data-tippy-content="Mute">
+                    <i class="fa fa-microphone"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+              <div class="text-right" style="float: right;position: absolute;bottom: 107px;right: 22px;">
+              <ul>
+                <li>
+                  <a class="icon-btn btn-light button-effect pause" id="chatopen"  href="#" @click="showCallchat()" data-tippy-content="Hold">
+                  <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
+                  </a>
+                  <a class="icon-btn btn-light button-effect pause" id="chatclose" href="#" @click="hideCallchat()" style="display:none" data-tippy-content="Hold">
+                  <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
+                  </a>
+                </li>
+            
+              </ul>
+            </div>
+          </div>
+        <div class="chitchat-main small-sidebar" id="contents" style="display:none;width: 30%;
+    float: right;">
+      
+
+        <div class="chat-content tabto" id="startchat">
+          <div class=" messages custom-scroll active messageschat" id="chatings" style="min-height:108vh !important;">
+            
+            <!-------- Dropzone ------>
+            <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
+            <!-------- end -------->
+            <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
+
+            </loading>
+            <div class="contact-chat  ">
+              <ul class="chatappend" v-for="chat in friendCallchat">
+                <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
+                  <div class="media">
+                    <div class="profile mr-4">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                    <div class="media-body">
+                      <div class="contact-name">
+                        <h5>{{ c_user.name}}</h5>
+                        <h6>{{isToday(chat.createdAt)}}</h6>
+
+                        <ul class="msg-box">
+                          <li class="msg-setting-main">
+                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                              <div class="msg-setting" :id="'msg-settings'+chat._id" @click="msg_setting(chat._id)">
+                                <i class="ti-more-alt"></i>
+                              </div>
+
+                              <div class="msg-dropdown" :id="'msg-dropdowns'+chat._id" style="z-index: 99999;">
+                                <ul>
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                    <a href="#" @click="eidtchat(chat._id,chat.message)">
+                                      <i class="fa fa-pencil"></i>edit</a>
+                                  </li>
+                                  <li>
+                                    <a href="#" @click="quote(chat)">
+                                      <i class="fa fa-share"></i>Quote</a>
+                                  </li>
+
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                    <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                      <i class="fa fa-clone"></i>copy</a>
+                                  </li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                  <li>
+                                    <a href="#" @click="msgdelete(chat)">
+                                      <i class="ti-trash"></i>delete</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+
+                            <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
+                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                            <br>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+chat.message">
+                            </a>
+
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+
+                          </li>
+                          <!-- <li class="msg-setting-main">
+                                <h5> your personal assistant to help you &#128512; </h5>
+                                <div class="badge badge-success sm ml-2"> R</div>
+                                <div class="msg-dropdown-main">
+                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                  <div class="msg-dropdown"> 
+                                    <ul>
+                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li> -->
+                        </ul>
+
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="sent" style="padding-bottom:20px" v-else>
+                  <div class="media">
+                    <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                    <div class="media-body">
+                      <div class="contact-name">
+                        <h5>{{ singlefriend.name }}</h5>
+                        <h6>{{isToday(chat.createdAt)}}</h6>
+                        <ul class="msg-box">
+                          <li class="msg-setting-main">
+
+                            <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
+                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                            <br>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+chat.message">
+                            </a>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                              <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
+                                <i class="ti-more-alt"></i>
+                              </div>
+                              <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;">
+                                <ul>
+                                  <!--<li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="eidtchat(chat._id,chat.message)"><i class="fa fa-pencil" ></i>edit</a></li>-->
+                                  <li>
+                                    <a href="#" @click="quote(chat)">
+                                      <i class="fa fa-share"></i>Quote</a>
+                                  </li>
+
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                    <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                      <i class="fa fa-clone"></i>copy</a>
+                                  </li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                  <!--<li><a href="#" @click="msgdelete(chat._id)"><i class="ti-trash"></i>delete</a></li>-->
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <!--   <li class="msg-setting-main">
+                                <h5> it should from elite auther &#128519;</h5>
+                                <div class="badge badge-success sm ml-2"> R</div>
+                                <div class="msg-dropdown-main">
+                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                  <div class="msg-dropdown"> 
+                                    <ul>
+                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li> -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+              <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
+            </div>
+           
+            <span v-show="typing" class="">{{ singlefriend.name }} is typing ...</span>
+
+          </div>
+       <VEmojiPicker @select="selectchatEmoji"
+          class=""
+          v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;"  v-if="ischatemojiActive" />
+          <div class="message-input message-call">
+            <div class="replybox" v-if="replyBox == true">
+              <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
+                <span style="float:right;cursor: pointer;" @click="closeReplybox()">
+                  <x-icon size="1.5x" class="custom-class"></x-icon>
+                </span>
+                <br>
+                <span style="margin-left: 6px;">
+                  {{isToday(chatreplydata.createdAt)}}
+                </span>
+              </p>
+            </div>
+            <div class="wrap emojis-main">
+             
+              <div class="dot-btn dot-primary mr-3">
+                <a class="icon-btn btn-outline-primary button-effect " @click="showChatemoji">
+                  <smile-icon size="1.5x" class="custom-class"></smile-icon>
+                </a>
+              </div>
+
+              <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
+                <i class="fa fa-plus"></i>
+              </label>
+              <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
+
+              <!--<div class="contact-poll-content">
+                      <ul>
+                        <li><a href="#"><i data-feather="image"></i>gallery</a></li>
+                        <li><a href="#"><i data-feather="camera"></i>camera</a></li>
+                        <li><a data-toggle="modal" data-target="#snippetModal"><i data-feather="code">                       </i>Code Snippest</a></li>
+                        <li><a href="#"><i data-feather="user">                              </i>contact</a></li>
+                        <li><a href="#"><i data-feather="map-pin">                       </i>location</a></li>
+                        <li><a href="#"><i data-feather="clipboard"> </i>document</a></li>
+                        <li><a data-toggle="modal" data-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
+                        <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
+                      </ul>
+                    </div>-->
+
+              <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
+              <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
+                <mic-icon size="1.5x" class="custom-class"></mic-icon>
+              </a>
+              <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
+                <send-icon size="1.5x" class="custom-class"></send-icon>
+              </button>
+              <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
+                <x-icon size="1.5x" class="custom-class"></x-icon>
+              </button>
+              
+            </div>
+          </div>
+        </div>
+
+      </div>
+        </div>
+      </div>
+    </div>
+    <!-------------------------------------------- CLOSE O2O CALL MODEL -------------------------------->
+
+    <!--------------------------------------------- OPEN BOARDCAST MODEL-------------------------------->
+      <div class="boardcastModel  viddiolog modal fade" :id="'boardcastcall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-body">
+          <div class="boardcastcall beforeopenChat call-modal"><img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
+            <div class="small-image"><img class="bg-img" src="../assets/images/avtar/big/videocall.jpg" alt="Avatar" /></div>
+            <div class="media videocall-details">
+              <div class="usersprof">
+                <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
+                <div class="profile"><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" /></div>
+              </div>
+              <div class="media-body">
+                <h5>Josephin water</h5>
+                <h6>America ,California</h6>
+              </div>
+              <div id="basicUsage">00:00:00</div>
+              <div class="zoomcontent minimizeclass" >
+                <a class="text-dark" href="#!"  @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
+                    <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
+                 </a>
               </div>
             </div>
             <div class="center-con text-center">
@@ -4459,10 +4764,236 @@
                 </li>
               </ul>
             </div>
+              <div class="text-right" style="float: right;position: absolute;bottom: 107px;right: 22px;">
+              <ul>
+                <li>
+                  <a class="icon-btn btn-light button-effect pause" id="chatopen"  href="#" @click="showCallchat()" data-tippy-content="Hold">
+                  <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
+                  </a>
+                  <a class="icon-btn btn-light button-effect pause" id="chatclose" href="#" @click="hideCallchat()" style="display:none" data-tippy-content="Hold">
+                  <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
+                  </a>
+                </li>
+            
+              </ul>
+            </div>
           </div>
+        <div class="chitchat-main small-sidebar" id="contents" style="display:none;width: 30%;float: right;">
+        <div class="chat-content tabto" id="startchat">
+          <div class=" messages custom-scroll active messageschat" id="chatings" style="min-height:108vh !important;">
+            
+            <!-------- Dropzone ------>
+            <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
+            <!-------- end -------->
+            <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
+
+            </loading>
+            <div class="contact-chat  ">
+              <ul class="chatappend" v-for="chat in friendCallchat">
+                <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
+                  <div class="media">
+                    <div class="profile mr-4">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                    <div class="media-body">
+                      <div class="contact-name">
+                        <h5>{{ c_user.name}}</h5>
+                        <h6>{{isToday(chat.createdAt)}}</h6>
+
+                        <ul class="msg-box">
+                          <li class="msg-setting-main">
+                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                              <div class="msg-setting" :id="'msg-settings'+chat._id" @click="msg_setting(chat._id)">
+                                <i class="ti-more-alt"></i>
+                              </div>
+
+                              <div class="msg-dropdown" :id="'msg-dropdowns'+chat._id" style="z-index: 99999;">
+                                <ul>
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                    <a href="#" @click="eidtchat(chat._id,chat.message)">
+                                      <i class="fa fa-pencil"></i>edit</a>
+                                  </li>
+                                  <li>
+                                    <a href="#" @click="quote(chat)">
+                                      <i class="fa fa-share"></i>Quote</a>
+                                  </li>
+
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                    <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                      <i class="fa fa-clone"></i>copy</a>
+                                  </li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                  <li>
+                                    <a href="#" @click="msgdelete(chat)">
+                                      <i class="ti-trash"></i>delete</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+
+                            <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
+                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                            <br>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+chat.message">
+                            </a>
+
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+
+                          </li>
+                          <!-- <li class="msg-setting-main">
+                                <h5> your personal assistant to help you &#128512; </h5>
+                                <div class="badge badge-success sm ml-2"> R</div>
+                                <div class="msg-dropdown-main">
+                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                  <div class="msg-dropdown"> 
+                                    <ul>
+                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li> -->
+                        </ul>
+
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="sent" style="padding-bottom:20px" v-else>
+                  <div class="media">
+                    <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                    <div class="media-body">
+                      <div class="contact-name">
+                        <h5>{{ singlefriend.name }}</h5>
+                        <h6>{{isToday(chat.createdAt)}}</h6>
+                        <ul class="msg-box">
+                          <li class="msg-setting-main">
+
+                            <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
+                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                            <br>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+chat.message">
+                            </a>
+                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                              <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
+                                <i class="ti-more-alt"></i>
+                              </div>
+                              <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;">
+                                <ul>
+                                  <!--<li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="eidtchat(chat._id,chat.message)"><i class="fa fa-pencil" ></i>edit</a></li>-->
+                                  <li>
+                                    <a href="#" @click="quote(chat)">
+                                      <i class="fa fa-share"></i>Quote</a>
+                                  </li>
+
+                                  <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                    <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                      <i class="fa fa-clone"></i>copy</a>
+                                  </li>
+                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                  <!--<li><a href="#" @click="msgdelete(chat._id)"><i class="ti-trash"></i>delete</a></li>-->
+                                </ul>
+                              </div>
+                            </div>
+                          </li>
+                          <!--   <li class="msg-setting-main">
+                                <h5> it should from elite auther &#128519;</h5>
+                                <div class="badge badge-success sm ml-2"> R</div>
+                                <div class="msg-dropdown-main">
+                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                  <div class="msg-dropdown"> 
+                                    <ul>
+                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li> -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+              </ul>
+              <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
+            </div>
+           
+            <span v-show="typing" class="">{{ singlefriend.name }} is typing ...</span>
+
+          </div>
+       <VEmojiPicker @select="selectchatEmoji"
+          class=""
+          v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;"  v-if="ischatemojiActive" />
+          <div class="message-input message-call">
+            <div class="replybox" v-if="replyBox == true">
+              <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
+                <span style="float:right;cursor: pointer;" @click="closeReplybox()">
+                  <x-icon size="1.5x" class="custom-class"></x-icon>
+                </span>
+                <br>
+                <span style="margin-left: 6px;">
+                  {{isToday(chatreplydata.createdAt)}}
+                </span>
+              </p>
+            </div>
+            <div class="wrap emojis-main">
+             
+              <div class="dot-btn dot-primary mr-3">
+                <a class="icon-btn btn-outline-primary button-effect " @click="showChatemoji">
+                  <smile-icon size="1.5x" class="custom-class"></smile-icon>
+                </a>
+              </div>
+
+              <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
+                <i class="fa fa-plus"></i>
+              </label>
+              <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
+
+              <!--<div class="contact-poll-content">
+                      <ul>
+                        <li><a href="#"><i data-feather="image"></i>gallery</a></li>
+                        <li><a href="#"><i data-feather="camera"></i>camera</a></li>
+                        <li><a data-toggle="modal" data-target="#snippetModal"><i data-feather="code">                       </i>Code Snippest</a></li>
+                        <li><a href="#"><i data-feather="user">                              </i>contact</a></li>
+                        <li><a href="#"><i data-feather="map-pin">                       </i>location</a></li>
+                        <li><a href="#"><i data-feather="clipboard"> </i>document</a></li>
+                        <li><a data-toggle="modal" data-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
+                        <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
+                      </ul>
+                    </div>-->
+
+              <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
+              <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
+                <mic-icon size="1.5x" class="custom-class"></mic-icon>
+              </a>
+              <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
+                <send-icon size="1.5x" class="custom-class"></send-icon>
+              </button>
+              <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
+                <x-icon size="1.5x" class="custom-class"></x-icon>
+              </button>
+              
+            </div>
+          </div>
+        </div>
+
+      </div>
         </div>
       </div>
     </div>
+
+    <!--------------------------------------------- CLOSE BOARDCAST MODEL -------------------------------->
     <div class="modal fade" id="confercall" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body">
@@ -5018,12 +5549,12 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VEmojiPicker from 'v-emoji-picker';
 import ApiService from '../services/api.service.js';
-import {Trash2Icon ,CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
+import { Minimize2Icon ,Trash2Icon ,CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-  components: {Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+  components: { Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
   props: [],
   data() {
     return {
@@ -5036,6 +5567,7 @@ export default {
       msgObj: {},
       message: '',
       friendchat: {},
+      friendCallchat:{},
       chatdata: {},
       typing: false,
       groups: {},
@@ -5053,7 +5585,7 @@ export default {
       onEditgroupclear: false,
       ongroupChat: true,
       dropzoneOptions: {
-        url: 'https://peekvideochat.com:22000/chatFilesShare',
+        url: 'https://192.168.100.25:22000/chatFilesShare',
         thumbnailWidth: 100,
         thumbnailHeight: 100,
         maxFiles: 10,
@@ -5087,6 +5619,7 @@ export default {
       userid:'',
       dragAndDropCapable: false,
       windowHeight:0,
+      hostname:''
 
     }
 
@@ -5118,11 +5651,15 @@ export default {
       if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
 
         this.friendchat.push(data.msgData);
+        
         // $('#f_typing'+data.msgData.receiverId._id).html(data.msgData.message);
         var container = this.$el.querySelector("#chating");
          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
       
         if (this.singlefriend.chatWithRefId == this.c_user._id) {
+          this.friendCallchat.push(data.msgData);
+          var containers = this.$el.querySelector("#chatings");
+         $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
           this.isSeen = true;
           console.log('seen');
            setTimeout(() => {
@@ -5283,7 +5820,7 @@ export default {
           }).pop();
           
             console.log(post);
-                if (this.singlefriend._id== data.UserId && post._id == data.selectFrienddata._id) {
+                if (this.singlefriend._id == data.UserId && post._id == data.selectFrienddata._id) {
                     this.typing = true;
                     
                 }else if(post._id == data.selectFrienddata._id){
@@ -5504,6 +6041,9 @@ usertab(){
            $('.message-input').show();
             var container = this.$el.querySelector("#chating");
             $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+            var containers = this.$el.querySelector("#chatings");
+            console.log(containers.scrollHeight);
+            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
             this.isLoading = true;
             this.message = '';
             this.editChatid = '';
@@ -5559,7 +6099,9 @@ usertab(){
 
           $('#group_chat').remove();
           var container = this.$el.querySelector("#chating");
-          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
+          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+          var containers = this.$el.querySelector("#chatings");
+            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast"); 
           $('#startchat').addClass("active");
 
           $('.chitchat-container').toggleClass("mobile-menu");
@@ -5616,6 +6158,7 @@ usertab(){
         //console.log(this.msgObj);
         this.isSeen = false;
         this.friendchat.push(this.msgObj);
+        this.friendCallchat.push(this.msgObj);
         this.$socket.emit('sendmsg', {
               selectFrienddata: this.singlefriend._id,
               userId: this.c_user._id,
@@ -5701,6 +6244,7 @@ usertab(){
         //console.log(this.msgObj);
       //  this.isSeen = false;
         this.friendchat.push(this.msgObj);
+        this.friendCallchat.push(this.msgObj);
         this.$socket.emit('sendmsg', {
               selectFrienddata: this.singlefriend._id,
               userId: this.c_user._id,
@@ -5749,11 +6293,12 @@ usertab(){
         })
         console.log(this.singlefriend._id);
 
-
+        this.message = '';
        var container = this.$el.querySelector("#chating");
          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-          
-        this.message = '';
+          var containers = this.$el.querySelector("#chatings");
+         $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+        
         $('#send-msg').addClass('disabled').attr("disabled", "disabled");
 
       }
@@ -5945,7 +6490,7 @@ if(this.onEditclear == true){
 
     msgdelete(data) {
       this.$socket.emit('senderdeletemsg', data);
-        console.log(data);
+
       $('#sender' + data._id).html('message deleted');
       console.log(data._id);
       axios.get('/deleteMsg/' + data._id + '/0')
@@ -6738,8 +7283,97 @@ if(this.multipleneewmembers){
     },
     msg_setting(id) {
       $('#msg-setting' + id).siblings('#msg-dropdown' + id).toggle();
+       $('#msg-settings' + id).siblings('#msg-dropdowns' + id).toggle();
     },
-   
+
+    showCallchat(){
+      $('#chatopen').hide();
+      $('#chatclose').show();
+      $('.message-input').show();
+            var containers = this.$el.querySelector("#chatings");
+            console.log(containers.scrollHeight);
+            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+            this.isLoading = true;
+            this.message = '';
+            this.editChatid = '';
+            this.onEditclear = false;
+            this.onChat = true;
+            this.chatreplydata = "";
+            this.typing = false;
+            $('.message-input').css("height", "96px");
+            this.replyBox = false;
+
+            
+            this.$socket.emit('updateUserSelection', {
+              selectedUser: this.singlefriend._id,
+              userId: this.c_user._id
+            });
+            const post = this.friendsdata.filter((obj) => {
+              return this.singlefriend._id === obj._id;
+            }).pop();
+            post.usCount = 0;
+            //console.log(post);
+            // this.$set(this.singlefriend,'chatWithRefId',this.c_user._id);
+            $('.init').removeClass("active");
+            $('#friend' + this.singlefriend._id).addClass("active");
+
+
+            //$(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
+              this.friendCallchat ={};
+            axios.get('/getChat/' + this.c_user._id + '/' + this.singlefriend._id + '/50')
+              .then(responce => {
+                
+                this.friendCallchat = responce.data;
+                this.$socket.emit('lastchatobj_send', this.friendCallchat[this.friendCallchat.length - 1]);
+                var container = this.$el.querySelector("#chatings");
+                $("#chatings").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
+                if (this.friendCallchat[this.friendCallchat.length - 1].isSeen == 1) {
+                  this.isSeen = true;
+                } else {
+                  this.isSeen = false;
+                }
+
+        })
+        .catch((error) => console.log(error));
+          setTimeout(() => {
+            this.isLoading = false
+          }, 1000)
+          $('#mainchatpage').remove();
+
+          $('#group_chat').remove();
+          var containers = this.$el.querySelector("#chatings");
+            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast"); 
+          $('#startchat').addClass("active");
+
+          $('.videocall').removeClass('beforeopenChat');
+          $('.videocall').addClass('afteropenChat');
+          $('#contents').show();
+          $('.chitchat-main .chat-content').css('opacity','1');
+    },
+
+      hideCallchat(){
+          $('.videocall').addClass('beforeopenChat');
+          $('.videocall').removeClass('afteropenChat');
+          $('#contents').hide(); 
+          $('#chatclose').hide();
+          $('#chatopen').show();
+          
+
+
+      }  ,
+
+      minimizeScreen(){
+        $('#startchat').removeClass('active');
+        $('#showcallModel'+this.singlefriend._id).hide()
+        $('#showCallMin').show();
+      },
+
+      on2Callclose(){
+        $('#showCallMin').hide();
+       $('#showcallModel'+this.singlefriend._id).show();
+       $('#startchat').addClass('active');
+        
+      },
 
   },
 
@@ -6749,7 +7383,7 @@ if(this.multipleneewmembers){
 
     this.c_user = this.$session.get('c_user');
     console.log(this.c_user.name);
-
+     this.hostname=this.$hostname;
     this.getfriends();
     this.emptyChatWithId();
     if(screen.width < 600){
@@ -6780,7 +7414,55 @@ if(this.multipleneewmembers){
         $("#groupdropzone").css("display", "none");
       }
     });
+testing();
+/////////////////////////////// BOARDCAST WEBSOCKET LISTINER/////////////////////////////
 
+
+    let hostIs = location.host.split(':');
+        let webSocketIp = "peekvideochat.com/";  
+        if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
+        let broadCastUrl = 'wss://' + webSocketIp + ':8444/one2many';
+       // var ws = new WebSocket('wss://' + location.host + '/one2many');
+       window.ws = new WebSocket(broadCastUrl);
+        window.presenterArr = [];
+        
+        window.ws.on('open', function (){
+              console.log('O2M socket open'); 
+            $interval(One2ManyCall.getPresenterData, 6000);
+            One2ManyCall.getPresenterData(); //call on start and then it will repeat by interval
+        })
+
+        window.ws.onmessage = function(message) {
+	var parsedMessage = JSON.parse(message.data);
+	console.info('Received message: ' + message.data);
+	switch (parsedMessage.id) {
+	case 'presenterResponse':
+		One2ManyCall.presenterResponse(parsedMessage);
+		break;
+	case 'viewerResponse':
+		One2ManyCall.viewerResponse(parsedMessage);
+		break;
+	case 'stopCommunication':
+		One2ManyCall.dispose();
+		break;
+	case 'iceCandidate':
+		 window.webRtcO2MPeer.addIceCandidate(parsedMessage.candidate)
+		break;
+      case 'presenterDataResp':
+                        // where 'user' is loggedInUser
+                        if (!this.c_user) break;
+                        let presenterData = [];
+
+                        parsedMessage.data.forEach(preData => {
+                            if (preData.preId != this.c_user._id) presenterData.push(preData)
+                        });
+                        window.presenterArr = presenterData;
+                        console.log('presenterArr ', window.presenterArr);
+                        break;
+	default:
+		console.error('Unrecognized message', parsedMessage);
+	}
+}
 ////////////////Jquery Code //////////////////////
   // $(document).ready(function() {
   //       $(".msg-setting-main h5").emojioneArea({
@@ -7424,5 +8106,120 @@ li.sent h5 {
 div#EmojiPicker {
     margin-bottom: 35px;
 }
+}
+.viddiolog.modal.fade .modal-dialog {
+    max-width: 100%;
+}
+.videocallModel .modal-dialog {
+    max-width: 100%;
+    margin: 0px 0px 0px auto;
+}
+.videocallModel .modal-body {
+    padding: 0;
+}
+.viddiolog .videocall.call-modal {
+    min-height: 108vh !important;
+}
+.videocall.call-modal .videocall-details, .videocallhang.call-modal .videocall-details {
+    position: absolute;
+    top: 40px;
+    padding: 35px;
+    right: 0;
+    left: 0;
+    align-items: center;
+}
+@media screen and (max-width: 767.98px){
+ .message-input {
+    width: calc(100% - 200px);
+}
+}
+
+@media screen and (max-width: 767.98px){
+.message-input {
+    width: calc(100% - 200px);
+}
+}
+
+@media screen and (max-width: 992px){
+.message-input {
+    width: calc(100% - 215px);
+}
+}
+
+@media screen and (max-width: 1366px){
+.message-input {
+    width: calc(100% - 490px);
+}
+}
+
+@media screen and(max-width: 767.98px){
+.message-input {
+    width: calc(100% - 200px);
+}
+}
+
+@media screen and (max-width: 992px){
+.message-input {
+    width: calc(100% - 215px);
+}
+}
+
+@media screen and (max-width: 800px){
+
+.message-input {
+    width: 100vw;
+    -webkit-animation: fadeInRight 300ms ease-in-out;
+    animation: fadeInRight 300ms ease-in-out;
+    transition: all 0.3s ease;
+}
+}
+
+@media screen and (max-width: 1024px){
+.message-input {
+    padding: 26px 20px;
+}
+}
+
+@media screen and (max-width: 1366px){
+.message-input {
+    padding: 26px 25px;
+}
+}
+.message-call {
+    height: 95px;
+    position: fixed;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    padding: 26px 45px;
+    z-index: 9;
+    width: 34% !important;
+    bottom: -55px !important;
+}
+.beforeopenChat{
+ background-image: url(/img/videocall_bg.b320143d.jpg);
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    width: 100%;
+    float: left;
+}
+.afteropenChat{
+  background-image: url(/img/videocall_bg.b320143d.jpg);
+    background-size: cover;
+    background-position: center center;
+    display: block;
+    width: 70%;
+    float: left;
+}
+.callChat{
+  width: 30%;
+  float: right;
+}
+.minimizeclass{
+    border-radius: 100%;
+    background-color: #eff1f2;
+    padding: 9px;
+    width: 35px;
+    height: 36px;
 }
 </style>
