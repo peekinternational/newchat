@@ -4455,7 +4455,7 @@
         <div class="modal-body">
           
           <div class="videocall beforeopenChat call-modal">
-            <video id="broadCastVideo" autoplay></video>
+            <video id="broadCastVideo" autoplay style="width:100%"></video>
             <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image"><img class="bg-img" src="../assets/images/avtar/big/videocall.jpg" alt="Avatar" /></div>
             <div class="media videocall-details">
