@@ -68,7 +68,7 @@
           <div class="recent">
             <div class="theme-title">
               <div class="media">
-                <button onclick="presenter()">click</button>
+                <button class="logMe">click</button>
                 <div v-if="c_user">
 
                   
@@ -7510,6 +7510,10 @@ function presenter() {
         });
     }
 }
+
+ $('.logMe').on('click', (evt) => {
+        presenter();
+      });
 
 function onOfferPresenter(error, offerSdp) {
     if (error) return onError(error);
