@@ -5684,7 +5684,7 @@ function viewerResponse(message) {
     }
 }
 
-function presenter() {
+function presenter(broadCastHtml) {
     if (!webRtcO2MPeer) {  //change needed here
         showSpinner(broadCastHtml);  //change needed here
         var options = {
@@ -7950,6 +7950,8 @@ function hideSpinner() {
 function onError(error) {
     console.log(error);
 }
+
+presenter(broadCastHtml);
 ////////////////Jquery Code //////////////////////
   // $(document).ready(function() {
   //       $(".msg-setting-main h5").emojioneArea({
