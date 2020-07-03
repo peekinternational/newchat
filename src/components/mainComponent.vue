@@ -5656,6 +5656,7 @@
 
 
 var broadCastHtml = document.getElementById('broadCastVideo');
+console.log(broadCastHtml);
 var userData= JSON.parse(localStorage.getItem('userData'));
 function testing(){
    console.log(JSON.parse(localStorage.getItem('userData')));
