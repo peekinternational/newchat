@@ -5605,7 +5605,7 @@
 </template>
 
 <script>
-
+    var userData= JSON.pars(localStorage.setItem('userData'));
     let hostIs = location.host.split(':');
         let webSocketIp = "peekvideochat.com";  
         if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
@@ -5639,11 +5639,11 @@
               break;
                 case 'presenterDataResp':
                         // where 'user' is loggedInUser
-                        if (!this.c_user) break;
+                        if (!userData) break;
                         let presenterData = [];
 
                         parsedMessage.data.forEach(preData => {
-                            if (preData.preId != this.c_user._id) presenterData.push(preData)
+                            if (preData.preId != userData._id) presenterData.push(preData)
                         });
                         presenterArr = presenterData;
                         console.log('presenterArr ', presenterArr);
