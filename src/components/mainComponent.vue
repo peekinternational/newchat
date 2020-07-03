@@ -5606,6 +5606,7 @@
 
 <script>
     var userData= JSON.parse(localStorage.getItem('userData'));
+    console.log(userData);
     let hostIs = location.host.split(':');
         let webSocketIp = "peekvideochat.com";  
         if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
@@ -5685,6 +5686,7 @@ function viewerResponse(message) {
 }
 
 function presenter(broadCastHtml) {
+  console.log(userData);
     if (!webRtcO2MPeer) {  //change needed here
         showSpinner(broadCastHtml);  //change needed here
         var options = {
