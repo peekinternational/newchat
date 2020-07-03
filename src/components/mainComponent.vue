@@ -4456,7 +4456,7 @@
     </div>
 
     <!---------------------------------- O2O CALL MODEL ---------------------------------->
-    <div class="videocallModel  viddiolog modal fade" :id="'videocall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="videocallModel  viddiolog modal fade" id="broadcastvideocall" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modelbefore" id="modalcall" role="document">
         <div class="modal-body">
           
@@ -4787,7 +4787,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Back</button>
-            <button class="btn btn-primary button-effect btn-sm" type="button" data-toggle="modal" :data-target="'#videocall'+singlefriend._id" @click="startBroadcasting()">Broadcasting Now</button>
+            <button class="btn btn-primary button-effect btn-sm" type="button" data-toggle="modal" data-target="#broadcastvideocall" @click="startBroadcasting()">Broadcasting Now</button>
           </div>
         </div>
       </div>
@@ -7677,6 +7677,7 @@ if(this.multipleneewmembers){
         $('#showCallMin').hide();
        $('#showcallModel'+this.singlefriend._id).show();
        $('#startchat').addClass('active');
+       broadcaststop();
         
       },
 
