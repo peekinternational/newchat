@@ -5605,7 +5605,7 @@
 </template>
 
 <script>
-    var userData= JSON.pars(localStorage.setItem('userData'));
+    var userData= JSON.parse(localStorage.getItem('userData'));
     let hostIs = location.host.split(':');
         let webSocketIp = "peekvideochat.com";  
         if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
