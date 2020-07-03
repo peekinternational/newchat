@@ -5720,6 +5720,7 @@ function getPresenterData() {
     var message = {
         id: 'presenterData'
     };
+    console.log('setintrval');
     sendMessage(message);
 }
 
@@ -6253,6 +6254,7 @@ selectEmoji(emoji) {
         .then((responce) => {
           this.$socket.emit('logout', this.c_user._id);
           this.$session.destroy();
+          ocalStorage.removeItem("userData")
           this.$router.push('/login')
         })
         .catch((error) => console.log(error));
