@@ -4123,6 +4123,12 @@
               </a>
               <h5>Reminder</h5>
             </li>
+            <li>
+              <a class="icon-btn btn-danger btn-sm button-effect" href="javascript:void(0);" data-toggle="modal" data-target="#showPresenter">
+                <radio-icon size="1.5x" class="custom-class"></radio-icon>
+              </a>
+              <h5>Broadcast</h5>
+            </li>
             <!--  <li class="close-app"><a class="icon-btn btn-danger" href="#" onclick="removedefault()"><x-icon size="1.5x" class="custom-class"></x-icon></a>
                   <h5>close</h5>
                 </li> -->
@@ -4727,10 +4733,75 @@
     <!-------------------------------------------- CLOSE O2O CALL MODEL -------------------------------->
 
     <!--------------------------------------------- OPEN BOARDCAST MODEL-------------------------------->
-      <div class="boardcastModel  viddiolog modal fade" :id="'boardcastcall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
+      
+  <!----------------------------Show Participent  Model -------------->
+
+    <div class="modal fade fev-addcall-main add-popup" id="showPresenter" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">
+              Broadcast</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p style="text-align: center;">No presenter found</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary button-effect btn-sm" data-toggle="modal" data-target="#startBroadcast" type="button">Start Broadcasting</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+ <!---------------------------- Close Show Participent  Model -------------->
+      
+ <!----------------------------- Show Broadcast Password  Model-------------->
+    
+     <div class="modal fade fev-addcall-main add-popup" id="startBroadcast" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">
+             <i class="fa fa-signal text-light-icon"></i>  Start Broadcasting
+              </h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+           <form class="default-form">
+             <h4>Set password for live stream:</h4>
+              <div class="form-group" style="display: flex;margin-top: 27px;">
+                <span>Yes</span>
+                <input class="form-control" id="exampleInputEmail12" name="password" type="radio" style="height: 19px;width:30%;margin-bottom: 0px;" value="Yes"/>
+              </div>
+              <div class="form-group" style="display: flex;">
+               <span style="width: 21px;">No</span>
+                <input class="form-control" id="exampleInputEmail12" name="password" type="radio" style="height: 19px;width:30%;margin-bottom: 0px;" value="No" checked/>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Back</button>
+            <button class="btn btn-primary button-effect btn-sm" type="button" data-toggle="modal" :data-target="'#boardcastcall'+singlefriend._id" @click="startBroadcasting()">Broadcasting Now</button>
+          </div>
+        </div>
+      </div>
+     </div>
+
+      <!---------------------------------------- Close Broadcast Password  Model -------------------->
+
+      <div class="videocallModel  viddiolog modal fade" :id="'boardcastcall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modelbefore" id="modalcall" role="document">
         <div class="modal-body">
-          <div class="boardcastcall beforeopenChat call-modal"><img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
+          
+          <div class="videocall beforeopenChat call-modal">
+            <video id="broadCastVideo" autoplay style="width:100%"></video>
+            <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image"><img class="bg-img" src="../assets/images/avtar/big/videocall.jpg" alt="Avatar" /></div>
             <div class="media videocall-details">
               <div class="usersprof">
@@ -4756,7 +4827,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" data-dismiss="modal" data-tippy-content="Hangup">
+                  <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" id="broadcaststop"  data-dismiss="modal" data-tippy-content="Hangup">
                     <phone-icon size="1.5x" class="custom-class"></phone-icon>
                   </a>
                 </li>
@@ -4781,7 +4852,10 @@
               </ul>
             </div>
           </div>
-        <div class="chitchat-main small-sidebar" id="contents" style="display:none;width: 30%;float: right;">
+        <div class="chitchat-main small-sidebar" id="contents" style="display:none;width: 30%;
+    float: right;">
+      
+
         <div class="chat-content tabto" id="startchat">
           <div class=" messages custom-scroll active messageschat" id="chatings" style="min-height:108vh !important;">
             
@@ -4996,7 +5070,12 @@
       </div>
     </div>
 
+
+
+
     <!--------------------------------------------- CLOSE BOARDCAST MODEL -------------------------------->
+    
+    
     <div class="modal fade" id="confercall" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body">
@@ -5526,6 +5605,218 @@
 </template>
 
 <script>
+
+    let hostIs = location.host.split(':');
+        let webSocketIp = "peekvideochat.com";  
+        if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
+        let broadCastUrl = 'wss://' + webSocketIp + ':8444/one2many';
+       // var ws = new WebSocket('wss://' + location.host + '/one2many');
+      var ws = new WebSocket(broadCastUrl);
+        var presenterArr = [];
+        
+        ws.onopen= function (){
+              console.log('O2M socket open'); 
+          
+            setInterval( getPresenterData(), 6000);
+            getPresenterData(); //call on start and then it will repeat by interval
+        }
+
+         ws.onmessage = function(message) {
+            var parsedMessage = JSON.parse(message.data);
+            console.info('Received message: ' + message.data);
+            switch (parsedMessage.id) {
+            case 'presenterResponse':
+              presenterResponse(parsedMessage);
+              break;
+            case 'viewerResponse':
+              viewerResponse(parsedMessage);
+              break;
+            case 'stopCommunication':
+              dispose();
+              break;
+            case 'iceCandidate':
+              window.webRtcO2MPeer.addIceCandidate(parsedMessage.candidate)
+              break;
+                case 'presenterDataResp':
+                        // where 'user' is loggedInUser
+                        if (!this.c_user) break;
+                        let presenterData = [];
+
+                        parsedMessage.data.forEach(preData => {
+                            if (preData.preId != this.c_user._id) presenterData.push(preData)
+                        });
+                        presenterArr = presenterData;
+                        console.log('presenterArr ', presenterArr);
+                        break;
+	default:
+		console.error('Unrecognized message', parsedMessage);
+	}
+}
+
+
+
+var broadCastHtml = document.getElementById('broadCastVideo');
+var userData= JSON.parse(localStorage.getItem('userData'));
+function testing(){
+   console.log(JSON.parse(localStorage.getItem('userData')));
+}
+var webRtcO2MPeer='';
+function presenterResponse(message) {
+    if (message.response != 'accepted') {
+        var errorMsg = message.message ? message.message : 'Unknow error';
+        console.warn('Call not accepted for the following reason: ' + errorMsg);
+        dispose();
+    } else {
+        webRtcO2MPeer.processAnswer(message.sdpAnswer); //change needed here
+        $('#bctest').text(message.data);  
+        presenterArr = message.data;  //change needed here
+    }
+}
+
+function viewerResponse(message) {
+    if (message.response != 'accepted') {
+        var errorMsg = message.message ? message.message : 'Unknow error';
+        console.warn('Call not accepted for the following reason: ' + errorMsg);
+        dispose();
+    } else {
+        webRtcO2MPeer.processAnswer(message.sdpAnswer);  //change needed here
+    }
+}
+
+function presenter() {
+    if (!webRtcO2MPeer) {  //change needed here
+        showSpinner(broadCastHtml);  //change needed here
+        var options = {
+            localVideo: broadCastHtml,  //change needed here
+            onicecandidate: onIceCandidate
+        }
+        webRtcO2MPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {  //change needed here
+            if (error) return onError(error);
+            this.generateOffer(onOfferPresenter);
+        });
+    }
+}
+
+ $('.logMe').on('click', (evt) => {
+        presenter();
+      });
+
+function onOfferPresenter(error, offerSdp) {
+    if (error) return onError(error);
+    var message = {
+        id: 'presenter',
+        sdpOffer: offerSdp,
+        preId: userData._id,  //change needed here
+        password: (prePassword) ? prePassword : 0,  //change needed here
+        preName: userData.name  //change needed here
+    };
+    sendMessage(message);
+}
+
+function getPresenterData() {
+    var message = {
+        id: 'presenterData'
+    };
+    sendMessage(message);
+}
+
+function viewer() {
+    if (webRtcO2MPeer) {  //change needed here
+        showSpinner(broadCastHtml);  //change needed here
+
+        var options = {
+            remoteVideo: broadCastHtml,  //change needed here
+            onicecandidate: onIceCandidate
+        }
+
+        webRtcO2MPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {  //change needed here
+            if (error) return onError(error);
+            this.generateOffer(onOfferViewer);
+        });
+    }
+}
+
+function onOfferViewer(error, offerSdp) {
+    if (error) return onError(error)
+
+    var message = {
+        id: 'viewer',
+        sdpOffer: offerSdp,
+        preId: this.bcPresenterId //$rootScope.connWdPreId  //change needed here
+    }
+
+    sendMessage(message);
+}
+
+function onIceCandidate(candidate) {
+    var message = {
+        id: 'onIceCandidate',
+        candidate: candidate
+    }
+    sendMessage(message);
+}
+
+$('#broadcaststop').on('click', (evt) => {
+        broadcaststop();
+        $('#showCallMin').hide();
+       $('#showcallModel'+this.singlefriend._id).show();
+       $('#startchat').addClass('active');
+      });
+
+function broadcaststop() {
+    if (webRtcO2MPeer) {  //change needed here
+        var message = { 
+            id: 'stop'
+        }
+        sendMessage(message);
+        dispose();
+    }
+}
+
+function dispose() {
+    if (webRtcO2MPeer) {  //change needed here
+        webRtcO2MPeer.dispose();  //change needed here
+        webRtcO2MPeer = null;  //change needed here
+    }
+    hideSpinner(broadCastHtml);  //change needed here
+}
+
+// function sendMessage(message) {
+//     window.O2MSoc.$emit(JSON.stringify(message));  //change needed here
+// }
+function sendMessage(message) {
+	var jsonMessage = JSON.stringify(message); 
+	ws.send(jsonMessage);
+}
+
+function showSpinner() {
+    //  if (!arguments[0]) return; // included temporary to bypass error
+    var i = 0;
+    var lengthIs = arguments.length;
+    for (i; i < lengthIs; i++) {
+        if (arguments[i] && typeof arguments[i].poster !== 'undefined') {
+            arguments[i].poster = './images/transparent-1px.png';
+            arguments[i].style.background = 'center transparent url("./images/webrtc.png") no-repeat';
+        }
+    }
+}
+
+function hideSpinner() {
+    //if (!arguments[0]) return; // included temporary to bypass error
+    var i = 0;
+    var lengthIs = arguments.length;
+    for (i; i < lengthIs; i++) {
+        if (arguments[i] && typeof arguments[i].poster !== 'undefined') {
+            arguments[i].src = '';
+            arguments[i].poster = './images/webrtc.png';
+            arguments[i].style.background = '';
+        }
+    }
+}
+
+function onError(error) {
+    console.log(error);
+}
 import Vue from 'vue';
 import $ from 'jquery';
 import JQuery from 'jquery';
@@ -5552,12 +5843,12 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VEmojiPicker from 'v-emoji-picker';
 import ApiService from '../services/api.service.js';
-import { Minimize2Icon ,Trash2Icon ,CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
+import {RadioIcon, Minimize2Icon ,Trash2Icon ,CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-  components: { Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+  components: { RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
   props: [],
   data() {
     return {
@@ -5622,7 +5913,12 @@ export default {
       userid:'',
       dragAndDropCapable: false,
       windowHeight:0,
-      hostname:''
+      hostname:'',
+      broadcastPassword:'',
+      presenterPassword:'',
+      broadcastingId:'',
+      broadcastChat:[],
+      bcPresenterId:''
 
     }
 
@@ -7382,6 +7678,21 @@ if(this.multipleneewmembers){
         
       },
 
+      startBroadcasting (){
+           this.broadcastPassword = this.setPassword;
+              presenter();
+                axios.post('/startPresenter/', {
+                password: this.broadcastPassword,
+                userId: this.c_user._id
+              }).then(response => {
+              this.broadcastingId = res.data.broadcastRefId._id;
+              }, function(err) {
+                console.log('err', err);
+                alert('error');
+             })
+           
+}
+
   },
 
 
@@ -7441,23 +7752,23 @@ if(this.multipleneewmembers){
             getPresenterData(); //call on start and then it will repeat by interval
         }
 
-        ws.onmessage = function(message) {
-	var parsedMessage = JSON.parse(message.data);
-	console.info('Received message: ' + message.data);
-	switch (parsedMessage.id) {
-	case 'presenterResponse':
-		presenterResponse(parsedMessage);
-		break;
-	case 'viewerResponse':
-		viewerResponse(parsedMessage);
-		break;
-	case 'stopCommunication':
-		dispose();
-		break;
-	case 'iceCandidate':
-		 window.webRtcO2MPeer.addIceCandidate(parsedMessage.candidate)
-		break;
-      case 'presenterDataResp':
+         ws.onmessage = function(message) {
+            var parsedMessage = JSON.parse(message.data);
+            console.info('Received message: ' + message.data);
+            switch (parsedMessage.id) {
+            case 'presenterResponse':
+              presenterResponse(parsedMessage);
+              break;
+            case 'viewerResponse':
+              viewerResponse(parsedMessage);
+              break;
+            case 'stopCommunication':
+              dispose();
+              break;
+            case 'iceCandidate':
+              window.webRtcO2MPeer.addIceCandidate(parsedMessage.candidate)
+              break;
+                case 'presenterDataResp':
                         // where 'user' is loggedInUser
                         if (!this.c_user) break;
                         let presenterData = [];
@@ -7562,7 +7873,7 @@ function onOfferViewer(error, offerSdp) {
     var message = {
         id: 'viewer',
         sdpOffer: offerSdp,
-        preId: userData.chatRefId //$rootScope.connWdPreId  //change needed here
+        preId: this.bcPresenterId //$rootScope.connWdPreId  //change needed here
     }
 
     sendMessage(message);
