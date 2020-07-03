@@ -7685,7 +7685,7 @@ if(this.multipleneewmembers){
                 password: this.broadcastPassword,
                 userId: this.c_user._id
               }).then(response => {
-              this.broadcastingId = res.data.broadcastRefId._id;
+              this.broadcastingId = response.data.broadcastRefId._id;
               }, function(err) {
                 console.log('err', err);
                 alert('error');
