@@ -14,23 +14,19 @@
         </div>
         <div class="sidebar-main">
           <ul class="sidebar-top">
-            <li>
-              <a class="button-effect" href="javascript:void(0);" @click="status()" data-intro="Check Status here">
-                <div class="user-popup status one">
-                  <div> <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
-                </div>
+			 <li>
+			 <div class="" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }" >
+              <a class="icon-btn btn-light  button-effect" href="javascript:void(0);" data-toggle="modal" data-target="#showPresenter">
+                <radio-icon size="1.5x" class="custom-class"></radio-icon>
               </a>
+			  </div>
             </li>
             <li>
               <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="favourite()" id="Fav">
                 <i class="fa fa-star"> </i>
               </a>
             </li>
-            <li>
-              <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="document()">
-                <i class="fa fa-file-text"> </i>
-              </a>
-            </li>
+           
             <li>
               <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="contact()">
                 <i class="fa fa-users"> </i>
@@ -68,7 +64,6 @@
           <div class="recent">
             <div class="theme-title">
               <div class="media">
-                <button class="logMe">click</button>
                 <div v-if="c_user">
 
                   
@@ -301,11 +296,7 @@
                           <phone-outgoing-icon size="1.5x" class="custom-class"></phone-outgoing-icon>
                         </a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="con2-tab" data-toggle="tab" href="#con2" role="tab" aria-controls="con2" aria-selected="false">
-                          <i data-feather="phone-missed"></i>
-                        </a>
-                      </li>
+                     
                     </ul>
                     <div class="tab-content" id="contactTabContent">
                       <div class="tab-pane fade show active" id="con1" role="tabpanel" aria-labelledby="con1-tab">
@@ -767,9 +758,8 @@
                     <div class="icon-close close-search"></div>
                   </div>
                 </form>
-                <a class="icon-btn btn-outline-light btn-sm m-r-15" href="#" data-toggle="modal" data-target="#addcallmodal">
-                  <plus-icon size="1.5x" class="custom-class"></plus-icon>
-                </a>
+                
+				
                 <a class="icon-btn btn-outline-light btn-sm close-panel">
                   <x-icon size="1.5x" class="custom-class"></x-icon>
                 </a>
@@ -2803,23 +2793,7 @@
                 <h3>{{singlefriend.name}}</h3>
                 <h6>Add Description</h6>
               </div>
-              <ul class="medialogo">
-                <li>
-                  <a class="icon-btn btn-danger button-effect" href="#">
-                    <i class="fa fa-google"></i>
-                  </a>
-                </li>
-                <li>
-                  <a class="icon-btn btn-primary button-effect" href="#">
-                    <i class="fa fa-twitter"></i>
-                  </a>
-                </li>
-                <li>
-                  <a class="icon-btn btn-facebook button-effect" href="#">
-                    <i class="fa fa-facebook-f"></i>
-                  </a>
-                </li>
-              </ul>
+           
             </div>
           </div>
           <div class="document">
@@ -2956,51 +2930,7 @@
               </div>
             </div>
           </div>
-          <div class="status">
-            <div class="collapse-block open">
-              <h5 class="block-title">Starred Messages
-                <label class="badge badge-outline-dark sm ml-2">2</label>
-              </h5>
-              <div class="block-content">
-                <div class="contact-chat p-0 m-0">
-                  <ul class="str-msg">
-                    <li>
-                      <div class="media">
-                        <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                        <div class="media-body">
-                          <div class="contact-name">
-                            <h5>Alan josheph</h5>
-                            <h6>01:35 AM</h6>
-                            <ul class="msg-box">
-                              <li>
-                                <h5>Hi I am Alan,</h5>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="media">
-                        <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                        <div class="media-body">
-                          <div class="contact-name">
-                            <h5>Josephin water</h5>
-                            <h6>01:35 AM</h6>
-                            <ul class="msg-box">
-                              <li>
-                                <h5>Can you help me to find best chat app?.</h5>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+         
           <div class="status">
             <div class="collapse-block open">
               <h5 class="block-title">Common groups
@@ -3053,48 +2983,18 @@
               </li>
             </ul>
           </div>
-          <div class="status">
-            <ul>
-              <li>
-                <input class="js-switch" type="checkbox" />
-                <h5>Block </h5>
-              </li>
-              <li>
-                <input class="js-switch1" type="checkbox" />
-                <h5>Mute </h5>
-              </li>
-              <li>
-                <input class="js-switch2" type="checkbox" checked="" />
-                <h5>Get Notification</h5>
-              </li>
-            </ul>
-          </div>
+        
           <div class="status other">
             <ul>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="share-2"></i>share Contact</a>
-                </h5>
-              </li>
+             
               <li>
                 <h5>
                   <a href="#">
                     <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>Clear Chat</a>
                 </h5>
               </li>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="external-link"></i>Export Chat</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="alert-circle"></i>Report Contact </a>
-                </h5>
-              </li>
+             
+             
             </ul>
           </div>
         </div>
@@ -4123,12 +4023,7 @@
               </a>
               <h5>Reminder</h5>
             </li>
-            <li>
-              <a class="icon-btn btn-danger btn-sm button-effect" href="javascript:void(0);" data-toggle="modal" data-target="#showPresenter">
-                <radio-icon size="1.5x" class="custom-class"></radio-icon>
-              </a>
-              <h5>Broadcast</h5>
-            </li>
+           
             <!--  <li class="close-app"><a class="icon-btn btn-danger" href="#" onclick="removedefault()"><x-icon size="1.5x" class="custom-class"></x-icon></a>
                   <h5>close</h5>
                 </li> -->
@@ -4463,7 +4358,7 @@
           <div class="videocall beforeopenChat call-modal">
             <video id="broadCastVideo" autoplay style="width:100%"></video>
             <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
-            <div class="small-image"><img class="bg-img" src="../assets/images/avtar/big/videocall.jpg" alt="Avatar" /></div>
+            
             <div class="media videocall-details">
               <div class="usersprof">
                 <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
@@ -4502,9 +4397,11 @@
               <div class="text-right" style="float: right;position: absolute;bottom: 107px;right: 22px;">
               <ul>
                 <li>
-                  <a class="icon-btn btn-light button-effect pause" id="chatopen"  href="#" @click="showCallchat()" data-tippy-content="Hold">
+				<div id="chatopen" class="">
+                  <a class="icon-btn btn-light button-effect pause" id=""  href="#" @click="showCallchat()" data-tippy-content="Hold">
                   <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
                   </a>
+				  </div>
                   <a class="icon-btn btn-light button-effect pause" id="chatclose" href="#" @click="hideCallchat()" style="display:none" data-tippy-content="Hold">
                   <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
                   </a>
@@ -4513,12 +4410,11 @@
               </ul>
             </div>
           </div>
-        <div class="chitchat-main small-sidebar" id="contents" style="display:none;width: 30%;
-    float: right;">
+        <div class="chitchat-main small-sidebar" id="contents" style="display:none;width: 30%;float: right;">
       
 
-        <div class="chat-content tabto" id="startchat">
-          <div class=" messages custom-scroll active messageschat" id="chatings" style="min-height:108vh !important;">
+        <div class="chat-content tabto" id="startboardcastchat">
+          <div class=" messages custom-scroll active boardcastchat" id="brochatings" style="min-height:108vh !important;">
             
             <!-------- Dropzone ------>
             <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
@@ -4527,7 +4423,7 @@
 
             </loading>
             <div class="contact-chat  ">
-              <ul class="chatappend" v-for="chat in friendCallchat">
+              <ul class="chatappend" v-for="chat in broadcastChat">
                 <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
                   <div class="media">
                     <div class="profile mr-4">
@@ -4568,17 +4464,10 @@
                               </div>
                             </div>
 
-                            <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
-                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                            <br>
-                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="hostname+'/images/chatImages/'+chat.message">
-                            </a>
-
-                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-
+                            
+                            <h5 >{{ chat.message }}</h5>
+                           
+                           
                           </li>
                           <!-- <li class="msg-setting-main">
                                 <h5> your personal assistant to help you &#128512; </h5>
@@ -4606,41 +4495,14 @@
                     <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
                     <div class="media-body">
                       <div class="contact-name">
-                        <h5>{{ singlefriend.name }}</h5>
+                        <h5>{{chat.senderId.name}}</h5>
                         <h6>{{isToday(chat.createdAt)}}</h6>
                         <ul class="msg-box">
                           <li class="msg-setting-main">
 
-                            <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
-                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                            <br>
-                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="hostname+'/images/chatImages/'+chat.message">
-                            </a>
-                            <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
-                              <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
-                                <i class="ti-more-alt"></i>
-                              </div>
-                              <div class="msg-dropdown" :id="'msg-dropdown'+chat._id" style="z-index: 99999;">
-                                <ul>
-                                  <!--<li v-if="chat.messageType != 1 && chat.messageType != 2"><a href="#" @click="eidtchat(chat._id,chat.message)"><i class="fa fa-pencil" ></i>edit</a></li>-->
-                                  <li>
-                                    <a href="#" @click="quote(chat)">
-                                      <i class="fa fa-share"></i>Quote</a>
-                                  </li>
-
-                                  <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                    <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
-                                      <i class="fa fa-clone"></i>copy</a>
-                                  </li>
-                                  <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
-                                  <!--<li><a href="#" @click="msgdelete(chat._id)"><i class="ti-trash"></i>delete</a></li>-->
-                                </ul>
-                              </div>
-                            </div>
+                            
+                            <h5>{{ chat.message }} </h5>
+                           
                           </li>
                           <!--   <li class="msg-setting-main">
                                 <h5> it should from elite auther &#128519;</h5>
@@ -4667,13 +4529,12 @@
               <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
             </div>
            
-            <span v-show="typing" class="">{{ singlefriend.name }} is typing ...</span>
 
           </div>
-       <VEmojiPicker @select="selectchatEmoji"
+       <VEmojiPicker @select="broadcastchatEmoji"
           class=""
-          v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;"  v-if="ischatemojiActive" />
-          <div class="message-input message-call">
+          v-bind:class="{activeChatemoji: isbroadchatemojiActive}" style="bottom: 86px;"  v-if="isbroadchatemojiActive" />
+          <div id="broadcast-input" class="message-input message-call">
             <div class="replybox" v-if="replyBox == true">
               <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
                 <span style="float:right;cursor: pointer;" @click="closeReplybox()">
@@ -4688,7 +4549,7 @@
             <div class="wrap emojis-main">
              
               <div class="dot-btn dot-primary mr-3">
-                <a class="icon-btn btn-outline-primary button-effect " @click="showChatemoji">
+                <a class="icon-btn btn-outline-primary button-effect " @click="showbroadcastChatemoji">
                   <smile-icon size="1.5x" class="custom-class"></smile-icon>
                 </a>
               </div>
@@ -4698,24 +4559,12 @@
               </label>
               <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
 
-              <!--<div class="contact-poll-content">
-                      <ul>
-                        <li><a href="#"><i data-feather="image"></i>gallery</a></li>
-                        <li><a href="#"><i data-feather="camera"></i>camera</a></li>
-                        <li><a data-toggle="modal" data-target="#snippetModal"><i data-feather="code">                       </i>Code Snippest</a></li>
-                        <li><a href="#"><i data-feather="user">                              </i>contact</a></li>
-                        <li><a href="#"><i data-feather="map-pin">                       </i>location</a></li>
-                        <li><a href="#"><i data-feather="clipboard"> </i>document</a></li>
-                        <li><a data-toggle="modal" data-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
-                        <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
-                      </ul>
-                    </div>-->
 
-              <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
+              <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="broadCastchat()" v-model="broadCastmsg" placeholder="Write your message..." />
               <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
                 <mic-icon size="1.5x" class="custom-class"></mic-icon>
               </a>
-              <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
+              <button class="submit icon-btn btn-primary disabled" v-show="onbroChat" @click="broadCastchat()" id="send-broadcastmsg" disabled="disabled">
                 <send-icon size="1.5x" class="custom-class"></send-icon>
               </button>
               <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
@@ -4747,7 +4596,12 @@
             </button>
           </div>
           <div class="modal-body">
-            <p style="text-align: center;">No presenter found</p>
+            <div v-if="presentersData.length > 0" v-for="presenter in presentersData">
+			<p> {{presenter.preName}} <button class="btn btn-success btn-xs" style="float:right;padding: 5px 16px;cursor: pointer;" @click="becomeViewer(presenter.preId)"> Join</button></p>
+			</div>
+			<div v-else>
+			<p> No Data</p>
+			</div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
@@ -4852,11 +4706,11 @@
               </ul>
             </div>
           </div>
-        <div class="chitchat-main small-sidebar" id="contents" style="display:none;width: 30%;
+        <div class="chitchat-main small-sidebar" id="contentss" style="display:none;width: 30%;
     float: right;">
       
 
-        <div class="chat-content tabto" id="startchat">
+        <div class="chat-content tabto" id="startchatss">
           <div class=" messages custom-scroll active messageschat" id="chatings" style="min-height:108vh !important;">
             
             <!-------- Dropzone ------>
@@ -5614,11 +5468,13 @@
        // var ws = new WebSocket('wss://' + location.host + '/one2many');
       var ws = new WebSocket(broadCastUrl);
         var presenterArr = [];
+		var returnpresenterData = [];
+		
         
         ws.onopen= function (){
               console.log('O2M socket open'); 
           
-            setInterval( getPresenterData(), 6000);
+            setInterval(getPresenterData, 6000);
             getPresenterData(); //call on start and then it will repeat by interval
         }
 
@@ -5636,17 +5492,22 @@
               dispose();
               break;
             case 'iceCandidate':
-              window.webRtcO2MPeer.addIceCandidate(parsedMessage.candidate)
+              webRtcO2MPeer.addIceCandidate(parsedMessage.candidate)
               break;
                 case 'presenterDataResp':
                         // where 'user' is loggedInUser
                         if (!userData) break;
                         let presenterData = [];
-
+						
+						
+                        console.log(userData._id);
                         parsedMessage.data.forEach(preData => {
+						console.log(preData.preId +'!='+ userData._id);
                             if (preData.preId != userData._id) presenterData.push(preData)
                         });
-                        presenterArr = presenterData;
+                       presenterArr  = presenterData;
+					   
+					 // returnpresenterData=presenterData;
                         console.log('presenterArr ', presenterArr);
                         break;
 	default:
@@ -5654,15 +5515,18 @@
 	}
 }
 
-
-
+ function returnPdata(){
+   return presenterArr;
+ }
 var broadCastHtml = document.getElementById('broadCastVideo');
 console.log(broadCastHtml);
 var userData= JSON.parse(localStorage.getItem('userData'));
 function testing(){
    console.log(JSON.parse(localStorage.getItem('userData')));
 }
+
 var webRtcO2MPeer='';
+var bcPresenterId='';
 function presenterResponse(message) {
     if (message.response != 'accepted') {
         var errorMsg = message.message ? message.message : 'Unknow error';
@@ -5700,9 +5564,7 @@ function presenter(broadCastHtml) {
     }
 }
 
- $('.logMe').on('click', (evt) => {
-        presenter();
-      });
+
 
 function onOfferPresenter(error, offerSdp) {
     if (error) return onError(error);
@@ -5710,26 +5572,33 @@ function onOfferPresenter(error, offerSdp) {
         id: 'presenter',
         sdpOffer: offerSdp,
         preId: userData._id,  //change needed here
-        password: (prePassword) ? prePassword : 0,  //change needed here
+        password: 0,  //change needed here
         preName: userData.name  //change needed here
     };
     sendMessage(message);
 }
 
+
 function getPresenterData() {
     var message = {
         id: 'presenterData'
     };
-    console.log('setintrval');
+	
+	
+	
     sendMessage(message);
 }
 
-function viewer() {
-    if (webRtcO2MPeer) {  //change needed here
-        showSpinner(broadCastHtml);  //change needed here
 
+function viewer(presenterid,viewHtml) {
+
+    if (!webRtcO2MPeer) {  //change needed here
+        showSpinner(viewHtml);  //change needed here
+       console.log('bcPresenterId'+ presenterid);
+	   console.log(viewHtml);
+	   bcPresenterId=presenterid;
         var options = {
-            remoteVideo: broadCastHtml,  //change needed here
+            remoteVideo: viewHtml,  //change needed here
             onicecandidate: onIceCandidate
         }
 
@@ -5746,9 +5615,9 @@ function onOfferViewer(error, offerSdp) {
     var message = {
         id: 'viewer',
         sdpOffer: offerSdp,
-        preId: this.bcPresenterId //$rootScope.connWdPreId  //change needed here
+        preId: bcPresenterId //$rootScope.connWdPreId  //change needed here
     }
-
+console.log(message);
     sendMessage(message);
 }
 
@@ -5760,12 +5629,7 @@ function onIceCandidate(candidate) {
     sendMessage(message);
 }
 
-$('#broadcaststop').on('click', (evt) => {
-        broadcaststop();
-        $('#showCallMin').hide();
-       $('#showcallModel'+this.singlefriend._id).show();
-       $('#startchat').addClass('active');
-      });
+
 
 function broadcaststop() {
     if (webRtcO2MPeer) {  //change needed here
@@ -5774,6 +5638,10 @@ function broadcaststop() {
         }
         sendMessage(message);
         dispose();
+		
+	   $('#broadcastvideocall').removeClass('show');
+		$('#broadcastvideocall').css('display','none');
+		$('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
     }
 }
 
@@ -5879,6 +5747,7 @@ export default {
       editChatid: '',
       onEditclear: false,
       onChat: true,
+	  onbroChat:true,
       editgroupChatid: '',
       onEditgroupclear: false,
       ongroupChat: true,
@@ -5903,6 +5772,7 @@ export default {
       isSeen: false,
       isActive:false,
       ischatemojiActive:false,
+	  isbroadchatemojiActive:false,
       multiplemembers:[],
       multipleneewmembers:[],
       havegroup:false,
@@ -5922,8 +5792,12 @@ export default {
       presenterPassword:'',
       broadcastingId:'',
       broadcastChat:[],
+	  presentersData:[],
       bcPresenterId:'',
-      broadcastHtml:''
+      broadcastHtml:'',
+	  starterBroid:'',
+	  broadCastmsg:'',
+	  presenterId:''
 
     }
 
@@ -5961,9 +5835,8 @@ export default {
          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
       
         if (this.singlefriend.chatWithRefId == this.c_user._id) {
-          this.friendCallchat.push(data.msgData);
-          var containers = this.$el.querySelector("#chatings");
-         $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+          //this.friendCallchat.push(data.msgData);
+          
           this.isSeen = true;
           console.log('seen');
            setTimeout(() => {
@@ -6161,7 +6034,31 @@ changestatuslogin(data) {
       }).pop();
       post.onlineStatus = 0;
     },
+	
+	///////////////////////BROADCASTING SECTION/////////////////////////
+	
+	 
+    receiveClosepanle(data) {
+      
+	  if(data == this.broadcastingId){
+	  
+	     $('#broadcastvideocall').removeClass('show');
+		$('#broadcastvideocall').css('display','none');
+		 $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
+	  }
+    },
 
+ receivebroadcastmsg(data) {
+      console.log(data.receiverId +'=='+ this.broadcastingId);
+	  if(data.receiverId == this.broadcastingId){
+	  $('#chatopen').addClass('dot-btn dot-success grow');
+	    this.broadcastChat.push(data);
+		var containers = this.$el.querySelector("#brochatings");
+            console.log(containers.scrollHeight);
+            $("#brochatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+		console.log(this.broadcastChat);
+	  }
+    },
   },
 
 
@@ -6195,6 +6092,14 @@ changestatuslogin(data) {
       }
 
     },
+	broadCastmsg(){
+	 if (this.broadCastmsg.length > 0) {
+         
+          $('#send-broadcastmsg').removeClass('disabled').attr("disabled", false);
+        } else {
+        $('#send-broadcastmsg').addClass('disabled').attr("disabled", true);
+      }
+	},
 
 message: _.debounce(function () {
     	 this.$socket.emit('stopTyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
@@ -6211,9 +6116,34 @@ message: _.debounce(function () {
     //   }
     // }
   },
-
+created() {
+     setInterval(() => this.startTimer(), 2000);
+},
 
   methods: {
+  startTimer() {
+  
+       var result=returnPdata();
+	   console.log(result);
+       if(result.length == 0){
+	   this.presentersData=[];
+	   }
+	   for(var i=0; i<this.friendsdata.length; i++){
+		for(var j=0; j<result.length; j++){
+		
+		if (this.friendsdata[i]._id == result[j].preId){
+			 var exists = this.presentersData.some(function(field) {
+			  return field.preId === result[j].preId
+			  });
+			  if (!exists) {
+				 this.presentersData.push(result[j]);
+				}
+           
+		   }
+		  }
+		}
+	console.log(this.presentersData);
+    },
     o2oopenwindow(id){
           window.open('/o2o?data='+this.singlefriend._id, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1100,height=600');
     },
@@ -6239,6 +6169,14 @@ selectEmoji(emoji) {
       
     },
 
+   broadcastchatEmoji(emoji) {
+
+      this.broadCastmsg += emoji.data;
+      console.log(this.broadCastmsg);
+      
+        $('#send-broadcastmsg').removeClass('disabled').attr("disabled", false);
+      
+    },
     showGroupemoji(){
        this.isActive = !this.isActive;
     },
@@ -6246,7 +6184,10 @@ selectEmoji(emoji) {
     showChatemoji(){
        this.ischatemojiActive = !this.ischatemojiActive;
     },
-
+	
+showbroadcastChatemoji(){
+       this.isbroadchatemojiActive = !this.isbroadchatemojiActive;
+    },
 
     logout: function() {
 
@@ -6254,7 +6195,8 @@ selectEmoji(emoji) {
         .then((responce) => {
           this.$socket.emit('logout', this.c_user._id);
           this.$session.destroy();
-          ocalStorage.removeItem("userData")
+          localStorage.removeItem("userData");
+		  localStorage.removeItem("presenterData");
           this.$router.push('/login')
         })
         .catch((error) => console.log(error));
@@ -6343,12 +6285,12 @@ usertab(){
 
 
     startchat(friend) {
+	       $('#startchat').show();
            $('.message-input').show();
+		   
             var container = this.$el.querySelector("#chating");
             $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-            var containers = this.$el.querySelector("#chatings");
-            console.log(containers.scrollHeight);
-            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+           
             this.isLoading = true;
             this.message = '';
             this.editChatid = '';
@@ -6405,8 +6347,7 @@ usertab(){
           $('#group_chat').remove();
           var container = this.$el.querySelector("#chating");
           $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-          var containers = this.$el.querySelector("#chatings");
-            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast"); 
+          
           $('#startchat').addClass("active");
 
           $('.chitchat-container').toggleClass("mobile-menu");
@@ -6463,7 +6404,7 @@ usertab(){
         //console.log(this.msgObj);
         this.isSeen = false;
         this.friendchat.push(this.msgObj);
-        this.friendCallchat.push(this.msgObj);
+        //this.friendCallchat.push(this.msgObj);
         this.$socket.emit('sendmsg', {
               selectFrienddata: this.singlefriend._id,
               userId: this.c_user._id,
@@ -6549,7 +6490,7 @@ usertab(){
         //console.log(this.msgObj);
       //  this.isSeen = false;
         this.friendchat.push(this.msgObj);
-        this.friendCallchat.push(this.msgObj);
+        //this.friendCallchat.push(this.msgObj);
         this.$socket.emit('sendmsg', {
               selectFrienddata: this.singlefriend._id,
               userId: this.c_user._id,
@@ -6601,8 +6542,7 @@ usertab(){
         this.message = '';
        var container = this.$el.querySelector("#chating");
          $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-          var containers = this.$el.querySelector("#chatings");
-         $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+          
         
         $('#send-msg').addClass('disabled').attr("disabled", "disabled");
 
@@ -7592,63 +7532,21 @@ if(this.multipleneewmembers){
     },
 
     showCallchat(){
+	$('#chatopen').removeClass('dot-btn dot-success grow');
       $('#chatopen').hide();
       $('#chatclose').show();
-      $('.message-input').show();
-            var containers = this.$el.querySelector("#chatings");
+	  $('#startchat').hide();
+      $('#broadcast-input').show();
+            var containers = this.$el.querySelector("#brochatings");
             console.log(containers.scrollHeight);
-            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
-            this.isLoading = true;
-            this.message = '';
+            $("#brochatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+           
+            this.broadCastmsg = '';
             this.editChatid = '';
             this.onEditclear = false;
-            this.onChat = true;
-            this.chatreplydata = "";
-            this.typing = false;
-            $('.message-input').css("height", "96px");
-            this.replyBox = false;
-
-            
-            this.$socket.emit('updateUserSelection', {
-              selectedUser: this.singlefriend._id,
-              userId: this.c_user._id
-            });
-            const post = this.friendsdata.filter((obj) => {
-              return this.singlefriend._id === obj._id;
-            }).pop();
-            post.usCount = 0;
-            //console.log(post);
-            // this.$set(this.singlefriend,'chatWithRefId',this.c_user._id);
-            $('.init').removeClass("active");
-            $('#friend' + this.singlefriend._id).addClass("active");
-
-
-            //$(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-              this.friendCallchat ={};
-            axios.get('/getChat/' + this.c_user._id + '/' + this.singlefriend._id + '/50')
-              .then(responce => {
-                
-                this.friendCallchat = responce.data;
-                this.$socket.emit('lastchatobj_send', this.friendCallchat[this.friendCallchat.length - 1]);
-                var container = this.$el.querySelector("#chatings");
-                $("#chatings").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
-                if (this.friendCallchat[this.friendCallchat.length - 1].isSeen == 1) {
-                  this.isSeen = true;
-                } else {
-                  this.isSeen = false;
-                }
-
-        })
-        .catch((error) => console.log(error));
-          setTimeout(() => {
-            this.isLoading = false
-          }, 1000)
-          $('#mainchatpage').remove();
-
-          $('#group_chat').remove();
-          var containers = this.$el.querySelector("#chatings");
-            $("#chatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast"); 
-          $('#startchat').addClass("active");
+            this.onbroChat = true;
+            $('#broadcast-input').css("height", "96px");
+         
 
           $('.videocall').removeClass('beforeopenChat');
           $('.videocall').addClass('afteropenChat');
@@ -7659,6 +7557,7 @@ if(this.multipleneewmembers){
     },
 
       hideCallchat(){
+	  $('#chatopen').removeClass('dot-btn dot-success grow');
           $('.videocall').addClass('beforeopenChat');
           $('.videocall').removeClass('afteropenChat');
           $('#modalcall').removeClass('modelafter');
@@ -7677,31 +7576,96 @@ if(this.multipleneewmembers){
         $('#showCallMin').show();
       },
 
-      on2Callclose(){
-        $('#showCallMin').hide();
-       $('#showcallModel'+this.singlefriend._id).show();
-       $('#startchat').addClass('active');
-       broadcaststop();
-        
-      },
+    
 
       startBroadcasting (){
-           this.broadcastPassword = this.setPassword;
+           this.broadcastPassword = this.setPassword; 
+		   
+		   $('#startBroadcast').removeClass('show');
+		   $('#startBroadcast').css('display','none');
+		   $('#showPresenter').removeClass('show');
+		   $('#showPresenter').css('display','none');
               presenter(this.broadcastHtml);
                 axios.post('/startPresenter/', {
                 password: this.broadcastPassword,
                 userId: this.c_user._id
               }).then(response => {
+			  console.log(response.data);
               this.broadcastingId = response.data.broadcastRefId._id;
+			  this.presenterId = response.data.broadcastRefId.presenterId
               }, function(err) {
                 console.log('err', err);
                 alert('error');
              })
            
-}
+},
+ 
+  becomeViewer(presenterid) {
+        this.starterBroid=presenterid;
+	    $('#showPresenter').removeClass('show');
+		$('#showPresenter').css('display','none');
+		$('#broadcastvideocall').addClass('show');
+		$('#broadcastvideocall').css('display','block');
+        viewer(presenterid,this.broadcastHtml);
+		 axios.get('/getBroadcastId/' + presenterid)
+		 .then(response => {
+            this.broadcastingId = response.data.broadcastRefId._id;
+           this.bcJoinedChat = {
+                senderId: { _id: this.c_user._id, name: this.c_user.name },
+                receiverId: this.broadcastingId,
+				message: 'I have Joined', 
+				chatType: 2
+            }
 
+            this.$socket.emit('broadcastmsg', this.bcJoinedChat); //emit socket to show other that I have joined BC
+
+            
+        }, function(err) {
+                console.log('err', err);
+                alert('error');
+             })
+    
   },
+   on2Callclose(){
+        $('#showCallMin').hide();
+	    $('#broadcastvideocall').removeClass('show');
+		$('#broadcastvideocall').css('display','none');
+		if(this.presenterId == this.c_user._id){
+		   
+		   this.$socket.emit('closebroadcastpanel', this.broadcastingId);
+		  }
+		else{
+		
+		   this.bcJoinedChat = {
+                senderId: { _id: this.c_user._id, name: this.c_user.name },
+                receiverId: this.broadcastingId,
+				message: 'Left !', 
+				chatType: 2
+             }
 
+            this.$socket.emit('broadcastmsg', this.bcJoinedChat); //emit socket to show other that I have joined BC
+		}
+		
+	   $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
+       broadcaststop();
+	   localStorage.removeItem("presenterData");
+        
+      },
+	  
+	broadCastchat(){
+	this.isbroadchatemojiActive = false;
+         this.bcJoinedChat = {
+                senderId: { _id: this.c_user._id, name: this.c_user.name },
+                receiverId: this.broadcastingId,
+				message: this.broadCastmsg, 
+				chatType: 2
+            }
+
+            this.$socket.emit('broadcastmsg', this.bcJoinedChat); //emit socket to show other that I have joined BC
+			
+            this.broadCastmsg='';
+      },
+},
 
   mounted() {
  
@@ -7716,7 +7680,7 @@ if(this.multipleneewmembers){
       $('.main-nav').removeClass('on');
       $('.main-nav').addClass('off');
     }
-
+	
  ////////////////Chat dropzone //////////////////////
 
     document.addEventListener('dragenter', function(e) {
