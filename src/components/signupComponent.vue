@@ -34,16 +34,8 @@
                       </div>
                     </div>
                   </form>
-                  <div class="line">
-                    <h6>OR Connect with</h6>
-                  </div>
-                  <div class="medialogo">
-                    <ul>
-                      <li><a class="icon-btn btn-danger button-effect" href="#"><i class="fa fa-google"></i></a></li>
-                      <li><a class="icon-btn btn-primary button-effect" href="#"><i class="fa fa-twitter"></i></a></li>
-                      <li><a class="icon-btn btn-facebook button-effect" href="#"><i class="fa fa-facebook-f"></i></a></li>
-                    </ul>
-                  </div>
+                  
+			
                   <div class="termscondition">
                     <h4 class="mb-0"><span>*</span>Terms and condition<b>&amp;</b>Privacy policy</h4>
                   </div>
