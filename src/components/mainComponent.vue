@@ -40,14 +40,14 @@
             </div>
           </li>
           <li>
-            <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="setting()" data-intro="You can change settings by clicking here">
+            <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="setting()" >
               <i class="fa fa-cog"></i>
             </a>
           </li>
         </ul>
         <ul class="sidebar-bottom">
           <li>
-            <a class="icon-btn btn-light button-effect mode" data-tippy-content="Theme Mode" data-intro="Change mode">
+            <a class="icon-btn btn-light button-effect mode" data-tippy-content="Theme Mode" >
               <i class="fa fa-moon-o"></i>
             </a>
           </li>
@@ -148,7 +148,7 @@
               </a>
             </li>
             <li>
-              <a href="#" data-toggle="modal" data-target="#exampleModalCenter">
+              <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
                 <span>new Group</span>
                 <div class="icon-btn btn-outline-danger button-effect btn-sm">
                   <users-icon size="1.5x" class="custom-class"></users-icon>
@@ -181,7 +181,7 @@
           <div class="theme-tab tab-sm chat-tabs" style="padding:0px;margin-top: 50px;">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" data-to="chat-content">
-                <a class="nav-link button-effect active" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="true" data-intro="Start chat">
+                <a class="nav-link button-effect active" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="true" >
                   <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
                   </i>Chat</a>
               </li>
@@ -194,7 +194,7 @@
                   <users-icon size="1.5x" class="custom-class"></users-icon> Contact</a>
               </li>
             </ul>
-            <div class="tab-content" id="myTabContent" style="padding:20px">
+            <div class="tab-content" id="myTabContent" style="">
               <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
                 <div class="theme-tab">
                   <ul class="nav nav-tabs" id="myTab1" role="tablist">
@@ -210,9 +210,9 @@
                       <div id="showCallMin" style="display:none">
                         <h5>Incomming call</h5>
                         <ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
-                          <a  href="#" data-toggle="modal" :data-target="'#videocall'+singlefriend._id" class="" style="font-size: 16px;line-height: 2;">
-                            {{ singlefriend.name }} </a>
-                            <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="on2Callclose()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
+                          <a  href="#" data-toggle="modal" @click="o2ostartchat()" :data-target="'#o2ovideocall'+oncallFriend._id" class="" style="font-size: 16px;line-height: 2;">
+                            {{ oncallFriend.name }} </a>
+                            <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
                             </a></li>
                             </ul>
                         </div>
@@ -232,7 +232,6 @@
 
                             </div>
                             <div class="date-status">
-                              <i class="ti-pin2"></i>
                               <h6>{{isToday(friends.updatedByMsg)}}</h6>
                               <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
                               <h6 class="font-success status" v-else> Seen</h6>
@@ -1549,172 +1548,8 @@
             </div>
           </div>
         </div>
-        <div class="setting-block">
-          <div class="block">
-            <div class="media">
-              <div class="media-body">
-                <h3>Chat</h3>
-              </div>
-              <div class="media-right">
-                <a class="icon-btn btn-outline-light btn-sm pull-right previous" href="#">
-                  <arrow-left-icon size="1.5x" class="custom-class"></arrow-left-icon>
-                </a>
-              </div>
-            </div>
-            <ul class="help">
-              <li>
-                <h5>Chat Backup</h5>
-                <ul class="switch-list">
-                  <li>
-                    <input class="js-switch5" type="checkbox" checked="" />
-                    <h5>Auto Backup</h5>
-                  </li>
-                  <li>
-                    <input class="js-switch6" type="checkbox" />
-                    <h5>Include document</h5>
-                  </li>
-                  <li>
-                    <input class="js-switch7" type="checkbox" />
-                    <h5>Include Videos</h5>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <h5>Chat wallpaper</h5>
-                <ul class="wallpaper">
-                  <li><img class="bg-img" src="../assets/images/wallpaper/2.jpg" alt="Avatar" /></li>
-                  <li><img class="bg-img" src="../assets/images/wallpaper/1.jpg" alt="Avatar" /></li>
-                  <li><img class="bg-img" src="../assets/images/wallpaper/3.jpg" alt="Avatar" /></li>
-                  <li><img class="bg-img" src="../assets/images/wallpaper/4.jpg" alt="Avatar" /></li>
-                  <li><img class="bg-img" src="../assets/images/wallpaper/5.jpg" alt="Avatar" /></li>
-                  <li><img class="bg-img" src="../assets/images/wallpaper/6.jpg" alt="Avatar" /></li>
-                </ul>
-              </li>
-              <li>
-                <h5>
-                  <a href="#">Archive all chat</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="#"> Clear all chats</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a class="font-danger" href="#">Delete all chats</a>
-                </h5>
-              </li>
-            </ul>
-          </div>
-          <div class="media">
-            <div class="media-body">
-              <h3>Chat</h3>
-              <h4>Control Your Chat Backup</h4>
-            </div>
-            <div class="media-right">
-              <a class="icon-btn btn-outline-light btn-sm pull-right next" href="#">
-                <i data-feather="chevron-right"> </i>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="setting-block">
-          <div class="block">
-            <div class="media">
-              <div class="media-body">
-                <h3>Integratin</h3>
-              </div>
-              <div class="media-right">
-                <a class="icon-btn btn-outline-light btn-sm pull-right previous" href="#">
-                  <arrow-left-icon size="1.5x" class="custom-class"></arrow-left-icon>
-                </a>
-              </div>
-            </div>
-            <ul class="integratin">
-              <li>
-                <div class="media">
-                  <div class="media-left">
-                    <a class="fb" href="https://www.facebook.com/login" target="_blank">
-                      <i class="fa fa-facebook"></i>
-                      <h5>Facebook </h5>
-                    </a>
-                  </div>
-                  <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="media">
-                  <div class="media-left">
-                    <a class="insta" href="https://www.instagram.com/accounts/login/?hl=en" target="_blank">
-                      <i class="fa fa-instagram"></i>
-                      <h5>instagram</h5>
-                    </a>
-                  </div>
-                  <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="media">
-                  <div class="media-left">
-                    <a class="twi" href="https://twitter.com/login" target="_blank">
-                      <i class="fa fa-twitter"></i>
-                      <h5>twitter </h5>
-                    </a>
-                  </div>
-                  <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="media">
-                  <div class="media-left">
-                    <a class="ggl" href="https://accounts.google.com/signin/v2/identifier?service=mail&amp;passive=true&amp;rm=false&amp;continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&amp;ss=1&amp;scc=1&amp;ltmpl=default&amp;ltmplcache=2&amp;emr=1&amp;osid=1&amp;flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" target="_blank">
-                      <i class="fa fa-google"></i>
-                      <h5>google </h5>
-                    </a>
-                  </div>
-                  <div class="media-right">
-                    <div class="profile"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="media">
-                  <div class="media-left">
-                    <a class="slc" href="#">
-                      <i class="fa fa-slack"></i>
-                      <h5>Slack </h5>
-                    </a>
-                  </div>
-                  <div class="media-right">
-                    <div class="profile">
-                      <a href="https://slack.com/get-started#/" target="_blank">
-                        <plus-circle-icon size="1.5x" class="custom-class"></plus-circle-icon>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="media">
-            <div class="media-body">
-              <h3>Integratin</h3>
-              <h4>Sync Your Other Social Account</h4>
-            </div>
-            <div class="media-right">
-              <a class="icon-btn btn-outline-light btn-sm pull-right next" href="#">
-                <i data-feather="chevron-right"> </i>
-              </a>
-            </div>
-          </div>
-        </div>
+        
+        
         <div class="setting-block">
           <div class="block">
             <div class="media">
@@ -1974,12 +1809,7 @@
                           </a>
                           <h5>profile</h5>
                         </li>
-                        <li>
-                          <a class="icon-btn btn-outline-success button-effect btn-sm" href="#">
-                            <i data-feather="plus-circle"></i>
-                          </a>
-                          <h5>archive</h5>
-                        </li>
+                        
 
                         <li v-if=" userid == singlegroup.creatorUserId ">
                           <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#" @click="deleteGroup()">
@@ -1987,12 +1817,7 @@
                           </a>
                           <h5>delete</h5>
                         </li>
-                        <li>
-                          <a class="icon-btn btn-outline-light button-effect btn-sm" href="#">
-                            <i data-feather="slash"></i>
-                          </a>
-                          <h5>block</h5>
-                        </li>
+                        
                       </ul>
                     </div>
                   </li>
@@ -2130,7 +1955,7 @@
     <VEmojiPicker @select="selectEmoji"
       class=""
       v-bind:class="{activeemoji: isActive}"  v-if="isActive" />
-        <div class="message-input">
+        <div class="message-input" id="message-input">
         <div class="replybox" v-if="groupreplyBox == true">
             <p style="padding: 7px; margin: 0;">‘‘{{groupchatreplydata.message}}’’
               <span style="float:right;cursor: pointer;" @click="closegroupReplybox()">
@@ -2182,6 +2007,7 @@
 
       <div class="chat-content tabto" id="startchat">
         <div class=" messages custom-scroll active messageschat" id="chating">
+		
           <div class="contact-details">
             <div class="row">
               <form class="form-inline search-form">
@@ -2240,7 +2066,7 @@
                     </a>
                   </li>
                   <li>
-                    <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Video Call" data-toggle="modal" :data-target="'#o2ovideocall'+singlefriend._id">
+                    <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall()" data-tippy-content="Quick Video Call" data-toggle="modal" :data-target="'#o2ovideocall'+singlefriend._id">
                       <video-icon size="1.5x" class="custom-class"></video-icon>
                     </a>
                   </li>
@@ -2261,24 +2087,14 @@
                           </a>
                           <h5 class="menu-trigger">Profile</h5>
                         </li>
-                        <li>
-                          <a class="icon-btn btn-outline-success button-effect btn-sm" href="#">
-                            <plus-circle-icon size="1.5x" class="custom-class"></plus-circle-icon>
-                          </a>
-                          <h5>Archive</h5>
-                        </li>
+                       
                         <li>
                           <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#">
                             <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
                           </a>
                           <h5>Delete</h5>
                         </li>
-                        <li>
-                          <a class="icon-btn btn-outline-light button-effect btn-sm" href="#">
-                            <i data-feather="slash"></i>
-                          </a>
-                          <h5>Block</h5>
-                        </li>
+
                       </ul>
                     </div>
                   </li>
@@ -2292,7 +2108,9 @@
           <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
 
           </loading>
-          <div class="contact-chat  ">
+		  
+          <div class="contact-chat">
+		  
             <ul class="chatappend" v-for="chat in friendchat">
               <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
                 <div class="media">
@@ -2439,7 +2257,7 @@
       <VEmojiPicker @select="selectchatEmoji"
         class=""
         v-bind:class="{activeChatemoji: ischatemojiActive}"  v-if="ischatemojiActive" />
-        <div class="message-input">
+        <div class="message-input" id="singlemessage-input">
           <div class="replybox" v-if="replyBox == true">
             <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
               <span style="float:right;cursor: pointer;" @click="closeReplybox()">
@@ -4101,7 +3919,7 @@
               <input class="form-control" id="exampleInputEmail1" v-model="groupName" type="text" placeholder="Enter Group Name" />
             </div>
             <div class="form-group mb-0">
-              <h5>Contact number</h5>
+              <h5>Friends Member</h5>
               <div class="showmembers">
                 <div class="groupmembers" v-for="(members, index) in friendsdata" v-if="members._id != c_user._id">
                 
@@ -4116,8 +3934,9 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
-          <button id="groupbtn" class="btn btn-primary button-effect btn-sm disabled"  type="button" @click="createGroup()" :disabled="havegroup">Create Group</button>
-        </div>
+          <button id="groupcreateBtn" class="btn btn-primary button-effect btn-sm disabled"  type="button" @click="createGroup()" :disabled="havegroup">Create Group</button>
+        <button class="buttonload btn btn-primary button-effect btn-sm" style="display:none"><i class="fa fa-spinner fa-spin"></i> Loading</button>
+		</div>
       </div>
     </div>
   </div>
@@ -4352,14 +4171,14 @@
 
   <!---------------------------------- O2O CALL MODEL ---------------------------------->
 
-    <div class="o2ovideocallModel  viddiolog modal fade" :id="'o2ovideocall'+singlefriend._id" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="o2ovideocallModel  viddiolog modal fade" :id="'o2ovideocall'+oncallFriend._id" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered o2omodelbefore" id="o2omodalcall" role="document">
       <div class="modal-body">
         
         <div class="videocall o2obeforeopenChat call-modal">
-          <video id="" autoplay style="width:100%"></video>
+          <video id="videoOutput" class="remoteVideoWidth" controls autoplay></video>
           <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
-          <div class="small-image"><img class="bg-img" src="../assets/images/avtar/big/videocall.jpg" alt="Avatar" /></div>
+          <div class="small-image"><video id="local-video" class="bg-img beforelocalVideo" controls autoplay></video></div>
           <div class="media videocall-details">
             <div class="usersprof">
               <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
@@ -4384,7 +4203,7 @@
                 </a>
               </li>
               <li>
-                <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" id="broadcaststop"  data-dismiss="modal" data-tippy-content="Hangup">
+                <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" @click="o2ostopKCall()"  data-dismiss="modal" data-tippy-content="Hangup">
                   <phone-icon size="1.5x" class="custom-class"></phone-icon>
                 </a>
               </li>
@@ -4414,7 +4233,7 @@
     
 
       <div class="chat-content tabto" id="startchatsss">
-        <div class=" messages custom-scroll active messageschat" id="o2ochating" style="min-height:108vh !important;">
+        <div class=" messages custom-scroll active messageschat" id="o2ochating" style="min-height:100vh !important;">
           
           <!-------- Dropzone ------>
           <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
@@ -4488,7 +4307,7 @@
                   <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
                   <div class="media-body">
                     <div class="contact-name">
-                      <h5>{{ singlefriend.name }}</h5>
+                      <h5>{{ oncallFriend.name }}</h5>
                       <h6>{{isToday(chat.createdAt)}}</h6>
                       <ul class="msg-box">
                         <li class="msg-setting-main">
@@ -4534,13 +4353,13 @@
             <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
           </div>
           
-          <span v-show="typing" class="">{{ singlefriend.name }} is typing ...</span>
+          <span v-show="typing" class="">{{ oncallFriend.name }} is typing ...</span>
 
         </div>
       <VEmojiPicker @select="selectchatEmoji"
         class=""
         v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;"  v-if="ischatemojiActive" />
-        <div class="message-input message-call">
+        <div class="message-input message-call" id="o2osinglemessage-input">
           <div class="replybox" v-if="replyBox == true">
             <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
               <span style="float:right;cursor: pointer;" @click="closeReplybox()">
@@ -4563,13 +4382,11 @@
             <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
               <i class="fa fa-plus"></i>
             </label>
-            <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
+            <input type="file" id="fileupload" ref="o2omyFiles" style="display:none" @change="uploadfile($event)" multiple>
 
 
             <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
-            <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
-              <mic-icon size="1.5x" class="custom-class"></mic-icon>
-            </a>
+            
             <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
               <send-icon size="1.5x" class="custom-class"></send-icon>
             </button>
@@ -4608,11 +4425,7 @@
               <h6>America ,California</h6>
             </div>
             <div id="basicUsage">00:00:00</div>
-            <div class="zoomcontent minimizeclass" >
-              <a class="text-dark" href="#!"  @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
-                  <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
-                </a>
-            </div>
+            
           </div>
           <div class="center-con text-center">
             <ul>
@@ -4774,17 +4587,7 @@
         class=""
         v-bind:class="{activeChatemoji: isbroadchatemojiActive}" style="bottom: 86px;"  v-if="isbroadchatemojiActive" />
         <div id="broadcast-input" class="message-input message-call">
-          <div class="replybox" v-if="replyBox == true">
-            <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
-              <span style="float:right;cursor: pointer;" @click="closeReplybox()">
-                <x-icon size="1.5x" class="custom-class"></x-icon>
-              </span>
-              <br>
-              <span style="margin-left: 6px;">
-                {{isToday(chatreplydata.createdAt)}}
-              </span>
-            </p>
-          </div>
+         
           <div class="wrap emojis-main">
             
             <div class="dot-btn dot-primary mr-3">
@@ -4793,16 +4596,8 @@
               </a>
             </div>
 
-            <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
-              <i class="fa fa-plus"></i>
-            </label>
-            <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
-
-
             <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="broadCastchat()" v-model="broadCastmsg" placeholder="Write your message..." />
-            <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
-              <mic-icon size="1.5x" class="custom-class"></mic-icon>
-            </a>
+            
             <button class="submit icon-btn btn-primary disabled" v-show="onbroChat" @click="broadCastchat()" id="send-broadcastmsg" disabled="disabled">
               <send-icon size="1.5x" class="custom-class"></send-icon>
             </button>
@@ -5176,7 +4971,6 @@
                   <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>22/10/19</h6>
                   <h6 class="font-success status"> Seen</h6>
                 </div>
@@ -5190,7 +4984,6 @@
                   <h6>Typing................</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>30/11/19</h6>
                   <div class="badge badge-primary sm">8</div>
                 </div>
@@ -5204,7 +4997,6 @@
                   <h6>I need job, please help me.</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>15/06/19</h6>
                   <h6 class="font-dark status"> Sending</h6>
                 </div>
@@ -5218,7 +5010,6 @@
                   <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>04/06/19</h6>
                   <h6 class="font-danger status"> Failed</h6>
                 </div>
@@ -5232,7 +5023,6 @@
                   <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>04/06/19</h6>
                   <h6 class="font-danger status"> Failed</h6>
                 </div>
@@ -5260,11 +5050,11 @@
                   <h6>I need job, please help me.</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>15/06/19</h6>
                   <h6 class="font-dark status"> Sending</h6>
                 </div>
               </div>
+			  
             </li>
             <li data-to="blank">
               <div class="chat-box">
@@ -5274,7 +5064,6 @@
                   <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>04/06/19</h6>
                   <h6 class="font-danger status"> Failed</h6>
                 </div>
@@ -5288,7 +5077,6 @@
                   <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
                 </div>
                 <div class="date-status">
-                  <i class="ti-pin2"></i>
                   <h6>04/06/19</h6>
                   <h6 class="font-danger status"> Failed</h6>
                 </div>
@@ -5430,7 +5218,7 @@ import socketio from 'socket.io-client';
 
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
-
+import InfiniteLoading from 'vue-infinite-loading';
 import 'feather-icons/dist/feather.min.js';
 import tippy from 'tippy.js';
 import Toasted from 'vue-toasted';
@@ -5450,7 +5238,7 @@ import carousel from 'vue-owl-carousel';
 
 export default {
 name: 'MainComponent',
-components: { RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+components: {InfiniteLoading, RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
 props: [],
 data() {
   return {
@@ -5477,12 +5265,12 @@ data() {
     editChatid: '',
     onEditclear: false,
     onChat: true,
-  onbroChat:true,
+    onbroChat:true,
     editgroupChatid: '',
     onEditgroupclear: false,
     ongroupChat: true,
     dropzoneOptions: {
-      url: this.hostname+'/chatFilesShare',
+      url: 'https://peekvideochat.com:22000/chatFilesShare',
       thumbnailWidth: 100,
       thumbnailHeight: 100,
       maxFiles: 10,
@@ -5502,7 +5290,7 @@ data() {
     isSeen: false,
     isActive:false,
     ischatemojiActive:false,
-  isbroadchatemojiActive:false,
+    isbroadchatemojiActive:false,
     multiplemembers:[],
     multipleneewmembers:[],
     havegroup:false,
@@ -5522,12 +5310,13 @@ data() {
     presenterPassword:'',
     broadcastingId:'',
     broadcastChat:[],
-  presentersData:[],
+    presentersData:[],
     bcPresenterId:'',
     broadcastHtml:'',
-  starterBroid:'',
-  broadCastmsg:'',
-  presenterId:''
+    starterBroid:'',
+    broadCastmsg:'',
+    presenterId:'',
+	oncallFriend:'',
 
   }
 
@@ -5561,8 +5350,10 @@ beforeCreate: function() {
       this.friendchat.push(data.msgData);
       
       // $('#f_typing'+data.msgData.receiverId._id).html(data.msgData.message);
-      var container = this.$el.querySelector("#chating");
+        var container = this.$el.querySelector("#chating");
         $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+		 var container2 = this.$el.querySelector("#o2ochating");
+         $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020}, "fast");
     
       if (this.singlefriend.chatWithRefId == this.c_user._id) {
         //this.friendCallchat.push(data.msgData);
@@ -5622,12 +5413,14 @@ beforeCreate: function() {
 
   lastchatobj_receive(data) {
     console.log(data);
-
+    if(data){
     if (data.isSeen == 1) {
       this.isSeen = true;
     } else {
       this.isSeen = false;
     }
+	
+	}
   },
 
   //////////////////////END CHAT SECTION////////////////////////
@@ -5746,7 +5539,12 @@ for (var l = 0; l < this.groups.length; l++) {
   stoptyping(data) {
     console.log(data);
     this.typing = false;
+	if(data.selectFrienddata.latestMsg){
     $('#f_typing'+data.UserId).html(data.selectFrienddata.latestMsg.message);
+	}
+	else{
+	  $('#f_typing'+data.UserId).html('Start Chat');
+	}
   },
   
 changestatuslogin(data) {
@@ -5816,7 +5614,7 @@ watch: {
 
 if (this.groupName.length > 0) {
         this.havegroup = false;
-        $('#groupbtn').removeClass('disabled');
+        $('#groupcreateBtn').removeClass('disabled');
       } else {
       this.havegroup = true;
     }
@@ -5854,7 +5652,7 @@ methods: {
 startTimer() {
 
       var result=returnPdata();
-    console.log(result);
+    //console.log(result);
       if(result.length == 0){
     this.presentersData=[];
     }
@@ -5872,7 +5670,7 @@ startTimer() {
       }
     }
   }
-console.log(this.presentersData);
+//console.log(this.presentersData);
   },
   o2oopenwindow(id){
         window.open('/o2o?data='+this.singlefriend._id, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1100,height=600');
@@ -5989,6 +5787,14 @@ showbroadcastChatemoji(){
       })
       .catch((error) => console.log(error));
   },
+    getUsers() {
+	        ApiService.getUsers((data) => {
+                     this.friendsdata = data
+                }, (response) => {
+                    //toastr.error("Oops, " + response.status + " " + response.statusText, "Users", toastrOptions);
+                })
+               
+            },
 
   getfriends() {
       
@@ -6002,21 +5808,23 @@ showbroadcastChatemoji(){
         console.log(this.friendsdata);
       })
       .catch((error) => console.log(error));
-      $('.message-input').hide();
+      $('#singlemessage-input').hide();
   },
 
 usertab(){
 $('.init').removeClass('active');
-$('.message-input').hide();
-$('#startchat').removeClass('active');
+$('#message-input').hide();
+$('#singlemessage-input').hide();
+$('#startchat').hide();
 },
 
 ///////////////////////////////////////  START CHAT SECTION //////////////////////////////////////
 
 
   startchat(friend) {
-        $('#startchat').show();
-          $('.message-input').show();
+         $('#startchat').show();
+		 $('#message-input').hide();
+          $('#singlemessage-input').show();
       
           var container = this.$el.querySelector("#chating");
           $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
@@ -6028,7 +5836,7 @@ $('#startchat').removeClass('active');
           this.onChat = true;
           this.chatreplydata = "";
           this.typing = false;
-          $('.message-input').css("height", "96px");
+          $('#singlemessage-input').css("height", "96px");
           this.replyBox = false;
             this.singlefriend = friend;
 
@@ -6141,7 +5949,7 @@ $('#startchat').removeClass('active');
             msgData:this.msgObj
           })
       $('#f_typing'+this.singlefriend._id).html(this.msgObj.message);
-      $('.message-input').css("height", "96px");
+      $('#singlemessage-input').css("height", "96px");
         this.replyBox = false;
         this.chatreplydata = "";
       axios.post('/chat', {
@@ -6182,6 +5990,8 @@ $('#startchat').removeClass('active');
       })
       var container = this.$el.querySelector("#chating");
       $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+	  var container2 = this.$el.querySelector("#o2ochating");
+       $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020}, "fast"); 
       this.message = '';
       $('#send-msg').addClass('disabled').attr("disabled", "disabled");
     }
@@ -6272,6 +6082,8 @@ $('#startchat').removeClass('active');
       this.message = '';
       var container = this.$el.querySelector("#chating");
         $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+	  var container2 = this.$el.querySelector("#o2ochating");
+         $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020}, "fast"); 
         
       
       $('#send-msg').addClass('disabled').attr("disabled", "disabled");
@@ -6475,7 +6287,7 @@ if(this.onEditclear == true){
   },
   quote(chatdata) {
     this.chatreplydata = chatdata;
-    $('.message-input').css("height", "140px");
+    $('#singlemessage-input').css("height", "140px");
     this.replyBox = true;
     this.$nextTick(function() {
       this.$refs.afterClick.focus();
@@ -6483,7 +6295,7 @@ if(this.onEditclear == true){
   },
 
   closeReplybox() {
-    $('.message-input').css("height", "96px");
+    $('#singlemessage-input').css("height", "96px");
     this.replyBox = false;
   },
 
@@ -6505,13 +6317,15 @@ if(this.onEditclear == true){
     
     $('#group_chat').addClass("active");
     $('.group_chat').removeClass("active");
-    $('.message-input').css("height", "96px");
-    $('.message-input').hide();
+   
+    $('#startchat').removeClass('active');
+	$('#message-input').hide();
     this.replyBox = false;
   },
 
   startgroupchat(group,index) {
-        $('.message-input').show();
+        $('#singlemessage-input').hide();
+        $('#message-input').show();
         $('.group_chat').removeClass("active");
         $('#group_data'+group._id).addClass("active");
           $('#group_chat').removeClass("active");
@@ -6595,7 +6409,7 @@ this.groupmsgObj = {
 
           console.log(response.data);
           this.$socket.emit('groupsendid', response.data)
-        $('.message-input').css("height", "96px");
+        $('#message-input').css("height", "96px");
         this.groupreplyBox = false;
         this.groupchatreplydata='';
           //$('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
@@ -6682,7 +6496,7 @@ this.groupmsgObj = {
     groupquote(chatdata) {
 
     this.groupchatreplydata = chatdata;
-    $('.message-input').css("height", "140px");
+    $('#message-input').css("height", "140px");
     this.groupreplyBox = true;
     this.$nextTick(function() {
       this.$refs.groupafterClick.focus();
@@ -6690,7 +6504,7 @@ this.groupmsgObj = {
   },
 
     closegroupReplybox() {
-    $('.message-input').css("height", "96px");
+    $('#message-input').css("height", "96px");
     this.groupreplyBox = false;
   },
 
@@ -6834,12 +6648,16 @@ groupuploadfile(event) {
 
 /////////////////////////////////////// CREATE GROUP ////////////////////////////////////////////
 
-
+creategroupPanle(){
+	$('#groupcreateBtn').show();
+	$('.buttonload').hide();
+},
 
 createGroup(){
-
-if(this.multiplemembers && this.groupName){
-
+console.log(this.multiplemembers.length);
+if(this.multiplemembers.length > 0 && this.groupName){
+$('#groupcreateBtn').css('display','none');
+$('.buttonload').show();
 this.multiplemembers.push(this.c_user._id);
     this.addgroupData = {
       name: this.groupName, 
@@ -6880,11 +6698,20 @@ this.multiplemembers.push(this.c_user._id);
       })
 }
 else{
-  this.$toasted.success('Enter Group Name', {
+if(this.multiplemembers.length == 0){
+this.$toasted.success('Select Member', {
             theme: "toasted-primary",
             position: "top-center",
             duration: 2000
           })
+}else{
+this.$toasted.success('Enter Group Name', {
+            theme: "toasted-primary",
+            position: "top-center",
+            duration: 2000
+          })
+}
+  
 }
 
 },
@@ -7263,11 +7090,30 @@ if(this.multipleneewmembers){
 
   
 
-    minimizeScreen(){
-      $('#startchat').removeClass('active');
-      $('#showcallModel'+this.singlefriend._id).hide()
-      $('#showCallMin').show();
-    },
+    infiniteHandler($state) {
+                let vm = this;
+				alert('hello');
+				
+                $state.loaded();
+                //this.$http.get('/post?page='+this.page)
+                  //  .then(response => {
+                  //      return response.json();
+                  //  }).then(data => {
+                   //     $.each(data.data, function(key, value) {
+                    //            vm.task.push(value);
+                       // });
+						//if(data.data.length == 0){
+						//$(".loading-default").css("display", "none");
+						//$('.nomore').html('No More Data');
+						//}else{
+                      //  $state.loaded();
+						//}
+                  //  });
+                     
+                    
+ 
+                //this.page = this.page + 1;
+            },
 
 
   //////////////////////////////////////// BROADCASTING ////////////////////////////////////////////////
@@ -7361,7 +7207,6 @@ becomeViewer(presenterid) {
   
 },
   on2Callclose(){
-        $('#showCallMin').hide();
         $('#broadcastvideocall').removeClass('show');
         $('#broadcastvideocall').css('display','none');
         if(this.presenterId == this.c_user._id){
@@ -7407,8 +7252,9 @@ broadCastchat(){
       $('#o2ochatopen').removeClass('dot-btn dot-success grow');
       $('#o2ochatopen').hide();
       $('#o2ochatclose').show();
-      $('#startchat').show();
-      $('.message-input').show();
+      $('#o2ochating').addClass('active');
+      $('#o2osinglemessage-input').show();
+	  $('#message-input').hide();
       var containers = this.$el.querySelector("#o2ochating");
       console.log(containers.scrollHeight);
       $("#o2ochating").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
@@ -7417,29 +7263,111 @@ broadCastchat(){
       this.editChatid = '';
       this.onEditclear = false;
       this.onChat = true;
-      $('.message-input').css("height", "96px");
+      $('#singlemessage-input').css("height", "96px");
 
 
       $('.videocall').removeClass('o2obeforeopenChat');
       $('.videocall').addClass('o2oafteropenChat');
       $('#o2omodalcall').removeClass('o2omodelbefore');
       $('#o2omodalcall').addClass('o2omodelafter');
+	   $('#local-video').removeClass('beforelocalVideo');
+      $('#local-video').addClass('afterlocalVideo');
       $('#o2ocontents').show();
       $('.chitchat-main .chat-content').css('opacity','1');
   },
+  
   o2ohideCallchat(){
-  $('#o2ochatopen').removeClass('dot-btn dot-success grow');
+  
+        $('#o2ochatopen').removeClass('dot-btn dot-success grow');
         $('.videocall').addClass('o2obeforeopenChat');
         $('.videocall').removeClass('o2oafteropenChat');
         $('#o2omodalcall').removeClass('o2omodelafter');
         $('#o2omodalcall').addClass('o2omodelbefore');
+		$('#local-video').removeClass('afterlocalVideo');
+        $('#local-video').addClass('beforelocalVideo');
         $('#o2ocontents').hide(); 
         $('#o2ochatclose').hide();
         $('#o2ochatopen').show();
         
 
 
-    }  ,
+    },
+	
+	videostartCall(){
+	$('#o2osinglemessage-input').show();
+	this.oncallFriend=this.singlefriend;
+	let userDataobj = {
+                friendId: this.oncallFriend._id,
+                callerName:this.c_user.name,
+                callerId: this.c_user._id,
+                callType: 0
+            };
+	    videoKCall(this.c_user._id,this.oncallFriend._id,userDataobj,0);
+		$('#local-video').css('display','block');
+	},
+	o2ostopKCall(){
+	//alert('stop');
+	 $('#showCallMin').hide();
+	  stopKCall();
+	  $('#showcallModel'+this.oncallFriend._id).show();
+	  $('#startchat').show();
+	},
+	 minimizeScreen(){
+      $('#startchat').hide();
+      $('#showcallModel'+this.oncallFriend._id).hide();
+      $('#showCallMin').show();
+    },
+	  o2ostartchat() {
+         //$('#startchat').show();
+		 $('#message-input').hide();
+          $('#o2osinglemessage-input').show();
+      
+          var container = this.$el.querySelector("#o2ochating");
+          $("#o2ochating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+          
+          this.message = '';
+          this.editChatid = '';
+          this.onEditclear = false;
+          this.onChat = true;
+          this.chatreplydata = "";
+          this.typing = false;
+          $('#o2osinglemessage-input').css("height", "96px");
+          this.replyBox = false;
+         
+
+          
+          this.$socket.emit('updateUserSelection', {
+            selectedUser: this.oncallFriend._id,
+            userId: this.c_user._id
+          });
+          const post = this.friendsdata.filter((obj) => {
+            return this.oncallFriend._id === obj._id;
+          }).pop();
+          post.usCount = 0;
+       
+
+            this.friendchat ={};
+          axios.get('/getChat/' + this.c_user._id + '/' + this.oncallFriend._id + '/50')
+            .then(responce => {
+              
+              this.friendchat = responce.data;
+              this.$socket.emit('lastchatobj_send', this.friendchat[this.friendchat.length - 1]);
+              var container = this.$el.querySelector("#o2ochating");
+              $("#o2ochating").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
+              if (this.friendchat[this.friendchat.length - 1].isSeen == 1) {
+                this.isSeen = true;
+              } else {
+                this.isSeen = false;
+              }
+
+      })
+      .catch((error) => console.log(error));
+       
+        var container = this.$el.querySelector("#o2ochating");
+        $("#o2ochating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+        
+
+  },
 
 },
 
@@ -7448,9 +7376,10 @@ mounted() {
 
   this.c_user = this.$session.get('c_user');
   console.log(this.c_user.name);
-  localStorage.setItem('userData', JSON.stringify(this.c_user));
-    this.hostname=this.$hostname;
+  console.log(JSON.parse(localStorage.getItem('userData')));
+  this.hostname=this.$hostname;
   this.getfriends();
+  //console.log(this.getUsers());
   this.emptyChatWithId();
   if(screen.width < 600){
     $('.main-nav').removeClass('on');
@@ -8197,15 +8126,21 @@ div#EmojiPicker {
 .message-input {
   padding: 26px 25px;
 }
+.chitchat-main #broadcast-input input {
+    width: calc(100% - 90px);
+}
+.chitchat-main #o2osinglemessage-input input {
+    width: calc(100% - 170px);
+}
 }
 .message-call {
   height: 95px;
   position: fixed;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  padding: 26px 45px;
+  padding: 26px 18px;
   z-index: 9;
-  width: 34% !important;
+  width: 30% !important;
   bottom: -55px !important;
 }
 .beforeopenChat{
@@ -8284,6 +8219,14 @@ background-image: url(/img/videocall_bg.b320143d.jpg);
   align-items: center;
   justify-content: center;
   height: calc(58vh - 36px);
+}
+.beforelocalVideo{
+	width: 286px;
+	height: 217px;
+}
+.afterlocalVideo{
+	width: 227px;
+    height: 176px;
 }
 .callChat{
 width: 30%;

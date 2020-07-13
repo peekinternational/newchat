@@ -39,15 +39,15 @@ var userData= JSON.parse(localStorage.getItem('userData'));
                       let presenterData = [];
           
           
-                      console.log(userData._id);
+                      //console.log(userData._id);
                       parsedMessage.data.forEach(preData => {
-          console.log(preData.preId +'!='+ userData._id);
+          //console.log(preData.preId +'!='+ userData._id);
                           if (preData.preId != userData._id) presenterData.push(preData)
                       });
                       presenterArr  = presenterData;
             
           // returnpresenterData=presenterData;
-                      console.log('presenterArr ', presenterArr);
+                     // console.log('presenterArr ', presenterArr);
                       break;
 default:
   console.error('Unrecognized message', parsedMessage);

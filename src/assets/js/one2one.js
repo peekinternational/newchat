@@ -15,17 +15,19 @@
         var friendId = 0;
         var callType = 0;
         var inComCallData = 0;
-
-        o2oSocConnec();
+var c_userData= JSON.parse(localStorage.getItem('userData'));
+  console.log(c_userData);
+       // o2oSocConnec();
 
         window.onbeforeunload = function () {
             O2O_ws.close();
         }
 
         O2O_ws.onopen = function (message) {
+			console.log(c_userData._id +' user register');
             sendKMessage({
                 id: 'register',
-                name: user._id  //set loggedIn userId here
+                name: c_userData._id  //set loggedIn userId here
             });
 
             setCallState(NO_CALL);
@@ -38,7 +40,7 @@
 
             switch (parsedMessage.id) {
                 case 'registerResponse':
-                    resgisterResponse(parsedMessage);
+                   // resgisterResponse(parsedMessage);
                     break;
                 case 'callResponse':
                     callResponse(parsedMessage);
@@ -62,11 +64,11 @@
         }
         
         O2O_ws.onclose = function () {
-            o2oSocConnec();
+           // o2oSocConnec();
         }
 
         O2O_ws.onerror = function () {
-            o2oSocConnec();
+           // o2oSocConnec();
         }
 
         function setCallState(nextState) {
@@ -94,13 +96,13 @@
             var message = {
                 id : 'onIceCandidate',
                 candidate : candidate,
-                to:(user._id==friendId)?callerId:friendId,  //set userIds
-                from:user._id 
+                to:(c_userData._id==friendId)?callerId:friendId,  //set userIds
+                from:c_userData._id 
             }
             sendKMessage(message);
         }
 
-        function sendMessage(message) {
+        function sendKMessage(message) {
             var jsonMessage = JSON.stringify(message);
             console.log('Sending message: ' + jsonMessage);
             O2O_ws.send(jsonMessage);
@@ -143,17 +145,31 @@
           
                 sendKMessage({ 
                     id : 'stop',
-                    to:(user._id==friendId)?callerId:friendId,   //set userIds
-                    from:user._id 
+                    to:(c_userData._id==friendId)?callerId:friendId,   //set userIds
+                    from:c_userData._id 
                 }); 
             } 
             disconnect(friendId);
         };
+		function stopKCall(){
+            console.log('stopCall');
+            let response = {
+                id : 'incomingCallResponse',
+                from : inComCallData.from,
+                to: c_userData._id, 
+                callResponse : 'reject',
+                message : 'user declined'
+            };
+            sendKMessage(response);
+            stopK(true);
+        }
+
+
 
           /*disconnect the call from user side who hit the disconnect button*/
           function disconnect (friendId) {
             setCallState(NO_CALL);
-            leaveRoom();
+            //leaveRoom();
             if (friendId) socket.emit('calldisconnect', {friendId: friendId});
           }
     
@@ -162,7 +178,7 @@
                 var response = {
                     id : 'incomingCallResponse',
                     from : message.from,   //callerId
-                    to: user._id, //set userId here
+                    to: c_userData._id, //set userId here
                     callResponse : 'reject',
                     message : 'bussy'
         
@@ -175,7 +191,7 @@
                     //     title: 'Incoming Call',
                     //     message: 'Another user is calling you ...'
                     // });
-                    socket.emit('userBusy', { 'callerId': user._id }); //set userId here
+                    socket.emit('userBusy', { 'callerId': c_userData._id }); //set userId here
                 }
 
                 console.log("*********** BUSY *************");
@@ -225,7 +241,7 @@
                     let response = {
                         id : 'incomingCallResponse',
                         from : inComCallData.from, //caller Id
-                        to: user._id, //set userId here
+                        to: c_userData._id, //set userId here
                         callResponse : 'accept',
                         sdpOffer:offerSdp
                     }; 
@@ -235,13 +251,53 @@
                 });
             });
         }
+		
+		function videoKCall(from,to,userData,isAudio){
+			
+            setCallState(PROCESSING_CALL); 
+            let localAsset=document.getElementById('local-video');
+            let remoteAsset= document.getElementById('videoOutput'); 
+            let medConst={};
+            
+            if(isAudio==1){
+                localAsset=document.getElementById('audioInput');
+                remoteAsset= document.getElementById('audioOutput'); 
+                medConst={mediaConstraints: {
+                    audio: true,
+                    video: false
+                }}; 
+            }
+            let options = {
+                localVideo : localAsset,
+                remoteVideo : remoteAsset,
+                onicecandidate : onIceCandidate,medConst
+            } 
+               
+            $rootScope.webRtcO2OPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
+                if (error) setCallState(NO_CALL);
+                 
+                this.generateOffer(function(error, offerSdp) {
+                    if (error) setCallState(NO_CALL);
+                     
+                    let message = {
+                        id : 'call',
+                        from : from,
+                        to : to, 
+                        userData:userData,
+                        sdpOffer:offerSdp
+                    };  
+                    $rootScope.userBusy = true;
+                    sendKMessage(message);
+                });
+            });
+        }
     
         function stopCall(){
             console.log('stopCall');
             let response = {
                 id : 'incomingCallResponse',
                 from : inComCallData.from,
-                to: user._id, // set userId here
+                to: c_userData._id, // set userId here
                 callResponse : 'reject',
                 message : 'user declined'
             };

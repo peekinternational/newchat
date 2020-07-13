@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                       <div class="buttons">
-                        <button type="submit" class="btn btn-primary button-effect">Login</button>
+                        <button type="submit" id="loginbtn" class="btn btn-primary button-effect">Login</button>
                         <router-link to="/signup" class="btn button-effect btn-signup">SignUp</router-link></div>
                     </div>
                   </form>
@@ -45,31 +45,7 @@
               <div class="right-page">
                 <div class="right-login animat-rate">
                   <div class="animation-block">
-                    <div class="bg_circle">
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                      <div></div>
-                    </div>
-                    <div class="cross"></div>
-                    <div class="cross1"></div>
-                    <div class="cross2"></div>
-                    <div class="dot"></div>
-                    <div class="dot1"></div>
-                    <div class="maincircle"></div>
-                    <div class="top-circle"></div>
-                    <div class="center-circle"></div>
-                    <div class="bottom-circle"></div>
-                    <div class="bottom-circle1"></div>
-                    <div class="right-circle"></div>
-                    <div class="right-circle1"></div><img class="heart-logo" src="../assets/images/login_signup/5.png" alt="login logo"/><img class="has-logo" src="../assets/images/login_signup/4.png" alt="login logo"/><img class="login-img" src="../assets/images/login_signup/1.png" alt="login logo"/><img class="boy-logo" src="../assets/images/login_signup/6.png" alt="login boy logo"/><img class="girl-logo" src="../assets/images/login_signup/7.png" alt="girllogo"/><img class="cloud-logo" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo1" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo2" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo3" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo4" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="has-logo1" src="../assets/images/login_signup/4.png" alt="login logo"/>
+                   
                   </div>
                 </div>
               </div>
@@ -126,14 +102,24 @@ export default {
                 }).then(response => {
 
                 console.log(response);
+				
+				
+				
                   if (response.data != '' ) {
-                    
+				  $('#loginbtn').addClass('disabled').attr('disabled',true);
+                        this.$toasted.success(  'Welcome Back !!', { 
+						 theme: "toasted-primary", 
+						 position: "top-left", 
+						 duration : 2000
+					   })
                     this.$session.start()
                     this.$session.set('c_user', response.data.user)
-                   
+                    localStorage.setItem('userData', JSON.stringify(response.data.user));
                     this.$session.set('jwt', response.data.user.token)
                     Vue.http.headers.common['Authorization'] = 'Bearer ' + response.data.user.token
-                    this.$router.push('/')
+                    //this.$router.push('/')
+					
+					window.location.href = '/';
                   }else{
                     
                     this.$toasted.error(  'Wrong username and password !!', { 

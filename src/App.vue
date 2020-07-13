@@ -17,12 +17,12 @@
 
 <script>
 
-import MainComponent from './components/mainComponent.vue'
+import Login from './components/loginComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    MainComponent
+    Login
   },
   data() {
             return {

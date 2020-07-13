@@ -38,6 +38,7 @@
     "vue-clipboard2": "^0.3.1",
     "vue-feather-icons": "^5.0.0",
     "vue-full-screen-file-drop": "^2.0.0",
+    "vue-infinite-loading": "^2.4.5",
     "vue-loading-overlay": "^3.3.2",
     "vue-owl-carousel": "^2.0.3",
     "vue-popperjs": "^2.3.0",

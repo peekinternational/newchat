@@ -15,8 +15,8 @@
         var friendId = 0;
         var callType = 0;
         var inComCallData = 0;
-var c_userData= JSON.parse(localStorage.getItem('userData'));
-  console.log(c_userData);
+       var c_userData= JSON.parse(localStorage.getItem('userData'));
+ // console.log(c_userData);
        // o2oSocConnec();
 
         window.onbeforeunload = function () {
@@ -24,6 +24,7 @@ var c_userData= JSON.parse(localStorage.getItem('userData'));
         }
 
         O2O_ws.onopen = function (message) {
+			//console.log(c_userData._id +' user register');
             sendKMessage({
                 id: 'register',
                 name: c_userData._id  //set loggedIn userId here
@@ -150,11 +151,25 @@ var c_userData= JSON.parse(localStorage.getItem('userData'));
             } 
             disconnect(friendId);
         };
+		function stopKCall(){
+            //console.log('stopCall');
+            let response = {
+                id : 'incomingCallResponse',
+                from : inComCallData.from,
+                to: c_userData._id, 
+                callResponse : 'reject',
+                message : 'user declined'
+            };
+            sendKMessage(response);
+            stopK(true);
+        }
+
+
 
           /*disconnect the call from user side who hit the disconnect button*/
           function disconnect (friendId) {
             setCallState(NO_CALL);
-            leaveRoom();
+            //leaveRoom();
             if (friendId) socket.emit('calldisconnect', {friendId: friendId});
           }
     
@@ -236,9 +251,49 @@ var c_userData= JSON.parse(localStorage.getItem('userData'));
                 });
             });
         }
+		
+		function videoKCall(from,to,userData,isAudio){
+			
+            setCallState(PROCESSING_CALL); 
+            let localAsset=document.getElementById('local-video');
+            let remoteAsset= document.getElementById('videoOutput'); 
+            let medConst={};
+            
+            if(isAudio==1){
+                localAsset=document.getElementById('audioInput');
+                remoteAsset= document.getElementById('audioOutput'); 
+                medConst={mediaConstraints: {
+                    audio: true,
+                    video: false
+                }}; 
+            }
+            let options = {
+                localVideo : localAsset,
+                remoteVideo : remoteAsset,
+                onicecandidate : onIceCandidate,medConst
+            } 
+               
+            $rootScope.webRtcO2OPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
+                if (error) setCallState(NO_CALL);
+                 
+                this.generateOffer(function(error, offerSdp) {
+                    if (error) setCallState(NO_CALL);
+                     
+                    let message = {
+                        id : 'call',
+                        from : from,
+                        to : to, 
+                        userData:userData,
+                        sdpOffer:offerSdp
+                    };  
+                    $rootScope.userBusy = true;
+                    sendKMessage(message);
+                });
+            });
+        }
     
         function stopCall(){
-            console.log('stopCall');
+            //console.log('stopCall');
             let response = {
                 id : 'incomingCallResponse',
                 from : inComCallData.from,
