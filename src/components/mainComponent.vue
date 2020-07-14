@@ -1381,101 +1381,7 @@
               </div>
             </div>
             <div class="theme-according" id="accordion">
-              <div class="card">
-                <div class="card-header" id="headingTwo" role="heading" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                  <a>Security
-                    <i class="fa fa-angle-down"></i>
-                  </a>
-                </div>
-                <div class="collapse show" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">
-                  <div class="card-body">
-                    <div class="media">
-                      <div class="media-body">
-                        <h5>Show Security notification</h5>
-                      </div>
-                      <div class="media-right">
-                        <input class="js-switch8" type="checkbox" />
-                      </div>
-                    </div>
-                    <p>
-                      <b>Note : </b>turn on this setting to recive notification when a contact's security code has been changes.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="headingOne" role="heading" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                  <a>Privacy
-                    <i class="fa fa-angle-down"></i>
-                  </a>
-                </div>
-                <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion">
-                  <div class="card-body">
-                    <ul class="privacy">
-                      <li>
-                        <h5>Last seen</h5>
-                        <input class="js-switch10" type="checkbox" checked="" />
-                        <p>
-                          <b>Note : </b>turn on this setting to whether your contact can see last seen or not.</p>
-                      </li>
-                      <li>
-                        <h5>Profile Photo</h5>
-                        <input class="js-switch11" type="checkbox" />
-                        <p>
-                          turn on this setting to whether your contact can see your profile or not.</p>
-                      </li>
-                      <li>
-                        <h5>About</h5>
-                        <input class="js-switch12" type="checkbox" />
-                        <p>
-                          <b>Note : </b>turn on this setting to whether your contact can see about status or not.</p>
-                      </li>
-                      <li>
-                        <h5>Status</h5>
-                        <input class="js-switch14" type="checkbox" />
-                        <p>
-                          <b>Note : </b>turn on this setting to whether your contact can see your status or not. </p>
-                      </li>
-                      <li>
-                        <h5>Read receipts</h5>
-                        <input class="js-switch16" type="checkbox" />
-                        <p>
-                          <b>Note : </b>If turn off this option you won't be able to see read recipts from contact. read receipts are always sent for group chats. </p>
-                      </li>
-                      <li>
-                        <h5>Groups</h5>
-                        <input class="js-switch13" type="checkbox" checked="" />
-                        <p>
-                          <b>Note : </b>turn on this setting to whether your contact can add in groups or not. </p>
-                      </li>
-                      <li>
-                        <h5>Screen Lock(Require Touch ID)</h5>
-                        <input class="js-switch17" type="checkbox" />
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="headingThree" role="heading" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  <a>Two Step verification
-                    <i class="fa fa-angle-down"></i>
-                  </a>
-                </div>
-                <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion">
-                  <div class="card-body">
-                    <div class="media">
-                      <div class="media-body">
-                        <h5>Enable</h5>
-                      </div>
-                      <div class="media-right">
-                        <input class="js-switch9" type="checkbox" />
-                      </div>
-                    </div>
-                    <p>
-                      <b>Note : </b>For added security, enable two-step verifiation, which will require a PIN when registering your phone number with Chitchat again.</p>
-                  </div>
-                </div>
-              </div>
+            
               <div class="card">
                 <div class="card-header" id="headingFour" role="heading" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                   <a>Change Number
@@ -1506,20 +1412,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card">
-                <div class="card-header" id="headingFive" role="heading" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                  <a>Request account info
-                    <i class="fa fa-angle-down"></i>
-                  </a>
-                </div>
-                <div class="collapse" id="collapseFive" aria-labelledby="headingFive" data-parent="#accordion">
-                  <div class="card-body">
-                    <a class="p-0 req-info" id="demo" href="#" onclick="document.getElementById(&quot;demo&quot;).innerHTML = &quot;Request sent&quot;">Request Info </a>
-                    <p>
-                      <b>Note : </b>Create a report of your account information and settings, which you can access ot port to another app.</p>
-                  </div>
-                </div>
-              </div>
+             
               <div class="card">
                 <div class="card-header" id="headingSix" role="heading" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
                   <a>Delete My account
@@ -1861,7 +1754,7 @@
                                 </li>
                                 <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
                                 <li>
-                                  <a href="#" @click="groupmsgdelete(g_chat._id)">
+                                  <a href="#" @click="groupmsgdelete(g_chat)">
                                     <i class="ti-trash"></i>delete</a>
                                 </li>
                               </ul>
@@ -1872,11 +1765,11 @@
                           <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'groupsender'+g_chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                           <br>
-                          <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                          <a :href="hostname+'/images/chatImages/'+g_chat.message" target="_blank" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
                             <img :src="hostname+'/images/chatImages/'+g_chat.message">
                           </a>
 
-                          <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                          <a :href="hostname+'/images/chatImages/'+g_chat.message" target="_blank" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                         </li>
                         <!--    <li class="msg-setting-main">
                               <h5> it should from elite auther &#128519;</h5>
@@ -1913,11 +1806,11 @@
                           <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'sender'+g_chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                           <br>
-                          <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
+                          <a :href="hostname+'/images/chatImages/'+g_chat.message" target="_blank" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
                             <img :src="hostname+'/images/chatImages/'+g_chat.message">
                           </a>
 
-                          <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
+                          <a :href="hostname+'/images/chatImages/'+g_chat.message" target="_blank" :id="'sender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                         
                         <div class="msg-dropdown-main" v-if="g_chat.isDeleted != 1">
                             <div class="msg-setting" :id="'msg-setting'+g_chat._id" @click="msg_setting(g_chat._id)">
@@ -2157,11 +2050,11 @@
                           <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                           <br>
-                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
                             <img :src="hostname+'/images/chatImages/'+chat.message">
                           </a>
 
-                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
 
                         </li>
                         <!-- <li class="msg-setting-main">
@@ -2200,10 +2093,10 @@
                           <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                           <br>
-                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
                             <img :src="hostname+'/images/chatImages/'+chat.message">
                           </a>
-                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
                           <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                             <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                               <i class="ti-more-alt"></i>
@@ -2589,6 +2482,234 @@
         </div>
       </div>
     </div>
+	  <aside class="chitchat-right-sidebar" id="groupslide-menu">
+      <div class="custom-scroll right-sidebar">
+        <div class="contact-profile">
+          <div class="theme-title">
+            <div class="media">
+              <div>
+                <h2>Profile</h2>
+                <h4>Personal Information</h4>
+              </div>
+              <div class="media-body text-right">
+                <a class="icon-btn btn-outline-light btn-sm close-profile ml-3" href="#">
+                  <x-icon size="1.5x" class="custom-class"></x-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="details">
+            <div class="contact-top"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="" /></div>
+            <div class="name">
+              <h3>{{groupchatdata.name}}</h3>
+              <h6>Add Description</h6>
+            </div>
+          
+          </div>
+        </div>
+        <div class="document">
+          <div class="filter-block">
+            <div class="collapse-block open">
+              <h5 class="block-title">Shared Document
+                <label class="badge badge-success sm ml-2">3</label>
+              </h5>
+              <div class="block-content">
+                <ul class="document-list">
+                  <li>
+                    <i class="ti-folder font-danger"></i>
+                    <h5>Simple_practice_project-zip</h5>
+                  </li>
+                  <li>
+                    <i class="ti-write font-success"></i>
+                    <h5>Word_Map-jpg</h5>
+                  </li>
+                  <li>
+                    <i class="ti-zip font-primary"></i>
+                    <h5>Latest_Design_portfolio.pdf</h5>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="media-gallery portfolio-section grid-portfolio">
+          <div class="collapse-block open">
+            <h5 class="block-title">Shared Media
+              <label class="badge badge-primary sm ml-2">2</label>
+            </h5>
+            <div class="block-content">
+              <div class="row share-media zoom-gallery">
+                <div class="col-12">
+                  <h6 class="mb-2">22/03/2019</h6>
+                </div>
+                <div class="col-4 isotopeSelector filter">
+                  <div class="media-big">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/1.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="media-small isotopeSelector filter">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/2.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="media-small isotopeSelector filter">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/3.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="media-small isotopeSelector filter">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/4.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="media-small isotopeSelector filter fashion">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/5.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <h6 class="mb-2 mt-2">20/04/2019</h6>
+                </div>
+                <div class="col-4">
+                  <div class="media-small isotopeSelector filter">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/2.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="media-small isotopeSelector filter">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/3.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="media-small isotopeSelector filter">
+                    <div class="overlay">
+                      <div class="border-portfolio">
+                        <a href="../assets/images/gallery/4.jpg">
+                          <div class="overlay-background">
+                            <i class="ti-plus" aria-hidden="true"></i>
+                          </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="status">
+          <div class="collapse-block open">
+            <h5 class="block-title">Common groups
+              <label class="badge badge-outline-dark sm ml-2">3</label>
+            </h5>
+            <div class="block-content">
+              <ul class="group-main">
+                <li>
+                  <div class="group-box">
+                    <div class="profile"><img class="bg-img" src="../assets/images/avtar/teq.jpg" alt="Avatar" /></div>
+                    <div class="details">
+                      <h5>Tech Ninjas</h5>
+                      <h6>johan, deo, Sufiya Elija, Pabelo & you</h6>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="group-box">
+                    <div class="profile"><img class="bg-img" src="../assets/images/avtar/family.jpg" alt="Avatar" /></div>
+                    <div class="details">
+                      <h5>Family Ties</h5>
+                      <h6>Mukrani, deo & you</h6>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="status other">
+          <h5 class="block-title p-b-25">Contact info</h5>
+          <ul>
+            <li>
+              <h5>
+                <a href="#">
+                  <i data-feather="smartphone"></i>+12 3456789587</a>
+              </h5>
+            </li>
+            <li>
+              <h5>
+                <a href="https://themeforest.net/user/pixelstrap/portfolio">
+                  <i data-feather="crosshair"></i>https://pixelstrap</a>
+              </h5>
+            </li>
+            <li>
+              <h5>
+                <a href="#">
+                  <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
+              </h5>
+            </li>
+          </ul>
+        </div>
+      
+        <div class="status other">
+          <ul>
+            
+            <li>
+              <h5>
+                <a href="#">
+                  <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>Clear Chat</a>
+              </h5>
+            </li>
+            
+            
+          </ul>
+        </div>
+      </div>
+    </aside>
     <aside class="chitchat-right-sidebar" id="slide-menu">
       <div class="custom-scroll right-sidebar">
         <div class="contact-profile">
@@ -3897,8 +4018,9 @@
         <div class="modal-footer">
           <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
           <button id="groupbtn" v-if="showmembers == true" class="btn btn-primary button-effect btn-sm "  type="button" @click="leaveGroup(userid,'user')" >Leave Group</button>
-          <button id="groupbtn" v-if="shownewmembers == true" class="btn btn-primary button-effect btn-sm "  type="button" @click="addNewmembersList()" >Submit</button>
-        </div>
+          <button id="addmemberbtn" v-if="shownewmembers == true" class="btn btn-primary button-effect btn-sm "  type="button" @click="addNewmembersList()" >Submit</button>
+          <button id="addmemberonload" class="addmemberonload btn btn-primary button-effect btn-sm" style="display: none;"><i class="fa fa-spinner fa-spin"></i> Loading</button>
+		</div>
       </div>
     </div>
   </div>
@@ -4137,7 +4259,7 @@
             <h6>log angelina california</h6>
             <ul>
               <li>
-                <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="o2oopenwindow()"  data-dismiss="modal">
+                <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="receiveCall()"  data-dismiss="modal">
                   <phone-icon size="1.5x" class="custom-class"></phone-icon>
                 </a>
               </li>
@@ -5206,7 +5328,8 @@
 </template>
 
 <script>
-  
+
+
 import Vue from 'vue';
 import $ from 'jquery';
 import JQuery from 'jquery';
@@ -5422,6 +5545,16 @@ beforeCreate: function() {
 	
 	}
   },
+  
+   reciverdeletemsg(data) {
+  
+  const post = this.friendchat.filter((obj) => {
+      return data._id === obj._id;
+    }).pop();
+    post.isDeleted = 1;
+    $('#receiver' + data._id).html('message deleted');
+
+  },
 
   //////////////////////END CHAT SECTION////////////////////////
 
@@ -5505,13 +5638,21 @@ for (var l = 0; l < this.groups.length; l++) {
                   }
               }
   },
+  
+   grpreciverdeletemsg(data) {
+ // console.log(data);
+	  const post = this.groupchatdata.filter((obj) => {
+		  return data._id === obj._id;
+		}).pop(post);
+		//console.log(post);
+	   post.isDeleted = 1;
+		$('#receiver' + data._id).html('message deleted');
+
+  },
 
   //////////////////////////END GROUP SEECTION ///////////////
 
-  reciverdeletemsg(data) {
-    $('#receiver' + data._id).html('message deleted');
-
-  },
+ 
 
   starttyping(data) {
 
@@ -5765,9 +5906,9 @@ showbroadcastChatemoji(){
     recognition.start();
 
     recognition.onresult = function(e) {
-      alert(e.results[0][0].transcript);
-      document.getElementById('transcript11').value
-        = e.results[0][0].transcript;
+	alert(e.results[0][0].transcript);
+      this.groupmessage = e.results[0][0].transcript;
+      
 
       recognition.stop();
       //document.getElementById('labnol').submit();
@@ -5925,7 +6066,7 @@ $('#startchat').hide();
 
       this.msgObj = {
 
-        commentId: { _id: this.chatreplydata._id, message: this.chatreplydata.message },
+        commentId: { _id: this.chatreplydata._id, message: this.chatreplydata.message, senderId:this.chatreplydata.senderId },
         messageType: 0,
         senderId: { _id: this.c_user._id },
         receiverId: { _id: this.singlefriend._id },
@@ -6177,12 +6318,14 @@ $('#startchat').hide();
     formDatas.append('senderName', this.c_user.name);
     formDatas.append('friendId', this.singlefriend._id);
     formDatas.append('isGroup', 0);
+	
     console.log(formDatas);
     let config = {
       header: {
         'Content-Type': 'multipart/form-data'
       }
     }
+	 this.isLoading = true;
     axios.post('/chatFilesShare', formDatas, config).then((response) => {
       console.log(response.data);
       this.msgObj = {
@@ -6207,6 +6350,7 @@ $('#startchat').hide();
       console.log(this.msgObj);
       this.isSeen = false;
       this.friendchat.push(this.msgObj);
+	   this.isLoading = false;
       var container = this.$el.querySelector("#chating");
       $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
       this.$socket.emit('sendmsg', {
@@ -6248,7 +6392,8 @@ $('#startchat').hide();
   eidtchat(id, message) {
     this.message = message;
     this.editChatid = id;
-
+    $('#singlemessage-input').css("height", "96px");
+    this.replyBox = false;
     this.$nextTick(function() {
       this.$refs.afterClick.focus();
     });
@@ -6266,7 +6411,8 @@ $('#startchat').hide();
 
   removecross() {
 if(this.onEditclear == true){
-  this.onEditclear = false;
+    this.onEditclear = false;
+    this.message = '';
     this.onChat = true;
     $('#send-msg').addClass('disabled').attr("disabled", "disabled")
   }else{
@@ -6277,7 +6423,10 @@ if(this.onEditclear == true){
 
   msgdelete(data) {
     this.$socket.emit('senderdeletemsg', data);
-
+    this.onEditclear = false;
+	this.message = '';
+	$('#singlemessage-input').css("height", "96px");
+    this.replyBox = false;
     $('#sender' + data._id).html('message deleted');
     console.log(data._id);
     axios.get('/deleteMsg/' + data._id + '/0')
@@ -6287,6 +6436,8 @@ if(this.onEditclear == true){
   },
   quote(chatdata) {
     this.chatreplydata = chatdata;
+	this.onEditclear = false;
+	this.message = '';
     $('#singlemessage-input').css("height", "140px");
     this.replyBox = true;
     this.$nextTick(function() {
@@ -6328,7 +6479,7 @@ if(this.onEditclear == true){
         $('#message-input').show();
         $('.group_chat').removeClass("active");
         $('#group_data'+group._id).addClass("active");
-          $('#group_chat').removeClass("active");
+        $('#group_chat').removeClass("active");
           
         this.singlegroup = group;
         this.groupIndex=index;
@@ -6483,12 +6634,12 @@ this.groupmsgObj = {
     $('#send-msg').addClass('disabled').attr("disabled", "disabled")
   },
 
-  groupmsgdelete(id) {
-    this.$socket.emit('senderdeletemsg', id);
+  groupmsgdelete(data) {
+    this.$socket.emit('grpsenderdeletemsg', data);
 
-    $('#groupsender' + id).html('message deleted');
-    console.log(id);
-    axios.get('/deleteMsg/' + id + '/0')
+    $('#groupsender' + data._id).html('message deleted');
+    console.log(data._id);
+    axios.get('/deleteMsg/' + data._id + '/0')
       .then((responce) => console.log(responce))
       .catch((error) => console.log(error));
 
@@ -6654,48 +6805,52 @@ creategroupPanle(){
 },
 
 createGroup(){
-console.log(this.multiplemembers.length);
-if(this.multiplemembers.length > 0 && this.groupName){
-$('#groupcreateBtn').css('display','none');
-$('.buttonload').show();
-this.multiplemembers.push(this.c_user._id);
-    this.addgroupData = {
-      name: this.groupName, 
-      members: this.multiplemembers, 
-      creatorUserId: this.c_user._id,
-      projectId: '5d4c07fb030f5d0600bf5c03', 
-      status: 1
-    };
-      axios.post('/createUserGroup', {
-        groupData: this.addgroupData,
-        userId:this.c_user._id
-      }).then(response => {
-        this.$socket.emit('getGroups', response.data);
-        console.log(response);
-        $('.chat-cont-setting').removeClass('open')
-        this.$toasted.success('Group Create Successfully', {
-            theme: "toasted-primary",
-            position: "top-center",
-            duration: 2000
-          })
-          setTimeout(() => {
+			console.log(this.multiplemembers.length);
+			if(this.multiplemembers.length > 0 && this.groupName){
+			$('#groupcreateBtn').css('display','none');
+			$('.buttonload').show();
+			this.multiplemembers.push(this.c_user._id);
+				this.addgroupData = {
+				  name: this.groupName, 
+				  members: this.multiplemembers, 
+				  creatorUserId: this.c_user._id,
+				  projectId: '5d4c07fb030f5d0600bf5c03', 
+				  status: 1
+				};
+				  axios.post('/createUserGroup', {
+					groupData: this.addgroupData,
+					userId:this.c_user._id
+				  }).then(response => {
+					this.$socket.emit('getGroups', response.data);
+					console.log(response);
+					$('.chat-cont-setting').removeClass('open')
+					this.$toasted.success('Group Create Successfully', {
+						theme: "toasted-primary",
+						position: "top-center",
+						duration: 2000
+					  })
+					  console.log(response.data._id);
+					  $('#group_data'+response.data._id).addClass('active');
+					   this.singlegroup = response.data;
+					  
+					  setTimeout(() => {
 
-          $('#exampleModalCenter').modal('hide')
-          $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
-            
-            }, 2000);
+					  $('#exampleModalCenter').modal('hide')
+					  $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
+						
+						}, 2000);
 
-            this.groupName='';
-            this.multiplemembers=[];
-            $('.hideRemove').hide();
-            $('.showAdd').show();
+						this.groupName='';
+						this.multiplemembers=[];
+						$('.hideRemove').hide();
+						$('.showAdd').show();
 
 
-          
-      }, function(err) {
-        console.log('err', err);
-        alert('error');
-      })
+					  
+				  }, function(err) {
+					console.log('err', err);
+					alert('error');
+				  })
 }
 else{
 if(this.multiplemembers.length == 0){
@@ -6754,13 +6909,13 @@ if(this.singlegroup.name){
       console.log(this.msgObj);
 
       this.$socket.emit('updateGroupTitle',this.singlegroup);
-
+         this.showGrouptitle= true;
+          this.editgTitle= false;
       axios.post('/editGroupName', {
         groupId: this.singlegroup._id,
         groupName: this.singlegroup.name,
       }).then(response => {
-          this.showGrouptitle= true;
-          this.editgTitle= false;
+          
       }, function(err) {
         console.log('err', err);
         alert('error');
@@ -6788,6 +6943,7 @@ if(this.orderedGroups[this.groupIndex]._id === this.singlegroup._id) {
       this.groups=this.orderedGroups;
     }
     this.$socket.emit('deleteGroup',this.groups);
+	$('.group-main').removeClass('active');
     $('#startgroupchat').removeClass('active');
       axios.post('/deleteGroup', {
         groupId: this.singlegroup._id,
@@ -6909,6 +7065,8 @@ $('#newmemberRm'+id).hide();
 
 
 addNewmembersList(){
+$('#addmemberbtn').hide();
+$('#addmemberonload').show();
 
 if(this.multipleneewmembers){
 
@@ -6937,31 +7095,32 @@ if(this.multipleneewmembers){
         this.$socket.emit('updateMembers', this.singlegroup);
         this.multipleneewmembers=[];
         console.log(this.nonGroupUsers);
+		 $('#addmemberonload').hide();
+			$('#addmemberbtn').show();
         this.$toasted.success('New Members Add Successfully', {
             theme: "toasted-primary",
             position: "top-center",
             duration: 2000
           })
-          setTimeout(() => {
-
-          // $('#exampleModalCenter').modal('hide')
-        // $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
-            
-            }, 2000);
+         
 
           //  this.groupName='';
             this.multipleneewmembers=[];
           //   $('.hideRemove').hide();
           //  $('.showAdd').show();
-
+		   
+			
 
           
       }, function(err) {
         console.log('err', err);
         alert('error');
       })
-      $('.hideRemove').hide();
-      $('.showAdd').show();
+	   setTimeout(() => {
+                 $('.hideRemove').hide();
+                 $('.showAdd').show();
+            }, 2000);
+      
 }
 
 
@@ -7146,6 +7305,7 @@ showCallchat(){
       $('#chatopen').hide();
       $('#chatclose').show();
       $('#startchat').hide();
+	  $('#brochatings').addClass('active');
       $('#broadcast-input').show();
       var containers = this.$el.querySelector("#brochatings");
       console.log(containers.scrollHeight);
@@ -7181,6 +7341,7 @@ showCallchat(){
     }  ,
 
 becomeViewer(presenterid) {
+
     this.starterBroid=presenterid;
     $('#showPresenter').removeClass('show');
     $('#showPresenter').css('display','none');
@@ -7209,9 +7370,11 @@ becomeViewer(presenterid) {
   on2Callclose(){
         $('#broadcastvideocall').removeClass('show');
         $('#broadcastvideocall').css('display','none');
+		$('#brochatings').removeClass('active');
         if(this.presenterId == this.c_user._id){
 
         this.$socket.emit('closebroadcastpanel', this.broadcastingId);
+		this.broadcastChat=[];
         }
         else{
 
@@ -7305,6 +7468,7 @@ broadCastchat(){
 	    videoKCall(this.c_user._id,this.oncallFriend._id,userDataobj,0);
 		$('#local-video').css('display','block');
 	},
+	
 	o2ostopKCall(){
 	//alert('stop');
 	 $('#showCallMin').hide();
@@ -7368,6 +7532,9 @@ broadCastchat(){
         
 
   },
+  receiveCall(){
+     startCall();
+  }
 
 },
 

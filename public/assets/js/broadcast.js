@@ -132,7 +132,7 @@ function getPresenterData() {
 function viewer(presenterid,viewHtml) {
 
   if (!webRtcO2MPeer) {  //change needed here
-      showSpinner(viewHtml);  //change needed here
+      //showSpinner(viewHtml);  //change needed here
       console.log('bcPresenterId'+ presenterid);
     console.log(viewHtml);
     bcPresenterId=presenterid;
@@ -142,6 +142,7 @@ function viewer(presenterid,viewHtml) {
       }
 
       webRtcO2MPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {  //change needed here
+	  console.log(error);
           if (error) return onError(error);
           this.generateOffer(onOfferViewer);
       });

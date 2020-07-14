@@ -205,9 +205,9 @@
             callerId = message.userData.callerId;
             friendId = message.userData.friendId;
             callType = message.userData.callType; 
-        
+            console.log('audiorcvcall');
             checkCallerUser(message.userData); 
-            $('#incommingCall').show(); // show incomingCall Modal here
+            $('#audiorcvcall').show(); // show incomingCall Modal here
             //document.getElementById('callerName').innerHTML = message.userData.callerName; //set callerName in html
             inComCallData=message;
              
@@ -273,7 +273,7 @@
                 onicecandidate : onIceCandidate,medConst
             } 
                
-            $rootScope.webRtcO2OPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
+            webRtcO2OPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
                 if (error) setCallState(NO_CALL);
                  
                 this.generateOffer(function(error, offerSdp) {
@@ -286,7 +286,7 @@
                         userData:userData,
                         sdpOffer:offerSdp
                     };  
-                    $rootScope.userBusy = true;
+                    userBusy = true;
                     sendKMessage(message);
                 });
             });

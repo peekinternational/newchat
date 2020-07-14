@@ -108,6 +108,11 @@ socket.on('getGroups', (data) => {
 		io.emit('receiveupdateMembers',data);
 	});
 	
+ socket.on('grpsenderdeletemsg', (data) => {
+		console.log(data);
+		io.emit('grpreciverdeletemsg',data);
+	});
+	
 /////////// BROADCAST  ////////// 
 
 
