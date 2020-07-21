@@ -47,7 +47,7 @@ var userData= JSON.parse(localStorage.getItem('userData'));
                       presenterArr  = presenterData;
             
           // returnpresenterData=presenterData;
-                     // console.log('presenterArr ', presenterArr);
+                     console.log('presenterArr ', presenterArr);
                       break;
 default:
   console.error('Unrecognized message', parsedMessage);
@@ -119,6 +119,7 @@ function onOfferPresenter(error, offerSdp) {
 
 
 function getPresenterData() {
+	returnPdata();
   var message = {
       id: 'presenterData'
   };
@@ -173,6 +174,7 @@ function onIceCandidate(candidate) {
 
 function broadcaststop() {
   if (webRtcO2MPeer) {  //change needed here
+     
       var message = { 
           id: 'stop'
       }

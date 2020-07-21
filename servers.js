@@ -126,6 +126,18 @@ socket.on('getGroups', (data) => {
 		io.emit('receivebroadcastmsg',data);
 	});
 
+/////////// O2O CALL  ////////// 
+
+ socket.on('O2OcloseReceiverPanal', (data) => {
+		console.log(data);
+		io.emit('O2OReceiverPanal',data);
+	});
+	
+	socket.on('O2OstarTimer', (data) => {
+		console.log(data);
+		io.emit('O2OreceivestarTimer',data);
+	});
+
  //////// LOGIN AND LOUT ////////// 
 	
  socket.on('login', (data) => {

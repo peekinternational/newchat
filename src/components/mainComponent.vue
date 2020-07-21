@@ -65,7 +65,8 @@
           <div class="theme-title">
             <div class="media">
               <div v-if="c_user">
-
+				
+					<p style="display:none">{{checkcallTime}}</p>
                 
                 <div v-if="c_user.onlineStatus == 1" class="profile" v-bind:class="{ online: c_user.pStatus == 0, unreachable : c_user.pStatus == 1, busy: c_user.pStatus == 2, offline: c_user.pStatus == 3, offline: c_user.pStatus == 4 }">
                   <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" /></div>
@@ -210,7 +211,7 @@
                       <div id="showCallMin" style="display:none">
                         <h5>Incomming call</h5>
                         <ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
-                          <a  href="#" data-toggle="modal" @click="o2ostartchat()" :data-target="'#o2ovideocall'+oncallFriend._id" class="" style="font-size: 16px;line-height: 2;">
+                          <a  href="#" data-toggle="modal" data-target="#o2ovideocall"   class="" style="font-size: 16px;line-height: 2;">
                             {{ oncallFriend.name }} </a>
                             <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
                             </a></li>
@@ -254,6 +255,22 @@
                           </div>
                         </div>
                       </div>
+					   <content-loader v-if="groupLoader"
+							:width="230"
+							:height="160"
+							:speed="2"
+							primaryColor="#dad7d7"
+							secondaryColor="#ecebeb"
+						 >
+							<rect x="66" y="17" rx="3" ry="3" width="139" height="5" /> 
+							<rect x="65" y="35" rx="3" ry="3" width="130" height="5" /> 
+							<rect x="66" y="55" rx="3" ry="3" width="142" height="5" /> 
+							<circle cx="2" cy="2" r="2" /> 
+							<rect x="7" y="14" rx="8" ry="8" width="49" height="49" /> 
+							<rect x="15" y="39" rx="0" ry="0" width="0" height="1" /> 
+							<circle cx="341" cy="18" r="8" /> 
+							<circle cx="218" cy="30" r="7" />
+					  </content-loader>
                       <ul class="group-main" v-for="(group,index) in orderedGroups">
                         <li class="group_chat" :id="'group_data'+group._id" data-to="group_chat" @click="startgroupchat(group,index)" style="cursor: pointer;">
                           <div class="group-box">
@@ -1959,7 +1976,7 @@
                     </a>
                   </li>
                   <li>
-                    <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall()" data-tippy-content="Quick Video Call" data-toggle="modal" :data-target="'#o2ovideocall'+singlefriend._id">
+                    <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall()" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#o2ovideocall">
                       <video-icon size="1.5x" class="custom-class"></video-icon>
                     </a>
                   </li>
@@ -4255,37 +4272,21 @@
       <div class="modal-body">
         <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/avtar/big/audiocall.jpg" alt="Avatar" />
           <div class="center-con text-center">
-            <div class="title2">Josephin water</div>
-            <h6>log angelina california</h6>
+            <div class="title2" id="incomingName"></div>
             <ul>
               <li>
-                <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="receiveCall()"  data-dismiss="modal">
+                <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="o2oreceiveCall()"  data-dismiss="modal">
                   <phone-icon size="1.5x" class="custom-class"></phone-icon>
                 </a>
               </li>
               <li>
-                <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" data-dismiss="modal">
+                <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal">
                   <phone-icon size="1.5x" class="custom-class"></phone-icon>
                 </a>
               </li>
             </ul>
           </div>
-          <div class="center-con text-right">
-            <div class="title2">Josephin water</div>
-            <h6>log angelina california</h6>
-            <ul>
-              <li>
-                <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="o2oopenwindow()"  data-dismiss="modal">
-                  <phone-icon size="1.5x" class="custom-class"></phone-icon>
-                </a>
-              </li>
-              <li>
-                <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" data-dismiss="modal">
-                  <phone-icon size="1.5x" class="custom-class"></phone-icon>
-                </a>
-              </li>
-            </ul>
-          </div>
+         
         </div>
       </div>
     </div>
@@ -4293,15 +4294,15 @@
 
   <!---------------------------------- O2O CALL MODEL ---------------------------------->
 
-    <div class="o2ovideocallModel  viddiolog modal fade" :id="'o2ovideocall'+oncallFriend._id" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="o2ovideocallModel  viddiolog modal fade" id="o2ovideocall" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered o2omodelbefore" id="o2omodalcall" role="document">
       <div class="modal-body">
         
         <div class="videocall o2obeforeopenChat call-modal">
-          <video id="videoOutput" class="remoteVideoWidth" controls autoplay></video>
+          <video id="videoOutput" class="remoteVideoWidth" style="width:100%"  autoplay></video>
           <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
-          <div class="small-image"><video id="local-video" class="bg-img beforelocalVideo" controls autoplay></video></div>
-          <div class="media videocall-details">
+          <div class="small-image"><video id="local-video" class="bg-img beforelocalVideo"  autoplay></video></div>
+          <div id="o2odetail" class="media beforeDetail videocall-details">
             <div class="usersprof">
               <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
               <div class="profile"><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" /></div>
@@ -4310,7 +4311,7 @@
               <h5>Josephin water</h5>
               <h6>America ,California</h6>
             </div>
-            <div id="basicUsage">00:00:00</div>
+            <div id="basicUsage">{{formattedElapsedTime}}</div>
             <div class="zoomcontent minimizeclass" >
               <a class="text-dark" href="#!"  @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
                   <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
@@ -4339,7 +4340,7 @@
             <div class="text-right" style="float: right;position: absolute;bottom: 107px;right: 22px;">
             <ul>
               <li>
-                <a class="icon-btn btn-light button-effect pause" id="o2ochatopen"  href="#" @click="o2oshowCallchat()" data-tippy-content="Hold">
+                <a class="icon-btn btn-light button-effect pause" id="o2ochatopen"  href="#" @click="o2ostartchat()" data-tippy-content="Hold">
                 <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
                 </a>
                 <a class="icon-btn btn-light button-effect pause" id="o2ochatclose" href="#" @click="o2ohideCallchat()" style="display:none" data-tippy-content="Hold">
@@ -4350,6 +4351,7 @@
             </ul>
           </div>
         </div>
+
 
       <div class="chitchat-main small-sidebar" id="o2ocontents" style="display:none;width: 30%;float:right">
     
@@ -4718,9 +4720,9 @@
               </a>
             </div>
 
-            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="broadCastchat()" v-model="broadCastmsg" placeholder="Write your message..." />
+            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  @keyup.enter="broadCastmsgchat()" v-model="broadCastmsg" placeholder="Write your message..." />
             
-            <button class="submit icon-btn btn-primary disabled" v-show="onbroChat" @click="broadCastchat()" id="send-broadcastmsg" disabled="disabled">
+            <button class="submit icon-btn btn-primary disabled" v-show="onbroChat" @click="broadCastmsgchat()" id="send-broadcastmsg" disabled="disabled">
               <send-icon size="1.5x" class="custom-class"></send-icon>
             </button>
             <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
@@ -4757,7 +4759,7 @@
         </div>
         <div class="modal-footer">
           <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-primary button-effect btn-sm" data-toggle="modal" data-target="#startBroadcast" type="button">Start Broadcasting</button>
+          <button class="btn btn-primary button-effect btn-sm" @click="startBroadcasting()" type="button">Start Broadcasting</button>
         </div>
       </div>
     </div>
@@ -4767,7 +4769,7 @@
     
 <!----------------------------- Show Broadcast Password  Model-------------->
   
-    <div class="modal fade fev-addcall-main add-popup" id="startBroadcast" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade fev-addcall-main add-popup" id="sBroadcast" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -5356,12 +5358,20 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VEmojiPicker from 'v-emoji-picker';
 import ApiService from '../services/api.service.js';
+import {
+  ContentLoader,
+  FacebookLoader,
+  CodeLoader,
+  BulletListLoader,
+  InstagramLoader,
+  ListLoader
+} from 'vue-content-loader'
 import {RadioIcon, Minimize2Icon ,Trash2Icon ,CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
 name: 'MainComponent',
-components: {InfiniteLoading, RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+components: {ContentLoader,InfiniteLoading, RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
 props: [],
 data() {
   return {
@@ -5384,6 +5394,7 @@ data() {
     groupmsgObj: {},
     groupchatdata: {},
     not_working: true,
+	groupLoader:false,
     messagecopy: '',
     editChatid: '',
     onEditclear: false,
@@ -5439,7 +5450,13 @@ data() {
     starterBroid:'',
     broadCastmsg:'',
     presenterId:'',
-	oncallFriend:'',
+	oncallFriend:{},
+	o2ostatus:false,
+	elapsedTime: 0,
+    timer: undefined,
+	elapsedcallTime: 0,
+    calltimer: undefined,
+	callstatus:0
 
   }
 
@@ -5711,23 +5728,58 @@ changestatuslogin(data) {
     
   if(data == this.broadcastingId){
   
-      $('#broadcastvideocall').removeClass('show');
-  $('#broadcastvideocall').css('display','none');
-    $('.modal-backdrop.fade.show').removeClass("modal-backdrop show");
+      this.broadcastChat=[];
+      $('#broadcastvideocall').modal('hide');
+      $('body').removeClass('modal-open');
+     $('.modal-backdrop').remove();
   }
   },
 
 receivebroadcastmsg(data) {
     console.log(data.receiverId +'=='+ this.broadcastingId);
-  if(data.receiverId == this.broadcastingId){
-  $('#chatopen').addClass('dot-btn dot-success grow');
-    this.broadcastChat.push(data);
-  var containers = this.$el.querySelector("#brochatings");
-          console.log(containers.scrollHeight);
-          $("#brochatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
-  console.log(this.broadcastChat);
-  }
+		  if(data.receiverId == this.broadcastingId){
+		  $('#chatopen').addClass('dot-btn dot-success grow');
+			this.broadcastChat.push(data);
+		  var containers = this.$el.querySelector("#brochatings");
+				  console.log(containers.scrollHeight);
+				  $("#brochatings").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+		  console.log(this.broadcastChat);
+		  }
   },
+  
+  ///////////////////////O2O CALL SECTION/////////////////////////
+
+  
+  O2OReceiverPanal(data) {
+  console.log(data);
+  if(data.reciverid == this.c_user._id || data.friendId == this.c_user._id ){
+
+		            $('#o2ovideocall').modal('hide');
+		            this.checkreset();
+	               this.checkcallstop();
+				   $('#audiocall').modal('hide');
+				   $('body').removeClass('modal-open');
+                   $('.modal-backdrop').remove();
+		           this.reset();
+                   this.stop();
+				   this.o2ostopKCall();
+		}
+	  },
+	  
+	  O2OreceivestarTimer(data) {
+		
+		  
+		  if(data.reciverid == this.c_user._id || data.friendId == this.c_user._id ){
+		           this.checkreset();
+	               this.checkcallstop();
+				   $('#audiocall').modal('hide');
+				   $('body').removeClass('modal-open');
+                   $('.modal-backdrop').remove();
+		           this.reset();
+                   this.start();
+				   
+				}
+			  },
 },
 
 
@@ -5738,11 +5790,38 @@ computed: {
 
   orderedGroups: function() {
     return _.orderBy(this.groups, 'createdAt', 'desc')
-  }
+  },
+  formattedElapsedTime() {
+      const date = new Date(null);
+      date.setSeconds(this.elapsedTime / 1000);
+      const utc = date.toUTCString();
+	  console.log(utc.substr(-6,3));
+      return utc.substr(utc.indexOf(":") - 2, 8);
+    },
+	
+	 checkcallTime() {
+      const date = new Date(null);
+      date.setSeconds(this.elapsedcallTime / 1000);
+      const utc = date.toUTCString();
+	  console.log(utc.substr(-6,3));
+      this.callstatus=utc.substr(-6,3);
+	  return utc.substr(-6,3);
+    }
 },
 
 
 watch: {
+	callstatus(){
+	console.log(this.callstatus);
+     if(this.callstatus > 10){
+	 $('#o2ovideocall').modal('hide');
+	 $('body').removeClass('modal-open');
+     $('.modal-backdrop').remove();
+	 
+	   this.o2ostopKCall();
+	 
+	 }
+	},
   groupmessage() {
 
     if (this.groupmessage.length > 0) {
@@ -5784,19 +5863,56 @@ message: _.debounce(function () {
       
   //   }
   // }
+
 },
 created() {
     setInterval(() => this.startTimer(), 2000);
 },
 
 methods: {
+  start() {
+      this.timer = setInterval(() => {
+        this.elapsedTime += 1000;
+      }, 1000);
+    },
+    stop() {
+      clearInterval(this.timer);
+    },
+    reset() {
+      this.elapsedTime = 0;
+    },
+	
+	checkcallstart() {
+      this.calltimer = setInterval(() => {
+        this.elapsedcallTime += 1000;
+      }, 1000);
+    },
+    checkcallstop() {
+      clearInterval(this.calltimer);
+    },
+    checkreset() {
+      this.elapsedcallTime = 0;
+    },
 startTimer() {
 
       var result=returnPdata();
-    //console.log(result);
+   // console.log(result);
       if(result.length == 0){
     this.presentersData=[];
     }
+	  if(this.presentersData.length > result.length ){
+		   console.log('alert remove');
+		   
+				for( var i=this.presentersData.length - 1; i>=0; i--){
+					for( var j=0; j<result.length; j++){
+						if(this.presentersData[i] && (this.presentersData[i].preId != result[j].preId)){
+							this.presentersData.splice(i, 1);
+						}
+					}
+				}
+		}
+		
+
     for(var i=0; i<this.friendsdata.length; i++){
   for(var j=0; j<result.length; j++){
   
@@ -5811,7 +5927,7 @@ startTimer() {
       }
     }
   }
-//console.log(this.presentersData);
+console.log(this.presentersData);
   },
   o2oopenwindow(id){
         window.open('/o2o?data='+this.singlefriend._id, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1100,height=600');
@@ -5966,7 +6082,7 @@ $('#startchat').hide();
          $('#startchat').show();
 		 $('#message-input').hide();
           $('#singlemessage-input').show();
-      
+          this.o2ostatus=false;
           var container = this.$el.querySelector("#chating");
           $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
           
@@ -6034,6 +6150,15 @@ $('#startchat').hide();
   },
 
   chat: function(e) {
+  
+  console.log(this.o2ostatus);
+ // if(Object.keys(this.oncallFriend).length > 0){
+ // this.singlefriend = this.oncallFriend
+ // }
+  
+       if(this.o2ostatus == true){
+		    this.singlefriend = this.oncallFriend
+		  }
     this.ischatemojiActive=false;
     if(this.message){
     if (this.editChatid) {
@@ -6066,7 +6191,7 @@ $('#startchat').hide();
 
       this.msgObj = {
 
-        commentId: { _id: this.chatreplydata._id, message: this.chatreplydata.message, senderId:this.chatreplydata.senderId },
+        commentId: { _id: this.chatreplydata._id, message: this.chatreplydata.message, senderId:this.chatreplydata.senderId._id },
         messageType: 0,
         senderId: { _id: this.c_user._id },
         receiverId: { _id: this.singlefriend._id },
@@ -6152,7 +6277,7 @@ $('#startchat').hide();
         message: this.message,
         createdAt: new Date().toISOString(),
       };
-
+console.log(this.msgObj);
         if (this.singlefriend.chatWithRefId == this.c_user._id) {
           this.$set(this.msgObj, 'isSeen', 1);
         this.isSeen = true;
@@ -6454,18 +6579,21 @@ if(this.onEditclear == true){
 
 ///////////////////////////////////////  START GROUP SECTION //////////////////////////////////////
   getgroups() {
-    axios.get('/getCreatedGroups/' + this.c_user._id + '/5d4c07fb030f5d0600bf5c03')
-      .then(responce => {
+ if(this.orderedGroups.length == 0){
+	  this.groupLoader=true;
+		axios.get('/getCreatedGroups/' + this.c_user._id + '/5d4c07fb030f5d0600bf5c03')
+		  .then(responce => {
 
-        this.groups = responce.data;
-        console.log(responce.data);
-        
-        }, function(err) {
-        console.log('err', err);
-        alert('error');
-      });
-
-    
+			this.groupLoader=false;
+			this.groups = responce.data;
+			console.log(responce.data);
+			
+			}, function(err) {
+			console.log('err', err);
+			alert('error');
+		  });
+		  }
+   
     $('#group_chat').addClass("active");
     $('.group_chat').removeClass("active");
    
@@ -6543,7 +6671,7 @@ if(this.onEditclear == true){
 
 this.groupmsgObj = {
 
-        commentId: { _id: this.groupchatreplydata._id, message: this.groupchatreplydata.message },
+        commentId: { _id: this.groupchatreplydata._id, message: this.groupchatreplydata.message,senderId:this.groupchatreplydata.senderId },
         messageType: 0,
         senderId: { _id: this.c_user._id, name: this.c_user.name },
         senderName: this.c_user.name,
@@ -6552,6 +6680,7 @@ this.groupmsgObj = {
         createdAt: new Date().toISOString(),
         chatType: 1,
         isGroup: 1,
+		isDeleted: 0
       };
 
           this.$socket.emit('sendgroupmsg', this.groupmsgObj);
@@ -6583,7 +6712,9 @@ this.groupmsgObj = {
       senderId: { _id: this.c_user._id, name: this.c_user.name },
       senderName: this.c_user.name,
       message: this.groupmessage,
-      groupId: this.singlegroup._id
+      groupId: this.singlegroup._id,
+	  isDeleted: 0,
+	  messageType: 0
     };
     console.log(this.groupmsgObj);
     this.$socket.emit('sendgroupmsg', this.groupmsgObj);
@@ -6683,6 +6814,7 @@ this.groupmsgObj = {
       senderName: this.c_user.name,
       message: response.file[0].originalname,
       groupId: this.singlegroup._id, 
+	  isDeleted:0,
       createdAt: new Date().toISOString(),
     };
     // if (this.singlefriend.chatWithRefId == this.c_user._id) {
@@ -6743,17 +6875,19 @@ groupuploadfile(event) {
         'Content-Type': 'multipart/form-data'
       }
     }
+	this.isLoading = true;
     axios.post('/chatFilesShare', groupformDatas, config).then((response) => {
       //console.log(response.data);
       this.groupmsgObj = {
       _id: response.data.data._id,
       chatType: 0,
       isGroup: 1,
-      messageType: 1,
+      messageType: response.data.data.messageType,
       senderId: { _id: this.c_user._id, name: this.c_user.name },
       senderName: this.c_user.name,
       message: response.data.file[0].originalname,
       groupId: this.singlegroup._id, 
+	  isDeleted:0,
       createdAt: new Date().toISOString(),
     };
       // if (this.singlefriend.chatWithRefId == this.c_user._id) {
@@ -6765,6 +6899,7 @@ groupuploadfile(event) {
       // this.isSeen = false;
       // this.friendchat.push(this.msgObj);
       this.$socket.emit('sendgroupmsg', this.groupmsgObj);
+	  this.isLoading = false;
       var container = this.$el.querySelector("#group_chat_open");
       $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
       // this.userdec = this.friendsdata.filter((obj) => {
@@ -7075,12 +7210,12 @@ if(this.multipleneewmembers){
         members: this.multipleneewmembers,
       }).then(response => {
         //this.$socket.emit('getGroups', response.data);
-        for (var j = 0; j < this.multipleneewmembers.length; j++) {
-        this.singlegroup.members.push(this.multipleneewmembers[j]);
+        for (var i = 0; i < this.multipleneewmembers.length; i++) {
+        this.singlegroup.members.push(this.multipleneewmembers[i]);
       }
       
         for (var j = 0; j < this.nonGroupUsers.length; j++) {
-
+           console.log(this.nonGroupUsers[j]._id +'==='+ this.multipleneewmembers[j]._id);
           if(this.nonGroupUsers[j]._id === this.multipleneewmembers[j]._id) { 
       this.nonGroupUsers.splice(this.nonGroupUsers[j], 1)
       //this.groups=this.orderedGroups;
@@ -7279,12 +7414,12 @@ if(this.multipleneewmembers){
 
 
     startBroadcasting (){
-
-      this.broadcastPassword = this.setPassword; 
-      $('#startBroadcast').removeClass('show');
-      $('#startBroadcast').css('display','none');
-      $('#showPresenter').removeClass('show');
-      $('#showPresenter').css('display','none');
+     
+             this.broadcastPassword = this.setPassword; 
+             this.broadCastchat=[];
+			  $('#showPresenter').hide();
+			  $('#broadcastvideocall').modal();
+			  $('#broadcastvideocall').show();
             presenter(this.broadcastHtml);
               axios.post('/startPresenter/', {
               password: this.broadcastPassword,
@@ -7343,10 +7478,10 @@ showCallchat(){
 becomeViewer(presenterid) {
 
     this.starterBroid=presenterid;
-    $('#showPresenter').removeClass('show');
-    $('#showPresenter').css('display','none');
-    $('#broadcastvideocall').addClass('show');
-    $('#broadcastvideocall').css('display','block');
+    this.broadCastchat=[];
+    $('#showPresenter').hide();
+	$('#broadcastvideocall').modal();
+    $('#broadcastvideocall').show();
     viewer(presenterid,this.broadcastHtml);
     axios.get('/getBroadcastId/' + presenterid)
     .then(response => {
@@ -7359,7 +7494,18 @@ becomeViewer(presenterid) {
         }
 
     this.$socket.emit('broadcastmsg', this.bcJoinedChat); //emit socket to show other that I have joined BC
-
+   axios.post('/joinViewer', {
+			   preId: this.starterBroid, //set presenterId here
+			   joinMsg: this.bcJoinedChat, //set joinMessage here
+			   broadcastId: this.broadcastingId, //set broadcast id here
+			   userData: this.c_user  //user data here
+          }).then(response => {
+                console.log(response.data); 
+                this.broadcastChat = response.data;	//storing chat in variable
+                }, function(err) {
+				  console.log('err', err);
+				  alert('error');
+           });
 
     }, function(err) {
       console.log('err', err);
@@ -7368,13 +7514,26 @@ becomeViewer(presenterid) {
   
 },
   on2Callclose(){
-        $('#broadcastvideocall').removeClass('show');
-        $('#broadcastvideocall').css('display','none');
+        
+		
+        $('#broadcastvideocall').hide();
+		$('.videocall').addClass('beforeopenChat');
+        $('.videocall').removeClass('afteropenChat');
+        $('#modalcall').removeClass('modelafter');
+        $('#modalcall').addClass('modelbefore');
+        $('#contents').hide(); 
+        $('#chatclose').hide();
+        $('#chatopen').show();
 		$('#brochatings').removeClass('active');
         if(this.presenterId == this.c_user._id){
 
         this.$socket.emit('closebroadcastpanel', this.broadcastingId);
 		this.broadcastChat=[];
+				axios.get('/stopPresenter/' + this.c_user._id +'/'+ this.broadcastingId)
+				.then(response => {
+				 
+			   
+				  })
         }
         else{
 
@@ -7384,6 +7543,17 @@ becomeViewer(presenterid) {
           message: 'Left !', 
           chatType: 2
         }
+		  axios.post('/stopViewer', {
+			   
+			   userData: this.c_user,
+               userId: this.c_user._id,
+               preId: this.starterBroid
+          }).then(response => {
+               
+                }, function(err) {
+				  console.log('err', err);
+				  alert('error');
+           });
 
         this.$socket.emit('broadcastmsg', this.bcJoinedChat); //emit socket to show other that I have joined BC
         }
@@ -7394,7 +7564,7 @@ becomeViewer(presenterid) {
 
   },
   
-broadCastchat(){
+broadCastmsgchat(){
     this.isbroadchatemojiActive = false;
       this.bcJoinedChat = {
       senderId: { _id: this.c_user._id, name: this.c_user.name },
@@ -7404,9 +7574,16 @@ broadCastchat(){
       }
 
     this.$socket.emit('broadcastmsg', this.bcJoinedChat); //emit socket to show other that I have joined BC
-
-    this.broadCastmsg='';
-  },
+	 this.broadCastmsg='';
+    axios.post('/chat', {
+        msgData: this.bcJoinedChat
+      }).then(response => {
+   
+  },function(err) {
+      console.log('err', err);
+      alert('error');
+      })
+	  },
 
   /////////////////////////////////////// END BROADCASTING //////////////////////////////////////////
   
@@ -7433,8 +7610,12 @@ broadCastchat(){
       $('.videocall').addClass('o2oafteropenChat');
       $('#o2omodalcall').removeClass('o2omodelbefore');
       $('#o2omodalcall').addClass('o2omodelafter');
-	   $('#local-video').removeClass('beforelocalVideo');
+	  $('#local-video').removeClass('beforelocalVideo');
       $('#local-video').addClass('afterlocalVideo');
+	  
+	  $('#o2odetail').removeClass('beforeDetail');
+      $('#o2odetail').addClass('afterDetail');
+	  
       $('#o2ocontents').show();
       $('.chitchat-main .chat-content').css('opacity','1');
   },
@@ -7448,6 +7629,10 @@ broadCastchat(){
         $('#o2omodalcall').addClass('o2omodelbefore');
 		$('#local-video').removeClass('afterlocalVideo');
         $('#local-video').addClass('beforelocalVideo');
+		$('#local-video').removeClass('afterlocalVideo');
+        $('#local-video').addClass('beforelocalVideo');
+		$('#o2odetail').removeClass('afterDetail');
+        $('#o2odetail').addClass('beforeDetail');
         $('#o2ocontents').hide(); 
         $('#o2ochatclose').hide();
         $('#o2ochatopen').show();
@@ -7457,6 +7642,11 @@ broadCastchat(){
     },
 	
 	videostartCall(){
+	
+	this.checkcallstart();
+	$('.modal-backdrop').remove();
+	$('#o2ovideocall').modal('show');
+	
 	$('#o2osinglemessage-input').show();
 	this.oncallFriend=this.singlefriend;
 	let userDataobj = {
@@ -7470,35 +7660,72 @@ broadCastchat(){
 	},
 	
 	o2ostopKCall(){
-	//alert('stop');
-	 $('#showCallMin').hide();
-	  stopKCall();
-	  $('#showcallModel'+this.oncallFriend._id).show();
-	  $('#startchat').show();
+			  $('#showCallMin').hide();
+			  this.checkreset();
+			   this.checkcallstop();
+			  //this.singlefriend= this.oncallFriend;
+			  this.o2ostatus=false;
+			  console.log(this.oncallFriend);
+			  stopCall();
+			   
+			  $('#showcallModel'+this.oncallFriend._id).show();
+			  
+			  var o2oobg={
+				reciverid:receiverId(),
+				friendId:this.oncallFriend._id
+			  }
+			  
+			  this.$socket.emit('O2OcloseReceiverPanal',o2oobg);
+			  $('#startchat').show();
+			  $('#message-input').hide();
+			  $('#singlemessage-input').show();
+			  this.stop();
+			  this.oncallFriend={};
 	},
 	 minimizeScreen(){
       $('#startchat').hide();
+	  $('#o2ovideocall').modal('hide');
+	  $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
       $('#showcallModel'+this.oncallFriend._id).hide();
       $('#showCallMin').show();
     },
 	  o2ostartchat() {
-         //$('#startchat').show();
-		 $('#message-input').hide();
-          $('#o2osinglemessage-input').show();
-      
-          var container = this.$el.querySelector("#o2ochating");
-          $("#o2ochating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
-          
-          this.message = '';
-          this.editChatid = '';
-          this.onEditclear = false;
-          this.onChat = true;
-          this.chatreplydata = "";
-          this.typing = false;
-          $('#o2osinglemessage-input').css("height", "96px");
-          this.replyBox = false;
-         
+	  
+	  console.log(this.oncallFriend);
+	  this.o2ostatus=true;
+      $('#o2ochatopen').removeClass('dot-btn dot-success grow');
+      $('#o2ochatopen').hide();
+      $('#o2ochatclose').show();
+      $('#o2ochating').addClass('active');
+      $('#o2osinglemessage-input').show();
+	  $('#message-input').hide();
+      var containers = this.$el.querySelector("#o2ochating");
+      console.log(containers.scrollHeight);
+      $("#o2ochating").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
 
+      this.message = '';
+      this.editChatid = '';
+      this.onEditclear = false;
+      this.onChat = true;
+	  this.chatreplydata = "";
+      this.typing = false;
+      this.replyBox = false;
+      $('#o2osinglemessage-input').css("height", "96px");
+
+
+      $('.videocall').removeClass('o2obeforeopenChat');
+      $('.videocall').addClass('o2oafteropenChat');
+      $('#o2omodalcall').removeClass('o2omodelbefore');
+      $('#o2omodalcall').addClass('o2omodelafter');
+	  $('#local-video').removeClass('beforelocalVideo');
+      $('#local-video').addClass('afterlocalVideo');
+	  
+	  $('#o2odetail').removeClass('beforeDetail');
+      $('#o2odetail').addClass('afterDetail');
+	  
+      $('#o2ocontents').show();
+      $('.chitchat-main .chat-content').css('opacity','1');
           
           this.$socket.emit('updateUserSelection', {
             selectedUser: this.oncallFriend._id,
@@ -7532,8 +7759,25 @@ broadCastchat(){
         
 
   },
-  receiveCall(){
+  o2oreceiveCall(){
      startCall();
+	 
+	 this.start();
+	 var o2oobg={
+	    reciverid:receiverId(),
+		friendId:this.oncallFriend._id
+	  }
+	  this.$socket.emit('O2OstarTimer',o2oobg);
+     $('#audiocall').modal('hide');
+	 
+     $('#o2ovideocall').modal('show');
+	 $('#local-video').css('display','block');
+	 
+	 const post = this.friendsdata.filter((obj) => {
+            return receiverId() === obj._id;
+          }).pop();
+          this.oncallFriend = post ; 
+	 console.log(this.oncallFriend);
   }
 
 },
@@ -8405,5 +8649,11 @@ float: right;
   padding: 9px;
   width: 35px;
   height: 36px;
+}
+.beforeDetail{
+top:315px !important;
+}
+.afterDetail{
+   top:40px !important;
 }
 </style>

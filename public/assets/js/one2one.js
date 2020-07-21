@@ -16,15 +16,18 @@
         var callType = 0;
         var inComCallData = 0;
        var c_userData= JSON.parse(localStorage.getItem('userData'));
- // console.log(c_userData);
+
+      
+       // console.log(c_userData);
        // o2oSocConnec();
 
         window.onbeforeunload = function () {
+            console.log("onbeforeunload");
             O2O_ws.close();
         }
 
         O2O_ws.onopen = function (message) {
-			//console.log(c_userData._id +' user register');
+            console.log("onopen");
             sendKMessage({
                 id: 'register',
                 name: c_userData._id  //set loggedIn userId here
@@ -55,6 +58,9 @@
                     console.info("Communication ended by remote peer");
                     stopK(true);
                     break;
+                case 'onIceCandidate': // testing purpose, needs reCheck
+                    webRtcO2OPeer.addIceCandidate(parsedMessage.candidate)
+                    break;
                 case 'iceCandidate':
                     webRtcO2OPeer.addIceCandidate(parsedMessage.candidate)
                     break;
@@ -64,35 +70,41 @@
         }
         
         O2O_ws.onclose = function () {
+            console.log("onclose");
            // o2oSocConnec();
         }
 
         O2O_ws.onerror = function () {
+            console.log("onerror");
+            sendKMessage({
+                id: 'register',
+                name: c_userData._id  //set loggedIn userId here
+            });
            // o2oSocConnec();
         }
 
         function setCallState(nextState) {
-            switch (nextState) {
-                case NO_CALL:
-                    $('#videoCall').attr('disabled', false);  //related to VideoCall icon
-                   // $('#terminate').attr('disabled', true);
-                    break; 
-                case PROCESSING_CALL:
-                    $('#videoCall').attr('disabled', true); 
-                  //  $('#terminate').attr('disabled', true);
-                    break;
-                case IN_CALL:
-                    $('#videoCall').attr('disabled', true);
-                  //  $('#terminate').attr('disabled', false);
-                    break;
-                default:
-                    return;
-            }
+            // switch (nextState) {
+            //     case NO_CALL:
+            //        // $('#videoCall').attr('disabled', false);  //related to VideoCall icon
+            //        // $('#terminate').attr('disabled', true);
+            //         break; 
+            //     case PROCESSING_CALL:
+            //        // $('#videoCall').attr('disabled', true); 
+            //       //  $('#terminate').attr('disabled', true);
+            //         break;
+            //     case IN_CALL:
+            //       // $('#videoCall').attr('disabled', true);
+            //       //  $('#terminate').attr('disabled', false);
+            //         break;
+            //     default:
+            //         return;
+            // }
            
             callState = nextState;
         }
 
-        function onIceCandidate(candidate) { 
+        function onIceCandidateO2O(candidate) { 
             var message = {
                 id : 'onIceCandidate',
                 candidate : candidate,
@@ -129,6 +141,8 @@
                 var errorMessage = message.message ? message.message
                         : 'Unknown reason for call rejection.';
                 // updateCallerUI();
+				o2oSocConEst=false;
+				//ping();
                 stopK(true);
             } else {
                 setCallState(IN_CALL);
@@ -151,20 +165,7 @@
             } 
             disconnect(friendId);
         };
-		function stopKCall(){
-            //console.log('stopCall');
-            let response = {
-                id : 'incomingCallResponse',
-                from : inComCallData.from,
-                to: c_userData._id, 
-                callResponse : 'reject',
-                message : 'user declined'
-            };
-            sendKMessage(response);
-            stopK(true);
-        }
-
-
+		
 
           /*disconnect the call from user side who hit the disconnect button*/
           function disconnect (friendId) {
@@ -191,7 +192,7 @@
                     //     title: 'Incoming Call',
                     //     message: 'Another user is calling you ...'
                     // });
-                    socket.emit('userBusy', { 'callerId': c_userData._id }); //set userId here
+                    // socket.emit('userBusy', { 'callerId': c_userData._id }); //set userId here
                 }
 
                 console.log("*********** BUSY *************");
@@ -202,12 +203,21 @@
             openVoice=true; 
             setCallState(PROCESSING_CALL); 
     
+            console.log(message);
             callerId = message.userData.callerId;
             friendId = message.userData.friendId;
             callType = message.userData.callType; 
-            console.log('audiorcvcall');
-            checkCallerUser(message.userData); 
-            $('#audiorcvcall').show(); // show incomingCall Modal here
+
+            // callMsgData = message.userData;
+            //alert('audiorcvcall');
+            // checkCallerUser(message.userData); 
+      
+            $('#audiocall').modal();
+            $('#audiocall').show(); // show incomingCall Modal here
+            $('#incomingName').html(message.userData.callerName);
+            //$('#broadcastvideocall').addClass('show');
+    //$('#broadcastvideocall').css('display','block');
+
             //document.getElementById('callerName').innerHTML = message.userData.callerName; //set callerName in html
             inComCallData=message;
              
@@ -229,7 +239,7 @@
             let options = {
                 localVideo : localAsset,
                 remoteVideo : remoteAsset,
-                onicecandidate : onIceCandidate,medConst
+                onicecandidate : onIceCandidateO2O,medConst
             }  
             webRtcO2OPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
             function(error) {
@@ -250,6 +260,12 @@
                     sendKMessage(response);
                 });
             });
+
+         //   receiverId(inComCallData.from);
+        }
+
+        function receiverId(){
+            return inComCallData.from;
         }
 		
 		function videoKCall(from,to,userData,isAudio){
@@ -270,7 +286,7 @@
             let options = {
                 localVideo : localAsset,
                 remoteVideo : remoteAsset,
-                onicecandidate : onIceCandidate,medConst
+                onicecandidate : onIceCandidateO2O,medConst
             } 
                
             webRtcO2OPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
@@ -322,7 +338,7 @@
             let options = {
                 localVideo : localAsset,
                 remoteVideo : remoteAsset,
-                onicecandidate : onIceCandidate,medConst
+                onicecandidate : onIceCandidateO2O,medConst
             } 
                
             webRtcO2OPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
@@ -348,3 +364,17 @@
             setCallState(IN_CALL);
             webRtcO2OPeer.processAnswer(message.sdpAnswer);
         }
+		//setInterval(ping, 2000);
+		//function ping() {
+        //if (!c_userData || typeof c_userData._id === "undefined") return;
+		//console.log(o2oSocConEst);
+       // if (!o2oSocConEst){ sendKMessage({
+               // id: 'register',
+               // name: c_userData._id  //set loggedIn userId here
+           // });
+			//} //window.location.reload();
+         // sendKMessage({
+         //   id: '__ping__',
+         //   from: c_userData._id
+        //});
+   // }

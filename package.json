@@ -36,6 +36,7 @@
     "vee-validate": "^2.0.3",
     "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.1",
+    "vue-content-loader": "^0.2.3",
     "vue-feather-icons": "^5.0.0",
     "vue-full-screen-file-drop": "^2.0.0",
     "vue-infinite-loading": "^2.4.5",
