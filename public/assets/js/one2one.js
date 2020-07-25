@@ -15,9 +15,9 @@
         var friendId = 0;
         var callType = 0;
         var inComCallData = 0;
-       var c_userData= JSON.parse(localStorage.getItem('userData'));
+        var c_userData= JSON.parse(localStorage.getItem('userData'));
 
-      
+       
        // console.log(c_userData);
        // o2oSocConnec();
 
@@ -76,10 +76,10 @@
 
         O2O_ws.onerror = function () {
             console.log("onerror");
-            sendKMessage({
-                id: 'register',
-                name: c_userData._id  //set loggedIn userId here
-            });
+           // sendKMessage({
+             //   id: 'register',
+             //   name: c_userData._id  //set loggedIn userId here
+           // });
            // o2oSocConnec();
         }
 
@@ -116,12 +116,12 @@
 
         function sendKMessage(message) {
             var jsonMessage = JSON.stringify(message);
-            console.log('Sending message: ' + jsonMessage);
+            //console.log('Sending message: ' + jsonMessage);
             O2O_ws.send(jsonMessage);
         }
      
         function callResponse(message) {
-            console.log(message);
+           // console.log(message);
             if (message.response != 'accepted') {
                 // if (message.message != 'user declined'){
                 //     $.toaster({
@@ -137,7 +137,7 @@
                 //         message: 'Call rejected by user'
                 //     });
                 // }
-                console.info('Call not accepted by peer. Closing call');
+               // console.info('Call not accepted by peer. Closing call');
                 var errorMessage = message.message ? message.message
                         : 'Unknown reason for call rejection.';
                 // updateCallerUI();
@@ -195,7 +195,7 @@
                     // socket.emit('userBusy', { 'callerId': c_userData._id }); //set userId here
                 }
 
-                console.log("*********** BUSY *************");
+                //console.log("*********** BUSY *************");
                 return sendKMessage(response);
             }
             
@@ -203,7 +203,7 @@
             openVoice=true; 
             setCallState(PROCESSING_CALL); 
     
-            console.log(message);
+           // console.log(message);
             callerId = message.userData.callerId;
             friendId = message.userData.friendId;
             callType = message.userData.callType; 
@@ -211,10 +211,28 @@
             // callMsgData = message.userData;
             //alert('audiorcvcall');
             // checkCallerUser(message.userData); 
-      
-            $('#audiocall').modal();
-            $('#audiocall').show(); // show incomingCall Modal here
-            $('#incomingName').html(message.userData.callerName);
+			  if(callType == 0){
+				  var x = document.getElementById("outgoingcall"); 
+				  console.log(x);
+						x.play();
+						x.muted = false;
+						x.loop = true;
+						
+						
+				    $('#videocallReceiver').modal();
+					$('#videocallReceiver').show(); // show incomingCall Modal here
+					$('#incomingName').html(message.userData.callerName);
+			  }else{
+				   var x = document.getElementById("outgoingcall"); 
+				  console.log(x);
+						x.play();
+						x.muted = false;
+						x.loop = true;
+				    $('#audiocallReceiver').modal();
+					$('#audiocallReceiver').show(); // show incomingCall Modal here
+					$('#audioincomingName').html(message.userData.callerName);
+			  }
+            
             //$('#broadcastvideocall').addClass('show');
     //$('#broadcastvideocall').css('display','block');
 
@@ -222,7 +240,14 @@
             inComCallData=message;
              
         }
-    
+    function playSound() {
+				 var sound= 'https://peekvideochat.com/incomming.mp3';
+					  if(sound) {
+						var audio = new Audio(sound);
+						return audio;
+					  }
+					}
+					
         function startCall(){
             let localAsset=document.getElementById('local-video');
             let remoteAsset= document.getElementById('videoOutput'); 

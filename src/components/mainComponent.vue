@@ -65,7 +65,15 @@
           <div class="theme-title">
             <div class="media">
               <div v-if="c_user">
+				 <audio id="outgoingcall" muted>
+				  <source src="https://peekvideochat.com/incomming.mp3" type="audio/ogg">
+				  <source src="https://peekvideochat.com/incomming.mp3" type="audio/mpeg">
+				</audio>
+				<audio id="incommingcall" muted>
+				  <source src="https://peekvideochat.com/outgoing_ringtone.mp3" type="audio/ogg">
+				  <source src="https://peekvideochat.com/outgoing_ringtone.mp3" type="audio/mpeg">
 				
+				</audio>
 					<p style="display:none">{{checkcallTime}}</p>
                 
                 <div v-if="c_user.onlineStatus == 1" class="profile" v-bind:class="{ online: c_user.pStatus == 0, unreachable : c_user.pStatus == 1, busy: c_user.pStatus == 2, offline: c_user.pStatus == 3, offline: c_user.pStatus == 4 }">
@@ -82,6 +90,18 @@
               </div>
             </div>
           </div>
+		   <div class="search2" style="padding: 0px;border-top: none;">
+                        <div>
+                          <div class="input-group">
+                            <div class="input-group-append">
+                              <span class="input-group-text">
+                                <i class="fa fa-search"></i>
+                              </span>
+                            </div>
+                            <input class="form-control" v-on:keyup="friendSearch" v-model="searchFriend" type="text" placeholder="Search People" />
+                          </div>
+                        </div>
+                      </div>
           <!-- <carousel :nav="false" :dots="false">
                 <div style="padding: 13px;">
               <div class="dot-btn dot-danger grow"></div>
@@ -101,6 +121,7 @@
               <div class="dot-btn dot-danger grow"></div>
               <img src="https://placeimg.com/200/200/any?4">
             </div>
+			
           </carousel> -->
           <!-- <div class="recent-slider recent-chat owl-carousel owl-theme">
                 <div class="item">
@@ -179,7 +200,8 @@
               </div>
             </div>
           </div>
-          <div class="theme-tab tab-sm chat-tabs" style="padding:0px;margin-top: 50px;">
+          <div class="theme-tab tab-sm chat-tabs" style="padding:0px;margin-top: 84px;">
+		  
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" data-to="chat-content">
                 <a class="nav-link button-effect active" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="true" >
@@ -210,37 +232,111 @@
                     <div class="tab-pane fade show active" id="direct" role="tabpanel" aria-labelledby="direct-tab">
                       <div id="showCallMin" style="display:none">
                         <h5>Incomming call</h5>
-                        <ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
+                        <ul  class="chat-main">
+						<li  data-to="blank" class="inits active" style="">
                           <a  href="#" data-toggle="modal" data-target="#o2ovideocall"   class="" style="font-size: 16px;line-height: 2;">
                             {{ oncallFriend.name }} </a>
+							<span style="margin-left: 44px;">{{formattedElapsedTime}}</span>
                             <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
                             </a></li>
                             </ul>
                         </div>
-
-                      <ul  v-for="friends in orderedUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
+						
+						<div id="audioshowCallMin" style="display:none">
+                        <h5>Incomming call</h5>
+                        <ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
+                          <a  href="#" data-toggle="modal" data-target="#o2oaudiocall"   class="" style="font-size: 16px;line-height: 2;">
+                            {{ oncallFriend.name }} </a>
+							<span style="margin-left: 44px;">{{formattedElapsedTime}}</span>
+                            <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
+                            </a></li>
+                            </ul>
+                        </div>
+                     <div v-if="showUsers">
+                       <ul  v-for="friends in orderedUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
                         <li class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                           <div class="chat-box">
                             <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
                               <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                             <div v-else class="profile offline">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
+							
                             <div class="details"  style="padding-left: 73px;">
                               <h5>{{friends.name}}</h5>
                               <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
                               <h6 v-else>Start Chat</h6>
-                              
-
                             </div>
+							
                             <div class="date-status">
                               <h6>{{isToday(friends.updatedByMsg)}}</h6>
                               <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
                               <h6 class="font-success status" v-else> Seen</h6>
                             </div>
+							
                           </div>
+						  
+						  
+						  
                         </li>
 
                       </ul>
+					  </div>
+					  <div v-if="showSearchfriends" >
+					  <div v-if="searchUsers.length > 0" >
+					   <ul  v-for="friends in searchUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
+                        
+						<li  v-if="friends.friendStatus == 1"  class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
+                          <div class="chat-box">
+                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                            <div v-else class="profile offline">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
+							 
+                            <div class="details"  style="padding-left: 73px;">
+                              <h5>{{friends.name}}</h5>
+                              <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+                              <h6 v-else>Start Chat</h6>
+                            </div>
+							
+                            <div class="date-status">
+                              <h6>{{isToday(friends.updatedByMsg)}}</h6>
+                              <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
+                              <h6 class="font-success status" v-else> Seen</h6>
+                            </div>
+                          
+                          </div>
+						  
+                        </li>
+
+
+                       <li v-else :id="'friend'+friends._id" data-to="blank" style="">
+                          <div class="chat-box">
+                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                            <div v-else class="profile offline">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
+							  
+                            <div class="details"  style="padding-left: 73px;">
+                              <h5>{{friends.name}}</h5>
+							  <br>
+                              <button type="button" class="btn btn-sm btn-default"> Add Friend </button>
+                            </div>
+							
+                          </div>
+						  
+                        </li>
+
+                      </ul>
+					  </div>
+					  <div v-else>
+					  <p style="text-align: center;"> No Record Found</p>
+					  </div>
+					  
+					  </div>
+					  
                     </div>
                     <div class="tab-pane fade" id="group" role="tabpanel" aria-labelledby="group-tab">
                       <div class="search2">
@@ -251,7 +347,7 @@
                                 <i class="fa fa-search"></i>
                               </span>
                             </div>
-                            <input class="form-control" type="text" placeholder="Start Chat" />
+                            <input class="form-control" type="text" v-model="groupSearch" placeholder="Start Chat" />
                           </div>
                         </div>
                       </div>
@@ -271,6 +367,8 @@
 							<circle cx="341" cy="18" r="8" /> 
 							<circle cx="218" cy="30" r="7" />
 					  </content-loader>
+					  
+					   <div v-if="groupData">
                       <ul class="group-main" v-for="(group,index) in orderedGroups">
                         <li class="group_chat" :id="'group_data'+group._id" data-to="group_chat" @click="startgroupchat(group,index)" style="cursor: pointer;">
                           <div class="group-box">
@@ -292,6 +390,35 @@
                         </li>
 
                       </ul>
+					  
+					  </div>
+					  
+					  <div v-if="groupSearching">
+					  
+					    <ul class="group-main" v-for="(group,index) in filteredGrouplist">
+                        <li class="group_chat" :id="'group_data'+group._id" data-to="group_chat" @click="startgroupchat(group,index)" style="cursor: pointer;">
+                          <div class="group-box">
+                            <div class="profile"><img class="bg-img" src="../assets/images/avtar/teq.jpg" alt="Avatar" /></div>
+                            <div class="details" style="padding-left: 66px;padding-top: 0px;">
+                              <h5>{{ group.name }}</h5>
+                              <h6>Lorem Ipsum is simply dummy text the printing and typesetting industry.</h6>
+                            </div>
+                            <div class="date-status">
+                              <ul class="grop-icon">
+                                <li>
+                                  <a class="group-tp" href="#" data-tippy-content=""> ({{group.members.length }})</a>
+                                </li>
+
+                              </ul>
+
+                            </div>
+                          </div>
+                        </li>
+
+                      </ul>
+					  
+					  </div>
+					  
                     </div>
                   </div>
                 </div>
@@ -1922,7 +2049,7 @@
             <div class="row">
               <form class="form-inline search-form">
                 <div class="form-group">
-                  <input class="form-control-plaintext" type="search" placeholder="Search.." />
+                  <input class="form-control-plaintext" v-model="o2oChatsearch" type="search" placeholder="Search.." />
                   <div class="icon-close close-search"> </div>
                 </div>
               </form>
@@ -1971,7 +2098,7 @@
               <div class="col">
                 <ul class="calls text-right">
                   <li>
-                    <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#audiocall">
+                    <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#o2oaudiocall" @click="startAudiocall()">
                       <phone-icon size="1.5x" class="custom-class"></phone-icon>
                     </a>
                   </li>
@@ -2205,7 +2332,7 @@
                     </ul>
                   </div>-->
 
-            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
+            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
             <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
               <mic-icon size="1.5x" class="custom-class"></mic-icon>
             </a>
@@ -4267,7 +4394,10 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="audiocall" tabindex="-1" role="dialog" aria-hidden="true">
+  
+  <!-------------------------------------------- O2O VIDEO CALL RECEIVER ---------------------------------->
+  
+  <div class="modal fade" id="videocallReceiver" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-body">
         <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/avtar/big/audiocall.jpg" alt="Avatar" />
@@ -4291,8 +4421,35 @@
       </div>
     </div>
   </div>
+  
+  
+ <!-------------------------------------------- O2O AUDIO CALL RECEIVER ---------------------------------->
+  <div class="modal fade" id="audiocallReceiver" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-body">
+        <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/avtar/big/audiocall.jpg" alt="Avatar" />
+          <div class="center-con text-center">
+            <div class="title2" id="audioincomingName"></div>
+            <ul>
+              <li>
+                <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="o2oaudioreceiveCall()"  data-dismiss="modal">
+                  <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                </a>
+              </li>
+              <li>
+                <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal">
+                  <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                </a>
+              </li>
+            </ul>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!---------------------------------- O2O CALL MODEL ---------------------------------->
+  <!---------------------------------- O2O VIDEO CALL MODEL ---------------------------------->
 
     <div class="o2ovideocallModel  viddiolog modal fade" id="o2ovideocall" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered o2omodelbefore" id="o2omodalcall" role="document">
@@ -4321,8 +4478,11 @@
           <div class="center-con text-center">
             <ul>
               <li>
-                <a class="icon-btn btn-light button-effect pause" href="#" data-tippy-content="Hold">
-                  <i class="ti-control-pause"></i>
+                <a v-if="videoPause" class="icon-btn btn-light button-effect pause" href="#" @click="videoPausecall()" data-tippy-content="Hold">
+                  <i class="fa fa-pause off" aria-hidden="true"></i>
+                </a>
+				<a v-if="videoPlay" class="icon-btn btn-light button-effect pause" href="#" @click="videoPlaycall()" data-tippy-content="Hold">
+                  <i class="fa fa-play" aria-hidden="true"></i>
                 </a>
               </li>
               <li>
@@ -4331,8 +4491,13 @@
                 </a>
               </li>
               <li>
-                <a class="icon-btn btn-light button-effect mic" href="#" data-tippy-content="Mute">
+			  
+                <a v-if="audioPause" class="icon-btn btn-light button-effect pause" href="#" @click="audioPausecall()" data-tippy-content="">
                   <i class="fa fa-microphone"></i>
+                </a>
+				
+				 <a v-if="audioPlay" class="icon-btn btn-light button-effect " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
+                  <i class="fa fa-microphone-slash" aria-hidden="true"></i>
                 </a>
               </li>
             </ul>
@@ -4509,7 +4674,7 @@
             <input type="file" id="fileupload" ref="o2omyFiles" style="display:none" @change="uploadfile($event)" multiple>
 
 
-            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
+            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
             
             <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
               <send-icon size="1.5x" class="custom-class"></send-icon>
@@ -4529,6 +4694,248 @@
 
 
   <!-------------------------------------------- CLOSE O2O CALL MODEL -------------------------------->
+  
+  
+   <!---------------------------------- O2O AUDIO CALL MODEL ---------------------------------->
+
+    <div class="o2ovideocallModel  viddiolog modal fade" id="o2oaudiocall" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered o2omodelbefore" id="o2omodalaudiocall" role="document">
+      <div class="modal-body">
+        
+        <div class="videocall o2obeforeopenChat call-modal">
+          <audio id="audioOutput" autoplay controls></audio>
+          <audio id="audioInput" autoplay controls></audio>
+          <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
+          <div class="small-image"></div>
+          <div id="o2oaudiodetail" class="media beforeDetail videocall-details">
+            <div class="usersprof">
+              <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
+              <div class="profile"><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" /></div>
+            </div>
+            <div class="media-body">
+              <h5>Josephin water</h5>
+              <h6>America ,California</h6>
+            </div>
+            <div id="basicUsage">{{formattedElapsedTime}}</div>
+            <div class="zoomcontent minimizeclass" >
+              <a class="text-dark" href="#!"  @click="audiominimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
+                  <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
+                </a>
+            </div>
+          </div>
+          <div class="center-con text-center">
+            <ul>
+               <li>
+                
+                <a v-if="audioPause" class="icon-btn btn-light button-effect pause" href="#" @click="audioPausecall()" data-tippy-content="">
+                  <i class="fa fa-microphone"></i>
+                </a>
+				
+				 <a v-if="audioPlay" class="icon-btn btn-light button-effect " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
+                  <i class="fa fa-microphone-slash" aria-hidden="true"></i>
+                </a>
+              <li>
+                <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" @click="o2ostopKCall()"  data-dismiss="modal" data-tippy-content="Hangup">
+                  <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                </a>
+              </li>
+            
+              </li>
+            </ul>
+          </div>
+            <div class="text-right" style="float: right;position: absolute;bottom: 107px;right: 22px;">
+            <ul>
+              <li>
+                <a class="icon-btn btn-light button-effect pause" id="o2oaudiochatopen"  href="#" @click="o2ostartAudiochat()" data-tippy-content="Hold">
+                <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
+                </a>
+                <a class="icon-btn btn-light button-effect pause" id="o2oaudiochatclose" href="#" @click="o2ohideaudioCallchat()" style="display:none" data-tippy-content="Hold">
+                <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
+                </a>
+              </li>
+          
+            </ul>
+          </div>
+        </div>
+
+
+      <div class="chitchat-main small-sidebar" id="o2oaudiocontents" style="display:none;width: 30%;float:right">
+    
+
+      <div class="chat-content tabto" id="startchatssss">
+        <div class=" messages custom-scroll active messageschat" id="o2oaudiochating" style="min-height:100vh !important;">
+          
+          <!-------- Dropzone ------>
+          <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
+          <!-------- end -------->
+          <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
+
+          </loading>
+          <div class="contact-chat  ">
+            <ul class="chatappend" v-for="chat in friendchat">
+              <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
+                <div class="media">
+                  <div class="profile mr-4">
+                    <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                  <div class="media-body">
+                    <div class="contact-name">
+                      <h5>{{ c_user.name}}</h5>
+                      <h6>{{isToday(chat.createdAt)}}</h6>
+
+                      <ul class="msg-box">
+                        <li class="msg-setting-main">
+                          <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                            <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
+                              <i class="ti-more-alt"></i>
+                            </div>
+
+                            <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
+                              <ul>
+                                <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                  <a href="#" @click="eidtchat(chat._id,chat.message)">
+                                    <i class="fa fa-pencil"></i>edit</a>
+                                </li>
+                                <li>
+                                  <a href="#" @click="quote(chat)">
+                                    <i class="fa fa-share"></i>Quote</a>
+                                </li>
+
+                                <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                  <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                    <i class="fa fa-clone"></i>copy</a>
+                                </li>
+                                <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                <li>
+                                  <a href="#" @click="msgdelete(chat)">
+                                    <i class="ti-trash"></i>delete</a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+
+                          <h5 v-if="chat.isDeleted == 1" :id="'sendero2o'+chat._id">message deleted</h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sendero2o'+chat._id">{{ chat.message }}</h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sendero2o'+chat._id">
+                            <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                          <br>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                            <img :src="hostname+'/images/chatImages/'+chat.message">
+                          </a>
+
+                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+
+                        </li>
+                       
+                      </ul>
+
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="sent" style="padding-bottom:20px" v-else>
+                <div class="media">
+                  <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                  <div class="media-body">
+                    <div class="contact-name">
+                      <h5>{{ oncallFriend.name }}</h5>
+                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <ul class="msg-box">
+                        <li class="msg-setting-main">
+
+                        <h5 v-if="chat.isDeleted == 1" :id="'receivero2o'+chat._id">message deleted</h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receivero2o'+chat._id">
+                            <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                          <br>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                            <img :src="hostname+'/images/chatImages/'+chat.message">
+                          </a>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                          <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                            <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
+                              <i class="ti-more-alt"></i>
+                            </div>
+                            <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
+                              <ul>
+                                
+                                <li>
+                                  <a href="#" @click="quote(chat)">
+                                    <i class="fa fa-share"></i>Quote</a>
+                                </li>
+
+                                <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                  <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                    <i class="fa fa-clone"></i>copy</a>
+                                </li>
+                               
+                              </ul>
+                            </div>
+                          </div>
+                        </li>
+                      
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+            <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
+          </div>
+          
+          <span v-show="typing" class="">{{ oncallFriend.name }} is typing ...</span>
+
+        </div>
+      <VEmojiPicker @select="selectchatEmoji"
+        class=""
+        v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;"  v-if="ischatemojiActive" />
+        <div class="message-input message-call" id="o2osinglemessage-input">
+          <div class="replybox" v-if="replyBox == true">
+            <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
+              <span style="float:right;cursor: pointer;" @click="closeReplybox()">
+                <x-icon size="1.5x" class="custom-class"></x-icon>
+              </span>
+              <br>
+              <span style="margin-left: 6px;">
+                {{isToday(chatreplydata.createdAt)}}
+              </span>
+            </p>
+          </div>
+          <div class="wrap emojis-main">
+            
+            <div class="dot-btn dot-primary mr-3">
+              <a class="icon-btn btn-outline-primary button-effect " @click="showChatemoji">
+                <smile-icon size="1.5x" class="custom-class"></smile-icon>
+              </a>
+            </div>
+
+            <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
+              <i class="fa fa-plus"></i>
+            </label>
+            <input type="file" id="fileupload" ref="o2omyFiles" style="display:none" @change="uploadfile($event)" multiple>
+
+
+            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
+            
+            <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
+              <send-icon size="1.5x" class="custom-class"></send-icon>
+            </button>
+            <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
+              <x-icon size="1.5x" class="custom-class"></x-icon>
+            </button>
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-------------------------------------------- CLOSE O2O Audio CALL MODEL -------------------------------->
+
 
   <!--------------------------------------------- OPEN BOARDCAST MODEL-------------------------------->
       <div class="videocallModel  viddiolog modal fade" id="broadcastvideocall" tabindex="-1" role="dialog" aria-hidden="true">
@@ -5379,8 +5786,12 @@ data() {
     isConnected: false,
     socketMessage: '',
     friendsdata: [],
+	searchUsers:[],
     userId: '',
     singlefriend: {},
+	searchFriend:'',
+	showSearchfriends:false,
+	showUsers:true,
     msgObj: {},
     message: '',
     friendchat: {},
@@ -5390,6 +5801,7 @@ data() {
     groups: {},
     singlegroup: {},
     groupdata: {},
+	groupSearch:'',
     groupmessage: '',
     groupmsgObj: {},
     groupchatdata: {},
@@ -5456,7 +5868,15 @@ data() {
     timer: undefined,
 	elapsedcallTime: 0,
     calltimer: undefined,
-	callstatus:0
+	callstatus:0,
+	audio:{},
+	videoPause:true,
+	videoPlay:false,
+	audioPause:true,
+	audioPlay:false,
+	groupData:true,
+	groupSearching:false,
+	
 
   }
 
@@ -5494,7 +5914,9 @@ beforeCreate: function() {
         $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
 		 var container2 = this.$el.querySelector("#o2ochating");
          $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020}, "fast");
-    
+         var container3 = this.$el.querySelector("#o2oaudiochating");
+         $("#o2oaudiochating").animate({ scrollTop: container3.scrollHeight + 7020}, "fast"); 
+		 
       if (this.singlefriend.chatWithRefId == this.c_user._id) {
         //this.friendCallchat.push(data.msgData);
         
@@ -5752,27 +6174,50 @@ receivebroadcastmsg(data) {
   
   O2OReceiverPanal(data) {
   console.log(data);
-  if(data.reciverid == this.c_user._id || data.friendId == this.c_user._id ){
-
-		            $('#o2ovideocall').modal('hide');
-		            this.checkreset();
-	               this.checkcallstop();
-				   $('#audiocall').modal('hide');
-				   $('body').removeClass('modal-open');
-                   $('.modal-backdrop').remove();
-		           this.reset();
-                   this.stop();
-				   this.o2ostopKCall();
+ if(data.reciverid == this.c_user._id || data.friendId == this.c_user._id ){
+                 
+				 var x = document.getElementById("outgoingcall");
+				 console.log(x);
+						x.pause();
+						x.muted = true;
+						
+						var incoming = document.getElementById("incommingcall");
+						incoming.pause();
+						incoming.muted = true;
+						$('#showCallMin').hide();
+						$('#audioshowCallMin').hide();
+						$('#showcallModel'+data.stoperId).show();
+						   $('#o2ovideocall').modal('hide');
+							$('#o2oaudiocall').modal('hide');
+							 this.checkreset();
+							this.checkcallstop();
+							this.reset();
+						   this.stop();
+							$('#audiocallReceiver').modal('hide');
+						   $('#videocallReceiver').modal('hide');
+						   
+						   $('body').removeClass('modal-open');
+						   $('.modal-backdrop').remove();
+						   
+						 // this.o2ostopKCall();
 		}
-	  },
+	 },
 	  
 	  O2OreceivestarTimer(data) {
 		
 		  
 		  if(data.reciverid == this.c_user._id || data.friendId == this.c_user._id ){
-		           this.checkreset();
+                  	          
+				  this.checkreset();
 	               this.checkcallstop();
-				   $('#audiocall').modal('hide');
+				    var x = document.getElementById("outgoingcall");
+						x.pause();
+						x.muted = true;
+				  var incoming = document.getElementById("incommingcall");
+						incoming.pause();
+						incoming.muted = true;
+				   $('#videocallReceiver').modal('hide');
+				   $('#audiocallReceiver').modal('hide');
 				   $('body').removeClass('modal-open');
                    $('.modal-backdrop').remove();
 		           this.reset();
@@ -5791,11 +6236,16 @@ computed: {
   orderedGroups: function() {
     return _.orderBy(this.groups, 'createdAt', 'desc')
   },
+    filteredGrouplist() {
+      return this.groups.filter(post => {
+        return post.name.toLowerCase().includes(this.groupSearch.toLowerCase())
+      })
+    },
   formattedElapsedTime() {
       const date = new Date(null);
       date.setSeconds(this.elapsedTime / 1000);
       const utc = date.toUTCString();
-	  console.log(utc.substr(-6,3));
+	 // console.log(utc.substr(-6,3));
       return utc.substr(utc.indexOf(":") - 2, 8);
     },
 	
@@ -5803,20 +6253,26 @@ computed: {
       const date = new Date(null);
       date.setSeconds(this.elapsedcallTime / 1000);
       const utc = date.toUTCString();
-	  console.log(utc.substr(-6,3));
+	  //console.log(utc.substr(-6,3));
       this.callstatus=utc.substr(-6,3);
 	  return utc.substr(-6,3);
-    }
+    },
+	
 },
 
 
 watch: {
 	callstatus(){
 	console.log(this.callstatus);
-     if(this.callstatus > 10){
-	 $('#o2ovideocall').modal('hide');
+     if(this.callstatus > 20){
+	 var incoming = document.getElementById("incommingcall");
+		incoming.pause();
+		incoming.muted = true;
 	 $('body').removeClass('modal-open');
      $('.modal-backdrop').remove();
+	 $('#o2ovideocall').modal('hide');
+	 $('#o2oaudiocall').modal('hide');
+	 
 	 
 	   this.o2ostopKCall();
 	 
@@ -5826,7 +6282,7 @@ watch: {
 
     if (this.groupmessage.length > 0) {
       this.not_working = false;
-    } else {
+    } else{
       this.not_working = true;
     }
   },
@@ -5840,6 +6296,17 @@ if (this.groupName.length > 0) {
     }
 
   },
+  groupSearch(){
+   if (this.groupSearch.length > 0) {
+		   this.groupData=false;
+		   this.groupSearching=true;
+   
+	   }
+	   else{
+		   this.groupData=true;
+		  this.groupSearching=false;
+	   }
+  },
 broadCastmsg(){
   if (this.broadCastmsg.length > 0) {
         
@@ -5852,6 +6319,18 @@ broadCastmsg(){
 message: _.debounce(function () {
       this.$socket.emit('stopTyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
   }, 1500),
+  
+  searchFriend(){
+  if (this.searchFriend.length > 0) {
+   this.showUsers=false;
+  this.showSearchfriends= true;
+  
+  }
+  else{
+  this.showSearchfriends= false;
+   this.showUsers=true;
+  }
+  },
 
   // message() {
   //   //this.removecross();
@@ -5870,6 +6349,15 @@ created() {
 },
 
 methods: {
+ //playSound () {
+ //var sound= 'https://peekvideochat.com/outgoing_ringtone.mp3';
+     // if(sound) {
+     //   this.audio = new Audio(sound);
+	//	console.log(this.audio);
+     //   this.audio.play();
+	//	this.audio.loop=true;
+     // }
+   // },
   start() {
       this.timer = setInterval(() => {
         this.elapsedTime += 1000;
@@ -5927,7 +6415,7 @@ startTimer() {
       }
     }
   }
-console.log(this.presentersData);
+//console.log(this.presentersData);
   },
   o2oopenwindow(id){
         window.open('/o2o?data='+this.singlefriend._id, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1100,height=600');
@@ -6044,6 +6532,7 @@ showbroadcastChatemoji(){
       })
       .catch((error) => console.log(error));
   },
+  
     getUsers() {
 	        ApiService.getUsers((data) => {
                      this.friendsdata = data
@@ -6052,6 +6541,7 @@ showbroadcastChatemoji(){
                 })
                
             },
+
 
   getfriends() {
       
@@ -6067,6 +6557,7 @@ showbroadcastChatemoji(){
       .catch((error) => console.log(error));
       $('#singlemessage-input').hide();
   },
+  
 
 usertab(){
 $('.init').removeClass('active');
@@ -6074,6 +6565,22 @@ $('#message-input').hide();
 $('#singlemessage-input').hide();
 $('#startchat').hide();
 },
+
+
+friendSearch(){
+
+axios.post('/friends/searchFriend/', {
+        name: this.searchFriend,
+		userId:this.c_user._id,
+		lastUserTime:''
+      }).then(response => {
+             this.searchUsers=response.data;
+      }, function(err) {
+        console.log('err', err);
+        alert('error');
+      })
+},
+
 
 ///////////////////////////////////////  START CHAT SECTION //////////////////////////////////////
 
@@ -6148,13 +6655,12 @@ $('#startchat').hide();
         $('.chitchat-container').toggleClass("mobile-menu");
 
   },
+  
 
   chat: function(e) {
   
   console.log(this.o2ostatus);
- // if(Object.keys(this.oncallFriend).length > 0){
- // this.singlefriend = this.oncallFriend
- // }
+
   
        if(this.o2ostatus == true){
 		    this.singlefriend = this.oncallFriend
@@ -6172,7 +6678,7 @@ $('#startchat').hide();
       console.log(this.msgObj);
 
       this.$socket.emit('updatechatmsg', this.msgObj)
-      
+      this.removecross();
       axios.post('/updateChat/' + this.editChatid, {
         msgData: this.msgObj
       }).then(response => {
@@ -6258,6 +6764,9 @@ $('#startchat').hide();
       $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
 	  var container2 = this.$el.querySelector("#o2ochating");
        $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020}, "fast"); 
+	   var container3 = this.$el.querySelector("#o2oaudiochating");
+         $("#o2oaudiochating").animate({ scrollTop: container3.scrollHeight + 7020}, "fast"); 
+		 
       this.message = '';
       $('#send-msg').addClass('disabled').attr("disabled", "disabled");
     }
@@ -6277,7 +6786,7 @@ $('#startchat').hide();
         message: this.message,
         createdAt: new Date().toISOString(),
       };
-console.log(this.msgObj);
+       console.log(this.msgObj);
         if (this.singlefriend.chatWithRefId == this.c_user._id) {
           this.$set(this.msgObj, 'isSeen', 1);
         this.isSeen = true;
@@ -6337,8 +6846,6 @@ console.log(this.msgObj);
         }, 0);
 
 
-
-
       }, function(err) {
         console.log('err', err);
         alert('error');
@@ -6350,6 +6857,8 @@ console.log(this.msgObj);
         $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
 	  var container2 = this.$el.querySelector("#o2ochating");
          $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020}, "fast"); 
+        var container3 = this.$el.querySelector("#o2oaudiochating");
+         $("#o2oaudiochating").animate({ scrollTop: container3.scrollHeight + 7020}, "fast"); 
         
       
       $('#send-msg').addClass('disabled').attr("disabled", "disabled");
@@ -6357,6 +6866,7 @@ console.log(this.msgObj);
     }
     }
   },
+
 
 
   dragfileupload(file, xhr, formData) {
@@ -6534,8 +7044,9 @@ console.log(this.msgObj);
     this.editChatid = '';
   },
 
+
   removecross() {
-if(this.onEditclear == true){
+  if(this.onEditclear == true){
     this.onEditclear = false;
     this.message = '';
     this.onChat = true;
@@ -7584,6 +8095,33 @@ broadCastmsgchat(){
       alert('error');
       })
 	  },
+	  videoPausecall(){
+	         webRtcO2OPeer.getLocalStream().getVideoTracks()[0].enabled= false;
+			 this.videoPause= false;
+			 this.videoPlay= true;
+	  },
+	  videoPlaycall(){
+	         webRtcO2OPeer.getLocalStream().getVideoTracks()[0].enabled= true;
+			 this.videoPlay= false;
+			 this.videoPause= true;
+			 
+	  },
+	  
+	  audioPausecall(){
+	  
+	   this.audioPause= false;
+			 this.audioPlay= true;
+	         webRtcO2OPeer.getLocalStream().getAudioTracks()[0].enabled= false;
+			
+	  },
+	  
+	  audioPlaycall(){
+	  
+	     webRtcO2OPeer.getLocalStream().getAudioTracks()[0].enabled= true;
+			 this.audioPlay= false;
+			 this.audioPause= true;
+	  },
+	  
 
   /////////////////////////////////////// END BROADCASTING //////////////////////////////////////////
   
@@ -7642,10 +8180,14 @@ broadCastmsgchat(){
     },
 	
 	videostartCall(){
-	
+	var incoming = document.getElementById("incommingcall");
+		incoming.play();
+		incoming.muted = false;
+		incoming.loop = true;
 	this.checkcallstart();
-	$('.modal-backdrop').remove();
-	$('#o2ovideocall').modal('show');
+	//$('body').removeClass('modal-open');
+	//$('.modal-backdrop').remove();
+	//$('#o2ovideocall').modal('show');
 	
 	$('#o2osinglemessage-input').show();
 	this.oncallFriend=this.singlefriend;
@@ -7660,7 +8202,18 @@ broadCastmsgchat(){
 	},
 	
 	o2ostopKCall(){
+	
+	             //this.audio.pause();
+				  var x = document.getElementById("outgoingcall");  console.log(x);
+						x.pause();
+						x.muted = true;
+						var incoming = document.getElementById("incommingcall");
+						incoming.pause();
+						incoming.muted = true;
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
 			  $('#showCallMin').hide();
+			  $('#audioshowCallMin').hide();
 			  this.checkreset();
 			   this.checkcallstop();
 			  //this.singlefriend= this.oncallFriend;
@@ -7672,7 +8225,8 @@ broadCastmsgchat(){
 			  
 			  var o2oobg={
 				reciverid:receiverId(),
-				friendId:this.oncallFriend._id
+				friendId:this.oncallFriend._id,
+				stoperId:this.c_user._id
 			  }
 			  
 			  this.$socket.emit('O2OcloseReceiverPanal',o2oobg);
@@ -7760,6 +8314,9 @@ broadCastmsgchat(){
 
   },
   o2oreceiveCall(){
+  var x = document.getElementById("outgoingcall"); 
+		x.pause();
+		x.muted = true;
      startCall();
 	 
 	 this.start();
@@ -7768,7 +8325,7 @@ broadCastmsgchat(){
 		friendId:this.oncallFriend._id
 	  }
 	  this.$socket.emit('O2OstarTimer',o2oobg);
-     $('#audiocall').modal('hide');
+     $('#videocallReceiver').modal('hide');
 	 
      $('#o2ovideocall').modal('show');
 	 $('#local-video').css('display','block');
@@ -7778,7 +8335,150 @@ broadCastmsgchat(){
           }).pop();
           this.oncallFriend = post ; 
 	 console.log(this.oncallFriend);
-  }
+  },
+  
+  
+  ///////////////////////////////////////////////////////// O2O AUDIO CALL /////////////////////////////////////////////////////////////////////////////
+
+startAudiocall(){
+	
+	this.checkcallstart();
+	var incoming = document.getElementById("incommingcall");
+		incoming.play();
+		incoming.muted = false;
+		incoming.loop= true;
+	
+	$('#o2osinglemessage-input').show();
+	this.oncallFriend=this.singlefriend;
+	let userDataobj = {
+                friendId: this.oncallFriend._id,
+                callerName:this.c_user.name,
+                callerId: this.c_user._id,
+                callType: 1
+            };
+	    videoKCall(this.c_user._id,this.oncallFriend._id,userDataobj,1);
+		
+	},  
+	
+	 o2ostartAudiochat() {
+	  
+	  console.log(this.oncallFriend);
+	  this.o2ostatus=true;
+      $('#o2oaudiochatopen').removeClass('dot-btn dot-success grow');
+      $('#o2oaudiochatopen').hide();
+      $('#o2oaudiochatclose').show();
+      $('#o2oaudiochating').addClass('active');
+      $('#o2osinglemessage-input').show();
+	  $('#message-input').hide();
+      var containers = this.$el.querySelector("#o2ochating");
+      console.log(containers.scrollHeight);
+      $("#o2ochating").animate({ scrollTop: containers.scrollHeight + 7020}, "fast");
+
+      this.message = '';
+      this.editChatid = '';
+      this.onEditclear = false;
+      this.onChat = true;
+	  this.chatreplydata = "";
+      this.typing = false;
+      this.replyBox = false;
+      $('#o2osinglemessage-input').css("height", "96px");
+
+
+      $('.videocall').removeClass('o2obeforeopenChat');
+      $('.videocall').addClass('o2oafteropenChat');
+      $('#o2omodalaudiocall').removeClass('o2omodelbefore');
+      $('#o2omodalaudioaudiocall').addClass('o2omodelafter');
+	  
+	  $('#o2oaudiodetail').removeClass('beforeDetail');
+      $('#o2oaudiodetail').addClass('afterDetail');
+	  
+      $('#o2oaudiocontents').show();
+      $('.chitchat-main .chat-content').css('opacity','1');
+          
+          this.$socket.emit('updateUserSelection', {
+            selectedUser: this.oncallFriend._id,
+            userId: this.c_user._id
+          });
+          const post = this.friendsdata.filter((obj) => {
+            return this.oncallFriend._id === obj._id;
+          }).pop();
+          post.usCount = 0;
+       
+
+            this.friendchat ={};
+             axios.get('/getChat/' + this.c_user._id + '/' + this.oncallFriend._id + '/50')
+            .then(responce => {
+              
+              this.friendchat = responce.data;
+              this.$socket.emit('lastchatobj_send', this.friendchat[this.friendchat.length - 1]);
+              var container = this.$el.querySelector("#o2oaudiochating");
+              $("#o2oaudiochating").animate({ scrollTop: container.scrollHeight + 7020}, "fast"); 
+              if (this.friendchat[this.friendchat.length - 1].isSeen == 1) {
+                this.isSeen = true;
+              } else {
+                this.isSeen = false;
+              }
+
+      })
+      .catch((error) => console.log(error));
+       
+        var container = this.$el.querySelector("#o2ochating");
+        $("#o2oaudiochating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+        
+
+  },
+  
+  o2ohideaudioCallchat(){
+  
+        $('#o2oaudiochatopen').removeClass('dot-btn dot-success grow');
+        $('.videocall').addClass('o2obeforeopenChat');
+        $('.videocall').removeClass('o2oafteropenChat');
+        $('#o2omodalaudiocall').removeClass('o2omodelafter');
+        $('#o2omodalaudiocall').addClass('o2omodelbefore');
+		
+		$('#o2oaudiodetail').removeClass('afterDetail');
+        $('#o2oaudiodetail').addClass('beforeDetail');
+        $('#o2oaudiocontents').hide(); 
+        $('#o2oaudiochatclose').hide();
+        $('#o2oaudiochatopen').show();
+        
+
+
+    },
+	
+	o2oaudioreceiveCall(){
+	 var x = document.getElementById("outgoingcall"); 
+		x.pause();
+		x.muted = true;
+						
+		 startCall();
+		 this.reset();
+         this.stop();
+		 var o2oobg={
+			reciverid:receiverId(),
+			friendId:this.oncallFriend._id
+		  }
+		  this.$socket.emit('O2OstarTimer',o2oobg);
+		 $('#audiocallReceiver').modal('hide');
+		 
+		 $('#o2oaudiocall').modal('show');
+		 
+		 const post = this.friendsdata.filter((obj) => {
+				return receiverId() === obj._id;
+			  }).pop();
+			  this.oncallFriend = post ; 
+		 console.log(this.oncallFriend);
+  },
+  
+ audiominimizeScreen(){
+      $('#startchat').hide();
+	  $('#o2oaudiocall').modal('hide');
+	  $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      $('#showcallModel'+this.oncallFriend._id).hide();
+      $('#showCallMin').show();
+    },
+  
 
 },
 

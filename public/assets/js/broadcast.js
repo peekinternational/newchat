@@ -19,7 +19,7 @@ var userData= JSON.parse(localStorage.getItem('userData'));
 
         ws.onmessage = function(message) {
           var parsedMessage = JSON.parse(message.data);
-          console.info('Received message: ' + message.data);
+         // console.info('Received message: ' + message.data);
           switch (parsedMessage.id) {
           case 'presenterResponse':
             presenterResponse(parsedMessage);
@@ -47,7 +47,7 @@ var userData= JSON.parse(localStorage.getItem('userData'));
                       presenterArr  = presenterData;
             
           // returnpresenterData=presenterData;
-                     console.log('presenterArr ', presenterArr);
+                  //   console.log('presenterArr ', presenterArr);
                       break;
 default:
   console.error('Unrecognized message', parsedMessage);
