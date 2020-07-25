@@ -92,7 +92,7 @@ module.exports = function (io, saveUser) {
             groupId: req.body.groupId,
             senderId: req.body.senderId
           })
-          .populate("commentId")
+          .populate({ path: 'commentId', populate: { path: 'senderId' , select: '_id name user_image'} })
           .populate("senderId", { _id: true, name: true })
           .sort({ updatedAt: -1 })
           .exec(function (err, data) {
@@ -267,7 +267,7 @@ console.log(req.body);
             senderId: sender,
             receiverId: recevier
           })
-          .populate("commentId")
+          .populate({ path: 'commentId', populate: { path: 'senderId' , select: '_id name user_image'} })
           .populate("senderId", { _id: true, name: true })
           .populate("receiverId", { _id: true, name: true })
           .sort({ updatedAt: -1 })
@@ -327,7 +327,7 @@ console.log(req.body);
 
     chatModel
       .find({ groupId: id })
-      .populate("commentId")
+      .populate({ path: 'commentId', populate: { path: 'senderId' , select: '_id name user_image'} })
       .populate("senderId", { _id: true, name: true })
       .sort({ createdAt: -1 })
       .limit(msgCountLimit)
@@ -359,7 +359,7 @@ console.log(req.body);
           .populate("senderId", { _id: true, name: true })
           .sort({ createdAt: -1 })
           .limit(msgCountLimit)
-          .populate("commentId")
+          .populate({ path: 'commentId', populate: { path: 'senderId' , select: '_id name user_image'} })
           .lean()
           .exec(function (err, data) {
 			  console.log(data);
@@ -385,7 +385,7 @@ console.log(req.body);
       .populate("senderId", { _id: true, name: true })
       .sort({ createdAt: -1 })
       .limit(msgCountLimit)
-      .populate("commentId")
+      .populate({ path: 'commentId', populate: { path: 'senderId' , select: '_id name user_image'} })
       .lean()
       .exec(function (err, data) {
         if (err) throw err;
@@ -412,7 +412,7 @@ console.log(req.body);
       .populate("senderId", { _id: true, name: true })
       .sort({ createdAt: -1 })
       .limit(msgCountLimit)
-      .populate("commentId")
+      .populate({ path: 'commentId', populate: { path: 'senderId' , select: '_id name user_image'} })
       .lean()
       .exec(function (err, data) {
         if (err) throw err;
@@ -488,13 +488,15 @@ console.log(req.body);
       if (err) {
         return next(err);
       }
+      
 	  userModel.update({
-		'_id': req.params.userId
+		'_id': passportUser._id
 	}, {
 		'onlineStatus': 1
 	}).exec();
       if (passportUser) {
-		  
+        console.log("----passportUser----");
+		    console.log(passportUser);
         const user = passportUser;
         user.token = passportUser.generateJWT();
         return res.json({ user: user.toAuthJSON() });
@@ -730,7 +732,7 @@ console.log(req.body);
   router.joinViewer = (req, res) => {
     let userBroadcastingId = req.body.preId;
     let broadcastRefId = req.body.broadcastId;
-
+console.log(req.body);
       broadModel.find({ 'presenterId': req.body.preId }).sort({ _id: -1 }).limit(1).exec(updateAllFound);
       function updateAllFound(err, preData) {
         var ids = preData.map(function (item) {

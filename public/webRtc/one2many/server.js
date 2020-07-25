@@ -108,7 +108,7 @@ wss.on('connection', function (ws) {
 
 	ws.on('message', function (_message) {
 		var message = JSON.parse(_message);
-		console.log('rcv server msg ', message);
+	//	console.log('rcv server msg ', message);
 		if (typeof message.event !== "undefined") message = JSON.parse(message.event);
 		switch (message.id) {
 			case 'presenter':
@@ -136,7 +136,8 @@ wss.on('connection', function (ws) {
 					'preName': presenter[i].preName,
 					'password': presenter[i].password
 				});
-
+				// console.log("--- presenter array ---");
+				// console.log(presenter);
 				ws.send(JSON.stringify({
 					id: 'presenterDataResp',
 					data: presArr
@@ -163,6 +164,9 @@ wss.on('connection', function (ws) {
 				stop(sessionId);
 				break;
 			case 'onIceCandidate':
+				console.log("... onIceCandidate ...");
+				console.log("sessionId: "+ sessionId);
+				console.log(message);
 				onIceCandidate(sessionId, message.candidate);
 				break;
 			default:
@@ -220,6 +224,7 @@ function startPresenter(sessionId, ws, message, callback) {
 		password: message.password
 	};
 
+	console.log("sessionId: "+ sessionId);
 	getKurentoClient(function (error, kurentoClient) {
 		if (error) {
 			stop(sessionId);
@@ -383,7 +388,12 @@ function clearCandidatesQueue(sessionId) {
 }
 
 function stop(sessionId) {
+	console.log("stopped");
+	console.log(presenter);
+	// console.log("presenter[sessionId].pipeline: "+ presenter[sessionId].pipeline);
+
 	if (presenter.length > 0 && presenter[sessionId] && presenter[sessionId].pipeline) {
+		console.log("stop - IF");
 		for (var i in viewers) {
 			var viewer = viewers[i];
 			if (viewer.ws) {
@@ -397,9 +407,23 @@ function stop(sessionId) {
 		presenter.splice(sessionId, 1);
 		viewers = [];
 	} else if (viewers[sessionId]) {
+		console.log("stop - ELSE IF");
 		viewers[sessionId].webRtcEndpoint.release();
 		delete viewers[sessionId];
 	}
+	// else{ //needs reCheck necessary
+	// 	console.log("stop - ELSE");
+	// 	for (var i in viewers) {
+	// 		var viewer = viewers[i];
+	// 		if (viewer.ws) {
+	// 			viewer.ws.send(JSON.stringify({
+	// 				id: 'stopCommunication'
+	// 			}));
+	// 		}
+	// 	}
+	// 	presenter.splice(sessionId, 1);
+	// 	viewers = [];
+	// }
 
 	clearCandidatesQueue(sessionId);
 

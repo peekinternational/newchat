@@ -23,6 +23,7 @@ const groupSchema = mongoose.Schema({
 		type: Number,
 		default: 1        //1=Active, 0=Deleted
 	},
+	"isGroup": {type: Number, default: 1} // for mobileApp, to tell them is this entity a user or group
 }, { timestamps: true });
 
 module.exports = mongoose.model('groups', groupSchema)

@@ -21,9 +21,13 @@ var ws = require('ws');
 var minimist = require('minimist');
 var url = require('url');
 var kurento = require('kurento-client');
-var fs    = require('fs');
+var fs = require('fs');
 var https = require('https');
 const sslConfig = require('../../../ssl-config');
+// let hostIs=location.host.split(':');
+// let webSocketIp='110.10.130.70';
+// if(hostIs[0]=='localhost') webSocketIp='127.0.0.1';  //searchbysearch.com
+
 var os = require('os');
 var ifaces = os.networkInterfaces();
 
@@ -38,6 +42,7 @@ Object.keys(ifaces).forEach(function (ifname) {
         ++alias;
     });
 });
+
 
 var siteLink = 'https://localhost:8443/';
 if (serverIpAdd.includes('138.68.27.231')) { //Job callme
@@ -85,7 +90,8 @@ function UserSession(id, name, ws) {
     this.sdpOffer = null;
 }
 
-UserSession.prototype.sendMessage = function(message) {
+UserSession.prototype.sendMessage = function (message) {
+    console.log('Sending message from server ================ ', message);
     this.ws.send(JSON.stringify(message));
 }
 
@@ -95,26 +101,26 @@ function UserRegistry() {
     this.usersByName = {};
 }
 
-UserRegistry.prototype.register = function(user) {
+UserRegistry.prototype.register = function (user) {
     this.usersById[user.id] = user;
     this.usersByName[user.name] = user;
 }
 
-UserRegistry.prototype.unregister = function(id) {
+UserRegistry.prototype.unregister = function (id) {
     var user = this.getById(id);
     if (user) delete this.usersById[id]
     if (user && this.getByName(user.name)) delete this.usersByName[user.name];
 }
 
-UserRegistry.prototype.getById = function(id) {
+UserRegistry.prototype.getById = function (id) {
     return this.usersById[id];
 }
 
-UserRegistry.prototype.getByName = function(name) {
+UserRegistry.prototype.getByName = function (name) {
     return this.usersByName[name];
 }
 
-UserRegistry.prototype.removeById = function(id) {
+UserRegistry.prototype.removeById = function (id) {
     var userSession = this.usersById[id];
     if (!userSession) return;
     delete this.usersById[id];
@@ -127,67 +133,67 @@ function CallMediaPipeline() {
     this.webRtcEndpoint = {};
 }
 
-CallMediaPipeline.prototype.createPipeline = function(callerId, calleeId, ws, callback) {
+CallMediaPipeline.prototype.createPipeline = function (callerId, calleeId, ws, callback) {
     var self = this;
-    getKurentoClient(function(error, kurentoClient) {
+    getKurentoClient(function (error, kurentoClient) {
         if (error) {
             return callback(error);
         }
 
-        kurentoClient.create('MediaPipeline', function(error, pipeline) {
+        kurentoClient.create('MediaPipeline', function (error, pipeline) {
             if (error) {
                 return callback(error);
             }
 
-            pipeline.create('WebRtcEndpoint', function(error, callerWebRtcEndpoint) {
+            pipeline.create('WebRtcEndpoint', function (error, callerWebRtcEndpoint) {
                 if (error) {
                     pipeline.release();
                     return callback(error);
                 }
 
                 if (candidatesQueue[callerId]) {
-                    while(candidatesQueue[callerId].length) {
+                    while (candidatesQueue[callerId].length) {
                         var candidate = candidatesQueue[callerId].shift();
                         callerWebRtcEndpoint.addIceCandidate(candidate);
                     }
                 }
 
-                callerWebRtcEndpoint.on('OnIceCandidate', function(event) {
+                callerWebRtcEndpoint.on('OnIceCandidate', function (event) {
                     var candidate = kurento.getComplexType('IceCandidate')(event.candidate);
                     userRegistry.getById(callerId).ws.send(JSON.stringify({
-                        id : 'iceCandidate',
-                        candidate : candidate
+                        id: 'iceCandidate',
+                        candidate: candidate
                     }));
                 });
 
-                pipeline.create('WebRtcEndpoint', function(error, calleeWebRtcEndpoint) {
+                pipeline.create('WebRtcEndpoint', function (error, calleeWebRtcEndpoint) {
                     if (error) {
                         pipeline.release();
                         return callback(error);
                     }
 
                     if (candidatesQueue[calleeId]) {
-                        while(candidatesQueue[calleeId].length) {
+                        while (candidatesQueue[calleeId].length) {
                             var candidate = candidatesQueue[calleeId].shift();
                             calleeWebRtcEndpoint.addIceCandidate(candidate);
                         }
                     }
 
-                    calleeWebRtcEndpoint.on('OnIceCandidate', function(event) {
+                    calleeWebRtcEndpoint.on('OnIceCandidate', function (event) {
                         var candidate = kurento.getComplexType('IceCandidate')(event.candidate);
                         userRegistry.getById(calleeId).ws.send(JSON.stringify({
-                            id : 'iceCandidate',
-                            candidate : candidate
+                            id: 'iceCandidate',
+                            candidate: candidate
                         }));
                     });
 
-                    callerWebRtcEndpoint.connect(calleeWebRtcEndpoint, function(error) {
+                    callerWebRtcEndpoint.connect(calleeWebRtcEndpoint, function (error) {
                         if (error) {
                             pipeline.release();
                             return callback(error);
                         }
 
-                        calleeWebRtcEndpoint.connect(callerWebRtcEndpoint, function(error) {
+                        calleeWebRtcEndpoint.connect(callerWebRtcEndpoint, function (error) {
                             if (error) {
                                 pipeline.release();
                                 return callback(error);
@@ -205,16 +211,16 @@ CallMediaPipeline.prototype.createPipeline = function(callerId, calleeId, ws, ca
     })
 }
 
-CallMediaPipeline.prototype.generateSdpAnswer = function(id, sdpOffer, callback) {
+CallMediaPipeline.prototype.generateSdpAnswer = function (id, sdpOffer, callback) {
     this.webRtcEndpoint[id].processOffer(sdpOffer, callback);
-    this.webRtcEndpoint[id].gatherCandidates(function(error) {
+    this.webRtcEndpoint[id].gatherCandidates(function (error) {
         if (error) {
             return callback(error);
         }
     });
 }
 
-CallMediaPipeline.prototype.release = function() {
+CallMediaPipeline.prototype.release = function () {
     if (this.pipeline) this.pipeline.release();
     this.pipeline = null;
 }
@@ -225,62 +231,64 @@ CallMediaPipeline.prototype.release = function() {
 
 var asUrl = url.parse(argv.as_uri);
 var port = asUrl.port;
-var server = https.createServer(options, app).listen(port, function() {
+var server = https.createServer(options, app).listen(port, function () {
     console.log('Kurento Tutorial started');
     console.log('Open ' + url.format(asUrl) + ' with a WebRTC capable browser');
 });
 
 var wss = new ws.Server({
-    server : server,
-    path : '/one2one'
+    server: server,
+    path: '/one2one'
 });
 
-wss.on('connection', function(ws) {
+wss.on('connection', function (ws) {
     var sessionId = nextUniqueId();
     console.log('Connection received with sessionId ' + sessionId);
 
-    ws.on('error', function(error) {
+    ws.on('error', function (error) {
         console.log('Connection ' + sessionId + ' error');
         stop(sessionId);
     });
 
-    ws.on('close', function() {
+    ws.on('close', function () {
         console.log('Connection ' + sessionId + ' closed');
         stop(sessionId);
-        userRegistry.unregister(sessionId);
+        //userRegistry.unregister(sessionId);
     });
 
-    ws.on('message', function(_message) {
+    ws.on('message', function (_message) {
         var message = JSON.parse(_message);
-        console.log('Connection ' + sessionId + ' received message ', message);
-
+        if (typeof message.event !== "undefined") message = JSON.parse(message.event);
+        console.log(message.id, ' = Connection ' + sessionId + ' received message ', message);
         switch (message.id) {
-        case 'register':
-            register(sessionId, message.name, ws);
-            break;
+            case 'register':
+                register(sessionId, message.name, ws);
+                break;
 
-        case 'call':
-            call(sessionId, message.to, message.from, message.sdpOffer);
-            break;
+            case 'call':
+                call(sessionId, message.to, message.from, message.sdpOffer, message.userData, ws);
+                break;
 
-        case 'incomingCallResponse':
-            incomingCallResponse(sessionId, message.from, message.callResponse, message.sdpOffer, ws);
-            break;
+            case 'incomingCallResponse':
+                incomingCallResponse(sessionId, message.from, message.to, message.callResponse, message.sdpOffer, ws);
+                break;
 
-        case 'stop':
-            stop(sessionId);
-            break;
+            case 'stop':
+                stop(sessionId, message.to, message.from);
+                break;
 
-        case 'onIceCandidate':
-            onIceCandidate(sessionId, message.candidate);
-            break;
-
-        default:
-            ws.send(JSON.stringify({
-                id : 'error',
-                message : 'Invalid message ' + message
-            }));
-            break;
+            case 'onIceCandidate':
+                onIceCandidate(sessionId, message.candidate, message.to, message.from);
+                break;
+            case '__ping__':
+                checkRegistration(sessionId, message.from, ws);
+                break;
+            default:
+                ws.send(JSON.stringify({
+                    id: 'error',
+                    message: 'Invalid message ' + message
+                }));
+                break;
         }
 
     });
@@ -292,7 +300,7 @@ function getKurentoClient(callback) {
         return callback(null, kurentoClient);
     }
 
-    kurento(argv.ws_uri, function(error, _kurentoClient) {
+    kurento(argv.ws_uri, function (error, _kurentoClient) {
         if (error) {
             var message = 'Coult not find media server at address ' + argv.ws_uri;
             return callback(message + ". Exiting with error " + error);
@@ -303,16 +311,20 @@ function getKurentoClient(callback) {
     });
 }
 
-function stop(sessionId) {
-    if (!pipelines[sessionId]) {
-        return;
-    }
+function stop(sessionId, to_id, from_id) {
+    sessionId = from_id;
+    console.log("Stop from server called ", sessionId, ' to ', to_id);
+    if (!pipelines[sessionId]) return;
 
     var pipeline = pipelines[sessionId];
     delete pipelines[sessionId];
     pipeline.release();
     var stopperUser = userRegistry.getById(sessionId);
-    var stoppedUser = userRegistry.getByName(stopperUser.peer);
+    if (typeof stopperUser === "undefined" || stopperUser == null) console.log("stopperUser undefined ");
+
+    var stoppedUser = userRegistry.getByName(stopperUser.peer); // We can put to_id here
+    if (typeof stoppedUser === "undefined" || stoppedUser == null) console.log("stoppedUser undefined ", stoppedUser);
+
     stopperUser.peer = null;
 
     if (stoppedUser) {
@@ -328,11 +340,13 @@ function stop(sessionId) {
     clearCandidatesQueue(sessionId);
 }
 
-function incomingCallResponse(calleeId, from, callResponse, calleeSdp, ws) {
-
+function incomingCallResponse(calleeId, from, to_id, callResponse, calleeSdp, ws) {
+    calleeId = to_id;
     clearCandidatesQueue(calleeId);
 
     function onError(callerReason, calleeReason) {
+        console.log('callerReason: ', callerReason);
+        console.log('calleeReason: ', calleeReason);
         if (pipeline) pipeline.release();
         if (caller) {
             var callerMessage = {
@@ -351,27 +365,27 @@ function incomingCallResponse(calleeId, from, callResponse, calleeSdp, ws) {
     }
 
     var callee = userRegistry.getById(calleeId);
-    if (!from || !userRegistry.getByName(from)) {
-        return onError(null, 'unknown from = ' + from);
-    }
+    if (typeof from === "undefined" || from == null) return onError(null, 'unknown from = ' + from);
+
     var caller = userRegistry.getByName(from);
+    if (typeof caller === "undefined" || caller == null) return onError(null, 'unknown caller = ' + caller);
 
     if (callResponse === 'accept') {
         var pipeline = new CallMediaPipeline();
         pipelines[caller.id] = pipeline;
         pipelines[callee.id] = pipeline;
 
-        pipeline.createPipeline(caller.id, callee.id, ws, function(error) {
+        pipeline.createPipeline(caller.id, callee.id, ws, function (error) {
             if (error) {
                 return onError(error, error);
             }
 
-            pipeline.generateSdpAnswer(caller.id, caller.sdpOffer, function(error, callerSdpAnswer) {
+            pipeline.generateSdpAnswer(caller.id, caller.sdpOffer, function (error, callerSdpAnswer) {
                 if (error) {
                     return onError(error, error);
                 }
 
-                pipeline.generateSdpAnswer(callee.id, calleeSdp, function(error, calleeSdpAnswer) {
+                pipeline.generateSdpAnswer(callee.id, calleeSdp, function (error, calleeSdpAnswer) {
                     if (error) {
                         return onError(error, error);
                     }
@@ -384,7 +398,7 @@ function incomingCallResponse(calleeId, from, callResponse, calleeSdp, ws) {
 
                     message = {
                         id: 'callResponse',
-                        response : 'accepted',
+                        response: 'accepted',
                         sdpAnswer: callerSdpAnswer
                     };
                     caller.sendMessage(message);
@@ -401,51 +415,97 @@ function incomingCallResponse(calleeId, from, callResponse, calleeSdp, ws) {
     }
 }
 
-function call(callerId, to, from, sdpOffer) {
+function call(callerId, to, from, sdpOffer, userData, ws) {
+    callerId = from;
     clearCandidatesQueue(callerId);
 
     var caller = userRegistry.getById(callerId);
+    console.log('Checking caller1 ==================== ', caller);
+    if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
+        caller = userRegistry.getByName(from);
+        console.log('Checking caller2 ==================== ', caller);
+        if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
+            userRegistry.register(new UserSession(callerId, from, ws));
+            console.log('Registered in call');
+        }
+    }
+
     var rejectCause = 'User ' + to + ' is not registered';
-    if (userRegistry.getByName(to)) {
+    console.log(callerId, '===============================================Caller ', from, ' and callee ', to);
+    if (userRegistry.getByName(to) && typeof caller === 'object' && typeof caller.sdpOffer !== "undefined") {
         var callee = userRegistry.getByName(to);
         caller.sdpOffer = sdpOffer
         callee.peer = from;
         caller.peer = to;
         var message = {
             id: 'incomingCall',
-            from: from
+            from: from,
+            userData: userData
         };
-        try{
+
+        // if (userData && typeof userData.friendId !== "undefined") {
+        //     let sendToSbs = 'sbsSite-' + userData.friendId;
+        //     if (userRegistry.getByName(sendToSbs)) {
+        //         let siteCallee = userRegistry.getByName(sendToSbs);
+        //         siteCallee.peer = from;
+        //         siteCallee.sendMessage(message);
+        //     }
+        // } 
+
+        console.log('Sending incomingCall ===========================================');
+        try {
             return callee.sendMessage(message);
-        } catch(exception) {
+        } catch (exception) {
             rejectCause = "Error " + exception;
         }
     }
-    var message  = {
-        id: 'callResponse',
-        response: 'rejected: ',
-        message: rejectCause
-    };
-    caller.sendMessage(message);
+    else console.log('Call else case =========');
+
+    if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
+        console.log('caller.sdpOffer ', caller);
+    }
+    else {
+        var message = {
+            id: 'callResponse',
+            response: 'rejected: ',
+            message: rejectCause
+        };
+        //console.log('Outside ',message,' caller ',caller);
+        caller.sendMessage(message);
+    }
+
+}
+
+function checkRegistration(sessionId, from, ws) {
+    let tester = userRegistry.getByName(from);  //It check from same ws
+    if (typeof tester !== 'object' || typeof tester.sdpOffer === "undefined")
+        register(from, from, ws);
+    else console.log('checkRegistration user ' + from + ' is registered with this socket');
 }
 
 function register(id, name, ws, callback) {
+    id = name;
+    console.log('register id: ', id, ' and ', name);
     function onError(error) {
-        ws.send(JSON.stringify({id:'registerResponse', response : 'rejected ', message: error}));
+        ws.send(JSON.stringify({
+            id: 'registerResponse',
+            response: 'rejected ',
+            message: error
+        }));
     }
 
-    if (!name) {
-        return onError("empty user name");
-    }
+    if (typeof name === 'undefined' || name == '') return onError("empty user name ", name);
 
-    if (userRegistry.getByName(name)) {
-        return onError("User " + name + " is already registered");
-    }
+    let checkVal = userRegistry.getByName(name);
+    if (checkVal && typeof checkVal !== "undefined") console.log("User " + name + " is already registered");
 
     userRegistry.register(new UserSession(id, name, ws));
     try {
-        ws.send(JSON.stringify({id: 'registerResponse', response: 'accepted'}));
-    } catch(exception) {
+        ws.send(JSON.stringify({
+            id: 'registerResponse',
+            response: 'accepted'
+        }));
+    } catch (exception) {
         onError(exception);
     }
 }
@@ -456,15 +516,16 @@ function clearCandidatesQueue(sessionId) {
     }
 }
 
-function onIceCandidate(sessionId, _candidate) {
+function onIceCandidate(sessionId, _candidate, to_id, from_id) {
+    sessionId = from_id;
+    console.log('onIceCandidate to:', to_id, ' and ', sessionId);
     var candidate = kurento.getComplexType('IceCandidate')(_candidate);
     var user = userRegistry.getById(sessionId);
 
     if (pipelines[user.id] && pipelines[user.id].webRtcEndpoint && pipelines[user.id].webRtcEndpoint[user.id]) {
         var webRtcEndpoint = pipelines[user.id].webRtcEndpoint[user.id];
         webRtcEndpoint.addIceCandidate(candidate);
-    }
-    else {
+    } else {
         if (!candidatesQueue[user.id]) {
             candidatesQueue[user.id] = [];
         }

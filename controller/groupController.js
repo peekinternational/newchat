@@ -9,26 +9,23 @@ module.exports = function (io, saveUser) {
   /*main router object which contain all function*/
   var router = {};
 
-  router.createUserGroup = (req, res) => {
+  router.createUserGroup = async (req, res) => {
     let newGroup = new groupsModel(req.body.groupData);
-    newGroup.save(function (err, result) {
-      groupsModel
-        .find({ status: 1, projectId: req.body.groupData.projectId + "" })
-        .populate("members", { password: false })
-        .exec(function (err, groups) {
-          var tempGroups = [];
-          if (err) return console.log(err);
-          var i = 0, j = 0;
-          for (i; i < groups.length; i++) {
-            j = 0;
-            for (j; j < groups[i].members.length; j++) {
-              if (req.body.userId == groups[i].members[j]._id) tempGroups.push(groups[i]);
-            }
-          }
-		  groups[groups.length - 1]
-          res.send(groups[groups.length - 1]); // send groups list
-        });
-    });
+    const result = await newGroup.save();
+    await result.populate('members').execPopulate();
+    res.send(result); 
+
+    // let newGroup = new groupsModel(req.body.groupData);
+    // newGroup.save(function (err, result) {
+    //   groupsModel
+    //     .find({ status: 1, projectId: req.body.groupData.projectId + "" })
+    //     .populate("members", { password: false })
+    //     .exec(function (err, groups) {
+    //       if (err) return console.log(err);
+         
+    //       res.send(groups[groups.length - 1]); // send groups list
+    //     });
+    // });
   }
 
   router.removeGroupUser = (req, res) => {

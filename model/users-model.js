@@ -26,6 +26,7 @@ const userSchema = new Schema({
 	"isAdmin": { type: Number, default: 0 },
 	"status": { type: Number, default: 1 },  //deleted=0/active=1/inActive=2
 	"pStatus": { type: Number, default: 0 },  //active=0/away=1/dNotDisturb=2/Invisible=3/Offline=4
+	"isGroup": {type: Number, default: 0} // for mobileApp, to tell them is this entity a user or group
 },
 	{ timestamps: true });
 

@@ -78,7 +78,8 @@ module.exports = function (app, io, saveUser) {
     app.post('/startPresenter', chatCon.startPresenter);
     app.post('/joinViewer', chatCon.joinViewer);
     app.post('/stopViewer', chatCon.stopViewer);
-    app.get('/stopPresenter/:userId', chatCon.stopPresenter);
+    app.get('/stopPresenter/:userId/:broadcastId', chatCon.stopPresenter);
+	app.get('/getBroadcastId/:presenterId', chatCon.getBroadcastId);
 
     // -------------- GROUP ROUTES---------------------------------------
     app.get('/getCreatedGroups/:userId/:projectId', groupCon.getCreatedGroups); 

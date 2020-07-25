@@ -3,7 +3,7 @@ const friendsRouter = express.Router();
 
 let userModel = require('../model/users-model');
 let friendModel = require('../model/friendModel');
-
+const testModel = require("../model/test");
 
 friendsRouter.route('/createfriend').post(function (req, res) {
     console.log(req.body);
@@ -185,5 +185,79 @@ friendsRouter.route('/create_register_friend').post(function (req, res) {
         }
     })
 })
+
+friendsRouter.route('/searchFriend').post(async function (req, res) {
+    console.log(req.body);
+    console.log("------------------------");
+    // const searchResult = await testModel.find({_id: { $lt: req.body.nextId } , $text: { $search: req.body.name } }).limit(7).exec();
+    var searchResult;
+
+    if (!req.body.lastUserTime){
+        searchResult = await userModel.aggregate(
+            [
+                { $match: { name: { $regex: req.body.name, '$options': 'i' } } },
+                { $sort: { highest : -1 } },
+                { $limit : 5 }
+            ]
+        );
+    }
+    else{
+        searchResult = await userModel.aggregate(
+            [
+                { $match: { name: { $regex: req.body.name, '$options': 'i' } } },
+                { $sort: { highest : -1 } },
+                { $lt: [ "createdAt", req.body.lastUserTime ] },
+                { $limit : 5 }
+            ]
+        );
+    }
+    
+
+    for (let i = 0; i < searchResult.length; i++) {
+        var friendIdData = await friendModel.findOne({
+            $or: [
+                {
+                    $and: [{ userId: req.body.userId }, { friendId: searchResult[i]._id }]
+                },
+                {
+                    $and: [{ userId: searchResult[i]._id }, { friendId: req.body.userId }]
+                }
+            ]
+        });
+
+        if (friendIdData) {
+            console.log(friendIdData);
+            searchResult[i].friendStatus = friendIdData.status;
+        }
+        else searchResult[i].friendStatus = 0;
+    }
+
+    res.json(searchResult);
+})
+
+
+friendsRouter.route('/sendFriendRequest').post(async function (req, res) {
+    console.log(req.body);
+    let _friendData = {
+        userId: req.body.userId,
+        friendId: req.body.friendId,
+        projectId: req.body.projectId,
+        status: 2
+    }
+
+    let newFriendModel = new friendModel(_friendData);
+    let saveRes = await newFriendModel.save();
+    await saveRes.populate('userId').execPopulate();
+    await saveRes.populate('friendId').execPopulate();
+
+    res.json(saveRes);
+})
+
+friendsRouter.route('/updateFriendRequest').post(async function (req, res) {
+  console.log(req.body);
+  let updateResult = await friendModel.update({ '_id': req.body._id }, { $set: { 'status': req.body.status } }).exec();
+  res.json(updateResult);
+})
+
 
 module.exports = friendsRouter;
