@@ -138,6 +138,13 @@ socket.on('getGroups', (data) => {
 		io.emit('O2OreceivestarTimer',data);
 	});
 
+ //////// REQUEST STATUS UPDATE ////////// 
+	
+ socket.on('updateRequeststatus', (data) => {
+		console.log(data);
+		io.emit('receiveRequeststatus',data);
+	});
+
  //////// LOGIN AND LOUT ////////// 
 	
  socket.on('login', (data) => {

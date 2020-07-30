@@ -294,6 +294,7 @@ var c_userData= JSON.parse(localStorage.getItem('userData'));
     
         function stopCall(){
             console.log('stopCall');
+            console.log('from: '+ inComCallData.from +", to: "+ c_userData._id);
             let response = {
                 id : 'incomingCallResponse',
                 from : inComCallData.from,

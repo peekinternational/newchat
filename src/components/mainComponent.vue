@@ -90,7 +90,7 @@
               </div>
             </div>
           </div>
-		   <div class="search2" style="padding: 0px;border-top: none;">
+		   <div class="search2" id="mainsearch" style="padding: 0px;border-top: none;">
                         <div>
                           <div class="input-group">
                             <div class="input-group-append">
@@ -98,7 +98,7 @@
                                 <i class="fa fa-search"></i>
                               </span>
                             </div>
-                            <input class="form-control" v-on:keyup="friendSearch" v-model="searchFriend" type="text" placeholder="Search People" />
+                            <input class="form-control"  v-model="searchFriend" type="text" placeholder="Search People" />
                           </div>
                         </div>
                       </div>
@@ -254,7 +254,7 @@
                         </div>
                      <div v-if="showUsers">
                        <ul  v-for="friends in orderedUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
-                        <li class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
+                        <li  v-if="friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                           <div class="chat-box">
                             <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
                               <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
@@ -262,17 +262,18 @@
                               <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
 							  </div>
 							
-                            <div class="details"  style="padding-left: 73px;">
-                              <h5>{{friends.name}}</h5>
-                              <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
-                              <h6 v-else>Start Chat</h6>
-                            </div>
+								<div class="details"  style="padding-left: 73px;">
+								  <h5>{{friends.name}}</h5>
+								  <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+								  <h6 v-else>Start Chat</h6>
+								</div>
 							
-                            <div class="date-status">
-                              <h6>{{isToday(friends.updatedByMsg)}}</h6>
-                              <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
-                              <h6 class="font-success status" v-else> Seen</h6>
-                            </div>
+								<div class="date-status">
+								  <h6>{{isToday(friends.updatedByMsg)}}</h6>
+								  <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
+								  <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
+								</div>
+							
 							
                           </div>
 						  
@@ -280,13 +281,46 @@
 						  
                         </li>
 
+
+
+                     <li v-else-if="friends.friendReqStatus == 2" class="init"  :id="'friend'+friends._id" data-to="blank">
+                          <div class="chat-box">
+                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                            <div v-else class="profile offline">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
+							<div v-if="friends.friendReqSenderId == friends._id">
+								 <div class="details"  style="padding-left: 73px;">
+								  <h5>{{friends.name}}</h5>
+								   <br>
+								<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 25px;" @click="friendRequestupdate(friends,1)">Accept</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Reject</span> </p>
+								</div>
+							</div>
+							
+							<div v-else>
+							 <div class="details"  style="padding-left: 73px;">
+								  <h5>{{friends.name}}</h5>
+								  <br>
+								<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 20px;" >Pending</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Cancel</span> </p>
+								</div>
+							</div>
+							
+                          </div>
+						  
+						  
+						  
+                        </li>
+
+
+
                       </ul>
 					  </div>
 					  <div v-if="showSearchfriends" >
 					  <div v-if="searchUsers.length > 0" >
 					   <ul  v-for="friends in searchUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
                         
-						<li  v-if="friends.friendStatus == 1"  class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
+						<li  v-if="friends.friendReqStatus == 1"  class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                           <div class="chat-box">
                             <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
                               <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
@@ -309,7 +343,35 @@
                           </div>
 						  
                         </li>
-
+						
+                       <li v-else-if="friends.friendReqStatus == 2" class="init"  :id="'friend'+friends._id" data-to="blank">
+                          <div class="chat-box">
+                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                            <div v-else class="profile offline">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
+							<div v-if="friends.friendReqSenderId == friends._id">
+								 <div class="details"  style="padding-left: 73px;">
+								  <h5>{{friends.name}}</h5>
+								   <br>
+								 <p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 25px;" @click="friendRequestupdate(friends,1)">Accept</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends.friendReqId,3)">Reject</span> </p>
+								</div>
+							</div>
+							
+							<div v-else>
+							 <div class="details"  style="padding-left: 73px;">
+								  <h5>{{friends.name}}</h5>
+								  <br>
+								 <p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 20px;" >Pending</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Cancel</span> </p>
+								</div>
+							</div>
+							
+                          </div>
+						  
+						  
+						  
+                        </li>
 
                        <li v-else :id="'friend'+friends._id" data-to="blank" style="">
                           <div class="chat-box">
@@ -322,7 +384,7 @@
                             <div class="details"  style="padding-left: 73px;">
                               <h5>{{friends.name}}</h5>
 							  <br>
-                              <button type="button" class="btn btn-sm btn-default"> Add Friend </button>
+                              <button type="button" @click="addfriends(friends)" class="btn btn-sm btn-default" style="cursor:pointer"> Add Friend </button>
                             </div>
 							
                           </div>
@@ -1772,7 +1834,7 @@
             <div class="row">
               <div class="col">
                 <div class="media left">
-                  <div class="media-left mr-3">
+                  <div class="d-md-none d-sm-block media-left mr-3">
                     
                   <ul>
                       <!--<li>
@@ -1806,7 +1868,7 @@
                   </div>
                   <div class="media-body">
                     
-                    <h5><a href="" :title="singlegroup.name">{{singlegroup.name}}</a></h5>
+                    <h5><span style="color: #3f8846;font-size: 14px;">{{singlegroup.name}}</span></h5>
                     
                     <a href="#" data-toggle="modal" data-target="#showGroupsMembers">
                       <span>(  Participants )</span>
@@ -1834,11 +1896,11 @@
                       <i class="ti-layout-grid2"></i>
                     </a>
                   </li>
-                  <li class="chat-friend-toggle">
-                    <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" data-tippy-content="Quick action">
-                      <more-vertical-icon size="1.5x" class="custom-class"></more-vertical-icon>
+                  <li class="" v-if=" userid == singlegroup.creatorUserId ">
+                    <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" @click="deleteGroup()" data-tippy-content="Quick action">
+                       <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
                     </a>
-                    <div class="chat-frind-content">
+                   <!-- <div class="chat-frind-content">
                       <ul>
                         <li>
                           <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#">
@@ -1856,7 +1918,7 @@
                         </li>
                         
                       </ul>
-                    </div>
+                    </div> -->
                   </li>
                 </ul>
               </div>
@@ -2332,7 +2394,7 @@
                     </ul>
                   </div>-->
 
-            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
+            <input class="setemoj" id="setemoj" ref="afterClick" type="text"  v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
             <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
               <mic-icon size="1.5x" class="custom-class"></mic-icon>
             </a>
@@ -4952,10 +5014,9 @@
               <div class="profile"><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" /></div>
             </div>
             <div class="media-body">
-              <h5>Josephin water</h5>
-              <h6>America ,California</h6>
+             
             </div>
-            <div id="basicUsage">00:00:00</div>
+            <div id="basicUsage"></div>
             
           </div>
           <div class="center-con text-center">
@@ -6001,8 +6062,9 @@ beforeCreate: function() {
 
 
 receiveGroups(data) {
-
+if(this.groups){
     this.groups.push(data);
+	}
     
   },
 
@@ -6016,9 +6078,11 @@ receiveGroups(data) {
 
   receivegroupmsg(data) {
     console.log(data);
+	if (this.groupchatdata){
     this.groupchatdata.push(data);
     var container = this.$el.querySelector("#group_chat_open");
     $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
+	}
   },
 
   groupreceiveid(data) {
@@ -6100,6 +6164,7 @@ for (var l = 0; l < this.groups.length; l++) {
         }).pop();
         
           console.log(post);
+		  if(post){
               if (this.singlefriend._id == data.UserId && post._id == data.selectFrienddata._id) {
                   this.typing = true;
                   
@@ -6112,6 +6177,7 @@ for (var l = 0; l < this.groups.length; l++) {
                 this.typing = false;
                 
               }
+			  }
         
 
   },
@@ -6225,6 +6291,41 @@ receivebroadcastmsg(data) {
 				   
 				}
 			  },
+			  
+/////////////////////////////////REQUEST UPDATE STATUS ////////////////////////////	
+	
+	receiveRequeststatus(data){
+        console.log(data);
+        console.log(data._id +'=='+ this.c_user._id);
+        
+        // ------------ [AMMAR] ---------------------------
+	      if(data._id == this.c_user._id){
+			    	const fdata = this.friendsdata.filter((obj) => {
+					  	return data.myId === obj._id;
+					    }).pop();
+					  
+					  console.log(fdata);
+					  if(data.status == 2){
+					     this.friendsdata.push(data.userObj);
+					  }else{
+					     fdata.friendReqStatus=data.status;
+					  }
+		    }
+        // ------------ ******* ---------------------------
+
+				// if(data._id == this.c_user._id){
+				// const fdata = this.friendsdata.filter((obj) => {
+				// 		return data.myId === obj._id;
+				// 	  }).pop();
+					  
+				// 	  console.log(fdata);
+				// 	  if(data.status == 2){
+				// 	     this.friendsdata.push(fdata);
+				// 	  }else{
+				// 	     fdata.friendReqStatus=data.status;
+				// 	  }
+		    //   }
+	  },	  
 },
 
 
@@ -6265,16 +6366,15 @@ watch: {
 	callstatus(){
 	console.log(this.callstatus);
      if(this.callstatus > 20){
-	 var incoming = document.getElementById("incommingcall");
-		incoming.pause();
-		incoming.muted = true;
-	 $('body').removeClass('modal-open');
-     $('.modal-backdrop').remove();
-	 $('#o2ovideocall').modal('hide');
-	 $('#o2oaudiocall').modal('hide');
+	  this.o2ostopKCall();
+	// var incoming = document.getElementById("incommingcall");
+	//	incoming.pause();
+	//	incoming.muted = true;
+	// $('body').removeClass('modal-open');
+   //  $('.modal-backdrop').remove();
+	// $('#o2ovideocall').modal('hide');
+	// $('#o2oaudiocall').modal('hide');
 	 
-	 
-	   this.o2ostopKCall();
 	 
 	 }
 	},
@@ -6320,17 +6420,28 @@ message: _.debounce(function () {
       this.$socket.emit('stopTyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
   }, 1500),
   
-  searchFriend(){
-  if (this.searchFriend.length > 0) {
-   this.showUsers=false;
-  this.showSearchfriends= true;
+searchFriend: _.debounce(function () {
+   if (this.searchFriend.length > 0) {
+	   this.showUsers=false;
+	  this.showSearchfriends= true;
+	  this.friendSearch();
+	  }
+	  else{
+	  this.showSearchfriends= false;
+	   this.showUsers=true;
+	  }
+}, 500),
+ //searchFriend(){
+  //if (this.searchFriend.length > 0) {
+  // this.showUsers=false;
+  //this.showSearchfriends= true;
   
-  }
-  else{
-  this.showSearchfriends= false;
-   this.showUsers=true;
-  }
-  },
+ // }
+ // else{
+ // this.showSearchfriends= false;
+ //  this.showUsers=true;
+ // }
+ // },
 
   // message() {
   //   //this.removecross();
@@ -6560,10 +6671,13 @@ showbroadcastChatemoji(){
   
 
 usertab(){
+
 $('.init').removeClass('active');
 $('#message-input').hide();
 $('#singlemessage-input').hide();
 $('#startchat').hide();
+$('.chat-tabs').css('margin-top','84px');
+$('#mainsearch').show();
 },
 
 
@@ -6574,6 +6688,7 @@ axios.post('/friends/searchFriend/', {
 		userId:this.c_user._id,
 		lastUserTime:''
       }).then(response => {
+	  console.log(response.data);
              this.searchUsers=response.data;
       }, function(err) {
         console.log('err', err);
@@ -6678,7 +6793,7 @@ axios.post('/friends/searchFriend/', {
       console.log(this.msgObj);
 
       this.$socket.emit('updatechatmsg', this.msgObj)
-      this.removecross();
+     // this.removecross();
       axios.post('/updateChat/' + this.editChatid, {
         msgData: this.msgObj
       }).then(response => {
@@ -7046,10 +7161,11 @@ axios.post('/friends/searchFriend/', {
 
 
   removecross() {
+ 
   if(this.onEditclear == true){
-    this.onEditclear = false;
-    this.message = '';
-    this.onChat = true;
+   this.onEditclear = false;
+   // this.message = '';
+  this.onChat = true;
     $('#send-msg').addClass('disabled').attr("disabled", "disabled")
   }else{
       this.$socket.emit('msgtyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
@@ -7090,6 +7206,7 @@ axios.post('/friends/searchFriend/', {
 
 ///////////////////////////////////////  START GROUP SECTION //////////////////////////////////////
   getgroups() {
+  
  if(this.orderedGroups.length == 0){
 	  this.groupLoader=true;
 		axios.get('/getCreatedGroups/' + this.c_user._id + '/5d4c07fb030f5d0600bf5c03')
@@ -7109,6 +7226,8 @@ axios.post('/friends/searchFriend/', {
     $('.group_chat').removeClass("active");
    
     $('#startchat').removeClass('active');
+	$('#mainsearch').hide();
+  $('.chat-tabs').css('margin-top','0px');
 	$('#message-input').hide();
     this.replyBox = false;
   },
@@ -7251,6 +7370,7 @@ this.groupmsgObj = {
   
   editgroupchat(id, message) {
     console.log(id+'edit id');
+	this.closegroupReplybox();
     this.groupmessage = message;
     this.editgroupChatid = id;
 
@@ -7277,6 +7397,9 @@ this.groupmsgObj = {
   },
 
   groupmsgdelete(data) {
+  this.closegroupReplybox();
+  this.onEditgroupclear = false;
+	this.groupmessage = '';
     this.$socket.emit('grpsenderdeletemsg', data);
 
     $('#groupsender' + data._id).html('message deleted');
@@ -7289,6 +7412,8 @@ this.groupmsgObj = {
     groupquote(chatdata) {
 
     this.groupchatreplydata = chatdata;
+	this.onEditgroupclear = false;
+	this.groupmessage = '';
     $('#message-input').css("height", "140px");
     this.groupreplyBox = true;
     this.$nextTick(function() {
@@ -7299,6 +7424,7 @@ this.groupmsgObj = {
     closegroupReplybox() {
     $('#message-input').css("height", "96px");
     this.groupreplyBox = false;
+	this.groupchatreplydata='';
   },
 
     draggroupfileupload(file, xhr, formData) {
@@ -7925,9 +8051,9 @@ if(this.multipleneewmembers){
 
 
     startBroadcasting (){
-     
+    
              this.broadcastPassword = this.setPassword; 
-             this.broadCastchat=[];
+             this.broadcastChat=[];
 			  $('#showPresenter').hide();
 			  $('#broadcastvideocall').modal();
 			  $('#broadcastvideocall').show();
@@ -8180,6 +8306,7 @@ broadCastmsgchat(){
     },
 	
 	videostartCall(){
+	this.o2ohideCallchat();
 	var incoming = document.getElementById("incommingcall");
 		incoming.play();
 		incoming.muted = false;
@@ -8204,6 +8331,7 @@ broadCastmsgchat(){
 	o2ostopKCall(){
 	
 	             //this.audio.pause();
+				 stopCall();
 				  var x = document.getElementById("outgoingcall");  console.log(x);
 						x.pause();
 						x.muted = true;
@@ -8219,7 +8347,7 @@ broadCastmsgchat(){
 			  //this.singlefriend= this.oncallFriend;
 			  this.o2ostatus=false;
 			  console.log(this.oncallFriend);
-			  stopCall();
+			  
 			   
 			  $('#showcallModel'+this.oncallFriend._id).show();
 			  
@@ -8233,6 +8361,7 @@ broadCastmsgchat(){
 			  $('#startchat').show();
 			  $('#message-input').hide();
 			  $('#singlemessage-input').show();
+			  this.reset();
 			  this.stop();
 			  this.oncallFriend={};
 	},
@@ -8314,11 +8443,12 @@ broadCastmsgchat(){
 
   },
   o2oreceiveCall(){
+  this.o2ohideCallchat();
   var x = document.getElementById("outgoingcall"); 
 		x.pause();
 		x.muted = true;
      startCall();
-	 
+	 this.reset();
 	 this.start();
 	 var o2oobg={
 	    reciverid:receiverId(),
@@ -8453,7 +8583,7 @@ startAudiocall(){
 						
 		 startCall();
 		 this.reset();
-         this.stop();
+         this.start();
 		 var o2oobg={
 			reciverid:receiverId(),
 			friendId:this.oncallFriend._id
@@ -8476,11 +8606,144 @@ startAudiocall(){
 	  $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
       $('#showcallModel'+this.oncallFriend._id).hide();
-      $('#showCallMin').show();
+      $('#audioshowCallMin').show();
     },
-  
+
+  addfriends(friend){
+  console.log(this.friendsdata);
+   console.log(this.searchUsers);
+		  if(friend.friendReqStatus == 0){
+      console.log("IFF");
+		  //  var statusUpdate={
+			// 	_id: friend._id,
+			// 	status: 2,
+      //   myId:this.c_user.split_id
+			// }
+		  // this.$socket.emit('updateRequeststatus',statusUpdate);
+      
+      // ---- NOT NEEDED HERE NOW -----------------------------------
+				  // 	const searchdata = this.searchUsers.filter((obj) => {
+          //           return friend._id === obj._id;
+          //         }).pop();
+				  // searchdata.friendReqStatus=2;
+				  // searchdata.friendReqSenderId=this.c_user._id;
+				  // this.friendsdata.push(searchdata);
+				  
+	       axios.post('/friends/sendFriendRequest', {
+				userId: this.c_user._id,
+				friendId: friend._id,
+				projectId: '5d4c07fb030f5d0600bf5c03',
+				status: 2
+			  }).then(response => {
+         console.log(response);
+          	const searchdata = this.searchUsers.filter((obj) => {
+                    return friend._id === obj._id;
+                  }).pop();
+				  searchdata.friendReqStatus=2;
+          searchdata.friendReqSenderId=this.c_user._id;
+          searchdata["friendReqId"]=response.data._id;
+          this.friendsdata.push(searchdata);
+
+          // -------------------- IN PROGRESS [AMMAR]-----------------------------------
+             let tempUserData = this.c_user;
+                 tempUserData["friendReqId"] = response.data._id;
+                 tempUserData.friendReqSenderId=this.c_user._id;
+                 tempUserData.friendReqStatus=2;
+             var statusUpdate={
+				      _id: friend._id,
+			       	status: 2,
+              myId:this.c_user._id,
+              userObj: tempUserData   //sending current user obj with required appended fields
+		      	}
+		       this.$socket.emit('updateRequeststatus',statusUpdate);
+          // --------------------  ---------- ------------------------------------------
+			  },function(err) {
+				  console.log('err', err);
+				  alert('error');
+				  })
+      }
+      else if (friend.friendReqStatus == 3){
+        console.log("ELSE IF");
+	  // 	  var statusUpdate={
+		//   	  _id: friend._id,
+		//     	status: 2,
+	  // 	  	myId:this.c_user._id
+	  //   	}
+		// this.$socket.emit('updateRequeststatus',statusUpdate);
+		// const fdata = this.searchUsers.filter((obj) => {
+		// return friend._id === obj._id;
+		// }).pop();
+
+		// fdata.friendReqStatus=2;
+		// fdata.friendReqSenderId=this.c_user._id;
+		
+		axios.post('/friends/updateFriendRequest', {
+			_id: friend.friendReqId,
+			status: 2,
+			}).then(response => {
+      console.log(response);
+      
+          // -------------------- IN PROGRESS [AMMAR]-----------------------------------
+	        const searchdata = this.searchUsers.filter((obj) => {
+                    return friend._id === obj._id;
+                  }).pop();
+				  searchdata.friendReqStatus=2;
+          searchdata.friendReqSenderId=this.c_user._id;
+          searchdata["friendReqId"]=response.data._id;
+          this.friendsdata.push(searchdata);
+
+             let tempUserData = this.c_user;
+                 tempUserData["friendReqId"] = response.data._id;
+                 tempUserData.friendReqSenderId=this.c_user._id;
+                 tempUserData.friendReqStatus=2;
+             var statusUpdate={
+				      _id: friend._id,
+			       	status: 2,
+              myId:this.c_user._id,
+              userObj: tempUserData   //sending current user obj with required appended fields
+		      	}
+		       this.$socket.emit('updateRequeststatus',statusUpdate);
+          // --------------------  ---------- ------------------------------------------
+
+			},function(err) {
+			console.log('err', err);
+			alert('error');
+		})
+		  
+		  }
+		 
+},
+
+friendRequestupdate(data,status){
+  console.log(data);
+  console.log(status);
+	var statusUpdate={
+		_id: data._id,
+		status: status,
+		myId:this.c_user._id
+	}
+this.$socket.emit('updateRequeststatus',statusUpdate);
+  const fdata = this.friendsdata.filter((obj) => {
+                    return data._id === obj._id;
+                  }).pop();
+				  
+				  fdata.friendReqStatus=status;
+				  fdata.friendReqSenderId=this.c_user._id;
+  axios.post('/friends/updateFriendRequest', {
+        _id: data.friendReqId,
+		status: status,
+      }).then(response => {
+         console.log(response);
+  },function(err) {
+      console.log('err', err);
+      alert('error');
+      })
+},
 
 },
+///////////////////////////////////////// ADD FRIENDS //////////////////////////////////////////////////////
+
+
 
 mounted() {
 
