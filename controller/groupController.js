@@ -4,6 +4,7 @@
  */
 const groupsModel = require("../model/groupsModel");
 const groupCall = require("../model/groupCall");
+const chatModel = require("../model/chatModel");
 
 module.exports = function (io, saveUser) {
   /*main router object which contain all function*/
@@ -55,25 +56,39 @@ module.exports = function (io, saveUser) {
     })
   }
 
-  router.getCreatedGroups = function (req, res) {
+  router.getCreatedGroups = async function (req, res) {
     // get all groups
-    groupsModel
-      .find({ status: 1, projectId: req.params.projectId })
-      .populate("members")
-      .exec(function (err, groups) {
-        var tempGroups = [];
-       if (err) return console.log(err);
+    // groupsModel
+    //   .find({ status: 1, projectId: req.params.projectId })
+    //   .populate("members")
+    //   .exec(function (err, groups) {
+    //     var tempGroups = [];
+    //    if (err) return console.log(err);
 
-        var i = 0, j = 0;
-        for (i; i < groups.length; i++) {
-          j = 0
-          for (j; j < groups[i].members.length; j++) {
-            if (req.params.userId == groups[i].members[j]._id) tempGroups.push(groups[i]);
-          }
-        }
+    //     var i = 0, j = 0;
+    //     for (i; i < groups.length; i++) {
+    //       j = 0
+    //       for (j; j < groups[i].members.length; j++) {
+    //         if (req.params.userId == groups[i].members[j]._id) tempGroups.push(groups[i]);
+    //       }
+    //     }
 
-        res.send(tempGroups); // send groups list
-      });
+    //     res.send(tempGroups); // send groups list
+    //   });
+
+    var groups = await groupsModel.find({ status: 1, projectId: req.params.projectId, "members": req.params.userId })
+    .populate("members").lean().exec();
+
+console.log("senderId: "+ req.params.userId);
+for (var i= 0; i < groups.length; i++) {
+// var unreadMsgCount = await chatModel.find({ groupId: groups[i], isSeen: 0 , senderId: {$ne: req.params.userId}}).count().lean().exec();
+// groups[i]["usCount"] = unreadMsgCount;
+var latestMsg = await chatModel.findOne({ groupId: groups[i]}, {}, { sort: { 'createdAt': -1 } }).lean().exec();
+groups[i]["latestMsg"] = latestMsg;
+}
+
+res.send(groups); // send groups list
+
   };
 
   

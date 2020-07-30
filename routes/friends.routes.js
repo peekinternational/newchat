@@ -21,7 +21,7 @@ friendsRouter.route('/createfriend').post(function (req, res) {
 //      { 'userId': userResult._id, 'friendId': friendResult._id}
                     // does userId and friendId already exist in friend table or not
                     friendModel.findOne(
-                        { 
+                        {
                            // $and: [
                           //  { 
                                 $or: [{ 'userId': userResult._id, 'friendId': friendResult._id},
@@ -225,16 +225,33 @@ friendsRouter.route('/searchFriend').post(async function (req, res) {
             ]
         });
 
+       // console.log("i: "+ i);  console.log(friendIdData);
         if (friendIdData) {
             console.log(friendIdData);
-            searchResult[i].friendStatus = friendIdData.status;
+            searchResult[i].friendReqStatus = friendIdData.status;
+            searchResult[i].friendReqSenderId = friendIdData.userId;
+            searchResult[i].friendReqId = friendIdData._id;
         }
-        else searchResult[i].friendStatus = 0;
+        else searchResult[i].friendReqStatus = 0;
     }
 
     res.json(searchResult);
 })
 
+friendsRouter.route('/getFriendsRequest').post(async function (req, res) {
+    var allFriendsRequest = await friendModel.find({
+        $or: [
+            {
+                $and: [{ userId: req.body.userId }, {status: 2}],
+            },
+            {
+                $and: [{ friendId: req.body.userId }, {status: 2}]
+            }
+        ]
+    });
+
+    res.json(allFriendsRequest);
+})
 
 friendsRouter.route('/sendFriendRequest').post(async function (req, res) {
     console.log(req.body);
@@ -254,9 +271,17 @@ friendsRouter.route('/sendFriendRequest').post(async function (req, res) {
 })
 
 friendsRouter.route('/updateFriendRequest').post(async function (req, res) {
-  console.log(req.body);
-  let updateResult = await friendModel.update({ '_id': req.body._id }, { $set: { 'status': req.body.status } }).exec();
-  res.json(updateResult);
+    console.log("--- updateFriendRequest ---");
+    console.log(req.body);
+    let updateResult = await friendModel.updateOne({ '_id': req.body._id }, { 'status': req.body.status }).exec();
+    console.log(updateResult);
+
+    var friendRequestData = await friendModel.findOne({_id: req.body._id}).exec();
+    await friendRequestData.populate('userId').execPopulate();
+    await friendRequestData.populate('friendId').execPopulate();
+    res.json(friendRequestData);
+
+  //  res.json(updateResult);
 })
 
 

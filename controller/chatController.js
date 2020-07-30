@@ -106,6 +106,14 @@ module.exports = function (io, saveUser) {
   router.getUsers = async function (req, res) {
     if (req.params.allList == 0) {
       var friendIdData = await friendModel.find({
+        // $or: [
+        //   {
+        //       $and: [{ userId: req.params.userId }, {status: 1}],
+        //   },
+        //   {
+        //       $and: [{ friendId: req.params.userId }, {status: 1}]
+        //   }
+        // ]
         $or: [
           { userId: req.params.userId },
           { friendId: req.params.userId }
@@ -118,10 +126,22 @@ module.exports = function (io, saveUser) {
 
       friendData = [];
       for (let i = 0; i < friendIdData.length; i++) {
-        if (friendIdData[i].friendId._id != req.params.userId)
-          friendData.push(friendIdData[i].friendId);
-        else if (friendIdData[i].userId._id != req.params.userId)
-          friendData.push(friendIdData[i].userId);
+        if (friendIdData[i].friendId._id != req.params.userId){
+         // console.log("IF --->");   console.log(friendIdData[i].status);
+          let tempData1 = friendIdData[i].friendId;
+          tempData1["friendReqId"] =  friendIdData[i]._id;
+          tempData1["friendReqStatus"] =  friendIdData[i].status;
+          tempData1["friendReqSenderId"] =  friendIdData[i].userId._id;
+          friendData.push(tempData1);
+        }
+        else if (friendIdData[i].userId._id != req.params.userId){
+        //  console.log("ELSE --->"); console.log(friendIdData[i].status);
+          let tempData2 = friendIdData[i].userId;
+          tempData2["friendReqId"] =  friendIdData[i]._id;
+          tempData2["friendReqStatus"] =  friendIdData[i].status;
+          tempData2["friendReqSenderId"] =  friendIdData[i].userId._id;
+          friendData.push(tempData2);
+        }
 
         var unreadMsgCount = await chatModel.find({ senderId: friendData[i]._id, receiverId: req.params.userId, isSeen: 0 }).count().lean().exec();
         friendData[i]["usCount"] = unreadMsgCount;
@@ -814,6 +834,9 @@ router.getSingleUser = async function (req, res){
         else res.json({ status: false, message: "Update failed" });
       }
   };
+
+
+
   router.getGroup_Users = async function (req, res) {
     var friendIdData = await friendModel.find({
       $or: [
@@ -851,8 +874,8 @@ router.getSingleUser = async function (req, res){
         // -------------- GROUPS GET ------------------------
         var groups = await groupsModel.find({ status: 1, projectId: req.params.projectId, "members": req.params.userId })
           .populate("members").lean().exec();
-
-        console.log("senderId: " + req.params.userId);
+      
+        if (groups.length != 0){   
         for (var g = 0; g < groups.length; g++) {
           var unreadMsgCount = await chatModel.find({ groupId: groups[g], isSeen: 0, senderId: { $ne: req.params.userId } }).count().lean().exec();
           groups[g]["usCount"] = unreadMsgCount;
@@ -864,7 +887,10 @@ router.getSingleUser = async function (req, res){
             res.json(combinedList);
           }
         }
-      //  res.json({ 'usersList': friendData });
+      }
+      else {
+        res.json(friendData);
+      }
       }
     }
   };
