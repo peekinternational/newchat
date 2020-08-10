@@ -145,6 +145,12 @@ socket.on('getGroups', (data) => {
 		io.emit('receiveRequeststatus',data);
 	});
 
+
+///////////////// Busy Call Status //////////////
+ socket.on('updateCallStatus', (data) => {
+		console.log(data);
+		io.emit('receiveupdateCallStatus',data);
+	});
  //////// LOGIN AND LOUT ////////// 
 	
  socket.on('login', (data) => {

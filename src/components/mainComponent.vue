@@ -64,7 +64,26 @@
         <div class="recent">
           <div class="theme-title">
             <div class="media">
+			<!--<audio-recorder
+					upload-url="YOUR_API_URL"
+					:attempts="3"
+					:time="2"
+					:headers="headers"
+					:before-recording="callback"
+					:pause-recording="callback"
+					:after-recording="callback"
+					:select-record="callback"
+					:before-upload="callback"
+					:successful-upload="callback"
+					:failed-upload="callback"/>
+					
+          <audio-player src="https://peekvideochat.com/incomming.mp3"/> -->
               <div v-if="c_user">
+			       <audio id="messagetone" muted>
+				  <source src="https://peekvideochat.com/bell.mp3" type="audio/ogg">
+				  <source src="https://peekvideochat.com/bell.mp3" type="audio/mpeg">
+				</audio>
+				
 				 <audio id="outgoingcall" muted>
 				  <source src="https://peekvideochat.com/incomming.mp3" type="audio/ogg">
 				  <source src="https://peekvideochat.com/incomming.mp3" type="audio/mpeg">
@@ -247,7 +266,7 @@
                         <ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
                           <a  href="#" data-toggle="modal" data-target="#o2oaudiocall"   class="" style="font-size: 16px;line-height: 2;">
                             {{ oncallFriend.name }} </a>
-							<span style="margin-left: 44px;">{{formattedElapsedTime}}</span>
+							<span  style="margin-left: 44px;">{{formattedElapsedTime}}</span>
                             <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
                             </a></li>
                             </ul>
@@ -409,7 +428,7 @@
                                 <i class="fa fa-search"></i>
                               </span>
                             </div>
-                            <input class="form-control" type="text" v-model="groupSearch" placeholder="Start Chat" />
+                            <input class="form-control" type="text" v-model="groupSearch" placeholder="Search Group" />
                           </div>
                         </div>
                       </div>
@@ -1815,10 +1834,26 @@
         </div>
       </div>
     </aside>
+	
     <div class="chitchat-main small-sidebar" id="content">
       <div class="chat-content tabto active" id="mainchatpage">
-        <div class="custom-scroll active">
-
+        <div class=" custom-scroll active">
+		<div class="row" style="margin-top: 157px;text-align: center;">
+			<div class="col-12" style="">
+			    <h2 style="text-transform: capitalize;">Welcome, {{current_User.name}} </h2>
+			   </div>
+			   <div class="col-12" style="margin-top: 35px;">
+			    <div v-if="current_User.onlineStatus == 1" class="profile" v-bind:class="{ online: current_User.pStatus == 0, unreachable : current_User.pStatus == 1, busy: current_User.pStatus == 2, offline: current_User.pStatus == 3, offline: current_User.pStatus == 4 }">
+                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
+				  </div>
+                
+				<div class="col-12" style="margin-top: 21px;">
+				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#msgchatModal" style="cursor: pointer; margin-top: 21px; margin-bottom: 21px;"> Start a conversation </button>
+				   <p>Search for someone to start chatting with or go to Contact to see who is availabe</p>
+				</div>
+				
+			   </div>
+		   </div>
         </div>
       </div>
       <div class="chat-content tabto active" id="group_chat">
@@ -2211,7 +2246,9 @@
           <div class="contact-chat">
 		  
             <ul class="chatappend" v-for="chat in friendchat">
-              <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
+			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{isToday(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
+                         
+              <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
                 <div class="media">
                   <div class="profile mr-4">
                     <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
@@ -2252,10 +2289,11 @@
                           </div>
 
                           <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
-                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
-                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sender'+chat._id">
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 1" :id="'sender'+chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                           <br>
+						 
                           <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
                             <img :src="hostname+'/images/chatImages/'+chat.message">
                           </a>
@@ -2285,6 +2323,7 @@
                 </div>
               </li>
               <li class="sent" style="padding-bottom:20px" v-else>
+			  
                 <div class="media">
                   <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
                   <div class="media-body">
@@ -2295,8 +2334,8 @@
                         <li class="msg-setting-main">
 
                           <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
-                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
-                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receiver'+chat._id">
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 1" :id="'receiver'+chat._id">
                             <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
                           <br>
                           <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
@@ -4183,7 +4222,7 @@
           <h2 class="modal-title" v-if="showGrouptitle">
             {{singlegroup.name}} <i class="fa fa-edit" @click="editGroup()"></i></h2>
             <div  class="form-group mb-2 modal-title" v-if="editgTitle == true" style="display: flex;">
-                      <input type="text" ref="groupTitle" name="username"  v-model="singlegroup.name" class="form-control">
+                      <input type="text" ref="groupTitle" name="username"   v-model="singlegroup.name" class="form-control" maxlength="50">
     
                         <check-icon size="1.5x" class="custom-class" @click="editGroupTitle()" style="margin: 3px;"></check-icon>
                         <x-icon size="1.5x" class="custom-class" @click="crossGroupTitle()" style="margin: 3px;"></x-icon>
@@ -4244,7 +4283,7 @@
           <form class="default-form">
             <div class="form-group">
               <h5>Group Name</h5>
-              <input class="form-control" id="exampleInputEmail1" v-model="groupName" type="text" placeholder="Enter Group Name" />
+              <input class="form-control" id="exampleInputEmail1" v-model="groupName" type="text" placeholder="Enter Group Name" maxlength="50" />
             </div>
             <div class="form-group mb-0">
               <h5>Friends Member</h5>
@@ -4594,7 +4633,8 @@
           </loading>
           <div class="contact-chat  ">
             <ul class="chatappend" v-for="chat in friendchat">
-              <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
+			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{isToday(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
+              <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
                 <div class="media">
                   <div class="profile mr-4">
                     <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
@@ -4778,7 +4818,7 @@
               <h5>Josephin water</h5>
               <h6>America ,California</h6>
             </div>
-            <div id="basicUsage">{{formattedElapsedTime}}</div>
+            <div id="audiobasicUsage">{{formattedElapsedTime}}</div>
             <div class="zoomcontent minimizeclass" >
               <a class="text-dark" href="#!"  @click="audiominimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
                   <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
@@ -4835,7 +4875,8 @@
           </loading>
           <div class="contact-chat  ">
             <ul class="chatappend" v-for="chat in friendchat">
-              <li class="replies" style="padding-bottom:20px" v-if="chat.senderId._id == c_user._id">
+			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{isToday(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
+              <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
                 <div class="media">
                   <div class="profile mr-4">
                     <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
@@ -5079,34 +5120,7 @@
 
                       <ul class="msg-box">
                         <li class="msg-setting-main">
-                          <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
-                            <div class="msg-setting" :id="'msg-settings'+chat._id" @click="msg_setting(chat._id)">
-                              <i class="ti-more-alt"></i>
-                            </div>
-
-                            <div class="msg-dropdown" :id="'msg-dropdowns'+chat._id" style="z-index: 99999;">
-                              <ul>
-                                <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                  <a href="#" @click="eidtchat(chat._id,chat.message)">
-                                    <i class="fa fa-pencil"></i>edit</a>
-                                </li>
-                                <li>
-                                  <a href="#" @click="quote(chat)">
-                                    <i class="fa fa-share"></i>Quote</a>
-                                </li>
-
-                                <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                  <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
-                                    <i class="fa fa-clone"></i>copy</a>
-                                </li>
-                                <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
-                                <li>
-                                  <a href="#" @click="msgdelete(chat)">
-                                    <i class="ti-trash"></i>delete</a>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
+                         
 
                           
                           <h5 >{{ chat.message }}</h5>
@@ -5554,126 +5568,29 @@
               </div>
             </div>
           </div>
-          <ul class="chat-main custom-scroll">
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Josephin water</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>22/10/19</h6>
-                  <h6 class="font-success status"> Seen</h6>
-                </div>
-              </div>
-            </li>
-            <li class="active" data-to="chating">
-              <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>Typing................</h6>
-                </div>
-                <div class="date-status">
-                  <h6>30/11/19</h6>
-                  <div class="badge badge-primary sm">8</div>
-                </div>
-              </div>
-            </li>
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Sufiya Elija</h5>
-                  <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>15/06/19</h6>
-                  <h6 class="font-dark status"> Sending</h6>
-                </div>
-              </div>
-            </li>
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="../assets/images/contact/4.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Mukrani Pabelo</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>04/06/19</h6>
-                  <h6 class="font-danger status"> Failed</h6>
-                </div>
-              </div>
-            </li>
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jhon Deo</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>04/06/19</h6>
-                  <h6 class="font-danger status"> Failed</h6>
-                </div>
-              </div>
-            </li>
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Pabelo Mukrani</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <i class="ti-pin2"></i>
-                  <h6>04/06/19</h6>
-                  <h6 class="font-danger status"> Failed</h6>
-                </div>
-              </div>
-            </li>
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Sufiya Elija</h5>
-                  <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>15/06/19</h6>
-                  <h6 class="font-dark status"> Sending</h6>
-                </div>
-              </div>
-			  
-            </li>
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="../assets/images/contact/4.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Mukrani Pabelo</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>04/06/19</h6>
-                  <h6 class="font-danger status"> Failed</h6>
-                </div>
-              </div>
-            </li>
-            <li data-to="blank">
-              <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jhon Deo</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>04/06/19</h6>
-                  <h6 class="font-danger status"> Failed</h6>
-                </div>
-              </div>
-            </li>
+         
+			 <ul class="chat-main custom-scroll">
+                        <li  v-for="friends in orderedUsers" v-if="friends._id != c_user._id || friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank"  data-dismiss="modal" style="cursor: pointer;">
+                          <div class="chat-box">
+                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                            <div v-else class="profile offline">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
+							
+								<div class="details"  style="padding-left: 73px;">
+								  <h5>{{friends.name}}</h5>
+								  <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+								  <h6 v-else>Start Chat</h6>
+								</div>
+							
+								<div class="date-status">
+								  <h6>{{isToday(friends.updatedByMsg)}}</h6>
+								  <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
+								  <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
+								</div>
+                          </div>
+                        </li>
           </ul>
         </div>
       </div>
@@ -5698,12 +5615,17 @@
               </div>
             </div>
           </div>
-          <ul class="call-log-main custom-scroll">
-            <li class="active">
+          <ul  class="call-log-main custom-scroll">
+            <li v-for="friends in orderedUsers" v-if="friends._id != c_user._id">
               <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                 <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
+                            <div v-else class="profile offline">
+                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+							  </div>
                 <div class="details">
-                  <h5>Jony Lynetin</h5>
+                  <h5>{{friends.name }}</h5>
                   <h6>
                     <i data-feather="arrow-down-left"></i>3:30 pm</h6>
                 </div>
@@ -5714,81 +5636,7 @@
                 </div>
               </div>
             </li>
-            <li>
-              <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>
-                    <i data-feather="arrow-down-right"></i>3:10 pm</h6>
-                </div>
-                <div class="call-status">
-                  <div class="icon-btn btn-outline-success button-effect btn-sm">
-                    <video-icon size="1.5x" class="custom-class"></video-icon>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>
-                    <i class="missed" data-feather="corner-left-down"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                  <div class="icon-btn btn-outline-danger button-effect btn-sm">
-                    <phone-icon size="1.5x" class="custom-class"></phone-icon>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>
-                    <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                  <div class="icon-btn btn-outline-success button-effect btn-sm">
-                    <video-icon size="1.5x" class="custom-class"></video-icon>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="call-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>
-                    <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                  <div class="icon-btn btn-outline-success button-effect btn-sm">
-                    <phone-icon size="1.5x" class="custom-class"></phone-icon>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="call-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>
-                    <i data-feather="arrow-down-right"></i>3:00 pm</h6>
-                </div>
-                <div class="call-status">
-                  <div class="icon-btn btn-outline-success button-effect btn-sm">
-                    <video-icon size="1.5x" class="custom-class"></video-icon>
-                  </div>
-                </div>
-              </div>
-            </li>
+           
           </ul>
         </div>
       </div>
@@ -5826,6 +5674,8 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import VEmojiPicker from 'v-emoji-picker';
 import ApiService from '../services/api.service.js';
+import AudioRecorder from 'vue-audio-recorder';
+Vue.use(AudioRecorder);
 import {
   ContentLoader,
   FacebookLoader,
@@ -5839,7 +5689,7 @@ import carousel from 'vue-owl-carousel';
 
 export default {
 name: 'MainComponent',
-components: {ContentLoader,InfiniteLoading, RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+components: {AudioRecorder,ContentLoader,InfiniteLoading, RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
 props: [],
 data() {
   return {
@@ -5849,6 +5699,7 @@ data() {
     friendsdata: [],
 	searchUsers:[],
     userId: '',
+	current_User:'',
     singlefriend: {},
 	searchFriend:'',
 	showSearchfriends:false,
@@ -5937,6 +5788,7 @@ data() {
 	audioPlay:false,
 	groupData:true,
 	groupSearching:false,
+	selectFriendStatus:false,
 	
 
   }
@@ -5969,7 +5821,9 @@ beforeCreate: function() {
     if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
 
       this.friendchat.push(data.msgData);
-      
+      var messagetone = document.getElementById("messagetone");
+			messagetone.play();
+			messagetone.muted = false;
       // $('#f_typing'+data.msgData.receiverId._id).html(data.msgData.message);
         var container = this.$el.querySelector("#chating");
         $("#chating").animate({ scrollTop: container.scrollHeight + 7020}, "fast");
@@ -5990,7 +5844,9 @@ beforeCreate: function() {
       
     }
     else if(this.c_user._id == data.selectFrienddata){
-      
+      var messagetone = document.getElementById("messagetone");
+			messagetone.play();
+			messagetone.muted = false;
                 const fdata = this.friendsdata.filter((obj) => {
                     return data.userId === obj._id;
                   }).pop();
@@ -6198,7 +6054,10 @@ changestatuslogin(data) {
     const post = this.friendsdata.filter((obj) => {
       return data === obj._id;
     }).pop();
-    post.onlineStatus = 1;
+	
+	if(post){
+      post.onlineStatus = 1;
+	}
   },
   
   changestatuslogout(data) {
@@ -6206,7 +6065,9 @@ changestatuslogin(data) {
     const post = this.friendsdata.filter((obj) => {
       return data === obj._id;
     }).pop();
-    post.onlineStatus = 0;
+	if(post){
+        post.onlineStatus = 0;
+	}
   },
 
 ///////////////////////BROADCASTING SECTION/////////////////////////
@@ -6241,7 +6102,11 @@ receivebroadcastmsg(data) {
   O2OReceiverPanal(data) {
   console.log(data);
  if(data.reciverid == this.c_user._id || data.friendId == this.c_user._id ){
-                 
+ 
+            if(this.selectFriendStatus ==false){
+                 $('#startchat').css('opacity','0');
+				 }
+				 
 				 var x = document.getElementById("outgoingcall");
 				 console.log(x);
 						x.pause();
@@ -6264,8 +6129,13 @@ receivebroadcastmsg(data) {
 						   
 						   $('body').removeClass('modal-open');
 						   $('.modal-backdrop').remove();
-						   
-						 // this.o2ostopKCall();
+						    var endtime=$('#basicUsage').text();
+							   this.$toasted.success('Call Ended '+endtime, {
+								theme: "toasted-primary",
+								position: "top-right",
+								duration: 7000
+							  })
+						  //this.o2ostopKCall();
 		}
 	 },
 	  
@@ -6313,19 +6183,25 @@ receivebroadcastmsg(data) {
 		    }
         // ------------ ******* ---------------------------
 
-				// if(data._id == this.c_user._id){
-				// const fdata = this.friendsdata.filter((obj) => {
-				// 		return data.myId === obj._id;
-				// 	  }).pop();
-					  
-				// 	  console.log(fdata);
-				// 	  if(data.status == 2){
-				// 	     this.friendsdata.push(fdata);
-				// 	  }else{
-				// 	     fdata.friendReqStatus=data.status;
-				// 	  }
-		    //   }
-	  },	  
+	  },	
+
+///////////////////////////////// Call busy status ////////////////////////////	
+
+	receiveupdateCallStatus(data){
+	console.log(data);
+      const myData = this.friendsdata.filter((obj) => {
+					  	return data.userId === obj._id;
+					    }).pop();
+						if(myData){
+						     myData.callStatus=data.status;
+						}
+						const friendData = this.friendsdata.filter((obj) => {
+					  	return data.friendId === obj._id;
+					    }).pop();
+						if(friendData){
+						   friendData.callStatus=data.status;
+						}
+	},	  
 },
 
 
@@ -6370,10 +6246,10 @@ watch: {
 	// var incoming = document.getElementById("incommingcall");
 	//	incoming.pause();
 	//	incoming.muted = true;
-	// $('body').removeClass('modal-open');
-   //  $('.modal-backdrop').remove();
-	// $('#o2ovideocall').modal('hide');
-	// $('#o2oaudiocall').modal('hide');
+	 $('body').removeClass('modal-open');
+     $('.modal-backdrop').remove();
+	 $('#o2ovideocall').modal('hide');
+	 $('#o2oaudiocall').modal('hide');
 	 
 	 
 	 }
@@ -6578,6 +6454,7 @@ showbroadcastChatemoji(){
     axios.post('/externalLogout/' + this.c_user._id)
       .then((responce) => {
         this.$socket.emit('logout', this.c_user._id);
+		this.emptyChatWithId();
         this.$session.destroy();
         localStorage.removeItem("userData");
     localStorage.removeItem("presenterData");
@@ -6671,7 +6548,7 @@ showbroadcastChatemoji(){
   
 
 usertab(){
-
+this.groupSearch='';
 $('.init').removeClass('active');
 $('#message-input').hide();
 $('#singlemessage-input').hide();
@@ -6701,6 +6578,8 @@ axios.post('/friends/searchFriend/', {
 
 
   startchat(friend) {
+  $('#startchat').css('opacity','1');
+         this.selectFriendStatus=true;
          $('#startchat').show();
 		 $('#message-input').hide();
           $('#singlemessage-input').show();
@@ -6985,7 +6864,7 @@ axios.post('/friends/searchFriend/', {
 
 
   dragfileupload(file, xhr, formData) {
-    console.log(this.singlefriend);
+    console.log(file);
     formData.append('senderId', this.c_user._id);
     formData.append('senderName', this.c_user.name);
     formData.append('friendId', this.singlefriend._id);
@@ -7060,10 +6939,11 @@ axios.post('/friends/searchFriend/', {
 
   uploadfile(event) {
     console.log(event.target.value)
-    let filesdata = this.$refs.myFiles.files[0];
-
+    let filesdata = this.$refs.myFiles.files;
+   filesdata.forEach((file) =>{
+   console.log(file);
     let formDatas = new FormData();
-    formDatas.append('file', filesdata);
+    formDatas.append('file', file);
     formDatas.append('senderId', this.c_user._id);
     formDatas.append('senderName', this.c_user.name);
     formDatas.append('friendId', this.singlefriend._id);
@@ -7136,6 +7016,7 @@ axios.post('/friends/searchFriend/', {
       console.log('err', err);
       alert('error');
     })
+	})
   },
 
 
@@ -7498,10 +7379,10 @@ this.groupmsgObj = {
 
 groupuploadfile(event) {
     // console.log(event.target.value)
-    let groupfilesdata = this.$refs.groupmyFiles.files[0];
-
+    let groupfilesdata = this.$refs.groupmyFiles.files;
+    groupfilesdata.forEach((file) =>{
     let groupformDatas = new FormData();
-    groupformDatas.append('file', groupfilesdata);
+    groupformDatas.append('file', file);
     groupformDatas.append('senderId', this.c_user._id);
     groupformDatas.append('senderName', this.c_user.name);
     groupformDatas.append('groupId', this.singlegroup._id);
@@ -7567,6 +7448,7 @@ groupuploadfile(event) {
       console.log('err', err);
       alert('error');
     })
+	 })
   },
 
 /////////////////////////////////////// CREATE GROUP ////////////////////////////////////////////
@@ -7898,7 +7780,9 @@ if(this.multipleneewmembers){
 
 },
 ///////////////////////////////////////  END GROUP SECTION //////////////////////////////////////
-
+callback(msg) {
+      //console.debug('Event: ', msg)
+    },
   favourite() {
 
     $("#recent").removeClass("active");
@@ -8306,26 +8190,69 @@ broadCastmsgchat(){
     },
 	
 	videostartCall(){
-	this.o2ohideCallchat();
-	var incoming = document.getElementById("incommingcall");
-		incoming.play();
-		incoming.muted = false;
-		incoming.loop = true;
-	this.checkcallstart();
-	//$('body').removeClass('modal-open');
-	//$('.modal-backdrop').remove();
-	//$('#o2ovideocall').modal('show');
-	
-	$('#o2osinglemessage-input').show();
-	this.oncallFriend=this.singlefriend;
-	let userDataobj = {
-                friendId: this.oncallFriend._id,
-                callerName:this.c_user.name,
-                callerId: this.c_user._id,
-                callType: 0
-            };
-	    videoKCall(this.c_user._id,this.oncallFriend._id,userDataobj,0);
-		$('#local-video').css('display','block');
+	console.log(this.singlefriend.callStatus);
+	if(this.singlefriend.callStatus == 0){
+		this.videoPause=true;
+		this.videoPlay=false;
+		this.audioPause=true;
+		this.audioPlay=false;
+		this.o2ohideCallchat();
+		var incoming = document.getElementById("incommingcall");
+			incoming.play();
+			incoming.muted = false;
+			incoming.loop = true;
+			this.checkcallstart();
+			//$('body').removeClass('modal-open');
+			//$('.modal-backdrop').remove();
+			//$('#o2ovideocall').modal('show');
+			
+			$('#o2osinglemessage-input').show();
+			this.oncallFriend=this.singlefriend;
+			let userDataobj = {
+					friendId: this.oncallFriend._id,
+					callerName:this.c_user.name,
+					callerId: this.c_user._id,
+					callType: 0
+				};
+				
+			videoKCall(this.c_user._id,this.oncallFriend._id,userDataobj,0);
+			this.$socket.emit('updateCallStatus',{
+				   userId: this.c_user._id,
+				   friendId:this.oncallFriend._id,
+				   status: 1
+				  });
+			 axios.post('/updateCallStatus', {
+				   userId: this.c_user._id,
+				   friendId:this.oncallFriend._id,
+				   status: 1
+				  }).then(response => {
+					   
+						}, function(err) {
+						  console.log('err', err);
+						  //alert('error');
+				   });
+				   
+			       $('#local-video').css('display','block');
+		  	}
+			else{
+			 
+			  setTimeout(() => {
+			  
+              $('#o2ovideocall').modal('hide');
+				$('.o2ovideocallModel').modal('hide');
+				$('#o2omodalcall').modal('hide');
+				$('.modal-backdrop').remove();
+            }, 2000);
+				
+			    this.$toasted.success('User Busy An Another Call ', {
+				theme: "toasted-primary",
+				position: "top-right",
+				duration: 4000
+			  })
+			  
+				
+			}
+			
 	},
 	
 	o2ostopKCall(){
@@ -8338,6 +8265,7 @@ broadCastmsgchat(){
 						var incoming = document.getElementById("incommingcall");
 						incoming.pause();
 						incoming.muted = true;
+						
 				$('body').removeClass('modal-open');
 				$('.modal-backdrop').remove();
 			  $('#showCallMin').hide();
@@ -8361,6 +8289,69 @@ broadCastmsgchat(){
 			  $('#startchat').show();
 			  $('#message-input').hide();
 			  $('#singlemessage-input').show();
+			  var endtime=$('#basicUsage').text();
+			   this.$toasted.success('Call Ended '+endtime, {
+				theme: "toasted-primary",
+				position: "top-right",
+				duration: 4000
+			  })
+			  
+			  var Rid = '';
+			  var idddd=receiverId();
+			  if(receiverId()){
+			        Rid=receiverId();
+					console.log('reciver');
+			      }
+				  else{
+				     Rid=this.oncallFriend._id;
+				  }
+				  this.$socket.emit('updateCallStatus',{
+				   userId: this.c_user._id,
+				   friendId:Rid,
+				   status: 0
+				  });
+			   axios.post('/updateCallStatus', {
+				   userId: this.c_user._id,
+				   friendId:Rid,
+				   status: 0
+				  }).then(response => {
+					   
+						}, function(err) {
+						  console.log('err', err);
+						  //alert('error');
+				   });
+				 
+			  	 this.msgObj = {
+							chatType: 3,
+							isGroup: 0,
+							messageType: 3,
+							senderId: { _id: this.c_user._id },
+							senderImage: '',
+							receiverImage: '',
+							receiverId: { _id: Rid },
+							senderName: this.c_user.name,
+							message: endtime,
+							createdAt: new Date().toISOString(),
+						  };
+						   console.log(this.selectFriendStatus);
+						   if(this.selectFriendStatus){
+						   this.friendchat.push(this.msgObj);
+						   }
+						  this.$socket.emit('sendmsg', {
+							selectFrienddata: Rid,
+							userId: this.c_user._id,
+							msgData:this.msgObj
+						  })
+						axios.post('/chat', {
+							msgData: this.msgObj,
+							selectedUserData: Rid
+						  }).then(response => {
+						   console.log(response);
+
+							  }, function(err) {
+								console.log('err', err);
+								//alert('error');
+							  })
 			  this.reset();
 			  this.stop();
 			  this.oncallFriend={};
@@ -8471,7 +8462,9 @@ broadCastmsgchat(){
   ///////////////////////////////////////////////////////// O2O AUDIO CALL /////////////////////////////////////////////////////////////////////////////
 
 startAudiocall(){
-	
+	if(this.singlefriend.callStatus == 0){
+	this.audioPause=true;
+		this.audioPlay=false;
 	this.checkcallstart();
 	var incoming = document.getElementById("incommingcall");
 		incoming.play();
@@ -8488,6 +8481,39 @@ startAudiocall(){
             };
 	    videoKCall(this.c_user._id,this.oncallFriend._id,userDataobj,1);
 		
+		this.$socket.emit('updateCallStatus',{
+				   userId: this.c_user._id,
+				   friendId:this.oncallFriend._id,
+				   status: 1
+				  });
+			 axios.post('/updateCallStatus', {
+				   userId: this.c_user._id,
+				   friendId:this.oncallFriend._id,
+				   status: 1
+				  }).then(response => {
+					   
+						}, function(err) {
+						  console.log('err', err);
+						  //alert('error');
+				   });
+		}
+		else{
+			 
+				  setTimeout(() => {
+			  
+				  $('#o2ovideocall').modal('hide');
+					$('#o2oaudiocall').modal('hide');
+					$('.modal-backdrop').remove();
+				}, 2000);
+				
+			    this.$toasted.success('User Busy An Another Call ', {
+				theme: "toasted-primary",
+				position: "top-right",
+				duration: 4000
+			  })
+			  
+				
+			}
 	},  
 	
 	 o2ostartAudiochat() {
@@ -8750,6 +8776,7 @@ mounted() {
 
   this.c_user = this.$session.get('c_user');
   console.log(this.c_user.name);
+  this.current_User=this.c_user;
   console.log(JSON.parse(localStorage.getItem('userData')));
   this.hostname=this.$hostname;
   this.getfriends();

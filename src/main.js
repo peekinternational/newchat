@@ -7,6 +7,7 @@ import App from './App.vue'
 import VueSocketIO from 'vue-socket.io';
 import socketio from 'socket.io-client';
 import VueClipboard from 'vue-clipboard2';
+import AudioRecorder from 'vue-audio-recorder';
 
 window.axios = require('axios');
 //window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

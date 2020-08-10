@@ -40,7 +40,7 @@
             var parsedMessage = JSON.parse(message.data);
             console.info('Received message: ' + message.data);
             o2oSocConEst = true;
-
+            console.info(parsedMessage.id);
             switch (parsedMessage.id) {
                 case 'registerResponse':
                    // resgisterResponse(parsedMessage);
@@ -49,6 +49,7 @@
                     callResponse(parsedMessage);
                     break;
                 case 'incomingCall':
+                    console.log('..incomingCall...');
                     incomingCall(parsedMessage);
                     break;
                 case 'startCommunication':
@@ -174,8 +175,9 @@
             if (friendId) socket.emit('calldisconnect', {friendId: friendId});
           }
     
-        function incomingCall(message) {  
-            if (callState != NO_CALL) {
+        function incomingCall(message) { 
+            console.log("userBusy:"+ userBusy);
+            if (userBusy) {
                 var response = {
                     id : 'incomingCallResponse',
                     from : message.from,   //callerId
@@ -185,17 +187,8 @@
         
                 };
 
-                if (userBusy){
-                    // SHOW TOASTER MESSAGE HERE
-                    // $.toaster({
-                    //     priority: 'danger',
-                    //     title: 'Incoming Call',
-                    //     message: 'Another user is calling you ...'
-                    // });
-                    // socket.emit('userBusy', { 'callerId': c_userData._id }); //set userId here
-                }
-
-                //console.log("*********** BUSY *************");
+               
+                console.log("*********** BUSY *************");
                 return sendKMessage(response);
             }
             
