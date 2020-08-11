@@ -22,14 +22,19 @@ passport.use(new LocalStrategy({
   usernameField: 'name',
   passwordField: 'password',
 }, (name, password, done) => {
-  userModel.find({ "name": name, "password": password })
+  console.log('passport name: '+ name);
+  userModel.findOne({ name })
     .then((user) => {
-      if (!user) {
-        return done(null, false, { errors: { 'name/password': 'is invalid' } });
-      }
-      else{
-        return done(null, user[0]);
-      }
+      console.log("passport: 1");
+      console.log(user);
+	  userModel.update({
+		'_id': user._id
+	}, {
+		'onlineStatus': 1
+	}).exec();
+     
+        return done(null, user);
+      
     }).catch(done);
 }));
 
@@ -883,8 +888,7 @@ router.getSingleUser = async function (req, res){
           groups[g]["latestMsg"] = latestMsg;
          // ------------------------------------------------
           if (g == groups.length - 1) {
-            const combinedList = friendData.concat(groups)
-            res.json(combinedList);
+            res.json({ 'usersList': friendData, 'groupList': groups });
           }
         }
       }

@@ -50,12 +50,12 @@ if (serverIpAdd.includes('138.68.27.231')) { //Job callme
         key: sslConfig.keyJcm,
         cert: sslConfig.certJcm,
     };
-    siteLink = 'https://www.peekvideochat.com:8443/';
+    siteLink = 'https://www.mooz.jp:8443/';
 }
 
 var argv = minimist(process.argv.slice(2), {
     default: {
-        as_uri: siteLink,
+        as_uri: "https://localhost:8443/",
         ws_uri: "ws://localhost:8888/kurento"
     }
 });
