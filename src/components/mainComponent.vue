@@ -37,7 +37,7 @@
              <span style="padding-left: 16px;">Rooms</span>
             </li>
             <li data-toggle="modal" data-target="#showPresenter">
-             <span style="vertical-align: text-bottom;"class="dot-btn dot-danger grow" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="vertical-align: text-bottom;"class="" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
              <span style="padding-left: 16px;" >Live</span>
             </li>
             <li @click="contact()">
