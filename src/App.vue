@@ -8,6 +8,7 @@
 
 <style>
   @import './assets/css/style.css';
+  @import './assets/css/newStyle.css';
   @import './assets/css/magnific-popup.css';
   @import './assets/css/tour.css';
   @import './assets/css/date-picker.css';

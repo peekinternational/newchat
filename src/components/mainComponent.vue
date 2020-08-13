@@ -1,7 +1,8 @@
 <template>
 <div class="hello">
   <div class="chitchat-loader">
-    <div><img src="../assets/images/logo/logo_big.png" alt="" />
+    <div>
+      <img src="../assets/images/logo/logo_big.png" alt="" />
       <h3>Simple, secure messaging for fast connect to world..!</h3>
     </div>
   </div>
@@ -9,19 +10,71 @@
 
     <nav class="main-nav on custom-scroll" id="mainnav">
 
-      <div class="logo-warpper">
-        <a href=""><img src="../assets/images/logo/logo.png" alt="logo" /></a>
+      <div class="logo-warpper" style="border: 0;">
+          <div class="navlogo">
+          <a href=""><img src="../assets/images/logo/logo.png" alt="logo" style="border-radius: 0px;" /></a>
+          </div>
+          <div style="margin-top: 17px;padding-right: 10px;">
+            <span><img class="" src="../assets/images/nav/bars.png" alt="Avatar" style="height: auto;border-radius: 0;" /></span>
+          <span style="margin-left: 12px; margin-right: 12px;" v-if="current_User.onlineStatus == 1" class="navprofile" v-bind:class="{ online: current_User.pStatus == 0, unreachable : current_User.pStatus == 1, busy: current_User.pStatus == 2, offline: current_User.pStatus == 3, offline: current_User.pStatus == 4 }">
+              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
+              </span>
+                <span><img class="" src="../assets/images/nav/dots.png" alt="Avatar" style="height: auto;" /></span>
+              </div>
       </div>
       <div class="sidebar-main">
         <ul class="sidebar-top">
-      <li>
-      <div class="" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }" >
-            <a class="icon-btn btn-light  button-effect" href="javascript:void(0);" data-toggle="modal" data-target="#showPresenter">
-              <radio-icon size="1.5x" class="custom-class"></radio-icon>
-            </a>
-      </div>
-          </li>
           <li>
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Chat</span>
+            </li>
+            <li>
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/meetings.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Meetings</span>
+            </li>
+            <li>
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/rooms.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Rooms</span>
+            </li>
+            <li data-toggle="modal" data-target="#showPresenter">
+             <span style="vertical-align: text-bottom;"class="dot-btn dot-danger grow" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;" >Live</span>
+            </li>
+            <li @click="contact()">
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/contacts.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Contacts</span>
+            </li>
+            <li>
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/schedule.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Schedule</span>
+            </li>
+            <li>
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/todo.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">To-Do</span>
+            </li>
+            <li>
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/projects.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Projects</span>
+            </li>
+            <li @click="document()">
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/documents.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Documents</span>
+            </li>
+            <li @click="status()">
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/files.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Files</span>
+            </li>
+             <li class="records">
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/records.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Records</span>
+             <span style="margin-left: 16px;" class="badge badge-danger sm">2</span>
+            </li> 
+            <li class="minutes" style="    margin-bottom: 66px !important;">
+             <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/minutes.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="padding-left: 16px;">Minutes</span>
+            </li>
+   
+          <!--<li>
             <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="favourite()" id="Fav">
               <i class="fa fa-star"> </i>
             </a>
@@ -43,10 +96,10 @@
             <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="setting()" >
               <i class="fa fa-cog"></i>
             </a>
-          </li>
+          </li>-->
         </ul>
         <ul class="sidebar-bottom">
-          <li>
+          <!--<li>
             <a class="icon-btn btn-light button-effect mode" data-tippy-content="Theme Mode" >
               <i class="fa fa-moon-o"></i>
             </a>
@@ -55,10 +108,17 @@
             <button v-on:click="logout()" class="icon-btn btn-light">
               <i class="fa fa-power-off"> </i>
             </button>
-          </li>
+          </li>-->
         </ul>
+        
       </div>
+      
     </nav>
+    <div class="logoutDiv">
+         <span @click="notification()" class="dot-btn dot-danger grow"><img class="" src="../assets/images/nav/notification.png" alt="Avatar" style="height: auto;width: 28px;" /></span>
+          <span @click="setting()" style="padding-left: 15px;padding-right: 15px;"><img class="" src="../assets/images/nav/setting.png" alt="Avatar" style="height: auto;width: 28px;" /></span>
+          <span v-on:click="logout()"><img class="" src="../assets/images/nav/logout.png" alt="Avatar" style="height: auto;width: 28px;" /></span>
+          </div>
     <aside class="chitchat-left-sidebar left-disp">
       <div class="recent-default dynemic-sidebar active" id="recent">
         <div class="recent">
@@ -78,7 +138,8 @@
 					:failed-upload="callback"/>
 					
           <audio-player src="https://peekvideochat.com/incomming.mp3"/> -->
-              <div v-if="c_user">
+
+              <div v-if="c_user" style="display: contents;">
 			       <audio id="messagetone" muted>
 				  <source src="https://peekvideochat.com/bell.mp3" type="audio/ogg">
 				  <source src="https://peekvideochat.com/bell.mp3" type="audio/mpeg">
@@ -95,32 +156,29 @@
 				</audio>
 					<p style="display:none">{{checkcallTime}}</p>
                 
-                <div v-if="c_user.onlineStatus == 1" class="profile" v-bind:class="{ online: c_user.pStatus == 0, unreachable : c_user.pStatus == 1, busy: c_user.pStatus == 2, offline: c_user.pStatus == 3, offline: c_user.pStatus == 4 }">
-                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" /></div>
-                <span style="font-size:16px"> {{c_user.name}} </span>
+                <div style="border: 1px #BAC5E9 solid;padding: 1px;border-radius: 26px;width: 62px !important;height: 62px !important;" v-if="c_user.onlineStatus == 1" class="profile">
+                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;width: 57px;" />
+                  </div>
+                  <div style="padding-left: 12px; margin-top: 5px;">
+                  <p style="font-size:16px;margin-bottom: 10px;"> {{c_user.name}} </p>
+               
+                <div v-if="c_user.pStatus == 0"  class="badge badge-success">Online</div>
+                <div v-else-if="c_user.pStatus == 1"  class="badge badge-warning">Away</div>
+                <div v-else-if="c_user.pStatus == 2"  class="badge badge-danger">Busy</div>
+                <div v-else-if="c_user.pStatus == 3"  class="badge badge-light">Offline</div>
+                </div>
               </div>
               <div class="media-body">
                 <a class="icon-btn btn-outline-light button-effect pull-right mobile-back">
                   <i class="ti-angle-right"></i>
                 </a>
-                <a class="icon-btn btn-outline-light button-effect pull-right mainnav">
-                  <i class="ti-layout-grid2"></i>
+                <a class="icon-btn button-effect pull-right mainnav" style="margin-top: 19px;">
+                  <img class="" src="../assets/images/nav/dots.png" alt="Avatar" style="height: auto;" />
                 </a>
               </div>
             </div>
           </div>
-		   <div class="search2" id="mainsearch" style="padding: 0px;border-top: none;">
-                        <div>
-                          <div class="input-group">
-                            <div class="input-group-append">
-                              <span class="input-group-text">
-                                <i class="fa fa-search"></i>
-                              </span>
-                            </div>
-                            <input class="form-control"  v-model="searchFriend" type="text" placeholder="Search People" />
-                          </div>
-                        </div>
-                      </div>
+		   
           <!-- <carousel :nav="false" :dots="false">
                 <div style="padding: 13px;">
               <div class="dot-btn dot-danger grow"></div>
@@ -219,36 +277,49 @@
               </div>
             </div>
           </div>
-          <div class="theme-tab tab-sm chat-tabs" style="padding:0px;margin-top: 84px;">
+          <div class="theme-tab tab-sm chat-tabs" style="padding:0px;margin-top: 50px;">
 		  
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" data-to="chat-content">
                 <a class="nav-link button-effect active" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="true" >
-                  <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
-                  </i>Chat</a>
+                  <message-circle-icon size="2x" class="custom-class"></message-circle-icon>Chat</a>
               </li>
               <li class="nav-item" data-to="call-content">
                 <a class="nav-link button-effect" id="call-tab" data-toggle="tab" href="#call" role="tab" aria-controls="call" aria-selected="false">
-                  <phone-icon size="1.5x" class="custom-class"></phone-icon>Call</a>
+                  <phone-icon size="2x" class="custom-class"></phone-icon>Call</a>
               </li>
               <li class="nav-item" data-to="contact-content">
                 <a class="nav-link button-effect" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
-                  <users-icon size="1.5x" class="custom-class"></users-icon> Contact</a>
+                  <monitor-icon size="2x" class="custom-class"></monitor-icon> Room</a>
               </li>
             </ul>
             <div class="tab-content" id="myTabContent" style="">
               <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
                 <div class="theme-tab">
-                  <ul class="nav nav-tabs" id="myTab1" role="tablist">
-                    <li class="nav-item">
+                  <ul class="nav nav-tabs" id="myTab1" role="tablist" style="border: 1px solid rgb(234 238 248 / 67%);">
+                    <li class="nav-item" style="margin: 0px 19px;">
                       <a class="nav-link button-effect active" @click="usertab()" id="direct-tab" data-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a>
                     </li>
-                    <li class="nav-item">
+                    <span style="border-right: 1px #bac5e947 solid;border-width: 1px;padding: 15px 0;"></span>
+                    <li class="nav-item" style="margin: 0px 19px;">
                       <a class="nav-link button-effect" @click="getgroups()" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" data-to="group_chat">Group</a>
                     </li>
                   </ul>
                   <div class="tab-content" id="myTabContent1">
                     <div class="tab-pane fade show active" id="direct" role="tabpanel" aria-labelledby="direct-tab">
+                      <div class="search2" id="mainsearch" style="padding: 0px;border-top: none;margin-bottom: 6px;">
+                        <div>
+                          <div class="input-group">
+                            
+                            <input class="form-control"  v-model="searchFriend" type="text" placeholder="Search ..." />
+                          <div class="input-group-append">
+                              <span class="input-group-text">
+                                <i class="fa fa-search"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div id="showCallMin" style="display:none">
                         <h5>Incomming call</h5>
                         <ul  class="chat-main">
@@ -261,160 +332,160 @@
                             </ul>
                         </div>
 						
-						<div id="audioshowCallMin" style="display:none">
-                        <h5>Incomming call</h5>
-                        <ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
-                          <a  href="#" data-toggle="modal" data-target="#o2oaudiocall"   class="" style="font-size: 16px;line-height: 2;">
-                            {{ oncallFriend.name }} </a>
-							<span  style="margin-left: 44px;">{{formattedElapsedTime}}</span>
-                            <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
-                            </a></li>
-                            </ul>
-                        </div>
-                     <div v-if="showUsers">
-                       <ul  v-for="friends in orderedUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
-                        <li  v-if="friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
-                          <div class="chat-box">
-                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                            <div v-else class="profile offline">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
-							  </div>
-							
-								<div class="details"  style="padding-left: 73px;">
-								  <h5>{{friends.name}}</h5>
-								  <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
-								  <h6 v-else>Start Chat</h6>
-								</div>
-							
-								<div class="date-status">
-								  <h6>{{isToday(friends.updatedByMsg)}}</h6>
-								  <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
-								  <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
-								</div>
-							
-							
-                          </div>
-						  
-						  
-						  
-                        </li>
+<div id="audioshowCallMin" style="display:none">
+<h5>Incomming call</h5>
+<ul  class="chat-main"><li  data-to="blank" class="inits active" style="">
+<a  href="#" data-toggle="modal" data-target="#o2oaudiocall"   class="" style="font-size: 16px;line-height: 2;">
+{{ oncallFriend.name }} </a>
+<span  style="margin-left: 44px;">{{formattedElapsedTime}}</span>
+<a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;"> <i class="fa fa-phone" aria-hidden="true"></i>
+</a></li>
+</ul>
+</div>
+<div v-if="showUsers">
+<ul  v-for="friends in orderedUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
+<li  v-if="friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
+<div class="chat-box">
+<div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+<div v-else class="profile offline">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+</div>
+
+<div class="details"  style="padding-left: 73px;">
+<h5>{{friends.name}}</h5>
+<h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+<h6 v-else>Start Chat</h6>
+</div>
+
+<div class="date-status">
+<h6 class="todayDate">{{isToday(friends.updatedByMsg)}}</h6>
+<div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
+<h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
+</div>
+
+
+</div>
 
 
 
-                     <li v-else-if="friends.friendReqStatus == 2" class="init"  :id="'friend'+friends._id" data-to="blank">
-                          <div class="chat-box">
-                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                            <div v-else class="profile offline">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
-							  </div>
-							<div v-if="friends.friendReqSenderId == friends._id">
-								 <div class="details"  style="padding-left: 73px;">
-								  <h5>{{friends.name}}</h5>
-								   <br>
-								<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 25px;" @click="friendRequestupdate(friends,1)">Accept</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Reject</span> </p>
-								</div>
-							</div>
-							
-							<div v-else>
-							 <div class="details"  style="padding-left: 73px;">
-								  <h5>{{friends.name}}</h5>
-								  <br>
-								<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 20px;" >Pending</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Cancel</span> </p>
-								</div>
-							</div>
-							
-                          </div>
-						  
-						  
-						  
-                        </li>
+</li>
 
 
 
-                      </ul>
-					  </div>
-					  <div v-if="showSearchfriends" >
-					  <div v-if="searchUsers.length > 0" >
-					   <ul  v-for="friends in searchUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
-                        
-						<li  v-if="friends.friendReqStatus == 1"  class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
-                          <div class="chat-box">
-                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                            <div v-else class="profile offline">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
-							  </div>
-							 
-                            <div class="details"  style="padding-left: 73px;">
-                              <h5>{{friends.name}}</h5>
-                              <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
-                              <h6 v-else>Start Chat</h6>
-                            </div>
-							
-                            <div class="date-status">
-                              <h6>{{isToday(friends.updatedByMsg)}}</h6>
-                              <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
-                              <h6 class="font-success status" v-else> Seen</h6>
-                            </div>
-                          
-                          </div>
-						  
-                        </li>
-						
-                       <li v-else-if="friends.friendReqStatus == 2" class="init"  :id="'friend'+friends._id" data-to="blank">
-                          <div class="chat-box">
-                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                            <div v-else class="profile offline">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
-							  </div>
-							<div v-if="friends.friendReqSenderId == friends._id">
-								 <div class="details"  style="padding-left: 73px;">
-								  <h5>{{friends.name}}</h5>
-								   <br>
-								 <p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 25px;" @click="friendRequestupdate(friends,1)">Accept</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends.friendReqId,3)">Reject</span> </p>
-								</div>
-							</div>
-							
-							<div v-else>
-							 <div class="details"  style="padding-left: 73px;">
-								  <h5>{{friends.name}}</h5>
-								  <br>
-								 <p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 20px;" >Pending</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Cancel</span> </p>
-								</div>
-							</div>
-							
-                          </div>
-						  
-						  
-						  
-                        </li>
+<li v-else-if="friends.friendReqStatus == 2" class="init"  :id="'friend'+friends._id" data-to="blank">
+<div class="chat-box">
+<div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+<div v-else class="profile offline">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+</div>
+<div v-if="friends.friendReqSenderId == friends._id">
+<div class="details"  style="padding-left: 73px;">
+<h5>{{friends.name}}</h5>
+<br>
+<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 25px;" @click="friendRequestupdate(friends,1)">Accept</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Reject</span> </p>
+</div>
+</div>
 
-                       <li v-else :id="'friend'+friends._id" data-to="blank" style="">
-                          <div class="chat-box">
-                            <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                            <div v-else class="profile offline">
-                              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
-							  </div>
-							  
-                            <div class="details"  style="padding-left: 73px;">
-                              <h5>{{friends.name}}</h5>
-							  <br>
-                              <button type="button" @click="addfriends(friends)" class="btn btn-sm btn-default" style="cursor:pointer"> Add Friend </button>
-                            </div>
-							
-                          </div>
-						  
-                        </li>
+<div v-else>
+<div class="details"  style="padding-left: 73px;">
+<h5>{{friends.name}}</h5>
+<br>
+<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 20px;" >Pending</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Cancel</span> </p>
+</div>
+</div>
 
-                      </ul>
-					  </div>
-					  <div v-else>
-					  <p style="text-align: center;"> No Record Found</p>
-					  </div>
+</div>
+
+
+
+</li>
+
+
+
+</ul>
+</div>
+<div v-if="showSearchfriends" >
+<div v-if="searchUsers.length > 0" >
+<ul  v-for="friends in searchUsers" v-if="friends._id != c_user._id" class="chat-main" :id="'showcallModel'+friends._id">
+
+<li  v-if="friends.friendReqStatus == 1"  class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
+<div class="chat-box">
+<div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+<div v-else class="profile offline">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+</div>
+
+<div class="details"  style="padding-left: 73px;">
+<h5>{{friends.name}}</h5>
+<h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+<h6 v-else>Start Chat</h6>
+</div>
+
+<div class="date-status">
+<h6 class="todayDate">{{isToday(friends.updatedByMsg)}}</h6>
+<div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
+<h6 class="font-success status" v-else> Seen</h6>
+</div>
+
+</div>
+
+</li>
+
+<li v-else-if="friends.friendReqStatus == 2" class="init"  :id="'friend'+friends._id" data-to="blank">
+<div class="chat-box">
+<div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+<div v-else class="profile offline">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+</div>
+<div v-if="friends.friendReqSenderId == friends._id">
+<div class="details"  style="padding-left: 73px;">
+<h5>{{friends.name}}</h5>
+<br>
+<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 25px;" @click="friendRequestupdate(friends,1)">Accept</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends.friendReqId,3)">Reject</span> </p>
+</div>
+</div>
+
+<div v-else>
+<div class="details"  style="padding-left: 73px;">
+<h5>{{friends.name}}</h5>
+<br>
+<p style="margin: 0;"> <span  style="cursor: pointer;color:green;padding-right: 20px;" >Pending</span> <span  style="cursor: pointer;color:red" @click="friendRequestupdate(friends,3)">Cancel</span> </p>
+</div>
+</div>
+
+</div>
+
+
+
+</li>
+
+<li v-else :id="'friend'+friends._id" data-to="blank" style="">
+<div class="chat-box">
+<div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+<div v-else class="profile offline">
+<img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+</div>
+
+<div class="details"  style="padding-left: 73px;">
+<h5>{{friends.name}}</h5>
+<br>
+<button type="button" @click="addfriends(friends)" class="btn btn-sm btn-default" style="cursor:pointer"> Add Friend </button>
+</div>
+
+</div>
+
+</li>
+
+</ul>
+</div>
+<div v-else>
+<p style="text-align: center;"> No Record Found</p>
+</div>
 					  
 					  </div>
 					  
@@ -423,12 +494,13 @@
                       <div class="search2">
                         <div>
                           <div class="input-group">
-                            <div class="input-group-append">
+                          
+                            <input class="form-control" type="text" v-model="groupSearch" placeholder="Search Group" />
+                              <div class="input-group-append">
                               <span class="input-group-text">
                                 <i class="fa fa-search"></i>
                               </span>
                             </div>
-                            <input class="form-control" type="text" v-model="groupSearch" placeholder="Search Group" />
                           </div>
                         </div>
                       </div>
@@ -965,6 +1037,7 @@
           </div>
         </div>
       </div>
+
       <div class="fevorite-tab dynemic-sidebar" id="favourite">
         <div class="theme-title">
           <div class="media">
@@ -1267,7 +1340,7 @@
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
               </div>
               <div class="date-status">
-                <h6>22/10/19</h6>
+                <h6 class="todayDate">22/10/19</h6>
                 <h6 class="font-success status"> Seen</h6>
               </div>
             </div>
@@ -1280,7 +1353,7 @@
                 <h6>Hello</h6>
               </div>
               <div class="date-status">
-                <h6>30/11/19</h6>
+                <h6 class="todayDate">30/11/19</h6>
                 <div class="badge badge-primary sm">8</div>
               </div>
             </div>
@@ -1293,7 +1366,7 @@
                 <h6>I need job, please help me.</h6>
               </div>
               <div class="date-status">
-                <h6>15/06/19</h6>
+                <h6 class="todayDate">15/06/19</h6>
                 <h6 class="font-dark status"> Sending</h6>
               </div>
             </div>
@@ -1306,7 +1379,7 @@
                 <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
               </div>
               <div class="date-status">
-                <h6>04/06/19</h6>
+                <h6 class="todayDate">04/06/19</h6>
                 <h6 class="font-danger status"> Failed</h6>
               </div>
             </div>
@@ -1345,7 +1418,7 @@
                 <h6>I need job, please help me.</h6>
               </div>
               <div class="date-status">
-                <h6>15/06/19</h6>
+                <h6 class="todayDate">15/06/19</h6>
                 <h6 class="font-dark status"> Sending</h6>
               </div>
             </div>
@@ -1722,116 +1795,704 @@
         </div>
       </div>
       <div class="status-tab custom-scroll dynemic-sidebar" id="status">
-        <div class="my-status-box">
-          <div class="status-content">
-            <div class="media">
-              <div class="img-status">
-                <div class="user-status two"><img class="img-fluid bg-img" src="../assets/images/avtar/girls.jpg" alt="status" /></div>
-                <div class="upload-img">
-                  <input type="file" />
+        
+            <div class="theme-title">
+              <div class="media">
+                <div>
+                  <h2>Files</h2>
+                  <h4>Shared Media</h4>
                 </div>
-              </div>
-              <div class="media-body">
-                <h3>my status</h3>
-                <p>tap to add status Update</p>
-              </div>
-              <div>
-                <a class="icon-btn btn-outline-light btn-sm close-panel">
-                  <x-icon size="1.5x" class="custom-class"></x-icon>
-                </a>
+                <div class="media-body media-body text-right">
+                  <a class="icon-btn btn-sm btn-outline-light close-apps" href="javascript:void(0);">
+                    <x-icon size="1.5x" class="custom-class"></x-icon>
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="contact-status-box">
-          <div class="theme-title">
-            <h3>Recent Update</h3>
-          </div>
-          <div class="status-content">
-            <ul>
-              <li class="user-status">
-                <a class="lightbox img-status status" href="#statusbox"><img class="img-fluid bg-img" src="../assets/images/status-img/small/sm-1.jpg" alt="status" /></a>
-                <div class="lightbox-target" id="statusbox"><img src="../assets/images/status-img/large/lg-1.jpg" alt="status" />
-                  <a class="lightbox-close" href="#"></a>
+            <div class="theme-tab">
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link button-effect active" data-toggle="pill" href="#tab1">Media</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link button-effect" data-toggle="pill" href="#tab2">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link button-effect" data-toggle="pill" href="#tab3">Docs</a>
+                </li>
+              </ul>
+            </div>
+            <div class="file-tab">
+              <div class="tab-content custom-scroll">
+                <div class="tab-pane active" id="tab1">
+                  <div class="media-gallery portfolio-section grid-portfolio">
+                    <div class="collapse-block open">
+                      <h5 class="block-title">12/12/2019
+                        <label class="badge badge-primary sm ml-2">8</label>
+                      </h5>
+                      <div class="block-content">
+                        <div class="row share-media zoom-gallery">
+                          <div class="col-4 isotopeSelector filter">
+                            <div class="media-big">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/1.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/2.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/3.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/4.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter fashion">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/5.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <h5 class="block-title">10/01/2020
+                        <label class="badge badge-primary sm ml-2">5</label>
+                      </h5>
+                      <div class="block-content">
+                        <div class="row share-media zoom-gallery">
+                          <div class="col-4 isotopeSelector filter">
+                            <div class="media-big">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/1.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/2.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/3.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/4.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter fashion">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/5.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <h5 class="block-title">30/04/2020
+                        <label class="badge badge-primary sm ml-2">2</label>
+                      </h5>
+                      <div class="block-content">
+                        <div class="row share-media zoom-gallery">
+                          <div class="col-4 isotopeSelector filter">
+                            <div class="media-big">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/1.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/2.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/3.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/4.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter fashion">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/5.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/2.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/3.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/4.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <h5 class="block-title">10/01/2020
+                        <label class="badge badge-primary sm ml-2">2</label>
+                      </h5>
+                      <div class="block-content">
+                        <div class="row share-media zoom-gallery">
+                          <div class="col-4 isotopeSelector filter">
+                            <div class="media-big">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/1.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/2.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/3.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/4.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="media-small isotopeSelector filter fashion">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/5.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/2.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/3.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4">
+                            <div class="media-small isotopeSelector filter">
+                              <div class="overlay">
+                                <div class="border-portfolio">
+                                  <a href="../assets/images/gallery/4.jpg">
+                                    <div class="overlay-background">
+                                      <i class="ti-plus" aria-hidden="true"></i>
+                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </li>
-              <li>
-                <h5>Josephin water</h5>
-                <p>today , 8:30am</p>
-              </li>
-            </ul>
-          </div>
-          <div class="status-content">
-            <ul>
-              <li class="user-status">
-                <a class="lightbox img-status status" href="#statusbox2"><img class="img-fluid bg-img" src="../assets/images/status-img/small/sm-2.jpg" alt="status" /></a>
-                <div class="lightbox-target" id="statusbox2"><img src="../assets/images/status-img/large/lg-2.jpg" alt="status" />
-                  <a class="lightbox-close" href="#"></a>
+                <div class="tab-pane fade" id="tab2">
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Jquery Template</h5>
+                        <h6>12:05 PM Today </h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/endless-react-admin-template/25365098">https://themeforest.net/item/endless-react-admin-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/12.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>React Template</h5>
+                        <h6 class="mt-0">Functionality integration project.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Multikart Template</h5>
+                        <h6>05:12 AM Today</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/multikart-responsive-vuejs-ecommerce-template/25174665">https://themeforest.net/item/multikart-responsive-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/3.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Multipurpose Vuejs.</h5>
+                        <h6 class="mt-0">Template is a multi-use Vue template.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Unice-Multipurpose</h5>
+                        <h6>03:26 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/unice-angular-multipurpose-template/24776272">https://themeforest.net/item/unice-angular-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/8.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Angular Template.</h5>
+                        <h6 class="mt-0">Unice is a Perfect Respon.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Endless-Angular</h5>
+                        <h6>02:26 AM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/endless-angular-admin-template/23884779">https://themeforest.net/item/endless-angular-admin-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/12.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Endless Document.</h5>
+                        <h6 class="mt-0">Help you understand angular.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Bigdeal-eCommerce</h5>
+                        <h6>04:00 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/bigdeal-ecommerce-html-template/24809149">https://themeforest.net/item/bigdeal-ecommerce-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/9.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>HTML Template.</h5>
+                        <h6 class="mt-0">eCommerce HTML Template.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Multikart-Responsive.</h5>
+                        <h6>11:05 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/multikart-responsive-react-ecommerce-template/23067773">https://themeforest.net/item/multikart-responsive-react-ecommerce</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/3.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Multipurp eComme.</h5>
+                        <h6 class="mt-0">Well with multi-purpose websites.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Creative - Responsive</h5>
+                        <h6>12:26 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/creative-responsive-admin-template/24978419">https://themeforest.net/item/creative-responsive</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/11.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Dashboard Templa.</h5>
+                        <h6 class="mt-0">Creative Admin is a full featured.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">eComme Template</h5>
+                        <h6>12:26 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/multikart-responsive-angular-ecommerce-template/22905358">https://themeforest.net/item/multikart-responsive-angular</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/3.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Responsive Ang.</h5>
+                        <h6 class="mt-0">Multikart – Multipurpose.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <div class="media"></div>
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Multikart Templat.</h5>
+                        <h6>12:26 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/multikart-responsive-ecommerce-html-template/22809967">https://themeforest.net/item/multikart-responsive-ecommerce</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/10.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Multi Responsive.</h5>
+                        <h6 class="mt-0">Ecommerce HTML Theme.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <div class="media"></div>
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">BigBoost Template</h5>
+                        <h6>04:26 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/bigboost-ecommerce-html-template/24168053">https://themeforest.net/item/bigboost-ecommerce-html-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/7.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Fully Responsive.</h5>
+                        <h6 class="mt-0">Multiple Header Varations.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">App Landing </h5>
+                        <h6>10:05 PM 20/05/2019</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/unice-app-landing-corporate-and-portfolio-multipurpose-template/24581311">https://themeforest.net/item/unice-app-landing-corporate-and-portfolio-multipurpose-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/4.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Multi-Purpos theme.</h5>
+                        <h6 class="mt-0">Unice is a Perfect Responsive.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Reno - Tools Store</h5>
+                        <h6>12:26 PM</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/reno-multipurpose-html-template/24141678">https://themeforest.net/item/reno-multipurpose-html-template</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/6.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Reno Template is a busines.</h5>
+                        <h6 class="mt-0">Android Mobile or tablets.</h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="link-group">
+                    <div class="media">
+                      <i data-feather="link"></i>
+                      <div class="media-body">
+                        <h5 class="mt-0">Shop - Mart</h5>
+                        <h6>12:26 PM 03/11/2019</h6>
+                      </div>
+                    </div>
+                    <a href="https://themeforest.net/item/shopmart-multipurpose-shopify-theme/24040917?s_rank=12">https://themeforest.net/item/shopmart-multipurpose-shopify-theme</a>
+                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/5.png" alt="media-img" />
+                      <div class="media-body">
+                        <h5>Shop Mart Landing Page.</h5>
+                        <h6 class="mt-0">This is App Landing Template.</h6>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </li>
-              <li>
-                <h5>Jony Lynetin</h5>
-                <p>today , 10:30am</p>
-              </li>
-            </ul>
-          </div>
-          <div class="status-content">
-            <ul>
-              <li class="user-status">
-                <a class="lightbox img-status status" href="#statusbox3"><img class="img-fluid bg-img" src="../assets/images/status-img/small/sm-3.jpg" alt="status" /></a>
-                <div class="lightbox-target" id="statusbox3"><img src="../assets/images/status-img/large/lg-3.jpg" alt="status" />
-                  <a class="lightbox-close" href="#"></a>
+                <div class="tab-pane fade" id="tab3">
+                  <ul class="chat-main">
+                    <li>
+                      <div class="chat-box">
+                        <div class="media">
+                          <div class="profile">
+                            <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
+                              <i class="fa fa-file-code-o"></i>
+                            </a>
+                          </div>
+                          <div class="details">
+                            <h5>messenger.html</h5>
+                            <h6>2, octomber 2019</h6>
+                          </div>
+                          <div class="media-body">
+                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
+                              <download-icon size="1.5x" class="custom-class"></download-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="chat-box">
+                        <div class="media">
+                          <div class="profile">
+                            <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
+                              <i class="fa fa-file-video-o"></i>
+                            </a>
+                          </div>
+                          <div class="details">
+                            <h5>chapter1.MP4</h5>
+                            <h6>3, Octomber 2019</h6>
+                          </div>
+                          <div class="media-body">
+                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/chapter1.MP4" target="_blank">
+                              <download-icon size="1.5x" class="custom-class"></download-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="chat-box">
+                        <div class="media">
+                          <div class="profile">
+                            <a class="icon-btn btn-outline-primary btn-xl pull-right rouded15" href="#">
+                              <i class="fa fa-file-word-o"></i>
+                            </a>
+                          </div>
+                          <div class="details">
+                            <h5>salary.xlsx</h5>
+                            <h6>5, Octomber 2019</h6>
+                          </div>
+                          <div class="media-body">
+                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/salary.xlsx" target="_blank">
+                              <download-icon size="1.5x" class="custom-class"></download-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="chat-box">
+                        <div class="media">
+                          <div class="profile">
+                            <a class="icon-btn btn-outline-warning btn-xl pull-right rouded15" href="#">
+                              <i class="fa fa-file-pdf-o"></i>
+                            </a>
+                          </div>
+                          <div class="details">
+                            <h5>document.pdf</h5>
+                            <h6>7, Octomber 2019</h6>
+                          </div>
+                          <div class="media-body">
+                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/document.pdf" target="_blank">
+                              <download-icon size="1.5x" class="custom-class"></download-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="chat-box">
+                        <div class="media">
+                          <div class="profile">
+                            <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
+                              <i class="fa fa-file-text-o"></i>
+                            </a>
+                          </div>
+                          <div class="details">
+                            <h5>details.txt</h5>
+                            <h6>20, Octomber 2019</h6>
+                          </div>
+                          <div class="media-body">
+                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/details.txt" target="_blank">
+                              <download-icon size="1.5x" class="custom-class"></download-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="chat-box">
+                        <div class="media">
+                          <div class="profile">
+                            <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
+                              <i class="fa fa-file-code-o"></i>
+                            </a>
+                          </div>
+                          <div class="details">
+                            <h5>messenger.html</h5>
+                            <h6>2, octomber 2019</h6>
+                          </div>
+                          <div class="media-body">
+                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
+                              <download-icon size="1.5x" class="custom-class"></download-icon>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-              </li>
-              <li>
-                <h5>Sufiya Elija</h5>
-                <p>today , 11:00am</p>
-              </li>
-            </ul>
-          </div>
-          <div class="status-content">
-            <ul>
-              <li class="user-status">
-                <a class="lightbox img-status status" href="#statusbox4"><img class="img-fluid bg-img" src="../assets/images/status-img/small/sm-4.jpg" alt="status" /></a>
-                <div class="lightbox-target" id="statusbox4"><img src="../assets/images/status-img/large/lg-4.jpg" alt="status" />
-                  <a class="lightbox-close" href="#"></a>
-                </div>
-              </li>
-              <li>
-                <h5>Mukrani Pabelo </h5>
-                <p>today , 9:55am</p>
-              </li>
-            </ul>
-          </div>
-          <div class="status-content">
-            <ul>
-              <li class="user-status">
-                <a class="lightbox img-status status" href="#statusbox5"><img class="img-fluid bg-img" src="../assets/images/status-img/small/sm-5.jpg" alt="status" /></a>
-                <div class="lightbox-target" id="statusbox5"><img src="../assets/images/status-img/large/lg-5.jpg" alt="status" />
-                  <a class="lightbox-close" href="#"></a>
-                </div>
-              </li>
-              <li>
-                <h5>Pabelo Mukrani</h5>
-                <p>today , 12:05am</p>
-              </li>
-            </ul>
-          </div>
-          <div class="status-content">
-            <ul>
-              <li class="user-status">
-                <a class="lightbox img-status status" href="#statusbox6"><img class="img-fluid bg-img" src="../assets/images/status-img/small/sm-3.jpg" alt="status" /></a>
-                <div class="lightbox-target" id="statusbox6"><img src="../assets/images/status-img/large/lg-3.jpg" alt="status" />
-                  <a class="lightbox-close" href="#"></a>
-                </div>
-              </li>
-              <li>
-                <h5>Sufiya Elija</h5>
-                <p>today , 11:00am</p>
-              </li>
-            </ul>
-          </div>
-        </div>
+              </div>
+            </div>
+          
       </div>
     </aside>
 	
@@ -1926,11 +2587,11 @@
                       <video-icon size="1.5x" class="custom-class"></video-icon>
                     </a>
                   </li>
-                  <li>
+                  <!--<li>
                     <a class="icon-btn btn-light button-effect apps-toggle" href="#" data-tippy-content="All Apps">
                       <i class="ti-layout-grid2"></i>
                     </a>
-                  </li>
+                  </li>-->
                   <li class="" v-if=" userid == singlegroup.creatorUserId ">
                     <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" @click="deleteGroup()" data-tippy-content="Quick action">
                        <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
@@ -1969,7 +2630,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{g_chat.senderId.name}}</h5>
-                      <h6>{{isToday(g_chat.createdAt)}}</h6>
+                      <h6>{{chatTime(g_chat.createdAt)}}</h6>
                       <ul class="msg-box">
                         <li class="msg-setting-main">
                           
@@ -1994,7 +2655,7 @@
                                     <i class="fa fa-clone"></i>copy</a>
                                 </li>
                                 <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
-                                <li>
+                                <li style="margin-left: 12px;">
                                   <a href="#" @click="groupmsgdelete(g_chat)">
                                     <i class="ti-trash"></i>delete</a>
                                 </li>
@@ -2038,7 +2699,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{g_chat.senderId.name}}</h5>
-                      <h6>{{isToday(g_chat.createdAt)}}</h6>
+                      <h6>{{chatTime(g_chat.createdAt)}}</h6>
                       <ul class="msg-box">
                         <li class="msg-setting-main">
                           
@@ -2097,7 +2758,7 @@
               </span>
               <br>
               <span style="margin-left: 6px;">
-                {{isToday(groupchatreplydata.createdAt)}}
+                {{chatTime(groupchatreplydata.createdAt)}}
               </span>
             </p>
           </div>
@@ -2146,7 +2807,7 @@
             <div class="row">
               <form class="form-inline search-form">
                 <div class="form-group">
-                  <input class="form-control-plaintext" v-model="o2oChatsearch" type="search" placeholder="Search.." />
+                  <input class="form-control-plaintext"  type="search" placeholder="Search.." />
                   <div class="icon-close close-search"> </div>
                 </div>
               </form>
@@ -2154,9 +2815,9 @@
                 <div class="media left">
                   <div class="media-left mr-3">
 
-                    <div v-if="singlefriend.onlineStatus == 1" class="profile menu-trigger" v-bind:class="{ online: singlefriend.pStatus == 0, unreachable : singlefriend.pStatus == 1, busy: singlefriend.pStatus == 2, offline: singlefriend.pStatus == 3, offline: singlefriend.pStatus == 4 }">
+                    <div v-if="singlefriend.onlineStatus == 1" style="border-radius: 30px;" class="profile menu-trigger" v-bind:class="{ online: singlefriend.pStatus == 0, unreachable : singlefriend.pStatus == 1, busy: singlefriend.pStatus == 2, offline: singlefriend.pStatus == 3, offline: singlefriend.pStatus == 4 }">
                       <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                    <div v-else class="profile offline menu-trigger">
+                    <div v-else class="profile offline menu-trigger" style="border-radius: 30px;">
                       <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
                   </div>
 
@@ -2204,29 +2865,47 @@
                       <video-icon size="1.5x" class="custom-class"></video-icon>
                     </a>
                   </li>
-                  <li>
+                  <!--<li>
                     <a class="icon-btn btn-light button-effect apps-toggle">
                       <i class="ti-layout-grid2"></i>
                     </a>
-                  </li>
+                  </li>-->
                   <li class="chat-friend-toggle">
                     <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" data-tippy-content="Quick action">
                       <more-vertical-icon size="1.5x" class="custom-class"></more-vertical-icon>
                     </a>
                     <div class="chat-frind-content">
-                      <ul>
+                      <ul style="width:170px">
                         <li>
-                          <a class="icon-btn btn-outline-primary button-effect btn-sm menu-trigger" href="#">
-                            <users-icon size="1.5x" class="custom-class"></users-icon>
+                          <a class="" href="#" style="color: #959595;">
+                            <user-icon size="1.5x" class="custom-class"></user-icon>
                           </a>
-                          <h5 class="menu-trigger">Profile</h5>
+                          <h5 class="menu-trigger">Contact info</h5>
                         </li>
                        
                         <li>
-                          <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#">
+                          <a class="" href="#" style="color: #959595;">
+                           <star-icon size="1.5x" class="custom-class"></star-icon>
+                          </a>
+                          <h5 class="menu-trigger">Stat Message</h5>
+                        </li>
+                        <li>
+                          <a class="" href="#" style="color: #959595;">
+                           <volume-x-icon size="1.5x" class="custom-class"></volume-x-icon>
+                          </a>
+                          <h5 class="menu-trigger">Mute Notification</h5>
+                        </li>
+                        <li>
+                          <a class="" href="#" style="color: #959595;">
+                           <slash-icon size="1.5x" class="custom-class"></slash-icon>
+                          </a>
+                          <h5 class="menu-trigger">Block</h5>
+                        </li>
+                        <li>
+                          <a class="" href="#" style="color: #959595;">
                             <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
                           </a>
-                          <h5>Delete</h5>
+                          <h5 class="menu-trigger">Delete Chat</h5>
                         </li>
 
                       </ul>
@@ -2246,7 +2925,7 @@
           <div class="contact-chat">
 		  
             <ul class="chatappend" v-for="chat in friendchat">
-			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{isToday(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
+			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{chatTime(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
                          
               <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
                 <div class="media">
@@ -2255,7 +2934,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{ c_user.name}}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
 
                       <ul class="msg-box">
                         <li class="msg-setting-main">
@@ -2280,7 +2959,7 @@
                                     <i class="fa fa-clone"></i>copy</a>
                                 </li>
                                 <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
-                                <li>
+                                <li style="margin-left: 12px;">
                                   <a href="#" @click="msgdelete(chat)">
                                     <i class="ti-trash"></i>delete</a>
                                 </li>
@@ -2329,20 +3008,10 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{ singlefriend.name }}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
                       <ul class="msg-box">
                         <li class="msg-setting-main">
-
-                          <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
-                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
-                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 1" :id="'receiver'+chat._id">
-                            <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                          <br>
-                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                            <img :src="hostname+'/images/chatImages/'+chat.message">
-                          </a>
-                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-                          <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                         <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                             <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                               <i class="ti-more-alt"></i>
                             </div>
@@ -2363,6 +3032,16 @@
                               </ul>
                             </div>
                           </div>
+                          <h5 v-if="chat.isDeleted == 1" :id="'receiver'+chat._id">message deleted</h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
+                          <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 1" :id="'receiver'+chat._id">
+                            <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                          <br>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'receiver'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                            <img :src="hostname+'/images/chatImages/'+chat.message">
+                          </a>
+                          <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'receiver'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                          
                         </li>
                         <!--   <li class="msg-setting-main">
                               <h5> it should from elite auther &#128519;</h5>
@@ -2403,7 +3082,7 @@
               </span>
               <br>
               <span style="margin-left: 6px;">
-                {{isToday(chatreplydata.createdAt)}}
+                {{chatTime(chatreplydata.createdAt)}}
               </span>
             </p>
           </div>
@@ -2416,7 +3095,7 @@
             </div>
 
             <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
-              <i class="fa fa-plus"></i>
+               <file-plus-icon size="1.5x" class="custom-class"></file-plus-icon>
             </label>
             <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
 
@@ -3183,7 +3862,7 @@
         </div>
       </div>
     </aside>
-    <aside class="app-sidebar active" id="rightside">
+    <aside class="app-sidebar active" id="rightside" style="display:none">
       <div class="apps">
         <ul class="apps-ul">
           <li id="todo">
@@ -3360,704 +4039,7 @@
               </div>
             </div>
           </li>
-          <li id="files">
-            <div class="theme-title">
-              <div class="media">
-                <div>
-                  <h2>Files</h2>
-                  <h4>Shared Media</h4>
-                </div>
-                <div class="media-body media-body text-right">
-                  <a class="icon-btn btn-sm btn-outline-light close-apps" href="javascript:void(0);">
-                    <x-icon size="1.5x" class="custom-class"></x-icon>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="theme-tab">
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a class="nav-link button-effect active" data-toggle="pill" href="#tab1">Media</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link button-effect" data-toggle="pill" href="#tab2">Link</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link button-effect" data-toggle="pill" href="#tab3">Docs</a>
-                </li>
-              </ul>
-            </div>
-            <div class="file-tab">
-              <div class="tab-content custom-scroll">
-                <div class="tab-pane active" id="tab1">
-                  <div class="media-gallery portfolio-section grid-portfolio">
-                    <div class="collapse-block open">
-                      <h5 class="block-title">12/12/2019
-                        <label class="badge badge-primary sm ml-2">8</label>
-                      </h5>
-                      <div class="block-content">
-                        <div class="row share-media zoom-gallery">
-                          <div class="col-4 isotopeSelector filter">
-                            <div class="media-big">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/1.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/2.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/3.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/4.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter fashion">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/5.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <h5 class="block-title">10/01/2020
-                        <label class="badge badge-primary sm ml-2">5</label>
-                      </h5>
-                      <div class="block-content">
-                        <div class="row share-media zoom-gallery">
-                          <div class="col-4 isotopeSelector filter">
-                            <div class="media-big">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/1.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/2.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/3.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/4.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter fashion">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/5.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <h5 class="block-title">30/04/2020
-                        <label class="badge badge-primary sm ml-2">2</label>
-                      </h5>
-                      <div class="block-content">
-                        <div class="row share-media zoom-gallery">
-                          <div class="col-4 isotopeSelector filter">
-                            <div class="media-big">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/1.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/2.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/3.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/4.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter fashion">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/5.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/2.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/3.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/4.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <h5 class="block-title">10/01/2020
-                        <label class="badge badge-primary sm ml-2">2</label>
-                      </h5>
-                      <div class="block-content">
-                        <div class="row share-media zoom-gallery">
-                          <div class="col-4 isotopeSelector filter">
-                            <div class="media-big">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/1.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/1.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/2.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/3.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/4.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="media-small isotopeSelector filter fashion">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/5.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/2.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/3.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4">
-                            <div class="media-small isotopeSelector filter">
-                              <div class="overlay">
-                                <div class="border-portfolio">
-                                  <a href="../assets/images/gallery/4.jpg">
-                                    <div class="overlay-background">
-                                      <i class="ti-plus" aria-hidden="true"></i>
-                                    </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="tab2">
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Jquery Template</h5>
-                        <h6>12:05 PM Today </h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/endless-react-admin-template/25365098">https://themeforest.net/item/endless-react-admin-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/12.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>React Template</h5>
-                        <h6 class="mt-0">Functionality integration project.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Multikart Template</h5>
-                        <h6>05:12 AM Today</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/multikart-responsive-vuejs-ecommerce-template/25174665">https://themeforest.net/item/multikart-responsive-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/3.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Multipurpose Vuejs.</h5>
-                        <h6 class="mt-0">Template is a multi-use Vue template.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Unice-Multipurpose</h5>
-                        <h6>03:26 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/unice-angular-multipurpose-template/24776272">https://themeforest.net/item/unice-angular-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/8.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Angular Template.</h5>
-                        <h6 class="mt-0">Unice is a Perfect Respon.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Endless-Angular</h5>
-                        <h6>02:26 AM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/endless-angular-admin-template/23884779">https://themeforest.net/item/endless-angular-admin-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/12.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Endless Document.</h5>
-                        <h6 class="mt-0">Help you understand angular.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Bigdeal-eCommerce</h5>
-                        <h6>04:00 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/bigdeal-ecommerce-html-template/24809149">https://themeforest.net/item/bigdeal-ecommerce-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/9.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>HTML Template.</h5>
-                        <h6 class="mt-0">eCommerce HTML Template.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Multikart-Responsive.</h5>
-                        <h6>11:05 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/multikart-responsive-react-ecommerce-template/23067773">https://themeforest.net/item/multikart-responsive-react-ecommerce</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/3.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Multipurp eComme.</h5>
-                        <h6 class="mt-0">Well with multi-purpose websites.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Creative - Responsive</h5>
-                        <h6>12:26 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/creative-responsive-admin-template/24978419">https://themeforest.net/item/creative-responsive</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/11.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Dashboard Templa.</h5>
-                        <h6 class="mt-0">Creative Admin is a full featured.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">eComme Template</h5>
-                        <h6>12:26 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/multikart-responsive-angular-ecommerce-template/22905358">https://themeforest.net/item/multikart-responsive-angular</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/3.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Responsive Ang.</h5>
-                        <h6 class="mt-0">Multikart – Multipurpose.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <div class="media"></div>
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Multikart Templat.</h5>
-                        <h6>12:26 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/multikart-responsive-ecommerce-html-template/22809967">https://themeforest.net/item/multikart-responsive-ecommerce</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/10.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Multi Responsive.</h5>
-                        <h6 class="mt-0">Ecommerce HTML Theme.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <div class="media"></div>
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">BigBoost Template</h5>
-                        <h6>04:26 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/bigboost-ecommerce-html-template/24168053">https://themeforest.net/item/bigboost-ecommerce-html-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/7.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Fully Responsive.</h5>
-                        <h6 class="mt-0">Multiple Header Varations.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">App Landing </h5>
-                        <h6>10:05 PM 20/05/2019</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/unice-app-landing-corporate-and-portfolio-multipurpose-template/24581311">https://themeforest.net/item/unice-app-landing-corporate-and-portfolio-multipurpose-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/4.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Multi-Purpos theme.</h5>
-                        <h6 class="mt-0">Unice is a Perfect Responsive.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Reno - Tools Store</h5>
-                        <h6>12:26 PM</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/reno-multipurpose-html-template/24141678">https://themeforest.net/item/reno-multipurpose-html-template</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/6.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Reno Template is a busines.</h5>
-                        <h6 class="mt-0">Android Mobile or tablets.</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="link-group">
-                    <div class="media">
-                      <i data-feather="link"></i>
-                      <div class="media-body">
-                        <h5 class="mt-0">Shop - Mart</h5>
-                        <h6>12:26 PM 03/11/2019</h6>
-                      </div>
-                    </div>
-                    <a href="https://themeforest.net/item/shopmart-multipurpose-shopify-theme/24040917?s_rank=12">https://themeforest.net/item/shopmart-multipurpose-shopify-theme</a>
-                    <div class="media"><img class="img-fluid" src="../assets/images/file_icons/5.png" alt="media-img" />
-                      <div class="media-body">
-                        <h5>Shop Mart Landing Page.</h5>
-                        <h6 class="mt-0">This is App Landing Template.</h6>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="tab3">
-                  <ul class="chat-main">
-                    <li>
-                      <div class="chat-box">
-                        <div class="media">
-                          <div class="profile">
-                            <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
-                              <i class="fa fa-file-code-o"></i>
-                            </a>
-                          </div>
-                          <div class="details">
-                            <h5>messenger.html</h5>
-                            <h6>2, octomber 2019</h6>
-                          </div>
-                          <div class="media-body">
-                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
-                              <download-icon size="1.5x" class="custom-class"></download-icon>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="chat-box">
-                        <div class="media">
-                          <div class="profile">
-                            <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
-                              <i class="fa fa-file-video-o"></i>
-                            </a>
-                          </div>
-                          <div class="details">
-                            <h5>chapter1.MP4</h5>
-                            <h6>3, Octomber 2019</h6>
-                          </div>
-                          <div class="media-body">
-                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/chapter1.MP4" target="_blank">
-                              <download-icon size="1.5x" class="custom-class"></download-icon>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="chat-box">
-                        <div class="media">
-                          <div class="profile">
-                            <a class="icon-btn btn-outline-primary btn-xl pull-right rouded15" href="#">
-                              <i class="fa fa-file-word-o"></i>
-                            </a>
-                          </div>
-                          <div class="details">
-                            <h5>salary.xlsx</h5>
-                            <h6>5, Octomber 2019</h6>
-                          </div>
-                          <div class="media-body">
-                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/salary.xlsx" target="_blank">
-                              <download-icon size="1.5x" class="custom-class"></download-icon>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="chat-box">
-                        <div class="media">
-                          <div class="profile">
-                            <a class="icon-btn btn-outline-warning btn-xl pull-right rouded15" href="#">
-                              <i class="fa fa-file-pdf-o"></i>
-                            </a>
-                          </div>
-                          <div class="details">
-                            <h5>document.pdf</h5>
-                            <h6>7, Octomber 2019</h6>
-                          </div>
-                          <div class="media-body">
-                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/document.pdf" target="_blank">
-                              <download-icon size="1.5x" class="custom-class"></download-icon>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="chat-box">
-                        <div class="media">
-                          <div class="profile">
-                            <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
-                              <i class="fa fa-file-text-o"></i>
-                            </a>
-                          </div>
-                          <div class="details">
-                            <h5>details.txt</h5>
-                            <h6>20, Octomber 2019</h6>
-                          </div>
-                          <div class="media-body">
-                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/details.txt" target="_blank">
-                              <download-icon size="1.5x" class="custom-class"></download-icon>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="chat-box">
-                        <div class="media">
-                          <div class="profile">
-                            <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
-                              <i class="fa fa-file-code-o"></i>
-                            </a>
-                          </div>
-                          <div class="details">
-                            <h5>messenger.html</h5>
-                            <h6>2, octomber 2019</h6>
-                          </div>
-                          <div class="media-body">
-                            <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
-                              <download-icon size="1.5x" class="custom-class"></download-icon>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </li>
+          
           <li id="notes">
             <div class="notes-main">
               <div class="theme-title">
@@ -4633,7 +4615,7 @@
           </loading>
           <div class="contact-chat  ">
             <ul class="chatappend" v-for="chat in friendchat">
-			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{isToday(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
+			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{chatTime(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
               <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
                 <div class="media">
                   <div class="profile mr-4">
@@ -4641,7 +4623,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{ c_user.name}}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
 
                       <ul class="msg-box">
                         <li class="msg-setting-main">
@@ -4699,7 +4681,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{ oncallFriend.name }}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
                       <ul class="msg-box">
                         <li class="msg-setting-main">
 
@@ -4758,7 +4740,7 @@
               </span>
               <br>
               <span style="margin-left: 6px;">
-                {{isToday(chatreplydata.createdAt)}}
+                {{chatTime(chatreplydata.createdAt)}}
               </span>
             </p>
           </div>
@@ -4875,7 +4857,7 @@
           </loading>
           <div class="contact-chat  ">
             <ul class="chatappend" v-for="chat in friendchat">
-			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{isToday(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
+			 <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;"> <span>{{chatTime(chat.createdAt)}}</span> <br><br>  Call ended {{ chat.message }}</h5>
               <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
                 <div class="media">
                   <div class="profile mr-4">
@@ -4883,7 +4865,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{ c_user.name}}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
 
                       <ul class="msg-box">
                         <li class="msg-setting-main">
@@ -4941,7 +4923,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{ oncallFriend.name }}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
                       <ul class="msg-box">
                         <li class="msg-setting-main">
 
@@ -5000,7 +4982,7 @@
               </span>
               <br>
               <span style="margin-left: 6px;">
-                {{isToday(chatreplydata.createdAt)}}
+                {{chatTime(chatreplydata.createdAt)}}
               </span>
             </p>
           </div>
@@ -5116,7 +5098,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{ c_user.name}}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
 
                       <ul class="msg-box">
                         <li class="msg-setting-main">
@@ -5154,7 +5136,7 @@
                   <div class="media-body">
                     <div class="contact-name">
                       <h5>{{chat.senderId.name}}</h5>
-                      <h6>{{isToday(chat.createdAt)}}</h6>
+                      <h6>{{chatTime(chat.createdAt)}}</h6>
                       <ul class="msg-box">
                         <li class="msg-setting-main">
 
@@ -5585,7 +5567,7 @@
 								</div>
 							
 								<div class="date-status">
-								  <h6>{{isToday(friends.updatedByMsg)}}</h6>
+								  <h6 class="todayDate">{{chatTime(friends.updatedByMsg)}}</h6>
 								  <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
 								  <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
 								</div>
@@ -5684,12 +5666,12 @@ import {
   InstagramLoader,
   ListLoader
 } from 'vue-content-loader'
-import {RadioIcon, Minimize2Icon ,Trash2Icon ,CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
+import {UserIcon,VolumeXIcon,SlashIcon ,FilePlusIcon ,MonitorIcon ,MessageCircleIcon ,RadioIcon, Minimize2Icon ,Trash2Icon ,CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
 name: 'MainComponent',
-components: {AudioRecorder,ContentLoader,InfiniteLoading, RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+components: {UserIcon,VolumeXIcon,SlashIcon,FilePlusIcon ,MonitorIcon ,MessageCircleIcon ,AudioRecorder,ContentLoader,InfiniteLoading, RadioIcon,Minimize2Icon ,Trash2Icon ,CheckIcon,VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
 props: [],
 data() {
   return {
@@ -6483,7 +6465,11 @@ showbroadcastChatemoji(){
   },
 
   isToday(date) {
-    return moment(date).calendar();
+    return moment(date).format('l');
+  },
+
+   chatTime(date) {
+    return moment(date).format('LT'); 
   },
 
   feedbackDictation() {
@@ -6553,7 +6539,6 @@ $('.init').removeClass('active');
 $('#message-input').hide();
 $('#singlemessage-input').hide();
 $('#startchat').hide();
-$('.chat-tabs').css('margin-top','84px');
 $('#mainsearch').show();
 },
 
@@ -7108,7 +7093,6 @@ axios.post('/friends/searchFriend/', {
    
     $('#startchat').removeClass('active');
 	$('#mainsearch').hide();
-  $('.chat-tabs').css('margin-top','0px');
 	$('#message-input').hide();
     this.replyBox = false;
   },
