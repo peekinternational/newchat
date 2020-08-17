@@ -80,7 +80,7 @@ h5{
 
 .sidebar-top span img{
     border-radius: 0px;
-    max-width: 16px;
+    max-width: 20px;
 }
 .sidebar-top li{
     padding-top: 10px !important;
@@ -246,4 +246,53 @@ h5{
 .search2 .input-group .input-group-append:last-child span {
     border-left: 1px solid #e5e8e9a6;
     padding-bottom: 4px;
+}
+
+.add-popup .modal-header {
+    border-bottom-color: transparent !important;
+    background-color: transparent !important;
+}
+.add-popup .modal-footer, .add-popup .modal-header {
+    padding: 10px 30px;
+}
+.add-popup .close {
+    width: 75px;
+    height: 75px;
+    background: transparent;
+    border-radius: 0 0 0 90px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 1;
+}
+.add-popup .close span {
+    color: #333;
+    font-size: 16px;
+    position: absolute;
+    top: -11px;
+    right: -9px;
+    background: #fff;
+    border-radius: 30px;
+    width: 20px;
+    height: 20px;
+    line-height: 21px;
+    padding-left: 1px;
+}
+.add-popup .modal-footer .modal-title, .add-popup .modal-header .modal-title {
+    color: #000000;
+    text-transform: capitalize;
+    font-weight: 700;
+    font-size: calc(16px + 12*(100vw - 320px)/1600);
+    font-size: 15px;
+}
+.btn-group-sm>.btn, .btn.btn-sm {
+    padding: 7px 15px;
+}
+.btn {
+    font-size: calc(14px + 2*(100vw - 320px)/1600);
+    font-weight: 400;
+    text-transform: capitalize;
+    padding: 15px 40px;
+    border-radius: 3px;
+    font-size: 12px;
 }
