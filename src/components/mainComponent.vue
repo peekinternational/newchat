@@ -24,9 +24,11 @@
       </div>
       <div class="sidebar-main">
         <ul class="sidebar-top">
-          <li>
+          <li style="display: flex;">
+		  <div style="width: 20px;">
              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;" /></span>
-             <span style="padding-left: 16px;">Chat</span>
+            </div>
+			<span style="padding-left: 16px;">Chat</span>
             </li>
             <li>
              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/meetings.png" alt="Avatar" style="height: auto;" /></span>
@@ -37,7 +39,7 @@
              <span style="padding-left: 16px;">Rooms</span>
             </li>
             <li data-toggle="modal" data-target="#showPresenter">
-             <span style="vertical-align: text-bottom;"class="dot-btn dot-danger grow" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
+             <span style="vertical-align: text-bottom;"class="" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
              <span style="padding-left: 16px;" >Live</span>
             </li>
             <li @click="contact()">
@@ -60,9 +62,12 @@
              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/documents.png" alt="Avatar" style="height: auto;" /></span>
              <span style="padding-left: 16px;">Documents</span>
             </li>
-            <li @click="status()">
+            <li @click="status()" style="display: flex;">
+			
+		    <div style="width: 20px;">
              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/files.png" alt="Avatar" style="height: auto;" /></span>
-             <span style="padding-left: 16px;">Files</span>
+             </div>
+			 <span style="padding-left: 16px;">Files</span>
             </li>
              <li class="records">
              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/records.png" alt="Avatar" style="height: auto;" /></span>
@@ -281,7 +286,7 @@
 		  
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" data-to="chat-content">
-                <a class="nav-link button-effect active" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="true" >
+                <a class="nav-link button-effect active" id="chat-tab" data-toggle="tab" @click="chatTab()" href="#chat" role="tab" aria-controls="chat" aria-selected="true" >
                   <message-circle-icon size="2x" class="custom-class"></message-circle-icon>Chat</a>
               </li>
               <li class="nav-item" data-to="call-content">
@@ -4256,7 +4261,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-title">
-            Create Group</h2>
+            New Group</h2>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -6541,7 +6546,12 @@ $('#singlemessage-input').hide();
 $('#startchat').hide();
 $('#mainsearch').show();
 },
-
+chatTab(){
+$('.init').removeClass('active');
+$('#message-input').hide();
+$('#singlemessage-input').hide();
+$('#startchat').hide();
+},
 
 friendSearch(){
 

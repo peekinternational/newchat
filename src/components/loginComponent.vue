@@ -14,7 +14,7 @@
                   <form v-on:submit="loginuser" class="form1">
                     <div class="form-group">
                       <label class="col-form-label"  for="inputEmail3">Username</label>
-                      <input class="form-control" name="username" v-model="input.username"  id="inputEmail3" type="text" placeholder="Demo" required>
+                      <input class="form-control" name="username" v-model="input.username"  id="inputEmail3" type="text" placeholder="Username" required>
                     </div>
                     <div class="form-group">
                       <label class="col-form-label" for="inputPassword3">Password</label><span> </span>
