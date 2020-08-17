@@ -4286,7 +4286,7 @@
                   <div class="chat-box">
                   <div v-if="friends.onlineStatus == 1" class="profile" style="width: 56px;height: 56px;" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
                   <img class="bg-img" src="../assets/images/contact/1.jpg" style="width: 48px;" alt="Avatar" /></div>
-                  <div v-else class="profile offline">
+                  <div v-else class="profile offline" style="width: 56px;height: 56px;">
                   <img class="bg-img" src="../assets/images/contact/1.jpg" style="width: 48px;" alt="Avatar" />
                   </div>
 
