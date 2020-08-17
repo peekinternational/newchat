@@ -233,30 +233,34 @@
               </div> -->
         </div>
         <div class="chat custom-scroll" style="margin-top: 0px;">
-          <ul class="chat-cont-setting">
+          <ul class="chat-cont-setting" style="padding: 7px;margin-left: 14px;margin-bottom:-15px;box-shadow: 0px 0px 0px 1px #0000000f;">
             <li>
+              
               <a href="#" data-toggle="modal" data-target="#msgchatModal">
-                <span>new chat</span>
-                <div class="icon-btn btn-outline-primary button-effect btn-sm">
-                  <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
+                <div style="margin-right: 11px;">
+                 <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                   </i>
                 </div>
+                <span style="padding-right: 10px;">new chat</span>
+                
               </a>
             </li>
             <li>
               <a href="#" data-toggle="modal" data-target="#msgcallModal">
-                <span>new call</span>
-                <div class="icon-btn btn-outline-success button-effect btn-sm">
-                  <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                <div style="margin-right: 11px;">
+                  <img class="" src="../assets/images/nav/newcall.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                 </div>
+                <span style="padding-right: 14px;">new call</span>
+                
               </a>
             </li>
             <li>
               <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
-                <span>new Group</span>
-                <div class="icon-btn btn-outline-danger button-effect btn-sm">
-                  <users-icon size="1.5x" class="custom-class"></users-icon>
+               <div style="margin-right: 11px;">
+                  <img class="" src="../assets/images/nav/groupUsers.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                 </div>
+                <span style="padding-right: 0px;">new Group</span>
+               
               </a>
             </li>
           </ul>
@@ -368,16 +372,8 @@
 <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
 <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
 </div>
-
-
 </div>
-
-
-
 </li>
-
-
-
 <li v-else-if="friends.friendReqStatus == 2" class="init"  :id="'friend'+friends._id" data-to="blank">
 <div class="chat-box">
 <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
@@ -402,13 +398,7 @@
 </div>
 
 </div>
-
-
-
 </li>
-
-
-
 </ul>
 </div>
 <div v-if="showSearchfriends" >
@@ -4259,29 +4249,63 @@
   <div class="modal fade add-popup add-contact-modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" >
           <h2 class="modal-title">
-            New Group</h2>
+             <span><img class="" src="../assets/images/nav/groupUsers.png" alt="Avatar" style="height: auto;border-radius: 0;" /></span>  New Group</h2>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form class="default-form">
-            <div class="form-group">
-              <h5>Group Name</h5>
+            <div style="display: flex;">
+            <div style="padding-right: 10px;">
+              <h4 style="margin-bottom: 4px; color: black;">Group:</h4>
+              <div style="border: 1px #E5EAF9 solid;padding: 4px;border-radius: 6px;">
+               <span><img class="" src="../assets/images/nav/icon.png" alt="Avatar" style="height: auto;border-radius: 0;" /></span>
+              </div>
+              </div>
+            <div class="form-group" style="width: 100%;margin-top: 22px;">
               <input class="form-control" id="exampleInputEmail1" v-model="groupName" type="text" placeholder="Enter Group Name" maxlength="50" />
             </div>
-            <div class="form-group mb-0">
-              <h5>Friends Member</h5>
+            </div>
+                <div style="margin-right: -10px;margin-left: -10px;">
+                  <div class="input-group">
+                  
+                    <input  class="form-control modelsearch" type="text"  placeholder="Search ..." />
+                      
+                  </div>
+                </div>
+                      
+            <div class="form-group mb-0 mt-2">
+              <h5>A</h5>
               <div class="showmembers">
-                <div class="groupmembers" v-for="(members, index) in friendsdata" v-if="members._id != c_user._id">
                 
-                <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /> {{members.name}} 
-                <span class="btn btn-sm btn-success showAdd" :id="'member'+members._id" style="padding: 4px 7px;float:right;cursor: pointer;" @click="addGroupmemners(members._id)">Add</span> 
-                <span class="btn btn-sm btn-danger hideRemove" :id="'memberRm'+members._id" style="padding: 4px 7px;float:right;cursor: pointer;display:none" @click="removeGroupmemners(members._id,index)">Remove</span>
-              </div>
+                  <ul  v-for="(friends, index) in friendsdata" v-if="friends._id != c_user._id" class=" groupmembers chat-main">
+                  <li  v-if="friends.friendReqStatus == 1" class="init" data-to="blank" style="padding-left: 0px;cursor: pointer;width: 100%;display: inline-block;margin: 0 0px;    padding-top: 0px;padding-bottom: 0px;">
+                  <div class="chat-box">
+                  <div v-if="friends.onlineStatus == 1" class="profile" style="width: 56px;height: 56px;" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                  <img class="bg-img" src="../assets/images/contact/1.jpg" style="width: 48px;" alt="Avatar" /></div>
+                  <div v-else class="profile offline">
+                  <img class="bg-img" src="../assets/images/contact/1.jpg" style="width: 48px;" alt="Avatar" />
+                  </div>
 
+                  <div class="details"  style="padding-left: 73px;">
+                  <h5>{{friends.name}}</h5>
+                  <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg" style="padding-top: 0px;">{{ friends.latestMsg.message }}</h6>
+                  <h6 style="padding-top: 0px;" v-else>Start Chat</h6>
+                  </div>
+
+                  <div class="date-status">
+                  <h6 class="todayDate" style="margin-bottom: 11px;">{{isToday(friends.updatedByMsg)}}</h6>
+                 
+                  <span class="showAdd" :id="'member'+friends._id" @click="addGroupmemners(friends._id)" style="font-size: 21px;"> <i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+                   <span class="hideRemove" style="display:none;font-size: 21px;" :id="'memberRm'+friends._id" @click="removeGroupmemners(friends._id)"> <i class="fa fa-times-circle-o" aria-hidden="true"></i></span>
+                  </div>
+                  </div>
+                  </li>
+
+                  </ul>
               </div>
             </div>
           </form>
@@ -9389,26 +9413,10 @@ z-index: 9999;
   position: absolute;
   bottom: 0px;
 }
-.default-form .showmembers {
-  -webkit-appearance: none;
-  width: 100%;
-  border: 1px solid rgba(0,0,0,0.15);
-  padding: 12px 20px;
-  text-transform: capitalize;
-  font-size: 15px;
-  line-height: 1;
-  background-color: transparent;
-  height: 290px;
-  border-radius: 15px;
-  color: #647589;
-  border: none;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAQAAAC1+jfqAAAApklEQ…94lRwOjAlwmbMEVRNr2FNyJyUExZp+ZRXMKADDiTMhwAv5Mx4HKASKogAAAABJRU5ErkJggg==) #eff7fe no-repeat scroll 94% center;
-  margin-bottom: 30px;
-  overflow-x: hidden;
-}
+
 .groupmembers{
-padding-top: 12px;
-  padding-bottom: 12px;
+padding-top: 7px;
+  padding-bottom: 7px;
 }
 img.emojione {
 

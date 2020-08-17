@@ -13,8 +13,8 @@
                  <h5> {{this.errorMessage}} </h5>
                   <form v-on:submit="loginuser" class="form1">
                     <div class="form-group">
-                      <label class="col-form-label"  for="inputEmail3">Username</label>
-                      <input class="form-control" name="username" v-model="input.username"  id="inputEmail3" type="text" placeholder="Username" required>
+                      <label class="col-form-label"  for="inputEmail3">Email or Mobile No</label>
+                      <input class="form-control" name="username" v-model="input.username"  id="inputEmail3" type="text" placeholder="Email or Mobile No" required>
                     </div>
                     <div class="form-group">
                       <label class="col-form-label" for="inputPassword3">Password</label><span> </span>
@@ -105,7 +105,7 @@ export default {
 				
 				
 				
-                  if (response.data != '' ) {
+                  if (response.data != null ) {
 				  $('#loginbtn').addClass('disabled').attr('disabled',true);
                         this.$toasted.success(  'Welcome Back !!', { 
 						 theme: "toasted-primary", 
