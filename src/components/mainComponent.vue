@@ -5809,7 +5809,7 @@ export default {
     receivemsg(data) {
       //this.c_user._id == data.receiverId._id &&
       console.log(data);
-   setTimeout(() => {
+       setTimeout(() => {
             $('#f_typing' + data.msgData.receiverId._id).html(data.msgData.message);
           }, 1500);
 
@@ -5846,6 +5846,11 @@ export default {
         const fdata = this.friendsdata.filter((obj) => {
           return data.userId === obj._id;
         }).pop();
+        
+     const userdec = this.friendsdata.filter((obj) => {
+              return data.userId === obj._id;
+            }).pop();
+            userdec.updatedByMsg = new Date().toISOString();
 
         this.isSeen = false;
         fdata.usCount += 1;
