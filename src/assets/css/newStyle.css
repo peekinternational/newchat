@@ -54,13 +54,13 @@ h5{
     left: 0;
     border: 1px #BAC5E9 solid;
     padding: 3px;
-    width: 65px;
-    height: 65px;
+    width: 57px;
+    height: 57px;
     border-radius: 30px;
 }
 .profile img{
     border-radius: 30px !important  ;
-    width: 57px;
+    width: 49px;
 }
 .profile.busy:before, .profile.online:before, .profile.offline:before, .profile.unreachable:before {
     content: "";
@@ -72,7 +72,21 @@ h5{
     right: 8px;
     top: 5px;
 }
+.mainpanleProfile{
+    
+    border: 1px solid rgb(186, 197, 233);
+    width: 71px;
+    height: 71px;
+    padding: 3px;
+    border-radius: 32px;
 
+}
+
+.mainpanleProfile img{
+    
+  width: 63px !important;
+
+}
 .sidebar-top span{
     font-size: 14px;
     font-weight: normal;
@@ -209,8 +223,8 @@ h5{
     left: -9px;
     border: 1px #BAC5E9 solid;
     padding: 3px;
-    width: 65px;
-    height: 65px;
+    width: 58px;
+    height: 58px;
     border-radius: 30px;
 }
 .media-left.mr-3{
@@ -222,9 +236,9 @@ h5{
 }
 .profile.mr-4{
     border: 1px #BAC5E9 solid;
-    padding: 2px;
-    width: 55px;
-    height: 55px !important;
+    padding: 3px;
+    width: 56px;
+    height: 56px !important;
     border-radius: 30px;
 }
 .profile.mr-4 img{
@@ -412,4 +426,76 @@ ul.chat-cont-setting.open {
 }
 .modal-backdrop.show {
     opacity: .6;
+}
+.call-log-main li .call-box .profile {
+    position: absolute;
+    left: 0;
+    border: 1px #BAC5E9 solid;
+    padding: 3px;
+    width: 57px;
+    height: 57px;
+    border-radius: 30px;
+}
+.group-box .profile img {
+    border-radius: 30px !important;
+    width: 50px;
+}
+.chitchat-right-sidebar .contact-profile {
+    padding: 20px;
+    padding-left: 0px !important;
+}
+.close-profile{
+   position: fixed;
+    left: -32px !important;
+    top: 6px !important;
+    height: 21px !important;
+    width: 22px !important;
+    font-size: 13px;
+    color: black !important;
+    background-color: white !important;
+    border-radius: 100% !important;
+    padding: 3px;
+}
+.chitchat-right-sidebar .contact-profile .details .contact-top {
+    height: 130px;
+    width: 130px;
+    box-shadow: 0 0 0 0 !important;
+    margin: 0 auto;
+    background-image: none !important;
+    padding: 4px;
+    border: 1px solid rgb(186, 197, 233);
+    border-radius: 55px;
+}
+.chitchat-right-sidebar .contact-profile .details .contact-top img {
+   display: block !important;
+    width: 120px;
+    height: 120px;
+    border-radius: 50% !important;
+}
+
+.contact-top.profile.busy:before, .contact-top.profile.online:before, .contact-top.profile.offline:before, .contact-top.profile.unreachable:before {
+    content: "";
+    position: absolute;
+    height: 13px;
+    width: 13px;
+    border-radius: 100%;
+    border: 2px solid #fff;
+    right: 20px;
+    top: 11px;
+}
+.chitchat-right-sidebar .document, .chitchat-right-sidebar .media-gallery, .chitchat-right-sidebar .status {
+    border-top: 1px solid #eff1f2;
+    padding: 3px 15px;
+}
+.collapse-block .block-title {
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.chitchat-container .chitchat-right-sidebar {
+    min-width: 330px !important;
+    width: 330px !important;
 }
