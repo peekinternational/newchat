@@ -5809,8 +5809,10 @@ export default {
     receivemsg(data) {
       //this.c_user._id == data.receiverId._id &&
       console.log(data);
+   setTimeout(() => {
+            $('#f_typing' + data.msgData.receiverId._id).html(data.msgData.message);
+          }, 1500);
 
-$('#f_typing' + data.msgData.receiverId._id).html(data.msgData.message);
 
       if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
 
