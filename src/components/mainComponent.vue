@@ -5810,7 +5810,7 @@ export default {
       //this.c_user._id == data.receiverId._id &&
       console.log(data);
 
-$('#f_typing' + data.msgData.senderId._id).html(data.msgData.message);
+$('#f_typing' + data.msgData.receiverId._id).html(data.msgData.message);
 
       if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
 
