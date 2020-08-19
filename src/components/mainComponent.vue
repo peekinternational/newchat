@@ -4550,11 +4550,11 @@
             <video id="videoOutput" class="remoteVideoWidth" style="width:100%" autoplay></video>
             <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image">
-              <video id="local-video" class="bg-img beforelocalVideo" autoplay></video>
+              <video id="local-video" style="width:250px" class="bg-img" autoplay></video>
             </div>
-            <div id="o2odetail" class="media beforeDetail videocall-details">
+            <div id="o2odetail" class="media videocall-details">
     
-              <div id="basicUsage">{{formattedElapsedTime}}</div>
+              
               <div class="zoomcontent minimizeclass">
                 <a class="text-dark" href="#!" @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
                   <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
@@ -4562,21 +4562,24 @@
               </div>
             </div>
             <div class="center-con text-center">
-              <ul>
-                <li>
+              <ul style="float: right;margin-right: 25px;">
+                <!--<li>
                   <a v-if="videoPause" class="icon-btn btn-light button-effect pause" href="#" @click="videoPausecall()" data-tippy-content="Hold">
                     <i class="fa fa-pause off" aria-hidden="true"></i>
                   </a>
                   <a v-if="videoPlay" class="icon-btn btn-light button-effect pause" href="#" @click="videoPlaycall()" data-tippy-content="Hold">
                     <i class="fa fa-play" aria-hidden="true"></i>
                   </a>
-                </li>
+                </li>-->
                 <li>
                   <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" @click="o2ostopKCall()" data-dismiss="modal" data-tippy-content="Hangup">
                     <phone-icon size="1.5x" class="custom-class"></phone-icon>
                   </a>
+                  <br>
+                   <br>
+                   <div id="basicUsage">{{formattedElapsedTime}}</div>
                 </li>
-                <li>
+                <!--<li>
 
                   <a v-if="audioPause" class="icon-btn btn-light button-effect pause" href="#" @click="audioPausecall()" data-tippy-content="">
                     <i class="fa fa-microphone"></i>
@@ -4585,10 +4588,11 @@
                   <a v-if="audioPlay" class="icon-btn btn-light button-effect " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
                     <i class="fa fa-microphone-slash" aria-hidden="true"></i>
                   </a>
-                </li>
+                </li>-->
               </ul>
+              
             </div>
-          
+         
           </div>
 
         </div>
