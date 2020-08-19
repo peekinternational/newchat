@@ -150,6 +150,7 @@
                     <source src="https://peekvideochat.com/bell.mp3" type="audio/mpeg">
                   </audio>
 
+
                   <audio id="outgoingcall" muted>
                     <source src="https://peekvideochat.com/incomming.mp3" type="audio/ogg">
                     <source src="https://peekvideochat.com/incomming.mp3" type="audio/mpeg">
@@ -486,6 +487,7 @@
                                     <br>
                                     <button type="button" @click="addfriends(friends)" class="btn btn-sm btn-default" style="cursor:pointer"> Add Friend </button>
                                   </div>
+
 
                                 </div>
 
@@ -2528,102 +2530,81 @@
         <!--  Groupchat -->
         <div class="chat-content tabto" id="startgroupchat">
           <div id="group_chat_open" class="messages custom-scroll group_chat_open">
-            <div class="contact-details">
+             <div class="contact-details">
               <div class="row">
-                <div class="col">
+                <form class="form-inline search-form">
+                  <div class="form-group">
+                    <input class="form-control-plaintext" type="search" placeholder="Search.." />
+                    <div class="icon-close close-search"> </div>
+                  </div>
+                </form>
+                <div class="col-7">
                   <div class="media left">
-                    <div class="d-md-none d-sm-block media-left mr-3">
+                    <div class="media-left mr-3" @click="groupSidebar()">
 
+                      <div  class="profile menu-trigger" style="border-radius: 30px;">
+                        <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                    </div>
+                    <div class="media-body">
+                      <h5>{{singlegroup.name}}</h5>
+
+                    </div>
+                    <div class="media-right groupUsers">
                       <ul>
-                        <!--<li>
-                          <a class="icon-btn btn-light button-effect mute" href="#">
-                            <i class="fa fa-volume-up"></i>
-                          </a>
-                        </li>-->
-                        <!--<li>
-                          <a class="icon-btn btn-light search search-right" href="#">
-                            <search-icon size="1.5x" class="custom-class"></search-icon>
-                          </a>
-                          </a>
-                          <form class="form-inline search-form">
-                            <div class="form-group">
-                              <input class="form-control-plaintext" type="search" placeholder="Search.." />
-                              <div class="icon-close close-search"> </div>
-                            </div>
-                          </form>
-                        </li>-->
+                           <li> 
+                            <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                              <div class="usersprof">
+                                <template v-for="gmembers,index in singlegroup.members" v-if="index < 4">
+                                <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
+                                </template>
+                                <div class="profile"><div class="usersCount">{{groupmembers}}</div></div>
+                                <div class="addGroups" data-toggle="modal" data-target="#showGroupsMembers"><div class="" style="padding: 6px;color: #6F66FF;"> <plus-icon size="1.5x" class="custom-class"></plus-icon></div></div>
+                                 
+                             </div>
+                           </li>
+                       
                         <li>
                           <a class="icon-btn btn-light button-effect mobile-sidebar" href="#">
                             <arrow-left-icon size="1.5x" class="custom-class"></arrow-left-icon>
                           </a>
                         </li>
                       </ul>
-
                     </div>
-                    <div class="media-right" style="padding-right: 14px;" @click="groupSidebar()">
-                      <div class="profile menu-trigger">
-                        <img class="bg-img" src="../assets/images/avtar/teq.jpg" alt="Avatar" /></div>
-                    </div>
-                    <div class="media-body">
-
-                      <h5>
-                        <span style="color: #3f8846;font-size: 14px;">{{singlegroup.name}}</span>
-                      </h5>
-
-                      <a href="#" data-toggle="modal" data-target="#showGroupsMembers">
-                        <span>( Participants )</span>
-
-                      </a>
-
-                    </div>
-
                   </div>
                 </div>
                 <div class="col">
                   <ul class="calls text-right">
+                     <!--<li>
+                          <a class="icon-btn btn-light button-effect mute" href="#">
+                            <i class="fa fa-volume-up"></i>
+                          </a>
+                        </li>-->
+                        <li>
+                          <a class="icon-btn btn-light search-right" href="#">
+                            <search-icon size="1.5x" class="custom-class"></search-icon>
+                          </a>
+                        </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Start Audio Conference" data-toggle="modal" data-target="#confercall">
+                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#" >
                         <phone-icon size="1.5x" class="custom-class"></phone-icon>
                       </a>
                     </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Start Video Conference" data-toggle="modal" data-target="#confvideocl">
+                      <a class="icon-btn btn-light button-effect" href="#"  data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#">
                         <video-icon size="1.5x" class="custom-class"></video-icon>
                       </a>
                     </li>
-                    <!--<li>
-                      <a class="icon-btn btn-light button-effect apps-toggle" href="#" data-tippy-content="All Apps">
-                        <i class="ti-layout-grid2"></i>
-                      </a>
-                    </li>-->
-                    <li class="" v-if=" userid == singlegroup.creatorUserId ">
+                     <!--<li class="" v-if=" userid == singlegroup.creatorUserId ">
                       <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" @click="deleteGroup()" data-tippy-content="Quick action">
                         <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
                       </a>
-                      <!-- <div class="chat-frind-content">
-                        <ul>
-                          <li>
-                            <a class="icon-btn btn-outline-primary button-effect btn-sm" href="#">
-                              <i data-feather="user"></i>
-                            </a>
-                            <h5>profile</h5>
-                          </li>
-                          
-
-                          <li v-if=" userid == singlegroup.creatorUserId ">
-                            <a class="icon-btn btn-outline-danger button-effect btn-sm" href="#" @click="deleteGroup()">
-                              <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
-                            </a>
-                            <h5>delete</h5>
-                          </li>
-                          
-                        </ul>
-                      </div> -->
-                    </li>
+                    </li>-->
+                   
                   </ul>
                 </div>
               </div>
             </div>
+           
             <vue-dropzone ref="mygroupVueDropzone" id="groupdropzone" @vdropzone-success="groupComplete" v-on:vdropzone-sending="draggroupfileupload" :options="dropzoneOptions"></vue-dropzone>
             <div class="contact-chat">
               <ul class="chatappend" v-for="g_chat in groupchatdata" v-if="g_chat.groupId == singlegroup._id">
@@ -4537,7 +4518,7 @@
     <div class="modal fade" id="audiocallReceiver" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body">
-          <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/avtar/big/audiocall.jpg" alt="Avatar" />
+          <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/modal/incommingCall.png" alt="Avatar" />
             <div class="center-con text-center">
               <div class="title2" id="audioincomingName"></div>
               <ul>
@@ -4572,14 +4553,7 @@
               <video id="local-video" class="bg-img beforelocalVideo" autoplay></video>
             </div>
             <div id="o2odetail" class="media beforeDetail videocall-details">
-              <div class="usersprof">
-                <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
-                <div class="profile"><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" /></div>
-              </div>
-              <div class="media-body">
-                <h5>Josephin water</h5>
-                <h6>America ,California</h6>
-              </div>
+    
               <div id="basicUsage">{{formattedElapsedTime}}</div>
               <div class="zoomcontent minimizeclass">
                 <a class="text-dark" href="#!" @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
@@ -4614,189 +4588,9 @@
                 </li>
               </ul>
             </div>
-            <div class="text-right" style="float: right;position: absolute;bottom: 107px;right: 22px;">
-              <ul>
-                <li>
-                  <a class="icon-btn btn-light button-effect pause" id="o2ochatopen" href="#" @click="o2ostartchat()" data-tippy-content="Hold">
-                    <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
-                  </a>
-                  <a class="icon-btn btn-light button-effect pause" id="o2ochatclose" href="#" @click="o2ohideCallchat()" style="display:none" data-tippy-content="Hold">
-                    <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
-                  </a>
-                </li>
-
-              </ul>
-            </div>
+          
           </div>
 
-          <div class="chitchat-main small-sidebar" id="o2ocontents" style="display:none;width: 30%;float:right">
-
-            <div class="chat-content tabto" id="startchatsss">
-              <div class=" messages custom-scroll active messageschat" id="o2ochating" style="min-height:100vh !important;">
-
-                <!-------- Dropzone ------>
-                <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
-                <!-------- end -------->
-                <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
-
-                </loading>
-                <div class="contact-chat  ">
-                  <ul class="chatappend" v-for="chat in friendchat">
-                    <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;">
-                      <span>{{chatTime(chat.createdAt)}}</span> <br><br> Call ended {{ chat.message }}</h5>
-                    <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
-                      <div class="media">
-                        <div class="profile mr-4">
-                          <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                        <div class="media-body">
-                          <div class="contact-name">
-                            <h5>{{ c_user.name}}</h5>
-                            <h6>{{chatTime(chat.createdAt)}}</h6>
-
-                            <ul class="msg-box">
-                              <li class="msg-setting-main">
-                                <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
-                                  <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
-                                    <i class="ti-more-alt"></i>
-                                  </div>
-
-                                  <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
-                                    <ul>
-                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                        <a href="#" @click="eidtchat(chat._id,chat.message)">
-                                          <i class="fa fa-pencil"></i>edit</a>
-                                      </li>
-                                      <li>
-                                        <a href="#" @click="quote(chat)">
-                                          <i class="fa fa-share"></i>Quote</a>
-                                      </li>
-
-                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                        <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
-                                          <i class="fa fa-clone"></i>copy</a>
-                                      </li>
-                                      <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
-                                      <li>
-                                        <a href="#" @click="msgdelete(chat)">
-                                          <i class="ti-trash"></i>delete</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-
-                                <h5 v-if="chat.isDeleted == 1" :id="'sendero2o'+chat._id">message deleted</h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sendero2o'+chat._id">{{ chat.message }}</h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sendero2o'+chat._id">
-                                  <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                                <br>
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                                  <img :src="hostname+'/images/chatImages/'+chat.message">
-                                </a>
-
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-
-                              </li>
-
-                            </ul>
-
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="sent" style="padding-bottom:20px" v-else>
-                      <div class="media">
-                        <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                        <div class="media-body">
-                          <div class="contact-name">
-                            <h5>{{ oncallFriend.name }}</h5>
-                            <h6>{{chatTime(chat.createdAt)}}</h6>
-                            <ul class="msg-box">
-                              <li class="msg-setting-main">
-
-                                <h5 v-if="chat.isDeleted == 1" :id="'receivero2o'+chat._id">message deleted</h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receivero2o'+chat._id">
-                                  <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                                <br>
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                                  <img :src="hostname+'/images/chatImages/'+chat.message">
-                                </a>
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-                                <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
-                                  <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
-                                    <i class="ti-more-alt"></i>
-                                  </div>
-                                  <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
-                                    <ul>
-
-                                      <li>
-                                        <a href="#" @click="quote(chat)">
-                                          <i class="fa fa-share"></i>Quote</a>
-                                      </li>
-
-                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                        <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
-                                          <i class="fa fa-clone"></i>copy</a>
-                                      </li>
-
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                  </ul>
-                  <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
-                </div>
-
-                <span v-show="typing" class="">{{ oncallFriend.name }} is typing ...</span>
-
-              </div>
-              <VEmojiPicker @select="selectchatEmoji" class="" v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;" v-if="ischatemojiActive" />
-              <div class="message-input message-call" id="o2osinglemessage-input">
-                <div class="replybox" v-if="replyBox == true">
-                  <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
-                    <span style="float:right;cursor: pointer;" @click="closeReplybox()">
-                      <x-icon size="1.5x" class="custom-class"></x-icon>
-                    </span>
-                    <br>
-                    <span style="margin-left: 6px;">
-                      {{chatTime(chatreplydata.createdAt)}}
-                    </span>
-                  </p>
-                </div>
-                <div class="wrap emojis-main">
-
-                  <div class="dot-btn dot-primary mr-3">
-                    <a class="icon-btn btn-outline-primary button-effect " @click="showChatemoji">
-                      <smile-icon size="1.5x" class="custom-class"></smile-icon>
-                    </a>
-                  </div>
-
-                  <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
-                    <i class="fa fa-plus"></i>
-                  </label>
-                  <input type="file" id="fileupload" ref="o2omyFiles" style="display:none" @change="uploadfile($event)" multiple>
-
-                  <input class="setemoj" id="setemoj" ref="afterClick" type="text" v-on:keyup="" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
-
-                  <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
-                    <send-icon size="1.5x" class="custom-class"></send-icon>
-                  </button>
-                  <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
-                    <x-icon size="1.5x" class="custom-class"></x-icon>
-                  </button>
-
-                </div>
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
     </div>
@@ -4810,19 +4604,13 @@
         <div class="modal-body">
 
           <div class="videocall o2obeforeopenChat call-modal">
-            <audio id="audioOutput" autoplay controls></audio>
-            <audio id="audioInput" autoplay controls></audio>
+            <audio style="display:none" id="audioOutput" autoplay controls></audio>
+            <audio style="display:none" id="audioInput" autoplay controls></audio>
             <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image"></div>
-            <div id="o2oaudiodetail" class="media beforeDetail videocall-details">
-              <div class="usersprof">
-                <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
-                <div class="profile"><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" /></div>
-              </div>
-              <div class="media-body">
-                <h5>Josephin water</h5>
-                <h6>America ,California</h6>
-              </div>
+            <div id="o2oaudiodetail" class="media videocall-details">
+             
+            
               <div id="audiobasicUsage">{{formattedElapsedTime}}</div>
               <div class="zoomcontent minimizeclass">
                 <a class="text-dark" href="#!" @click="audiominimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
@@ -4850,189 +4638,9 @@
                 </li>
               </ul>
             </div>
-            <div class="text-right" style="float: right;position: absolute;bottom: 107px;right: 22px;">
-              <ul>
-                <li>
-                  <a class="icon-btn btn-light button-effect pause" id="o2oaudiochatopen" href="#" @click="o2ostartAudiochat()" data-tippy-content="Hold">
-                    <message-square-icon size="1.5x" class="custom-class"></message-square-icon>
-                  </a>
-                  <a class="icon-btn btn-light button-effect pause" id="o2oaudiochatclose" href="#" @click="o2ohideaudioCallchat()" style="display:none" data-tippy-content="Hold">
-                    <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
-                  </a>
-                </li>
-
-              </ul>
-            </div>
+           
           </div>
 
-          <div class="chitchat-main small-sidebar" id="o2oaudiocontents" style="display:none;width: 30%;float:right">
-
-            <div class="chat-content tabto" id="startchatssss">
-              <div class=" messages custom-scroll active messageschat" id="o2oaudiochating" style="min-height:100vh !important;">
-
-                <!-------- Dropzone ------>
-                <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
-                <!-------- end -------->
-                <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
-
-                </loading>
-                <div class="contact-chat  ">
-                  <ul class="chatappend" v-for="chat in friendchat">
-                    <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 45px;">
-                      <span>{{chatTime(chat.createdAt)}}</span> <br><br> Call ended {{ chat.message }}</h5>
-                    <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
-                      <div class="media">
-                        <div class="profile mr-4">
-                          <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                        <div class="media-body">
-                          <div class="contact-name">
-                            <h5>{{ c_user.name}}</h5>
-                            <h6>{{chatTime(chat.createdAt)}}</h6>
-
-                            <ul class="msg-box">
-                              <li class="msg-setting-main">
-                                <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
-                                  <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
-                                    <i class="ti-more-alt"></i>
-                                  </div>
-
-                                  <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
-                                    <ul>
-                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                        <a href="#" @click="eidtchat(chat._id,chat.message)">
-                                          <i class="fa fa-pencil"></i>edit</a>
-                                      </li>
-                                      <li>
-                                        <a href="#" @click="quote(chat)">
-                                          <i class="fa fa-share"></i>Quote</a>
-                                      </li>
-
-                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                        <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
-                                          <i class="fa fa-clone"></i>copy</a>
-                                      </li>
-                                      <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
-                                      <li>
-                                        <a href="#" @click="msgdelete(chat)">
-                                          <i class="ti-trash"></i>delete</a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-
-                                <h5 v-if="chat.isDeleted == 1" :id="'sendero2o'+chat._id">message deleted</h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sendero2o'+chat._id">{{ chat.message }}</h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sendero2o'+chat._id">
-                                  <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                                <br>
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                                  <img :src="hostname+'/images/chatImages/'+chat.message">
-                                </a>
-
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-
-                              </li>
-
-                            </ul>
-
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="sent" style="padding-bottom:20px" v-else>
-                      <div class="media">
-                        <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                        <div class="media-body">
-                          <div class="contact-name">
-                            <h5>{{ oncallFriend.name }}</h5>
-                            <h6>{{chatTime(chat.createdAt)}}</h6>
-                            <ul class="msg-box">
-                              <li class="msg-setting-main">
-
-                                <h5 v-if="chat.isDeleted == 1" :id="'receivero2o'+chat._id">message deleted</h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id">{{ chat.message }} </h5>
-                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receivero2o'+chat._id">
-                                  <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                                <br>
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                                  <img :src="hostname+'/images/chatImages/'+chat.message">
-                                </a>
-                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-                                <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
-                                  <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
-                                    <i class="ti-more-alt"></i>
-                                  </div>
-                                  <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
-                                    <ul>
-
-                                      <li>
-                                        <a href="#" @click="quote(chat)">
-                                          <i class="fa fa-share"></i>Quote</a>
-                                      </li>
-
-                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
-                                        <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
-                                          <i class="fa fa-clone"></i>copy</a>
-                                      </li>
-
-                                    </ul>
-                                  </div>
-                                </div>
-                              </li>
-
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                  </ul>
-                  <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
-                </div>
-
-                <span v-show="typing" class="">{{ oncallFriend.name }} is typing ...</span>
-
-              </div>
-              <VEmojiPicker @select="selectchatEmoji" class="" v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;" v-if="ischatemojiActive" />
-              <div class="message-input message-call" id="o2osinglemessage-input">
-                <div class="replybox" v-if="replyBox == true">
-                  <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
-                    <span style="float:right;cursor: pointer;" @click="closeReplybox()">
-                      <x-icon size="1.5x" class="custom-class"></x-icon>
-                    </span>
-                    <br>
-                    <span style="margin-left: 6px;">
-                      {{chatTime(chatreplydata.createdAt)}}
-                    </span>
-                  </p>
-                </div>
-                <div class="wrap emojis-main">
-
-                  <div class="dot-btn dot-primary mr-3">
-                    <a class="icon-btn btn-outline-primary button-effect " @click="showChatemoji">
-                      <smile-icon size="1.5x" class="custom-class"></smile-icon>
-                    </a>
-                  </div>
-
-                  <label class="icon-btn btn-outline-primary mr-4" for="fileupload">
-                    <i class="fa fa-plus"></i>
-                  </label>
-                  <input type="file" id="fileupload" ref="o2omyFiles" style="display:none" @change="uploadfile($event)" multiple>
-
-                  <input class="setemoj" id="setemoj" ref="afterClick" type="text" v-on:keyup="" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
-
-                  <button class="submit icon-btn btn-primary disabled" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
-                    <send-icon size="1.5x" class="custom-class"></send-icon>
-                  </button>
-                  <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
-                    <x-icon size="1.5x" class="custom-class"></x-icon>
-                  </button>
-
-                </div>
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
     </div>
@@ -5636,6 +5244,35 @@
         </div>
       </div>
     </div>
+ <div class="viddiolog modal fade" id="testvideocall" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-body">
+          <div class="videocall call-modal bg-size"><img class="bg-img" src="http://themes.pixelstrap.com/chitchat/assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" style="display: none;">
+            <div class="small-image bg-size" ><img class="bg-img" src="http://themes.pixelstrap.com/chitchat/assets/images/avtar/big/videocall.jpg" alt="Avatar" style="display: none;"></div>
+            <div class="media videocall-details">
+              <div class="usersprof">
+                <div class="profile bg-size" ><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" style="display: none;"></div>
+                <div class="profile bg-size" ><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" style="display: none;"></div>
+              </div>
+              <div class="media-body">
+                <h5>Josephin water</h5>
+                <h6>America ,California</h6>
+              </div>
+              <div id="basicUsage">00:00:26</div>
+              <div class="zoomcontent"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()" data-tippy-content="Zoom Screen"><img src="../assets/images/logo/maximize.svg" alt="zoom screen"></a></div>
+            </div>
+            <div class="center-con text-center">
+              <ul>
+                <li><a class="icon-btn btn-light button-effect pause" href="#" data-tippy-content="Hold"><i class="ti-control-pause"></i></a></li>
+                <li><a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" data-dismiss="modal" data-tippy-content="Hangup"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a></li>
+                <li><a class="icon-btn btn-light button-effect mic" href="#" data-tippy-content="Mute"><i class="fa fa-microphone"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -5746,6 +5383,7 @@ export default {
       multiplemembers: [],
       multipleneewmembers: [],
       havegroup: false,
+      groupmembers:'',
       groupName: '',
       addgroupData: {},
       showGrouptitle: true,
@@ -5846,7 +5484,7 @@ export default {
         const fdata = this.friendsdata.filter((obj) => {
           return data.userId === obj._id;
         }).pop();
-        
+
      const userdec = this.friendsdata.filter((obj) => {
               return data.userId === obj._id;
             }).pop();
@@ -5859,6 +5497,7 @@ export default {
         }, 2000);
 
       }
+      
 
 
 
@@ -7129,6 +6768,7 @@ export default {
       $('#group_chat').removeClass("active");
 
       this.singlegroup = group;
+      this.groupmembers=group.members.length;
       this.groupIndex = index;
       console.log(this.groupIndex);
       this.userid = this.c_user._id;
@@ -8170,9 +7810,6 @@ export default {
       $('#local-video').removeClass('beforelocalVideo');
       $('#local-video').addClass('afterlocalVideo');
 
-      $('#o2odetail').removeClass('beforeDetail');
-      $('#o2odetail').addClass('afterDetail');
-
       $('#o2ocontents').show();
       $('.chitchat-main .chat-content').css('opacity', '1');
     },
@@ -8188,8 +7825,6 @@ export default {
       $('#local-video').addClass('beforelocalVideo');
       $('#local-video').removeClass('afterlocalVideo');
       $('#local-video').addClass('beforelocalVideo');
-      $('#o2odetail').removeClass('afterDetail');
-      $('#o2odetail').addClass('beforeDetail');
       $('#o2ocontents').hide();
       $('#o2ochatclose').hide();
       $('#o2ochatopen').show();
@@ -8406,9 +8041,6 @@ export default {
       $('#local-video').removeClass('beforelocalVideo');
       $('#local-video').addClass('afterlocalVideo');
 
-      $('#o2odetail').removeClass('beforeDetail');
-      $('#o2odetail').addClass('afterDetail');
-
       $('#o2ocontents').show();
       $('.chitchat-main .chat-content').css('opacity', '1');
 
@@ -8560,8 +8192,6 @@ export default {
       $('#o2omodalaudiocall').removeClass('o2omodelbefore');
       $('#o2omodalaudioaudiocall').addClass('o2omodelafter');
 
-      $('#o2oaudiodetail').removeClass('beforeDetail');
-      $('#o2oaudiodetail').addClass('afterDetail');
 
       $('#o2oaudiocontents').show();
       $('.chitchat-main .chat-content').css('opacity', '1');
@@ -8607,8 +8237,6 @@ export default {
       $('#o2omodalaudiocall').removeClass('o2omodelafter');
       $('#o2omodalaudiocall').addClass('o2omodelbefore');
 
-      $('#o2oaudiodetail').removeClass('afterDetail');
-      $('#o2oaudiodetail').addClass('beforeDetail');
       $('#o2oaudiocontents').hide();
       $('#o2oaudiochatclose').hide();
       $('#o2oaudiochatopen').show();
@@ -8721,6 +8349,8 @@ export default {
         axios.post('/friends/updateFriendRequest', {
           _id: friend.friendReqId,
           status: 2,
+          userId: this.c_user._id,
+          friendId: friend._id,
         }).then(response => {
           console.log(response);
 
@@ -8740,6 +8370,7 @@ export default {
           var statusUpdate = {
             _id: friend._id,
             status: 2,
+            friendId: friend._id,
             myId: this.c_user._id,
             userObj: tempUserData   //sending current user obj with required appended fields
           }
@@ -9462,23 +9093,6 @@ display:none !important;
   }
 }
 
-.viddiolog.modal.fade .modal-dialog {
-  max-width: 100%;
-}
-
-.videocallModel .modal-dialog {
-  max-width: 100%;
-  margin: 0px 0px 0px auto;
-}
-
-.videocallModel .modal-body {
-  padding: 0;
-}
-
-.viddiolog .videocall.call-modal {
-  min-height: 108vh !important;
-}
-
 .videocall.call-modal .videocall-details,
 .videocallhang.call-modal .videocall-details {
   position: absolute;
@@ -9565,108 +9179,86 @@ display:none !important;
 }
 
 .beforeopenChat {
-  background-image: url(/img/videocall_bg.b320143d.jpg);
+  /*background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 100%;
-  float: left;
+  float: left;*/
 }
 
 .afteropenChat {
-  background-image: url(/img/videocall_bg.b320143d.jpg);
+  /*background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 70%;
-  float: left;
+  float: left;*/
 }
 
 .modelafter {
-  display: flex;
+  /*display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(99vh - 60px);
+  height: calc(99vh - 60px);*/
 }
 
 .modelbefore {
-  display: flex;
+  /*display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(58vh - 36px);
+  height: calc(58vh - 36px);*/
 }
 
 
 /*020 video call*/
 
-.o2ovideocallModel .modal-dialog {
-  max-width: 100%;
-  margin: 0px 0px 0px auto;
-}
-
-.o2ovideocallModel .modal-body {
-  padding: 0;
-}
-
-.viddiolog .videocall.call-modal {
-  min-height: 108vh !important;
-}
-
-.videocall.call-modal .videocall-details,
-.videocallhang.call-modal .o2ovideocall-details {
-  position: absolute;
-  top: 40px;
-  padding: 35px;
-  right: 0;
-  left: 0;
-  align-items: center;
-}
 
 .o2obeforeopenChat {
-  background-image: url(/img/videocall_bg.b320143d.jpg);
+  /*background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 100%;
-  float: left;
+  float: left;*/
 }
 
 .o2oafteropenChat {
-  background-image: url(/img/videocall_bg.b320143d.jpg);
+  /*background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 70%;
-  float: left;
+  float: left;*/
 }
 
 .o2omodelafter {
-  display: flex;
+  /*display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(99vh - 60px);
+  height: calc(99vh - 60px);*/
 }
 
 .o2omodelbefore {
-  display: flex;
+  /*display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(58vh - 36px);
+  height: calc(58vh - 36px);*/
 }
 
 .beforelocalVideo {
-  width: 286px;
-  height: 217px;
+  /*width: 286px;
+  height: 217px;*/
 }
 
 .afterlocalVideo {
-  width: 227px;
-  height: 176px;
+  /*width: 227px;
+  height: 176px;*/
 }
 
 .callChat {
-  width: 30%;
-  float: right;
+  /*width: 30%;
+  float: right;*/
 }
 
 .minimizeclass {
@@ -9677,11 +9269,5 @@ display:none !important;
   height: 36px;
 }
 
-.beforeDetail {
-  top: 315px !important;
-}
 
-.afterDetail {
-  top: 40px !important;
-}
 </style>

@@ -499,3 +499,52 @@ ul.chat-cont-setting.open {
     min-width: 330px !important;
     width: 330px !important;
 }
+.groupUsers .usersprof
+{
+    display: flex;
+    justify-content: center;
+}
+.groupUsers .usersprof .profile {
+    max-width: 30px;
+    max-height: 30px;
+    border-radius: 100%;
+    border: 1px solid #BAC5E9;
+    margin-bottom: 8px;
+    padding: 2px;
+    background-image: none !important;
+}
+.groupUsers .usersprof .profile img {
+    display: block !important;
+    width: 24px !important;
+}
+.groupUsers .usersprof .profile+.profile {
+    margin-left: -7px;
+}
+.usersCount{
+    background: black;
+    border-radius: 30px;
+    width: 24px;
+    height: 24px;
+    color: white;
+    line-height: 23px;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+}
+.addGroups{
+    border-style: dotted;
+    width: 35px;
+    height: 35px;
+    border-radius: 13px;
+    border-color: #BAC5E9;
+    margin-left: 13px;
+    margin-top: -4px;
+    border-width: 2.4px;
+    cursor: pointer;
+}
+.viddiolog.modal.fade .modal-dialog {
+    max-width: 800px !important;
+}
+.viddiolog .videocall.call-modal{
+    min-height: 90vh !important;
+}
