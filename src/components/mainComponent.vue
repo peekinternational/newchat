@@ -4544,7 +4544,7 @@
 
     <div class="o2ovideocallModel  viddiolog modal fade" id="o2ovideocall" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered o2omodelbefore" id="o2omodalcall" role="document">
-        <div class="modal-body">
+        <div class="modal-body" style="border: 3px solid white;padding: 0px 0px;">
 
           <div class="videocall o2obeforeopenChat call-modal">
             <video id="videoOutput" class="remoteVideoWidth" style="width:100%" autoplay></video>
@@ -4562,7 +4562,7 @@
               </div>
             </div>
             <div class="center-con text-center">
-              <ul style="float: right;margin-right: 25px;">
+              <ul style="float: right;">
                 <!--<li>
                   <a v-if="videoPause" class="icon-btn btn-light button-effect pause" href="#" @click="videoPausecall()" data-tippy-content="Hold">
                     <i class="fa fa-pause off" aria-hidden="true"></i>

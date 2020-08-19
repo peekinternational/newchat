@@ -546,5 +546,12 @@ ul.chat-cont-setting.open {
     max-width: 800px !important;
 }
 .viddiolog .videocall.call-modal{
-    min-height: 90vh !important;
+    min-height: 78vh !important;
+}
+#basicUsage {
+    font-size: 16px;
+    color: #fff;
+    font-family: Montserrat,sans-serif;
+    font-weight: 700;
+    width: 100px;
 }
