@@ -9097,16 +9097,6 @@ display:none !important;
   }
 }
 
-.videocall.call-modal .videocall-details,
-.videocallhang.call-modal .videocall-details {
-  position: absolute;
-  top: 40px;
-  padding: 35px;
-  right: 0;
-  left: 0;
-  align-items: center;
-}
-
 @media screen and (max-width: 767.98px) {
   .message-input {
     width: calc(100% - 200px);

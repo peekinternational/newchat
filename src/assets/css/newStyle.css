@@ -555,3 +555,16 @@ ul.chat-cont-setting.open {
     font-weight: 700;
     width: 100px;
 }
+.audiocall1.call-modal .center-con, .audiocall2.call-modal .center-con, .conferencecall.call-modal .center-con, .videocall.call-modal .center-con, .videocallhang.call-modal .center-con {
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
+}
+.videocall.call-modal .videocall-details, .videocallhang.call-modal .videocall-details {
+    position: absolute;
+    top: 0px;
+    padding: 20px;
+    right: 0;
+    left: 0;
+    align-items: center;
+}
