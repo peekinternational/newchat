@@ -4734,7 +4734,7 @@
           <div class="chitchat-main small-sidebar" id="o2ocontents" style="display:none;width: 30%;float:right">
 
             <div class="chat-content tabto" id="startchatsss">
-              <div class=" messages custom-scroll active messageschat o2omessageschat" id="o2ochating" style="min-height:78vh !important;">
+              <div class=" messages custom-scroll active messageschat o2omessageschat" id="o2ochating" style="min-height: 450px!important;">
 
                 <!-------- Dropzone ------>
                 <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
@@ -9464,7 +9464,7 @@ display:none !important;
     padding: 17px 8px;
     z-index: 9;
     width: 30% !important;
-    bottom: 13px !important;
+    bottom: 9px !important;
 }
 
 .beforeopenChat {

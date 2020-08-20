@@ -644,7 +644,7 @@ ul.call-cont-setting li a span {
     padding: 0px;
     padding-top: 45px;
     padding-bottom: 45px;
-    height: calc(100vh - 95px);
+    height: calc(707px - 101px);
     min-height: calc(100vh - 95px);
     overflow: auto;
     overflow-x: hidden;
