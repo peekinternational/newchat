@@ -9526,6 +9526,7 @@ display:none !important;
   align-items: center;
   justify-content: center;
   height: calc(99vh - 60px);
+  max-width: 1150px !important;
 }
 
 .o2omodelbefore {
