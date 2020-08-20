@@ -543,7 +543,7 @@ ul.chat-cont-setting.open {
     cursor: pointer;
 }
 .viddiolog.modal.fade .modal-dialog {
-    max-width: 800px !important;
+    max-width: 900px;
 }
 .viddiolog .videocall.call-modal{
     min-height: 78vh !important;
@@ -567,4 +567,92 @@ ul.chat-cont-setting.open {
     right: 0;
     left: 0;
     align-items: center;
+}
+.videocall.call-modal .small-image, .videocallhang.call-modal .small-image {
+    width: 201px !important;
+    height: 185px !important;
+    position: absolute;
+    left: 40px;
+    bottom: 5%;
+}
+ul.call-cont-setting {
+    background-color: #fff;
+    box-shadow: 0 0 10px #e5edf5;
+    padding: 15px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    text-align: right;
+    position: fixed;
+    left: 1%;
+    bottom: 65%;
+    z-index: 1;
+    display: none;
+    transition: all 0.5s ease;
+}
+ul.call-cont-setting li {
+    margin-bottom: 5px !important;
+    
+}
+ul.call-cont-setting li a {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    float: left
+}
+ul.call-cont-setting li a span {
+    padding: 5px;
+    line-height: 1;
+    text-transform: capitalize;
+    margin-right: 0px;
+    font-size: 12px;
+}
+.audiocall1.call-modal ul li+li, .audiocall2.call-modal ul li+li, .videocall.call-modal ul li+li, .videocallhang.call-modal ul li+li, .conferencecall.call-modal ul li+li {
+    margin-left:12px;
+}
+.calloption-close {
+    width: 75px;
+    height: 75px;
+    background: transparent;
+    border-radius: 0 0 0 90px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 1;
+}
+.calloption-close span {
+    color: #333;
+    font-size: 14px;
+    position: absolute;
+    top: -8px;
+    right: -6px;
+    background: #fff;
+    border-radius: 30px;
+    width: 15px;
+    height: 15px;
+    line-height: 17px;
+    padding-left: 0px;
+}
+.option-btn {
+    border: 1px solid white !important;
+    border-radius: 3px !important;
+    color: white !important;
+    height: 28px !important;
+    width: 28px !important;
+}
+.chitchat-main .o2omessageschat {
+    padding: 0px;
+    padding-top: 45px;
+    padding-bottom: 45px;
+    height: calc(100vh - 95px);
+    min-height: calc(100vh - 95px);
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-blend-mode: overlay;
+    top: 0;
+    background-color: #F3F6FF;
+    display: none;
+    -webkit-animation: fadeInLeft 300ms ease-in-out;
+    animation: fadeInLeft 300ms ease-in-out;
 }

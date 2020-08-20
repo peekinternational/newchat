@@ -80,40 +80,40 @@
             </li>
 
             <!--<li>
-              <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="favourite()" id="Fav">
-                <i class="fa fa-star"> </i>
-              </a>
-            </li>
-            
-            <li>
-              <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="contact()">
-                <i class="fa fa-users"> </i>
-              </a>
-            </li>
-            <li>
-              <div class="dot-btn dot-danger grow">
-                <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="notification()">
-                  <i class="fa fa-bell"></i>
+                <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="favourite()" id="Fav">
+                  <i class="fa fa-star"> </i>
                 </a>
-              </div>
-            </li>
-            <li>
-              <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="setting()" >
-                <i class="fa fa-cog"></i>
-              </a>
-            </li>-->
+              </li>
+              
+              <li>
+                <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="contact()">
+                  <i class="fa fa-users"> </i>
+                </a>
+              </li>
+              <li>
+                <div class="dot-btn dot-danger grow">
+                  <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="notification()">
+                    <i class="fa fa-bell"></i>
+                  </a>
+                </div>
+              </li>
+              <li>
+                <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="setting()" >
+                  <i class="fa fa-cog"></i>
+                </a>
+              </li>-->
           </ul>
           <ul class="sidebar-bottom">
             <!--<li>
-              <a class="icon-btn btn-light button-effect mode" data-tippy-content="Theme Mode" >
-                <i class="fa fa-moon-o"></i>
-              </a>
-            </li>
-            <li>
-              <button v-on:click="logout()" class="icon-btn btn-light">
-                <i class="fa fa-power-off"> </i>
-              </button>
-            </li>-->
+                <a class="icon-btn btn-light button-effect mode" data-tippy-content="Theme Mode" >
+                  <i class="fa fa-moon-o"></i>
+                </a>
+              </li>
+              <li>
+                <button v-on:click="logout()" class="icon-btn btn-light">
+                  <i class="fa fa-power-off"> </i>
+                </button>
+              </li>-->
           </ul>
 
         </div>
@@ -130,26 +130,25 @@
             <div class="theme-title">
               <div class="media">
                 <!--<audio-recorder
-  					upload-url="YOUR_API_URL"
-  					:attempts="3"
-  					:time="2"
-  					:headers="headers"
-  					:before-recording="callback"
-  					:pause-recording="callback"
-  					:after-recording="callback"
-  					:select-record="callback"
-  					:before-upload="callback"
-  					:successful-upload="callback"
-  					:failed-upload="callback"/>
-  					
-            <audio-player src="https://peekvideochat.com/incomming.mp3"/> -->
+    					upload-url="YOUR_API_URL"
+    					:attempts="3"
+    					:time="2"
+    					:headers="headers"
+    					:before-recording="callback"
+    					:pause-recording="callback"
+    					:after-recording="callback"
+    					:select-record="callback"
+    					:before-upload="callback"
+    					:successful-upload="callback"
+    					:failed-upload="callback"/>
+    					
+              <audio-player src="https://peekvideochat.com/incomming.mp3"/> -->
 
                 <div v-if="c_user" style="display: contents;">
                   <audio id="messagetone" muted>
                     <source src="https://peekvideochat.com/bell.mp3" type="audio/ogg">
                     <source src="https://peekvideochat.com/bell.mp3" type="audio/mpeg">
                   </audio>
-
 
                   <audio id="outgoingcall" muted>
                     <source src="https://peekvideochat.com/incomming.mp3" type="audio/ogg">
@@ -186,52 +185,52 @@
             </div>
 
             <!-- <carousel :nav="false" :dots="false">
-                  <div style="padding: 13px;">
-                <div class="dot-btn dot-danger grow"></div>
-                <img src="https://placeimg.com/200/200/any?1">
-                  </div>
+                    <div style="padding: 13px;">
+                  <div class="dot-btn dot-danger grow"></div>
+                  <img src="https://placeimg.com/200/200/any?1">
+                    </div>
 
-                  <div style="padding: 13px;">
-                  <div class="dot-btn dot-success grow"></div>
-                <img src="https://placeimg.com/200/200/any?2">
-              </div>
+                    <div style="padding: 13px;">
+                    <div class="dot-btn dot-success grow"></div>
+                  <img src="https://placeimg.com/200/200/any?2">
+                </div>
 
-              <div style="padding: 13px;">
-                <div class="dot-btn dot-danger grow"></div>
-                <img src="https://placeimg.com/200/200/any?3">
-              </div>
-              <div style="padding: 13px;">
-                <div class="dot-btn dot-danger grow"></div>
-                <img src="https://placeimg.com/200/200/any?4">
-              </div>
-  			
-            </carousel> -->
+                <div style="padding: 13px;">
+                  <div class="dot-btn dot-danger grow"></div>
+                  <img src="https://placeimg.com/200/200/any?3">
+                </div>
+                <div style="padding: 13px;">
+                  <div class="dot-btn dot-danger grow"></div>
+                  <img src="https://placeimg.com/200/200/any?4">
+                </div>
+    			
+              </carousel> -->
             <!-- <div class="recent-slider recent-chat owl-carousel owl-theme">
-                  <div class="item">
-                    <div class="recent-box">
-                      <div class="dot-btn dot-danger grow"></div>
-                      <div class="recent-profile"><img class="bg-img" src="../assets/images/avtar/1.jpg" alt="Avatar"/>
-                        <h6> John deo</h6>
+                    <div class="item">
+                      <div class="recent-box">
+                        <div class="dot-btn dot-danger grow"></div>
+                        <div class="recent-profile"><img class="bg-img" src="../assets/images/avtar/1.jpg" alt="Avatar"/>
+                          <h6> John deo</h6>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="item">
-                    <div class="recent-box">
-                      <div class="dot-btn dot-success grow"></div>
-                      <div class="recent-profile online"><img class="bg-img" src="../assets/images/avtar/big/audiocall.jpg" alt="Avatar"/>
-                        <h6> John </h6>
+                    <div class="item">
+                      <div class="recent-box">
+                        <div class="dot-btn dot-success grow"></div>
+                        <div class="recent-profile online"><img class="bg-img" src="../assets/images/avtar/big/audiocall.jpg" alt="Avatar"/>
+                          <h6> John </h6>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="item">
-                    <div class="recent-box">
-                      <div class="dot-btn dot-warning grow"></div>
-                      <div class="recent-profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar"/>
-                        <h6> Jpny</h6>
+                    <div class="item">
+                      <div class="recent-box">
+                        <div class="dot-btn dot-warning grow"></div>
+                        <div class="recent-profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar"/>
+                          <h6> Jpny</h6>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div> -->
+                  </div> -->
           </div>
           <div class="chat custom-scroll" style="margin-top: 0px;">
             <ul class="chat-cont-setting" style="padding: 7px;margin-left: 14px;margin-bottom:-15px;box-shadow: 0px 0px 0px 1px #0000000f;">
@@ -487,7 +486,6 @@
                                     <br>
                                     <button type="button" @click="addfriends(friends)" class="btn btn-sm btn-default" style="cursor:pointer"> Add Friend </button>
                                   </div>
-
 
                                 </div>
 
@@ -2530,7 +2528,7 @@
         <!--  Groupchat -->
         <div class="chat-content tabto" id="startgroupchat">
           <div id="group_chat_open" class="messages custom-scroll group_chat_open">
-             <div class="contact-details">
+            <div class="contact-details">
               <div class="row">
                 <form class="form-inline search-form">
                   <div class="form-group">
@@ -2542,7 +2540,7 @@
                   <div class="media left">
                     <div class="media-left mr-3" @click="groupSidebar()">
 
-                      <div  class="profile menu-trigger" style="border-radius: 30px;">
+                      <div class="profile menu-trigger" style="border-radius: 30px;">
                         <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
                     </div>
                     <div class="media-body">
@@ -2551,18 +2549,24 @@
                     </div>
                     <div class="media-right groupUsers">
                       <ul>
-                           <li> 
-                            <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
-                              <div class="usersprof">
-                                <template v-for="gmembers,index in singlegroup.members" v-if="index < 4">
-                                <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
-                                </template>
-                                <div class="profile"><div class="usersCount">{{groupmembers}}</div></div>
-                                <div class="addGroups" data-toggle="modal" data-target="#showGroupsMembers"><div class="" style="padding: 6px;color: #6F66FF;"> <plus-icon size="1.5x" class="custom-class"></plus-icon></div></div>
-                                 
-                             </div>
-                           </li>
-                       
+                        <li>
+                          <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                            <template v-for="gmembers,index in singlegroup.members" v-if="index < 4">
+                              <div class="profile"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" /></div>
+                            </template>
+                            <div class="profile">
+                              <div class="usersCount">{{groupmembers}}</div>
+                            </div>
+                            <div class="addGroups" data-toggle="modal" data-target="#showGroupsMembers">
+                              <div class="" style="padding: 6px;color: #6F66FF;">
+                                <plus-icon size="1.5x" class="custom-class"></plus-icon>
+                              </div>
+                            </div>
+
+                          </div>
+                        </li>
+
                         <li>
                           <a class="icon-btn btn-light button-effect mobile-sidebar" href="#">
                             <arrow-left-icon size="1.5x" class="custom-class"></arrow-left-icon>
@@ -2574,37 +2578,37 @@
                 </div>
                 <div class="col">
                   <ul class="calls text-right">
-                     <!--<li>
-                          <a class="icon-btn btn-light button-effect mute" href="#">
-                            <i class="fa fa-volume-up"></i>
-                          </a>
-                        </li>-->
-                        <li>
-                          <a class="icon-btn btn-light search-right" href="#">
-                            <search-icon size="1.5x" class="custom-class"></search-icon>
-                          </a>
-                        </li>
+                    <!--<li>
+                            <a class="icon-btn btn-light button-effect mute" href="#">
+                              <i class="fa fa-volume-up"></i>
+                            </a>
+                          </li>-->
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#" >
+                      <a class="icon-btn btn-light search-right" href="#">
+                        <search-icon size="1.5x" class="custom-class"></search-icon>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#">
                         <phone-icon size="1.5x" class="custom-class"></phone-icon>
                       </a>
                     </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#"  data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#">
+                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#">
                         <video-icon size="1.5x" class="custom-class"></video-icon>
                       </a>
                     </li>
-                     <!--<li class="" v-if=" userid == singlegroup.creatorUserId ">
-                      <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" @click="deleteGroup()" data-tippy-content="Quick action">
-                        <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
-                      </a>
-                    </li>-->
-                   
+                    <!--<li class="" v-if=" userid == singlegroup.creatorUserId ">
+                        <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" @click="deleteGroup()" data-tippy-content="Quick action">
+                          <trash-2-icon size="1.5x" class="custom-class"></trash-2-icon>
+                        </a>
+                      </li>-->
+
                   </ul>
                 </div>
               </div>
             </div>
-           
+
             <vue-dropzone ref="mygroupVueDropzone" id="groupdropzone" @vdropzone-success="groupComplete" v-on:vdropzone-sending="draggroupfileupload" :options="dropzoneOptions"></vue-dropzone>
             <div class="contact-chat">
               <ul class="chatappend" v-for="g_chat in groupchatdata" v-if="g_chat.groupId == singlegroup._id">
@@ -2659,20 +2663,20 @@
                             <a :href="hostname+'/images/chatImages/'+g_chat.message" target="_blank" :id="'groupsender'+g_chat._id" v-if="g_chat.messageType == 2 && g_chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ g_chat.message }}</a>
                           </li>
                           <!--    <li class="msg-setting-main">
-                                <h5> it should from elite auther &#128519;</h5>
-                                <div class="badge badge-success sm ml-2"> R</div>
-                                <div class="msg-dropdown-main">
-                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                  <div class="msg-dropdown"> 
-                                    <ul>
-                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
+                                  <h5> it should from elite auther &#128519;</h5>
+                                  <div class="badge badge-success sm ml-2"> R</div>
+                                  <div class="msg-dropdown-main">
+                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                    <div class="msg-dropdown"> 
+                                      <ul>
+                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                      </ul>
+                                    </div>
                                   </div>
-                                </div>
-                              </li> -->
+                                </li> -->
                         </ul>
                       </div>
                     </div>
@@ -2747,13 +2751,13 @@
             </div>
             <div class="wrap emojis-main">
               <!--<a class="icon-btn btn-outline-primary button-effect mr-3 toggle-sticker outside"  >
-                    <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2158px" height="2148px" viewbox="0 0 2158 2148" enable-background="new 0 0 2158 2148" xml:space="preserve">
-                      <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
-                      <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.201,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.251,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.251,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
-                      <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
-                    </svg></a>-->
+                      <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2158px" height="2148px" viewbox="0 0 2158 2148" enable-background="new 0 0 2158 2148" xml:space="preserve">
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.201,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.251,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.251,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
+                        <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
+                      </svg></a>-->
 
               <div class="dot-btn dot-primary mr-3">
                 <a class="icon-btn btn-outline-primary button-effect" @click="showGroupemoji">
@@ -2848,10 +2852,10 @@
                       </a>
                     </li>
                     <!--<li>
-                      <a class="icon-btn btn-light button-effect apps-toggle">
-                        <i class="ti-layout-grid2"></i>
-                      </a>
-                    </li>-->
+                        <a class="icon-btn btn-light button-effect apps-toggle">
+                          <i class="ti-layout-grid2"></i>
+                        </a>
+                      </li>-->
                     <li class="chat-friend-toggle">
                       <a class="icon-btn btn-light bg-transparent button-effect outside" href="#" data-tippy-content="Quick action">
                         <more-vertical-icon size="1.5x" class="custom-class"></more-vertical-icon>
@@ -2964,20 +2968,20 @@
 
                           </li>
                           <!-- <li class="msg-setting-main">
-                                <h5> your personal assistant to help you &#128512; </h5>
-                                <div class="badge badge-success sm ml-2"> R</div>
-                                <div class="msg-dropdown-main">
-                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                  <div class="msg-dropdown"> 
-                                    <ul>
-                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
+                                  <h5> your personal assistant to help you &#128512; </h5>
+                                  <div class="badge badge-success sm ml-2"> R</div>
+                                  <div class="msg-dropdown-main">
+                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                    <div class="msg-dropdown"> 
+                                      <ul>
+                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                      </ul>
+                                    </div>
                                   </div>
-                                </div>
-                              </li> -->
+                                </li> -->
                         </ul>
 
                       </div>
@@ -3027,20 +3031,20 @@
 
                           </li>
                           <!--   <li class="msg-setting-main">
-                                <h5> it should from elite auther &#128519;</h5>
-                                <div class="badge badge-success sm ml-2"> R</div>
-                                <div class="msg-dropdown-main">
-                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                  <div class="msg-dropdown"> 
-                                    <ul>
-                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
+                                  <h5> it should from elite auther &#128519;</h5>
+                                  <div class="badge badge-success sm ml-2"> R</div>
+                                  <div class="msg-dropdown-main">
+                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                    <div class="msg-dropdown"> 
+                                      <ul>
+                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                      </ul>
+                                    </div>
                                   </div>
-                                </div>
-                              </li> -->
+                                </li> -->
                         </ul>
                       </div>
                     </div>
@@ -3081,17 +3085,17 @@
               <input type="file" id="fileupload" ref="myFiles" style="display:none" @change="uploadfile($event)" multiple>
 
               <!--<div class="contact-poll-content">
-                      <ul>
-                        <li><a href="#"><i data-feather="image"></i>gallery</a></li>
-                        <li><a href="#"><i data-feather="camera"></i>camera</a></li>
-                        <li><a data-toggle="modal" data-target="#snippetModal"><i data-feather="code">                       </i>Code Snippest</a></li>
-                        <li><a href="#"><i data-feather="user">                              </i>contact</a></li>
-                        <li><a href="#"><i data-feather="map-pin">                       </i>location</a></li>
-                        <li><a href="#"><i data-feather="clipboard"> </i>document</a></li>
-                        <li><a data-toggle="modal" data-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
-                        <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
-                      </ul>
-                    </div>-->
+                        <ul>
+                          <li><a href="#"><i data-feather="image"></i>gallery</a></li>
+                          <li><a href="#"><i data-feather="camera"></i>camera</a></li>
+                          <li><a data-toggle="modal" data-target="#snippetModal"><i data-feather="code">                       </i>Code Snippest</a></li>
+                          <li><a href="#"><i data-feather="user">                              </i>contact</a></li>
+                          <li><a href="#"><i data-feather="map-pin">                       </i>location</a></li>
+                          <li><a href="#"><i data-feather="clipboard"> </i>document</a></li>
+                          <li><a data-toggle="modal" data-target="#pollModal"><i data-feather="bar-chart-2">                       </i>poll</a></li>
+                          <li><a href="#"><i data-feather="paperclip">                       </i>attach</a></li>
+                        </ul>
+                      </div>-->
 
               <input class="setemoj" id="setemoj" ref="afterClick" type="text" v-on:keyup="removecross()" @keyup.enter="chat()" v-model="message" placeholder="Write your message..." />
               <a class="icon-btn btn-outline-primary button-effect mr-3 ml-3" href="#">
@@ -3400,13 +3404,13 @@
                 <div>
                   <h6>Group Information</h6>
                 </div>
-                
+
               </div>
             </div>
             <div class="details">
               <div class="contact-top">
                 <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="" />
-                </div>
+              </div>
               <div class="name">
                 <h3>{{singlegroup.name}}</h3>
                 <h6>Add Description</h6>
@@ -3414,10 +3418,13 @@
 
             </div>
           </div>
-        <div class="document">
+          <div class="document">
             <div class="filter-block">
               <div class="collapse-block">
-                <h5 class="block-title"> <span style="padding-right: 5px;"><i class="fa fa-files-o" aria-hidden="true"></i> </span> &nbsp; &nbsp;  Shared Document
+                <h5 class="block-title">
+                  <span style="padding-right: 5px;">
+                    <i class="fa fa-files-o" aria-hidden="true"></i>
+                  </span> &nbsp; &nbsp; Shared Document
                   <label class="badge badge-success sm ml-2">3</label>
                 </h5>
                 <div class="block-content" style="display:none">
@@ -3441,7 +3448,10 @@
           </div>
           <div class="media-gallery portfolio-section grid-portfolio">
             <div class="collapse-block ">
-              <h5 class="block-title"><span style="padding-right: 5px;"><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> &nbsp; &nbsp; Bookmarked Messages
+              <h5 class="block-title">
+                <span style="padding-right: 5px;">
+                  <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+                </span> &nbsp; &nbsp; Bookmarked Messages
                 <label class="badge badge-primary sm ml-2">2</label>
               </h5>
               <div class="block-content" style="display:none">
@@ -3551,60 +3561,66 @@
 
           <div class="status">
             <div class="collapse-block ">
-              <h5 class="block-title"><span style="padding-right: 5px;"><i class="fa fa-cog" aria-hidden="true"></i></span> &nbsp;	&nbsp; Contact Info
+              <h5 class="block-title">
+                <span style="padding-right: 5px;">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                </span> &nbsp; &nbsp; Contact Info
                 <label class="badge badge-outline-dark sm ml-2">3</label>
               </h5>
               <div class="block-content" style="display:none">
-                 <ul>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="smartphone"></i>+12 3456789587</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="https://themeforest.net/user/pixelstrap/portfolio">
-                    <i data-feather="crosshair"></i>https://pixelstrap</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
-                </h5>
-              </li>
-            </ul>
+                <ul>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="smartphone"></i>+12 3456789587</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="https://themeforest.net/user/pixelstrap/portfolio">
+                        <i data-feather="crosshair"></i>https://pixelstrap</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
+                    </h5>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
           <div class="status other">
-             <div class="collapse-block ">
-            <h5 class="block-title p-b-25"><span style="padding-right: 5px;"><i class="fa fa-cog" aria-hidden="true"></i></span> &nbsp; 	&nbsp;Setting</h5>
-            <div class="block-content" style="display:none">
-            <ul>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="smartphone"></i>+12 3456789587</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="https://themeforest.net/user/pixelstrap/portfolio">
-                    <i data-feather="crosshair"></i>https://pixelstrap</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
-                </h5>
-              </li>
-            </ul>
+            <div class="collapse-block ">
+              <h5 class="block-title p-b-25">
+                <span style="padding-right: 5px;">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                </span> &nbsp; &nbsp;Setting</h5>
+              <div class="block-content" style="display:none">
+                <ul>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="smartphone"></i>+12 3456789587</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="https://themeforest.net/user/pixelstrap/portfolio">
+                        <i data-feather="crosshair"></i>https://pixelstrap</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
+                    </h5>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </aside>
       <aside class="chitchat-right-sidebar" id="slide-menu">
@@ -3620,11 +3636,11 @@
                 <div>
                   <h6>Personal Information</h6>
                 </div>
-                
+
               </div>
             </div>
             <div class="details">
-              <div class="contact-top profile"  v-bind:class="{ online: singlefriend.pStatus == 0, unreachable : singlefriend.pStatus == 1, busy: singlefriend.pStatus == 2, offline: singlefriend.pStatus == 3, offline: singlefriend.pStatus == 4 }"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="" /></div>
+              <div class="contact-top profile" v-bind:class="{ online: singlefriend.pStatus == 0, unreachable : singlefriend.pStatus == 1, busy: singlefriend.pStatus == 2, offline: singlefriend.pStatus == 3, offline: singlefriend.pStatus == 4 }"><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="" /></div>
               <div class="name">
                 <h3>{{singlefriend.name}}</h3>
                 <h6>Add Description</h6>
@@ -3635,7 +3651,10 @@
           <div class="document">
             <div class="filter-block">
               <div class="collapse-block">
-                <h5 class="block-title"> <span style="padding-right: 5px;"><i class="fa fa-files-o" aria-hidden="true"></i> </span> &nbsp; &nbsp;  Shared Document
+                <h5 class="block-title">
+                  <span style="padding-right: 5px;">
+                    <i class="fa fa-files-o" aria-hidden="true"></i>
+                  </span> &nbsp; &nbsp; Shared Document
                   <label class="badge badge-success sm ml-2">3</label>
                 </h5>
                 <div class="block-content" style="display:none">
@@ -3659,7 +3678,10 @@
           </div>
           <div class="media-gallery portfolio-section grid-portfolio">
             <div class="collapse-block ">
-              <h5 class="block-title"><span style="padding-right: 5px;"><i class="fa fa-bookmark-o" aria-hidden="true"></i></span> &nbsp; &nbsp; Bookmarked Messages
+              <h5 class="block-title">
+                <span style="padding-right: 5px;">
+                  <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+                </span> &nbsp; &nbsp; Bookmarked Messages
                 <label class="badge badge-primary sm ml-2">2</label>
               </h5>
               <div class="block-content" style="display:none">
@@ -3769,61 +3791,67 @@
 
           <div class="status">
             <div class="collapse-block ">
-              <h5 class="block-title"><span style="padding-right: 5px;"><i class="fa fa-cog" aria-hidden="true"></i></span> &nbsp;	&nbsp; Contact Info
+              <h5 class="block-title">
+                <span style="padding-right: 5px;">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                </span> &nbsp; &nbsp; Contact Info
                 <label class="badge badge-outline-dark sm ml-2">3</label>
               </h5>
               <div class="block-content" style="display:none">
-                 <ul>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="smartphone"></i>+12 3456789587</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="https://themeforest.net/user/pixelstrap/portfolio">
-                    <i data-feather="crosshair"></i>https://pixelstrap</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
-                </h5>
-              </li>
-            </ul>
+                <ul>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="smartphone"></i>+12 3456789587</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="https://themeforest.net/user/pixelstrap/portfolio">
+                        <i data-feather="crosshair"></i>https://pixelstrap</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
+                    </h5>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
           <div class="status other">
-             <div class="collapse-block ">
-            <h5 class="block-title p-b-25"><span style="padding-right: 5px;"><i class="fa fa-cog" aria-hidden="true"></i></span> &nbsp; 	&nbsp;Setting</h5>
-            <div class="block-content" style="display:none">
-            <ul>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="smartphone"></i>+12 3456789587</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="https://themeforest.net/user/pixelstrap/portfolio">
-                    <i data-feather="crosshair"></i>https://pixelstrap</a>
-                </h5>
-              </li>
-              <li>
-                <h5>
-                  <a href="#">
-                    <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
-                </h5>
-              </li>
-            </ul>
+            <div class="collapse-block ">
+              <h5 class="block-title p-b-25">
+                <span style="padding-right: 5px;">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                </span> &nbsp; &nbsp;Setting</h5>
+              <div class="block-content" style="display:none">
+                <ul>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="smartphone"></i>+12 3456789587</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="https://themeforest.net/user/pixelstrap/portfolio">
+                        <i data-feather="crosshair"></i>https://pixelstrap</a>
+                    </h5>
+                  </li>
+                  <li>
+                    <h5>
+                      <a href="#">
+                        <i data-feather="map-pin"></i>1766 Fidler Drive Texas, 78238.</a>
+                    </h5>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-          
+
         </div>
       </aside>
       <aside class="app-sidebar active" id="rightside" style="display:none">
@@ -4155,8 +4183,8 @@
             </li>
 
             <!--  <li class="close-app"><a class="icon-btn btn-danger" href="#" onclick="removedefault()"><x-icon size="1.5x" class="custom-class"></x-icon></a>
-                  <h5>close</h5>
-                </li> -->
+                    <h5>close</h5>
+                  </li> -->
           </ul>
         </div>
       </aside>
@@ -4543,7 +4571,7 @@
     <!---------------------------------- O2O VIDEO CALL MODEL ---------------------------------->
 
     <div class="o2ovideocallModel  viddiolog modal fade" id="o2ovideocall" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered o2omodelbefore" id="o2omodalcall" role="document">
+      <div class="modal-dialog modal-dialog-centered" id="o2omodalcall" role="document">
         <div class="modal-body" style="border: 3px solid white;padding: 0px 0px;">
 
           <div class="videocall o2obeforeopenChat call-modal">
@@ -4552,49 +4580,326 @@
             <div class="small-image">
               <video id="local-video" style="width:250px" class="bg-img" autoplay></video>
             </div>
-            <div id="o2odetail" class="media videocall-details">
-    
-              
-              <div class="zoomcontent minimizeclass">
-                <a class="text-dark" href="#!" @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
-                  <minimize-2-icon size="1.5x" class="custom-class"></minimize-2-icon>
-                </a>
-              </div>
+            <div id="o2odetail" class="media videocall-details" style="display:block">
+              <ul class="calls float-left">
+                <li class="call-option-toggle">
+                  <a class="icon-btn option-btn" href="#" data-tippy-content="Quick action">
+                    <more-vertical-icon size="1.5x" class="custom-class"></more-vertical-icon>
+                  </a>
+                </li>
+                <div class="call-option-content">
+                  <ul class="call-cont-setting" style="padding: 0px;margin-left: 14px;margin-bottom:-100px;border-radius: 5px;display: grid;box-shadow: 0px 0px 0px 1px #0000000f;">
+                    <li>
+                      <button type="button" class="calloption-close  close">
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </li>
+                    <li>
+
+                      <a href="#" @click="o2ostartchat()">
+                        <div style="margin-right: 11px;">
+                          <img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                          </i>
+                        </div>
+                        <span style="padding-right: 10px;">quick chat</span>
+
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" data-toggle="modal" data-target="#msgcallModal">
+                        <div style="margin-right: 11px;">
+                          <img class="" src="../assets/images/icons/videocall.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                        </div>
+                        <span style="padding-right: 14px;">video call</span>
+
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
+                        <div style="margin-right: 11px;">
+                          <img class="" src="../assets/images/icons/addperson.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                        </div>
+                        <span style="padding-right: 0px;">add participant</span>
+
+                      </a>
+                    </li>
+                    <li>
+                      <a v-if="audioPause" class="" href="#" @click="audioPausecall()" data-tippy-content="">
+                        <div style="margin-right: 11px;font-size: 20px;color: #4d5363cc;">
+                          <i class="fa fa-microphone"></i>
+                        </div>
+                        <span style="padding-right: 0px;">Mute</span>
+                      </a>
+
+                      <a v-if="audioPlay" class=" " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
+                        <div style="margin-right: 11px;font-size: 20px;color: #4d5363cc;">
+                          <i class="fa fa-microphone-slash" aria-hidden="true"></i>
+                        </div>
+                        <span style="padding-right: 0px;">Unmute</span>
+                      </a>
+
+                    </li>
+                    <li>
+                      <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
+                        <div style="margin-right: 11px;">
+                          <img class="" src="../assets/images/icons/speaker.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                        </div>
+                        <span style="padding-right: 0px;">speaker</span>
+
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
+                        <div style="margin-right: 11px;">
+                          <img class="" src="../assets/images/icons/screenshare.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                        </div>
+                        <span style="padding-right: 0px;">screen share</span>
+
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
+                        <div style="margin-right: 11px;">
+                          <img class="" src="../assets/images/icons/record.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                        </div>
+                        <span style="padding-right: 0px;">record</span>
+
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
+                        <div style="margin-right: 11px;">
+                          <img class="" src="../assets/images/icons/minutes.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                        </div>
+                        <span style="padding-right: 0px;">minutes</span>
+
+                      </a>
+                    </li>
+
+                  </ul>
+                </div>
+
+              </ul>
+              <ul style="float: right;">
+                <li>
+                  <div class="">
+                    <a class="text-dark" href="#!" @click="fullScreen()" >
+                      <img class="" src="../assets/images/icons/fullscreen.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                    </a>
+                  </div>
+                </li>
+                <li>
+                  <div class="">
+                    <a class="text-dark" href="#!" @click="minimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
+                      <img class="" src="../assets/images/icons/minscreen.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                    </a>
+                  </div>
+                </li>
+              </ul>
             </div>
             <div class="center-con text-center">
               <ul style="float: right;">
                 <!--<li>
-                  <a v-if="videoPause" class="icon-btn btn-light button-effect pause" href="#" @click="videoPausecall()" data-tippy-content="Hold">
-                    <i class="fa fa-pause off" aria-hidden="true"></i>
-                  </a>
-                  <a v-if="videoPlay" class="icon-btn btn-light button-effect pause" href="#" @click="videoPlaycall()" data-tippy-content="Hold">
-                    <i class="fa fa-play" aria-hidden="true"></i>
-                  </a>
-                </li>-->
+                        <a v-if="videoPause" class="icon-btn btn-light button-effect pause" href="#" @click="videoPausecall()" data-tippy-content="Hold">
+                          <i class="fa fa-pause off" aria-hidden="true"></i>
+                        </a>
+                        <a v-if="videoPlay" class="icon-btn btn-light button-effect pause" href="#" @click="videoPlaycall()" data-tippy-content="Hold">
+                          <i class="fa fa-play" aria-hidden="true"></i>
+                        </a>
+                      </li>-->
                 <li>
                   <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" @click="o2ostopKCall()" data-dismiss="modal" data-tippy-content="Hangup">
                     <phone-icon size="1.5x" class="custom-class"></phone-icon>
                   </a>
                   <br>
-                   <br>
-                   <div id="basicUsage">{{formattedElapsedTime}}</div>
+                  <br>
+                  <div id="basicUsage">{{formattedElapsedTime}}</div>
                 </li>
                 <!--<li>
 
-                  <a v-if="audioPause" class="icon-btn btn-light button-effect pause" href="#" @click="audioPausecall()" data-tippy-content="">
-                    <i class="fa fa-microphone"></i>
-                  </a>
+                        <a v-if="audioPause" class="icon-btn btn-light button-effect pause" href="#" @click="audioPausecall()" data-tippy-content="">
+                          <i class="fa fa-microphone"></i>
+                        </a>
 
-                  <a v-if="audioPlay" class="icon-btn btn-light button-effect " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
-                    <i class="fa fa-microphone-slash" aria-hidden="true"></i>
-                  </a>
-                </li>-->
+                        <a v-if="audioPlay" class="icon-btn btn-light button-effect " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
+                          <i class="fa fa-microphone-slash" aria-hidden="true"></i>
+                        </a>
+                      </li>-->
               </ul>
-              
+
             </div>
-         
+
           </div>
 
+          <div class="chitchat-main small-sidebar" id="o2ocontents" style="display:none;width: 30%;float:right">
+
+            <div class="chat-content tabto" id="startchatsss">
+              <div class=" messages custom-scroll active messageschat o2omessageschat" id="o2ochating" style="min-height:78vh !important;">
+
+                <!-------- Dropzone ------>
+                <vue-dropzone ref="myVueDropzone" @ondragleave="dragLeave(event)" id="dropzone" @vdropzone-success="afterComplete" v-on:vdropzone-sending="dragfileupload" :options="dropzoneOptions"> </vue-dropzone>
+                <!-------- end -------->
+                <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage">
+
+                </loading>
+                <div class="contact-chat  ">
+                  <ul class="chatappend" v-for="chat in friendchat">
+                    <h5 v-if="chat.messageType == 3 && chat.chatType == 3" style="text-align:center;padding: 10px;font-size: 10px;">
+                      <span>{{chatTime(chat.createdAt)}}</span> <br><br> Call ended {{ chat.message }}</h5>
+                    <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
+                      <div class="media">
+                        <div class="profile mr-4" style="margin-left: 0.5rem !important;width: 41px;height: 41px !important;padding: 2px;">
+                          <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 35px !important;" alt="Avatar" /></div>
+                        <div class="media-body">
+                          <div class="contact-name">
+                            <h5 style="font-size: 11px;">{{ c_user.name}}</h5>
+                            <h6 style="font-size: 10px;">{{chatTime(chat.createdAt)}}</h6>
+
+                            <ul class="msg-box" style="margin-top: 0px;margin-left: 8px;">
+                              <li class="msg-setting-main">
+                                <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                                  <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
+                                    <i class="ti-more-alt"></i>
+                                  </div>
+
+                                  <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
+                                    <ul>
+                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                        <a href="#" @click="eidtchat(chat._id,chat.message)">
+                                          <i class="fa fa-pencil"></i>edit</a>
+                                      </li>
+                                      <li>
+                                        <a href="#" @click="quote(chat)">
+                                          <i class="fa fa-share"></i>Quote</a>
+                                      </li>
+
+                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                        <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                          <i class="fa fa-clone"></i>copy</a>
+                                      </li>
+                                      <!--<li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>-->
+                                      <li>
+                                        <a href="#" @click="msgdelete(chat)">
+                                          <i class="ti-trash"></i>delete</a>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+
+                                <h5 v-if="chat.isDeleted == 1" :id="'sendero2o'+chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">message deleted</h5>
+                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'sendero2o'+chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">{{ chat.message }}</h5>
+                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'sendero2o'+chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">
+                                  <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                                <br>
+                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                                  <img :src="hostname+'/images/chatImages/'+chat.message">
+                                </a>
+
+                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'sendero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+
+                              </li>
+
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="sent" style="padding-bottom:20px" v-else>
+                      <div class="media">
+                        <div class="profile mr-4" style="margin-left: 0.5rem !important;width: 41px;height: 41px !important;padding: 2px;">
+                          <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 35px !important;" alt="Avatar" /></div>
+                        <div class="media-body">
+                          <div class="contact-name">
+                            <h5 style="font-size: 10px;">{{ oncallFriend.name }}</h5>
+                            <h6 style="font-size: 10px;">{{chatTime(chat.createdAt)}}</h6>
+                            <ul class="msg-box" style="margin-top: 0px;margin-left: 8px;">
+                              <li class="msg-setting-main">
+
+                                <h5 v-if="chat.isDeleted == 1" :id="'receivero2o'+chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">message deleted</h5>
+                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 0" :id="'receiver'+chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">{{ chat.message }} </h5>
+                                <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.chatType == 1" :id="'receivero2o'+chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">
+                                  <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                                <br>
+                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                                  <img :src="hostname+'/images/chatImages/'+chat.message">
+                                </a>
+                                <a :href="hostname+'/images/chatImages/'+chat.message" :id="'receivero2o'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1"><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+                                <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                                  <div class="msg-setting" :id="'msg-settingo2o'+chat._id" @click="msg_setting(chat._id)">
+                                    <i class="ti-more-alt"></i>
+                                  </div>
+                                  <div class="msg-dropdown" :id="'msg-dropdowno2o'+chat._id" style="z-index: 99999;">
+                                    <ul>
+
+                                      <li>
+                                        <a href="#" @click="quote(chat)">
+                                          <i class="fa fa-share"></i>Quote</a>
+                                      </li>
+
+                                      <li v-if="chat.messageType != 1 && chat.messageType != 2">
+                                        <a href="#" @click="copymsg(chat.message)" v-clipboard:copy="messagecopy" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                                          <i class="fa fa-clone"></i>copy</a>
+                                      </li>
+
+                                    </ul>
+                                  </div>
+                                </div>
+                              </li>
+
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+
+                  </ul>
+                  <img class="" src="../assets/images/contact/2.jpg" alt="Avatar" v-if="isSeen == true && friendCallchat.length > 0" style="width: 20px;float:right" />
+                </div>
+
+                <span v-show="typing" class="">{{ oncallFriend.name }} is typing ...</span>
+
+              </div>
+              <VEmojiPicker @select="selectchatEmoji" class="" v-bind:class="{activeChatemoji: ischatemojiActive}" style="bottom: 86px;" v-if="ischatemojiActive" />
+              <div class="message-input message-call" id="o2osinglemessage-input">
+                <div class="replybox" v-if="replyBox == true">
+                  <p style="padding: 7px; margin: 0;">‘‘{{chatreplydata.message}}’’
+                    <span style="float:right;cursor: pointer;" @click="closeReplybox()">
+                      <x-icon size="1.5x" class="custom-class"></x-icon>
+                    </span>
+                    <br>
+                    <span style="margin-left: 6px;">
+                      {{chatTime(chatreplydata.createdAt)}}
+                    </span>
+                  </p>
+                </div>
+                <div class="wrap emojis-main">
+
+                  <div class="dot-btn dot-primary mr-3" style="margin-right: 0.3rem !important;">
+                    <a class="icon-btn btn-outline-primary button-effect " style="height: 30px;width: 30px;" @click="showChatemoji">
+                      <smile-icon size="1.5x" class="custom-class"></smile-icon>
+                    </a>
+                  </div>
+
+                  <label class="icon-btn btn-outline-primary mr-4" style="height: 30px;width: 30px;margin-right: 0.3rem !important;" for="fileupload">
+                    <i class="fa fa-plus"></i>
+                  </label>
+                  <input type="file" id="fileupload" ref="o2omyFiles" style="display:none" @change="uploadfile($event)" multiple>
+
+                  <input class="setemoj" id="setemoj" ref="afterClick" type="text" v-on:keyup="" @keyup.enter="chat()" v-model="message" style="font-size: 11px;width: calc(100% - 100px);" placeholder="Write your message..." />
+
+                  <button class="submit icon-btn btn-primary disabled" style="height: 30px;width: 30px;" v-show="onChat" @click="chat()" id="send-msg" disabled="disabled">
+                    <send-icon size="1.5x" class="custom-class"></send-icon>
+                  </button>
+                  <button class="submit icon-btn btn-primary " style="display:none" v-show="onEditclear" @click="clearchat()">
+                    <x-icon size="1.5x" class="custom-class"></x-icon>
+                  </button>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
@@ -4604,7 +4909,7 @@
     <!---------------------------------- O2O AUDIO CALL MODEL ---------------------------------->
 
     <div class="o2ovideocallModel  viddiolog modal fade" id="o2oaudiocall" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered o2omodelbefore" id="o2omodalaudiocall" role="document">
+      <div class="modal-dialog modal-dialog-centered " id="o2omodalaudiocall" role="document">
         <div class="modal-body">
 
           <div class="videocall o2obeforeopenChat call-modal">
@@ -4613,8 +4918,7 @@
             <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image"></div>
             <div id="o2oaudiodetail" class="media videocall-details">
-             
-            
+
               <div id="audiobasicUsage">{{formattedElapsedTime}}</div>
               <div class="zoomcontent minimizeclass">
                 <a class="text-dark" href="#!" @click="audiominimizeScreen()" data-dismiss="modal" data-tippy-content="Zoom Screen">
@@ -4642,7 +4946,7 @@
                 </li>
               </ul>
             </div>
-           
+
           </div>
 
         </div>
@@ -4735,20 +5039,20 @@
 
                               </li>
                               <!-- <li class="msg-setting-main">
-                                <h5> your personal assistant to help you &#128512; </h5>
-                                <div class="badge badge-success sm ml-2"> R</div>
-                                <div class="msg-dropdown-main">
-                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                  <div class="msg-dropdown"> 
-                                    <ul>
-                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
+                                  <h5> your personal assistant to help you &#128512; </h5>
+                                  <div class="badge badge-success sm ml-2"> R</div>
+                                  <div class="msg-dropdown-main">
+                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                    <div class="msg-dropdown"> 
+                                      <ul>
+                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                      </ul>
+                                    </div>
                                   </div>
-                                </div>
-                              </li> -->
+                                </li> -->
                             </ul>
 
                           </div>
@@ -4769,20 +5073,20 @@
 
                               </li>
                               <!--   <li class="msg-setting-main">
-                                <h5> it should from elite auther &#128519;</h5>
-                                <div class="badge badge-success sm ml-2"> R</div>
-                                <div class="msg-dropdown-main">
-                                  <div class="msg-setting"><i class="ti-more-alt"></i></div>
-                                  <div class="msg-dropdown"> 
-                                    <ul>
-                                      <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
-                                      <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
-                                      <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
-                                      <li><a href="#"><i class="ti-trash"></i>delete</a></li>
-                                    </ul>
+                                  <h5> it should from elite auther &#128519;</h5>
+                                  <div class="badge badge-success sm ml-2"> R</div>
+                                  <div class="msg-dropdown-main">
+                                    <div class="msg-setting"><i class="ti-more-alt"></i></div>
+                                    <div class="msg-dropdown"> 
+                                      <ul>
+                                        <li><a href="#"><i class="fa fa-share"></i>forward</a></li>
+                                        <li><a href="#"><i class="fa fa-clone"></i>copy</a></li>
+                                        <li><a href="#"><i class="fa fa-star-o"></i>rating</a></li>
+                                        <li><a href="#"><i class="ti-trash"></i>delete</a></li>
+                                      </ul>
+                                    </div>
                                   </div>
-                                </div>
-                              </li> -->
+                                </li> -->
                             </ul>
                           </div>
                         </div>
@@ -5156,7 +5460,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h2 class="modal-title">
-               <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" /> New Chat</h2>
+              <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" /> New Chat</h2>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -5167,31 +5471,31 @@
                 <input class="form-control modelsearch" type="text" placeholder="Search ..." />
               </div>
             </div>
-           <div class="form-group mb-0 mt-2">
-             <h5>A</h5>
-            <ul class="chat-main custom-scroll">
-              <li v-for="friends in orderedUsers" v-if="friends._id != c_user._id || friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" data-dismiss="modal" style="cursor: pointer;width: 100%;    padding-left: 0px;padding-right: 5px;">
-                <div class="chat-box">
-                  <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                  <div v-else class="profile offline">
-                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
-                  </div>
+            <div class="form-group mb-0 mt-2">
+              <h5>A</h5>
+              <ul class="chat-main custom-scroll">
+                <li v-for="friends in orderedUsers" v-if="friends._id != c_user._id || friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" data-dismiss="modal" style="cursor: pointer;width: 100%;    padding-left: 0px;padding-right: 5px;">
+                  <div class="chat-box">
+                    <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                    <div v-else class="profile offline">
+                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                    </div>
 
-                  <div class="details" style="padding-left: 73px;">
-                    <h5>{{friends.name}}</h5>
-                    <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
-                    <h6 v-else>Start Chat</h6>
-                  </div>
+                    <div class="details" style="padding-left: 73px;">
+                      <h5>{{friends.name}}</h5>
+                      <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+                      <h6 v-else>Start Chat</h6>
+                    </div>
 
-                  <div class="date-status">
-                    <h6 class="todayDate">{{isToday(friends.updatedByMsg)}}</h6>
-                    <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
-                    <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
+                    <div class="date-status">
+                      <h6 class="todayDate">{{isToday(friends.updatedByMsg)}}</h6>
+                      <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
+                      <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
+                    </div>
                   </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -5214,68 +5518,41 @@
               </div>
             </div>
             <div class="form-group mb-0 mt-2">
-             <h5>A</h5>
-            <ul class="call-log-main custom-scroll">
-              <li style="width: 100%;padding-left: 0px; padding-right: 11px;" v-for="friends in orderedUsers" v-if="friends._id != c_user._id">
-                <div class="call-box">
+              <h5>A</h5>
+              <ul class="call-log-main custom-scroll">
+                <li style="width: 100%;padding-left: 0px; padding-right: 11px;" v-for="friends in orderedUsers" v-if="friends._id != c_user._id">
+                  <div class="call-box">
                     <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                  <div v-else class="profile offline">
-                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
-                  </div>
-                  <div class="details">
-                    <h5>{{friends.name }}</h5>
-                    <h6>
-                      <i data-feather="arrow-down-left"></i>{{isToday(friends.updatedByMsg)}}</h6>
-                  </div>
-                  <div class="call-status">
-                    <!--<div class="icon-btn btn-outline-success button-effect btn-sm">
-                      <phone-icon size="1.5x" class="custom-class"></phone-icon>
-                    </div>-->
+                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                    <div v-else class="profile offline">
+                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                    </div>
+                    <div class="details">
+                      <h5>{{friends.name }}</h5>
+                      <h6>
+                        <i data-feather="arrow-down-left"></i>{{isToday(friends.updatedByMsg)}}</h6>
+                    </div>
+                    <div class="call-status">
+                      <!--<div class="icon-btn btn-outline-success button-effect btn-sm">
+                        <phone-icon size="1.5x" class="custom-class"></phone-icon>
+                      </div>-->
                       <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#o2oaudiocall" @click="startAudiocall(friends)">
                         <phone-icon size="1.5x" class="custom-class"></phone-icon>
                       </a>
-                      <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall(friends)"  data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#o2ovideocall">
+                      <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall(friends)" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#o2ovideocall">
                         <video-icon size="1.5x" class="custom-class"></video-icon>
                       </a>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
 
-            </ul>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
- <div class="viddiolog modal fade" id="testvideocall" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-body">
-          <div class="videocall call-modal bg-size"><img class="bg-img" src="http://themes.pixelstrap.com/chitchat/assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" style="display: none;">
-            <div class="small-image bg-size" ><img class="bg-img" src="http://themes.pixelstrap.com/chitchat/assets/images/avtar/big/videocall.jpg" alt="Avatar" style="display: none;"></div>
-            <div class="media videocall-details">
-              <div class="usersprof">
-                <div class="profile bg-size" ><img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" style="display: none;"></div>
-                <div class="profile bg-size" ><img class="bg-img" src="../assets/images/avtar/3.jpg" alt="Avatar" style="display: none;"></div>
-              </div>
-              <div class="media-body">
-                <h5>Josephin water</h5>
-                <h6>America ,California</h6>
-              </div>
-              <div id="basicUsage">00:00:26</div>
-              <div class="zoomcontent"><a class="text-dark" href="#!" onclick="javascript:toggleFullScreen()" data-tippy-content="Zoom Screen"><img src="../assets/images/logo/maximize.svg" alt="zoom screen"></a></div>
-            </div>
-            <div class="center-con text-center">
-              <ul>
-                <li><a class="icon-btn btn-light button-effect pause" href="#" data-tippy-content="Hold"><i class="ti-control-pause"></i></a></li>
-                <li><a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" data-dismiss="modal" data-tippy-content="Hangup"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a></li>
-                <li><a class="icon-btn btn-light button-effect mic" href="#" data-tippy-content="Mute"><i class="fa fa-microphone"></i></a></li>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
+   
 
   </div>
 </template>
@@ -5387,7 +5664,7 @@ export default {
       multiplemembers: [],
       multipleneewmembers: [],
       havegroup: false,
-      groupmembers:'',
+      groupmembers: '',
       groupName: '',
       addgroupData: {},
       showGrouptitle: true,
@@ -5451,9 +5728,9 @@ export default {
     receivemsg(data) {
       //this.c_user._id == data.receiverId._id &&
       console.log(data);
-       setTimeout(() => {
-            $('#f_typing' + data.msgData.receiverId._id).html(data.msgData.message);
-          }, 1500);
+      setTimeout(() => {
+        $('#f_typing' + data.msgData.receiverId._id).html(data.msgData.message);
+      }, 1500);
 
 
       if (this.c_user._id == data.msgData.receiverId._id && this.singlefriend._id == data.msgData.senderId._id) {
@@ -5489,10 +5766,10 @@ export default {
           return data.userId === obj._id;
         }).pop();
 
-     const userdec = this.friendsdata.filter((obj) => {
-              return data.userId === obj._id;
-            }).pop();
-            userdec.updatedByMsg = new Date().toISOString();
+        const userdec = this.friendsdata.filter((obj) => {
+          return data.userId === obj._id;
+        }).pop();
+        userdec.updatedByMsg = new Date().toISOString();
 
         this.isSeen = false;
         fdata.usCount += 1;
@@ -5501,7 +5778,7 @@ export default {
         }, 2000);
 
       }
-      
+
 
 
 
@@ -5885,7 +6162,7 @@ export default {
   watch: {
     callstatus() {
       console.log(this.callstatus);
-      if (this.callstatus > 20) {
+      if (this.callstatus > 1020) {
         this.o2ostopKCall();
         // var incoming = document.getElementById("incommingcall");
         //	incoming.pause();
@@ -6457,7 +6734,7 @@ export default {
             userId: this.c_user._id,
             msgData: this.msgObj
           })
-        //  $('#f_typing' + this.singlefriend._id).html(this.msgObj.message);
+          //  $('#f_typing' + this.singlefriend._id).html(this.msgObj.message);
           this.$socket.emit('stopTyping', { selectFrienddata: this.singlefriend, UserId: this.c_user._id });
           axios.post('/chat', {
             msgData: this.msgObj,
@@ -6772,7 +7049,7 @@ export default {
       $('#group_chat').removeClass("active");
 
       this.singlegroup = group;
-      this.groupmembers=group.members.length;
+      this.groupmembers = group.members.length;
       this.groupIndex = index;
       console.log(this.groupIndex);
       this.userid = this.c_user._id;
@@ -7587,7 +7864,7 @@ export default {
     //////////////////////////////////////// BROADCASTING ////////////////////////////////////////////////
 
 
-    startBroadcasting() {
+  startBroadcasting() {
 
       this.broadcastPassword = this.setPassword;
       this.broadcastChat = [];
@@ -7789,7 +8066,7 @@ export default {
     /////////////////////////////////////// END BROADCASTING //////////////////////////////////////////
 
     ////////////////////////////////////// O2O VIDEO CALL ////////////////////////////////////////
-    o2oshowCallchat() {
+o2oshowCallchat() {
       $('#o2ochatopen').removeClass('dot-btn dot-success grow');
       $('#o2ochatopen').hide();
       $('#o2ochatclose').show();
@@ -7814,6 +8091,9 @@ export default {
       $('#local-video').removeClass('beforelocalVideo');
       $('#local-video').addClass('afterlocalVideo');
 
+      $('#o2odetail').removeClass('beforeDetail');
+      $('#o2odetail').addClass('afterDetail');
+
       $('#o2ocontents').show();
       $('.chitchat-main .chat-content').css('opacity', '1');
     },
@@ -7829,6 +8109,8 @@ export default {
       $('#local-video').addClass('beforelocalVideo');
       $('#local-video').removeClass('afterlocalVideo');
       $('#local-video').addClass('beforelocalVideo');
+      $('#o2odetail').removeClass('afterDetail');
+      $('#o2odetail').addClass('beforeDetail');
       $('#o2ocontents').hide();
       $('#o2ochatclose').hide();
       $('#o2ochatopen').show();
@@ -8045,6 +8327,9 @@ export default {
       $('#local-video').removeClass('beforelocalVideo');
       $('#local-video').addClass('afterlocalVideo');
 
+      $('#o2odetail').removeClass('beforeDetail');
+      $('#o2odetail').addClass('afterDetail');
+
       $('#o2ocontents').show();
       $('.chitchat-main .chat-content').css('opacity', '1');
 
@@ -8196,6 +8481,8 @@ export default {
       $('#o2omodalaudiocall').removeClass('o2omodelbefore');
       $('#o2omodalaudioaudiocall').addClass('o2omodelafter');
 
+      $('#o2oaudiodetail').removeClass('beforeDetail');
+      $('#o2oaudiodetail').addClass('afterDetail');
 
       $('#o2oaudiocontents').show();
       $('.chitchat-main .chat-content').css('opacity', '1');
@@ -8241,6 +8528,8 @@ export default {
       $('#o2omodalaudiocall').removeClass('o2omodelafter');
       $('#o2omodalaudiocall').addClass('o2omodelbefore');
 
+      $('#o2oaudiodetail').removeClass('afterDetail');
+      $('#o2oaudiodetail').addClass('beforeDetail');
       $('#o2oaudiocontents').hide();
       $('#o2oaudiochatclose').hide();
       $('#o2oaudiochatopen').show();
@@ -8738,7 +9027,13 @@ groupSidebar(){
     $('.chat-friend-toggle').on('click', function() {
       $('.chat-frind-content').toggle();
     });
+    $('.call-option-toggle').on('click', function() {
+      $('.call-option-content').toggle();
+    });
 
+    $('.calloption-close').on('click', function() {
+      $('.call-option-content').css('display', 'none');
+    });
     $('.gr-chat-friend-toggle').on('click', function() {
       $('.gr-chat-frind-content').toggle();
     });
@@ -8959,6 +9254,7 @@ groupSidebar(){
         $(".toggle-emoji, .toggle-sticker").removeClass("active");
         $('.contact-poll-content').css('display', 'none');
         $('.chat-frind-content').css('display', 'none');
+        //$('.call-option-content').css('display', 'none');
       }
     })
 
@@ -9162,97 +9458,93 @@ display:none !important;
 }
 
 .message-call {
-  height: 95px;
-  position: fixed;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
-  padding: 26px 18px;
-  z-index: 9;
-  width: 30% !important;
-  bottom: -55px !important;
+    height: 59px !important;
+    position: fixed;
+    transition: all 0.5s;
+    padding: 17px 8px;
+    z-index: 9;
+    width: 30% !important;
+    bottom: 13px !important;
 }
 
 .beforeopenChat {
-  /*background-image: url(/img/videocall_bg.b320143d.jpg);
+  background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 100%;
-  float: left;*/
+  float: left;
 }
 
 .afteropenChat {
-  /*background-image: url(/img/videocall_bg.b320143d.jpg);
+  background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 70%;
-  float: left;*/
+  float: left;
 }
 
 .modelafter {
-  /*display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(99vh - 60px);*/
+  height: calc(99vh - 60px);
 }
 
 .modelbefore {
-  /*display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(58vh - 36px);*/
+  height: calc(58vh - 36px);
 }
+
 
 
 /*020 video call*/
 
-
 .o2obeforeopenChat {
-  /*background-image: url(/img/videocall_bg.b320143d.jpg);
+  background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 100%;
-  float: left;*/
+  float: left;
 }
 
 .o2oafteropenChat {
-  /*background-image: url(/img/videocall_bg.b320143d.jpg);
+  background-image: url(/img/videocall_bg.b320143d.jpg);
   background-size: cover;
   background-position: center center;
   display: block;
   width: 70%;
-  float: left;*/
+  float: left;
 }
 
 .o2omodelafter {
-  /*display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(99vh - 60px);*/
+  height: calc(99vh - 60px);
 }
 
 .o2omodelbefore {
-  /*display: flex;
-  align-items: center;
-  justify-content: center;
-  height: calc(58vh - 36px);*/
+  max-width: 900px !important;
 }
 
 .beforelocalVideo {
-  /*width: 286px;
-  height: 217px;*/
+  width: 286px;
+  height: 217px;
 }
 
 .afterlocalVideo {
-  /*width: 227px;
-  height: 176px;*/
+  width: 227px;
+  height: 176px;
 }
 
 .callChat {
-  /*width: 30%;
-  float: right;*/
+  width: 30%;
+  float: right;
 }
 
 .minimizeclass {
@@ -9262,6 +9554,4 @@ display:none !important;
   width: 35px;
   height: 36px;
 }
-
-
 </style>
