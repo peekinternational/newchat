@@ -4524,7 +4524,7 @@
     <div class="modal fade" id="videocallReceiver" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body">
-          <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/avtar/big/audiocall.jpg" alt="Avatar" />
+          <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/modal/incommingCall.png" alt="Avatar" />
             <div class="center-con text-center">
               <div class="title2" id="incomingName"></div>
               <ul>
