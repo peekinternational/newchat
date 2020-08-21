@@ -28,7 +28,7 @@
               <div style="width: 20px;">
                 <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;" /></span>
               </div>
-              <span style="padding-left: 16px;">Chat</span>
+              <span style="padding-left: 18px;">Chat</span>
             </li>
             <li>
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/meetings.png" alt="Avatar" style="height: auto;" /></span>
@@ -36,11 +36,11 @@
             </li>
             <li>
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/rooms.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Rooms</span>
+              <span style="padding-left: 20px;">Rooms</span>
             </li>
             <li data-toggle="modal" data-target="#showPresenter">
               <span style="vertical-align: text-bottom;" class="" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Live</span>
+              <span style="padding-left: 17px;">Live</span>
             </li>
             <li @click="contact()">
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/contacts.png" alt="Avatar" style="height: auto;" /></span>
@@ -48,35 +48,35 @@
             </li>
             <li>
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/schedule.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Schedule</span>
+              <span style="padding-left: 22px;">Schedule</span>
             </li>
             <li>
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/todo.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">To-Do</span>
+              <span style="padding-left: 20px;">To-Do</span>
             </li>
             <li>
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/projects.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Projects</span>
+              <span style="padding-left: 17px;">Projects</span>
             </li>
             <li @click="document()">
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/documents.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Documents</span>
+              <span style="padding-left: 17px;">Documents</span>
             </li>
             <li @click="status()" style="display: flex;">
 
               <div style="width: 20px;">
                 <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/files.png" alt="Avatar" style="height: auto;" /></span>
               </div>
-              <span style="padding-left: 16px;">Files</span>
+              <span style="padding-left: 19px;">Files</span>
             </li>
             <li class="records">
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/records.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Records</span>
+              <span style="padding-left: 24px;">Records</span>
               <span style="margin-left: 16px;" class="badge badge-danger sm">2</span>
             </li>
             <li class="minutes" style="    margin-bottom: 66px !important;">
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/minutes.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Minutes</span>
+              <span style="padding-left: 22px;">Minutes</span>
             </li>
 
             <!--<li>
@@ -165,7 +165,7 @@
                     <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;width: 57px;" />
                   </div>
                   <div style="padding-left: 12px; margin-top: 5px;">
-                    <p style="font-size:16px;margin-bottom: 10px;"> {{c_user.name}} </p>
+                    <h5 style="font-size:16px;margin-bottom: 10px;"> {{c_user.name}} </h5>
 
                     <div v-if="c_user.pStatus == 0" class="badge badge-success">Online</div>
                     <div v-else-if="c_user.pStatus == 1" class="badge badge-warning">Away</div>
@@ -286,7 +286,7 @@
                 </div>
               </div>
             </div>
-            <div class="theme-tab tab-sm chat-tabs" style="padding:0px;margin-top: 50px;">
+            <div class="theme-tab tab-sm chat-tabs" style="padding:0px;margin-top: 0px;">
 
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" data-to="chat-content">
@@ -306,12 +306,16 @@
                 <div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
                   <div class="theme-tab">
                     <ul class="nav nav-tabs" id="myTab1" role="tablist" style="border: 1px solid rgb(234 238 248 / 67%);">
-                      <li class="nav-item" style="margin: 0px 19px;">
+                      <li class="nav-item" style="margin: 0px 0px;">
                         <a class="nav-link button-effect active" @click="usertab()" id="direct-tab" data-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a>
                       </li>
                       <span style="border-right: 1px #bac5e947 solid;border-width: 1px;padding: 15px 0;"></span>
-                      <li class="nav-item" style="margin: 0px 19px;">
+                      <li class="nav-item" style="margin: 0px 0px;">
                         <a class="nav-link button-effect" @click="getgroups()" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" data-to="group_chat">Group</a>
+                      </li>
+                      <span style="border-right: 1px #bac5e947 solid;border-width: 1px;padding: 15px 0;"></span>
+                      <li class="nav-item" style="margin: 0px 0px;">
+                        <a class="nav-link button-effect"  id="meeting-tab" data-toggle="tab" href="#meeting" role="tab" aria-controls="meeting" aria-selected="true" data-to="meeting_chat">Meeting</a>
                       </li>
                     </ul>
                     <div class="tab-content" id="myTabContent1">
@@ -9464,7 +9468,7 @@ display:none !important;
     padding: 17px 8px;
     z-index: 9;
     width: 30% !important;
-    bottom: 9px !important;
+    bottom: 0px !important;
 }
 
 .beforeopenChat {
@@ -9530,7 +9534,7 @@ display:none !important;
 }
 
 .o2omodelbefore {
-  max-width: 900px !important;
+  max-width: 850px !important;
 }
 
 .beforelocalVideo {
