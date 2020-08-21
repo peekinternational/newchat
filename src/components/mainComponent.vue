@@ -4591,8 +4591,8 @@
                     <more-vertical-icon size="1.5x" class="custom-class"></more-vertical-icon>
                   </a>
                 </li>
-                <div class="call-option-content">
-                  <ul class="call-cont-setting" style="padding: 0px;margin-left: 14px;margin-bottom:-100px;border-radius: 5px;display: grid;box-shadow: 0px 0px 0px 1px #0000000f;">
+                <div class="call-option-content" style="display:none">
+                  <ul class="call-cont-setting" style="padding: 0px;margin-left: 14px;margin-bottom:-24px;border-radius: 5px;display: grid;box-shadow: 0px 0px 0px 1px #0000000f;">
                     <li>
                       <button type="button" class="calloption-close  close">
                         <span aria-hidden="true">×</span>
