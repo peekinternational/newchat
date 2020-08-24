@@ -10,7 +10,7 @@ h5{
     z-index: 9;
     bottom: 0px;
     background: white;
-    padding: 17px;
+    padding: 12px 0px;
     border-top: 1px #ddd9d9eb solid;
 }
 .logoutDiv span{
@@ -26,6 +26,7 @@ h5{
     border-radius: 20px;
     position: relative;
 }
+
 .navprofile.online:before {
     background-color: #3fcc35;
 }
@@ -679,4 +680,14 @@ ul.call-cont-setting li a span {
 }
 .chitchat-container .chitchat-left-sidebar .recent-default .recent .theme-title {
     padding: 0 10px;
+}
+.chat-main li .chat-box .date-status .status {
+    padding-top: 9px;
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+.chitchat-container .main-nav .logo-warpper {
+    text-align: center;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #eff1f2;
 }

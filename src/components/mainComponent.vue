@@ -12,7 +12,7 @@
 
         <div class="logo-warpper" style="border: 0;">
           <div class="navlogo">
-            <a href=""><img src="../assets/images/logo/logo.png" alt="logo" style="border-radius: 0px;" /></a>
+            <a href=""><img src="../assets/images/logo/logo.png" alt="logo" style="border-radius: 0px;height:auto" /></a>
           </div>
           <div style="margin-top: 17px;padding-right: 10px;">
             <span><img class="" src="../assets/images/nav/bars.png" alt="Avatar" style="height: auto;border-radius: 0;" /></span>
@@ -120,9 +120,9 @@
 
       </nav>
       <div class="logoutDiv">
-        <span @click="notification()" class="dot-btn dot-danger grow"><img class="" src="../assets/images/nav/notification.png" alt="Avatar" style="height: auto;width: 28px;" /></span>
-        <span @click="setting()" style="padding-left: 15px;padding-right: 15px;"><img class="" src="../assets/images/nav/setting.png" alt="Avatar" style="height: auto;width: 28px;" /></span>
-        <span v-on:click="logout()"><img class="" src="../assets/images/nav/logout.png" alt="Avatar" style="height: auto;width: 28px;" /></span>
+        <span @click="notification()" class="dot-btn dot-danger grow" style="padding-left: 3px;"><img class="" src="../assets/images/nav/notification.png" alt="Avatar" style="height: auto;" /></span>
+        <span @click="setting()" style="padding-left: 5px;padding-right: 5px;"><img class="" src="../assets/images/nav/setting.png" alt="Avatar" style="height: auto;" /></span>
+        <span v-on:click="logout()"><img class="" src="../assets/images/nav/logout.png" alt="Avatar" style="height: auto;" /></span>
       </div>
       <aside class="chitchat-left-sidebar left-disp">
         <div class="recent-default dynemic-sidebar active" id="recent">
@@ -373,7 +373,7 @@
                                 <div class="details" style="padding-left: 73px;">
                                   <h5>{{friends.name}}</h5>
                                   <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
-                                  <h6 v-else>Start Chat</h6>
+                                  <h6 :id="'f_typing'+friends._id" v-else>Start Chat</h6>
                                 </div>
 
                                 <div class="date-status">
@@ -4711,7 +4711,35 @@
                           <i class="fa fa-play" aria-hidden="true"></i>
                         </a>
                       </li>-->
-                <li>
+                   <li>
+                     <div >
+                     <a v-if="audioPause" class="" href="#" @click="audioPausecall()" data-tippy-content="">
+                          <i class="fa fa-microphone"></i>
+                      </a>
+
+                      <a v-if="audioPlay" class=" " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
+                          <i class="fa fa-microphone-slash" aria-hidden="true"></i>
+                      </a>
+                      </div>
+                    </br>
+                    </br>
+                    <div>
+                     <a class="" href="#" @click="o2ostopKCall()">
+                       <img class="" src="../assets/images/icons/videocall.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                    </a>
+                    </div>
+                    </br>
+                    </br>
+                    <div>
+                    <a class="" id="o2ochatopen" href="#" @click="o2ostartchat()" >
+                      <img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                    </a>
+                    <a class="icon-btn " id="o2ochatclose" href="#" @click="o2ohideCallchat()" style="display:none" >
+                    <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
+                  </a>
+                    </br>
+                    </br>
+                    </div>
                   <a class="icon-btn btn-danger button-effect btn-xl is-animating" href="#" @click="o2ostopKCall()" data-dismiss="modal" data-tippy-content="Hangup">
                     <phone-icon size="1.5x" class="custom-class"></phone-icon>
                   </a>
