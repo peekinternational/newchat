@@ -4850,8 +4850,8 @@
                               <li class="msg-setting-main">
 
                                 <h5 v-if="g_chat.isDeleted == 1" :id="'receivero2o'+g_chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">message deleted</h5>
-                                <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.g_chatType == 0" :id="'receiver'+g_chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">{{ g_chat.message }} </h5>
-                                <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.g_chatType == 1" :id="'receivero2o'+g_chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">
+                                <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 0" :id="'receiver'+g_chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">{{ g_chat.message }} </h5>
+                                <h5 v-else-if="g_chat.messageType != 1 && g_chat.messageType != 2 && g_chat.chatType == 1" :id="'receivero2o'+g_chat._id" style="font-size: 10px;padding-right: 10px;padding: 6px 10px;">
                                   <span style="border-bottom: 1px solid;">‘‘{{g_chat.commentId.message}}’’</span><br> {{ g_chat.message }}</h5>
                                 <br>
                                 <a :href="hostname+'/images/chatImages/'+g_chat.message" :id="'receivero2o'+g_chat._id" v-if="g_chat.messageType == 1 && g_chat.isDeleted != 1" download>
