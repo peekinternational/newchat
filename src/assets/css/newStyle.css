@@ -129,7 +129,7 @@ h5{
     background-color: transparent !important;
     width: 260px !important;
     height: 35px !important;
-    border: 1px #e4e9f863 solid !important;
+    border: 2px #e4e9f863 solid !important;
 }
 .chat-main li.active .details h6 {
     font-weight: 600;
@@ -690,4 +690,34 @@ ul.call-cont-setting li a span {
     text-align: center;
     padding-bottom: 18px;
     border-bottom: 1px solid #eff1f2;
+}
+#myTab li{
+    margin: 0px;
+}
+.chitchat-container .chitchat-left-sidebar .recent-default .chat>.theme-tab .nav-tabs .nav-item .nav-link {
+    min-width: 90px;
+}
+.chitchat-main .messages .contact-details {
+    padding: 8px 12px;
+    background-color: #fff;
+    box-shadow: 0 -55px 0px 0px #F3F6FF;
+    position: fixed;
+    width: calc(100vw - 500px);
+    z-index: 999;
+    transition: all 0.9s;
+    border-radius: 5px;
+}
+.theme-tab .nav-tabs .nav-item .nav-link {
+    font-size: calc(14px + (15 - 14) * ((100vw - 320px) / (1920 - 320)));
+    font-weight: 500;
+    padding: 9px 22px;
+    min-height: 30px;
+    border-radius: 10px;
+    min-width: 140px;
+    background-color: transparent !important;
+    border: none !important;
+    color: #223645 !important;
+    text-align: center;
+    transition: all 0.3s ease;
+    justify-content: center;
 }
