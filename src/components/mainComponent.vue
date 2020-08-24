@@ -6107,8 +6107,8 @@ export default {
         incoming.muted = true;
         $('#videocallReceiver').modal('hide');
         $('#audiocallReceiver').modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
+        //$('body').removeClass('modal-open');
+        //$('.modal-backdrop').remove();
         this.reset();
         this.start();
 
