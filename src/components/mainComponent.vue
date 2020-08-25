@@ -2929,7 +2929,21 @@
 
                         <ul class="msg-box">
                           <li class="msg-setting-main">
-                            <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
+                        
+
+                            <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
+                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 1" :id="'sender'+chat._id">
+                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
+                            <br>
+
+                            <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
+                              <img :src="hostname+'/images/chatImages/'+chat.message">
+                            </a>
+
+                            <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
+
+    <div class="msg-dropdown-main" v-if="chat.isDeleted != 1">
                               <div class="msg-setting" :id="'msg-setting'+chat._id" @click="msg_setting(chat._id)">
                                 <i class="ti-more-alt"></i>
                               </div>
@@ -2957,19 +2971,6 @@
                                 </ul>
                               </div>
                             </div>
-
-                            <h5 v-if="chat.isDeleted == 1" :id="'sender'+chat._id">message deleted</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 0" :id="'sender'+chat._id">{{ chat.message }}</h5>
-                            <h5 v-else-if="chat.messageType != 1 && chat.messageType != 2 && chat.messageType != 3 && chat.chatType == 1" :id="'sender'+chat._id">
-                              <span style="border-bottom: 1px solid;">‘‘{{chat.commentId.message}}’’</span><br> {{ chat.message }}</h5>
-                            <br>
-
-                            <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'sender'+chat._id" v-if="chat.messageType == 1 && chat.isDeleted != 1" download>
-                              <img :src="hostname+'/images/chatImages/'+chat.message">
-                            </a>
-
-                            <a :href="hostname+'/images/chatImages/'+chat.message" target="_blank" :id="'sender'+chat._id" v-if="chat.messageType == 2 && chat.isDeleted != 1" download><img src="../assets/images/fileIcon.png" style="width: 40px;"> {{ chat.message }}</a>
-
                           </li>
                           <!-- <li class="msg-setting-main">
                                   <h5> your personal assistant to help you &#128512; </h5>
@@ -4573,17 +4574,17 @@
     </div>
 
 
-<!---------------------------------- O2O VIDEO CALL MODEL ---------------------------------->
+<!---------------------------------- GROUP VIDEO CALL MODEL ---------------------------------->
 
     <div class="groupvideocallModel  viddiolog modal fade" id="groupvideocall" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" id="groupmodalcall" role="document">
         <div class="modal-body" style="border: 3px solid white;padding: 0px 0px;">
 
           <div class="videocall groupbeforeopenChat call-modal">
-            <video id="videoOutput" class="remoteVideoWidth" style="width:100%" autoplay></video>
+            <video id="grpvideoOutput" class="remoteVideoWidth" style="width:100%" autoplay></video>
             <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image">
-              <video id="local-video" style="width:250px" class="bg-img" autoplay></video>
+              <video id="grplocal-video" style="width:250px" class="bg-img" autoplay></video>
             </div>
             <div id="groupdetail" class="media videocall-details" style="display:block">
               <ul class="calls float-left">
@@ -4936,7 +4937,7 @@
       </div>
     </div>
 
-    <!-------------------------------------------- CLOSE O2O CALL MODEL -------------------------------->
+    <!-------------------------------------------- CLOSE GROUP CALL MODEL -------------------------------->
 
 
 
@@ -8661,16 +8662,7 @@ export default {
         friendId: Rid,
         status: 0
       });
-      axios.post('/updateCallStatus', {
-        userId: this.c_user._id,
-        friendId: Rid,
-        status: 0
-      }).then(response => {
-
-      }, function(err) {
-        console.log('err', err);
-        //alert('error');
-      });
+    this.updateCallStatus();
 
       this.msgObj = {
         chatType: 3,
@@ -8809,7 +8801,18 @@ export default {
       console.log(this.oncallFriend);
     },
 
+updateCallStatus(){
+  axios.post('/updateCallStatus', {
+        userId: this.c_user._id,
+        friendId: Rid,
+        status: 0
+      }).then(response => {
 
+      }, function(err) {
+        console.log('err', err);
+        //alert('error');
+      });
+},
     ///////////////////////////////////////////////////////// O2O AUDIO CALL /////////////////////////////////////////////////////////////////////////////
 
     startAudiocall(friends) {
