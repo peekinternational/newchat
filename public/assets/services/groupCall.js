@@ -1,13 +1,13 @@
 var groupUser = '';
 var groupRoomName = '';
 var name;
-var socket = io('https://' + "peekvideochat.com:3000");
+var socket = io('https://'+"peekvideochat.com:3000");
 var participants = {};
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
-console.log(socket);
+
 window.onbeforeunload = function () {
-        socket.disconnect();
+    socket.disconnect();
 };
 
 socket.on('connect', () => {
@@ -55,10 +55,11 @@ socket.on('message', parsedMessage => {
     }
 
   // Call this function from HTML button click
-  function register(groupData, userData) {
+    function register(groupData, userData) {
         socket.connect();
         name = userData; // document.getElementById('name').value;
         var roomName = groupData; // document.getElementById('roomName').value;
+        groupUser = name;
 
         console.log("name: " + name);
         console.log("roomName: " + roomName);
@@ -108,6 +109,7 @@ socket.on('message', parsedMessage => {
             mediaConstraints: constraints,
             onicecandidate: participant.onIceCandidate.bind(participant)
         }
+
         participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
             function (error) {
                 if (error) {
