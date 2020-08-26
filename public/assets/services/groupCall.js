@@ -98,7 +98,7 @@ socket.on('message', parsedMessage => {
         };
 
         var participant = new Participant(groupUser);
-        participants[$rootScope.groupUser] = participant;
+        participants[groupUser] = participant;
         var video = participant.getVideoElement();
 
         console.log(video);
