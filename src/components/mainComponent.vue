@@ -4950,6 +4950,7 @@
 
           <div class="videocall o2obeforeopenChat call-modal">
             <video id="videoOutput" class="remoteVideoWidth" style="width:100%" autoplay></video>
+             <video id="remoteScreenshare" class="" style="width:100%;display:none"> </video>
             <img class="bg-img" src="../assets/images/avtar/big/videocall_bg.jpg" alt="Avatar" />
             <div class="small-image">
               <video id="local-video" style="width:250px" class="bg-img" autoplay></video>
@@ -5023,7 +5024,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
+                      <a href="#" id="share-screen" onclick="screenShare()">
                         <div style="margin-right: 11px;">
                           <img class="" src="../assets/images/icons/screenshare.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                         </div>
@@ -9457,6 +9458,17 @@ groupSidebar(){
     console.log(this.c_user.name);
     this.current_User = this.c_user;
     console.log(JSON.parse(localStorage.getItem('userData')));
+    axios.post('/updateCallStatus', {
+				   userId: this.c_user._id,
+				   friendId:'',
+				   status: 0
+				  }).then(response => {
+					   
+						}, function(err) {
+						  console.log('err', err);
+						  //alert('error');
+				   });
+  localStorage.setItem('tokenData', this.c_user._id);
     this.hostname = this.$hostname;
     this.getfriends();
     //console.log(this.getUsers());
@@ -10228,7 +10240,7 @@ display:none !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(58vh - 36px);
+  height: calc(100vh - 60px);
 }
 
 
@@ -10319,5 +10331,14 @@ display:none !important;
   padding: 9px;
   width: 35px;
   height: 36px;
+}
+#remoteScreenshare{
+  object-fit: initial;
+  width: 400px;
+  height: 600px;
+}
+#videoOutput{
+  object-fit: initial;
+  height: 630px;
 }
 </style>
