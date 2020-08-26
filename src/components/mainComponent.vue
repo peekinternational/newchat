@@ -5977,7 +5977,7 @@
             <div id="room" style="display: none;">
               <h2 id="room-header"> Room Name here</h2>
               <div id="participants"></div>
-              <input type="button" id="button-leave" onclick="leaveGroupCall()" value="Leave room">
+              <input type="button" id="button-leave" onclick="leaveRoom()" value="Leave room">
             </div>
           <!-- </div> -->
         </div>
