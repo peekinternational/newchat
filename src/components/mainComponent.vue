@@ -6946,7 +6946,8 @@ export default {
       this.replyBox = false;
       this.singlefriend = friend;
 
-
+localStorage.setItem('tokenIs', this.c_user._id + '-' + this.singlefriend._id + '-' + this.c_user.name);
+           localStorage.setItem('friendId', this.singlefriend._id);
       this.$socket.emit('updateUserSelection', {
         selectedUser: this.singlefriend._id,
         userId: this.c_user._id
