@@ -1,7 +1,7 @@
 var groupUser = '';
 var groupRoomName = '';
 var name;
-var socket = io('https://' + "turn.peekvideochat.com:3000");
+var socket = io('https://' + "peekvideochat.com:3000");
 var participants = {};
 const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
