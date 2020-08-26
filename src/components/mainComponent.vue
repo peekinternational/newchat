@@ -236,7 +236,7 @@
             <ul class="chat-cont-setting" style="padding: 7px;margin-left: 14px;margin-bottom:-15px;box-shadow: 0px 0px 0px 1px #0000000f;">
               <li>
 
-                <a href="#" data-toggle="modal" data-target="#msgchatModal">
+                <a href="#" data-toggle="modal" data-target="#newGroupCall">
                   <div style="margin-right: 11px;">
                     <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                     </i>
@@ -5955,7 +5955,34 @@
         </div>
       </div>
     </div>
-   
+       <div id="newGroupCall" class="modal fade" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+         <div id='join'>
+          <h1>Join a Room</h1>
+          <!-- <form onsubmit="register(); return false;" accept-charset="UTF-8"> -->
+            <p>
+              <input v-model="groupUser" type="text" name="name" value="" id="name" placeholder="Username" required>
+            </p>
+            <p>
+              <input v-model="groupRoomName" type="text" name="room" value="" id="roomName" placeholder="Room" required>
+            </p>
+            <p class="submit">
+              <input type="submit" @click="registerGroCall()" name="commit" value="Join!">
+            </p>
+          <!-- </form> -->
+        </div>
+
+          <!-- <div class="modal-footer" style="background-color: aliceblue;"> -->
+            <div id="room" style="display: none;">
+              <h2 id="room-header"> Room Name here</h2>
+              <div id="participants"></div>
+              <input type="button" id="button-leave" onclick="leaveGroupCall()" value="Leave room">
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -6920,7 +6947,12 @@ export default {
         alert('error');
       })
     },
-
+registerGroCall(){
+  var groupRoomName=this.groupRoomName;
+ var groupUser=this.groupUser;
+ console.log(groupRoomName);
+  register(groupRoomName,groupUser);
+},
 
     ///////////////////////////////////////  START CHAT SECTION //////////////////////////////////////
 
