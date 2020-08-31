@@ -4524,10 +4524,14 @@
 
     <div class="modal fade" id="videocallReceiver" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-body">
-          <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/modal/incommingCall.png" alt="Avatar" />
+        <div class="modal-body" style="border: 3px solid white; padding: 0px;">
+          <div class="audiocall1 call-modal">
             <div class="center-con text-center">
-              <div class="title2" id="incomingName"></div>
+               <div class="profile incomingName align-self-center">
+                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar"  />
+                  </div>
+              <div class="mt-4" style="margin-bottom: 100px;" ><span class="title2" id="incomingName"></span><br><h6>Incoming...</h6></div>
+              
               <ul>
                 <li>
                   <a class="icon-btn btn-success button-effect btn-xl is-animating" href="#" @click="o2oreceiveCall()" data-dismiss="modal">
@@ -4551,7 +4555,7 @@
     <div class="modal fade" id="audiocallReceiver" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body">
-          <div class="audiocall1 call-modal"><img class="bg-img" src="../assets/images/modal/incommingCall.png" alt="Avatar" />
+          <div class="audiocall1 call-modal">
             <div class="center-con text-center">
               <div class="title2" id="audioincomingName"></div>
               <ul>
@@ -6093,6 +6097,8 @@ export default {
       havegroup: false,
       groupmembers: '',
       groupName: '',
+      groupRoomName:'',
+      groupUser:'',
       addgroupData: {},
       showGrouptitle: true,
       editgTitle: false,
