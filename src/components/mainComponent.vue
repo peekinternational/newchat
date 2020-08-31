@@ -8882,7 +8882,7 @@ updateCallStatus(Rid){
           friendId: this.oncallFriend._id,
           status: 1
         });
-        this.this.updateCallStatus(this.oncallFriend._id);
+        this.updateCallStatus(this.oncallFriend._id);
       
       }
       else {
@@ -9487,7 +9487,8 @@ groupSidebar(){
     console.log(this.c_user.name);
     this.current_User = this.c_user;
     console.log(JSON.parse(localStorage.getItem('userData')));
-    this.this.updateCallStatus('hello');
+    var dd='';
+    this.updateCallStatus(dd);
   localStorage.setItem('tokenData', this.c_user._id);
     this.hostname = this.$hostname;
     this.getfriends();
