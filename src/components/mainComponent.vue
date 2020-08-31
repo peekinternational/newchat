@@ -6599,7 +6599,7 @@ export default {
   watch: {
     callstatus() {
       console.log(this.callstatus);
-      if (this.callstatus > 1020) {
+      if (this.callstatus > 20) {
         this.o2ostopKCall();
         // var incoming = document.getElementById("incommingcall");
         //	incoming.pause();
@@ -8590,6 +8590,8 @@ localStorage.setItem('tokenIs', this.c_user._id + '-' + this.singlefriend._id + 
         incoming.muted = false;
         incoming.loop = true;
         this.checkcallstart();
+        this.reset();
+        this.stop();
         //$('body').removeClass('modal-open');
         //$('.modal-backdrop').remove();
         //$('#o2ovideocall').modal('show');
