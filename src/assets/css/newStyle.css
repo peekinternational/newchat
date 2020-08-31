@@ -547,6 +547,8 @@ ul.chat-cont-setting.open {
 }
 .viddiolog .videocall.call-modal{
     min-height: 78vh !important;
+    background: #6F66FF;
+    background-image: none !important;
 }
 #basicUsage {
     font-size: 16px;

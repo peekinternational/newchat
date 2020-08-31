@@ -38,7 +38,7 @@
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/rooms.png" alt="Avatar" style="height: auto;" /></span>
               <span style="padding-left: 20px;">Rooms</span>
             </li>
-            <li data-toggle="modal" data-target="#showPresenter">
+            <li data-toggle="modal" data-target="#showPresenter"  data-keyboard="false" data-backdrop="static">
               <span style="vertical-align: text-bottom;" class="" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
               <span style="padding-left: 17px;">Live</span>
             </li>
@@ -236,7 +236,7 @@
             <ul class="chat-cont-setting" style="padding: 7px;margin-left: 14px;margin-bottom:-15px;box-shadow: 0px 0px 0px 1px #0000000f;">
               <li>
 
-                <a href="#" data-toggle="modal" data-target="#newGroupCall">
+                <a href="#" data-toggle="modal" data-target="#newGroupCall" data-keyboard="false" data-backdrop="static">
                   <div style="margin-right: 11px;">
                     <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                     </i>
@@ -246,7 +246,7 @@
                 </a>
               </li>
               <li>
-                <a href="#" data-toggle="modal" data-target="#msgcallModal">
+                <a href="#" data-toggle="modal" data-target="#msgcallModal" data-keyboard="false" data-backdrop="static">
                   <div style="margin-right: 11px;">
                     <img class="" src="../assets/images/nav/newcall.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                   </div>
@@ -255,7 +255,7 @@
                 </a>
               </li>
               <li>
-                <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter">
+                <a href="#" @click="creategroupPanle" data-toggle="modal" data-target="#exampleModalCenter" data-keyboard="false" data-backdrop="static">
                   <div style="margin-right: 11px;">
                     <img class="" src="../assets/images/nav/groupUsers.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                   </div>
@@ -337,7 +337,7 @@
                           <h5>Incomming call</h5>
                           <ul class="chat-main">
                             <li data-to="blank" class="inits active" style="">
-                              <a href="#" data-toggle="modal" data-target="#o2ovideocall" class="" style="font-size: 16px;line-height: 2;">
+                              <a href="#" data-toggle="modal" data-target="#o2ovideocall" data-keyboard="false" data-backdrop="static" class="" style="font-size: 16px;line-height: 2;">
                                 {{ oncallFriend.name }} </a>
                               <span style="margin-left: 44px;">{{formattedElapsedTime}}</span>
                               <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;">
@@ -351,7 +351,7 @@
                           <h5>Incomming call</h5>
                           <ul class="chat-main">
                             <li data-to="blank" class="inits active" style="">
-                              <a href="#" data-toggle="modal" data-target="#o2oaudiocall" class="" style="font-size: 16px;line-height: 2;">
+                              <a href="#" data-toggle="modal" data-target="#o2oaudiocall" data-keyboard="false" data-backdrop="static" class="" style="font-size: 16px;line-height: 2;">
                                 {{ oncallFriend.name }} </a>
                               <span style="margin-left: 44px;">{{formattedElapsedTime}}</span>
                               <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal" style="float: right;width: 30px;height: 30px;">
@@ -2515,7 +2515,7 @@
                 </div>
 
                 <div class="col-12" style="margin-top: 21px;">
-                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#msgchatModal" style="cursor: pointer; margin-top: 21px; margin-bottom: 21px;"> Start a conversation </button>
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#msgchatModal" style="cursor: pointer; margin-top: 21px; margin-bottom: 21px;"> Start a conversation </button>
                   <p>Search for someone to start chatting with or go to Contact to see who is availabe</p>
                 </div>
 
@@ -2562,7 +2562,7 @@
                             <div class="profile">
                               <div class="usersCount">{{groupmembers}}</div>
                             </div>
-                            <div class="addGroups" data-toggle="modal" data-target="#showGroupsMembers">
+                            <div class="addGroups" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#showGroupsMembers">
                               <div class="" style="padding: 6px;color: #6F66FF;">
                                 <plus-icon size="1.5x" class="custom-class"></plus-icon>
                               </div>
@@ -2593,12 +2593,12 @@
                       </a>
                     </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#">
+                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#">
                         <phone-icon size="1.5x" class="custom-class"></phone-icon>
                       </a>
                     </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#" @click="groupvideostartCall(singlegroup)" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#groupvideocall">
+                      <a class="icon-btn btn-light button-effect" href="#" @click="groupvideostartCall(singlegroup)" data-tippy-content="Quick Video Call" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#groupvideocall">
                         <video-icon size="1.5x" class="custom-class"></video-icon>
                       </a>
                     </li>
@@ -2851,7 +2851,7 @@
                       </a>
                     </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall(singlefriend)" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#o2ovideocall">
+                      <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall(singlefriend)" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#o2ovideocall" data-keyboard="false" data-backdrop="static">
                         <video-icon size="1.5x" class="custom-class"></video-icon>
                       </a>
                     </li>
@@ -3131,9 +3131,9 @@
                     <li>
                       <i class="fa fa-twitch"></i>massage</li>
                     <li>
-                      <i class="fa fa-phone" data-toggle="modal" data-target="#audiocall"></i>voice call</li>
+                      <i class="fa fa-phone" data-toggle="modal" data-target="#audiocall" data-keyboard="false" data-backdrop="static"></i>voice call</li>
                     <li>
-                      <i class="fa fa-video-camera" data-toggle="modal" data-target="#videocall"></i>video call</li>
+                      <i class="fa fa-video-camera" data-toggle="modal" data-target="#videocall" data-keyboard="false" data-backdrop="static"></i>video call</li>
                   </ul>
                 </div>
               </div>
@@ -3898,7 +3898,7 @@
                       <a class="nav-link button-effect" data-toggle="pill" href="#todo2">My to-dos</a>
                     </li>
                     <li>
-                      <a class="icon-btn btn-light button-effect btn-sm" data-toggle="modal" data-target="#todoModal">
+                      <a class="icon-btn btn-light button-effect btn-sm" data-toggle="modal" data-target="#todoModal" data-keyboard="false" data-backdrop="static">
                         <plus-icon size="1.5x" class="custom-class"></plus-icon>
                       </a>
                     </li>
@@ -4612,7 +4612,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="#" data-toggle="modal" data-target="#msgcallModal">
+                      <a href="#" data-toggle="modal" data-target="#msgcallModal" data-keyboard="false" data-backdrop="static">
                         <div style="margin-right: 11px;">
                           <img class="" src="../assets/images/icons/videocall.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                         </div>
@@ -5083,29 +5083,25 @@
                         </a>
                       </li>-->
                    <li>
-                     <div >
+                     <div style="padding: 7px;">
                      <a v-if="audioPause" class="" href="#" @click="audioPausecall()" data-tippy-content="">
-                          <i class="fa fa-microphone"></i>
+                          <img class="" src="../assets/images/icons/micfull.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                       </a>
 
                       <a v-if="audioPlay" class=" " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
-                          <i class="fa fa-microphone-slash" aria-hidden="true"></i>
+                          <img class="" src="../assets/images/icons/crossmicfull.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                       </a>
                       </div>
-                    </br>
-                    </br>
                     <div>
                      <a class="" href="#" @click="o2ostopKCall()">
-                       <img class="" src="../assets/images/icons/videocall.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                       <img class="" src="../assets/images/icons/videocallfull.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                     </a>
                     </div>
-                    </br>
-                    </br>
-                    <div>
+                    <div style="padding: 7px;">
                     <a class="" id="o2ochatopen" href="#" @click="o2ostartchat()" >
-                      <img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;border-radius: 0;" />
+                      <img class="" src="../assets/images/icons/chatfull.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                     </a>
-                    <a class="icon-btn " id="o2ochatclose" href="#" @click="o2ohideCallchat()" style="display:none" >
+                    <a class="icon-btn " style="height: 35px;width: 35px;border-radius: 15%;background:white;display:none" id="o2ochatclose" href="#" @click="o2ohideCallchat()" >
                     <img class="" src="../assets/images/chatclose.png" style="width: 60%;" alt="Avatar" />
                   </a>
                     </br>
@@ -5589,7 +5585,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Back</button>
-            <button class="btn btn-primary button-effect btn-sm" type="button" data-toggle="modal" data-target="#broadcastvideocall" @click="startBroadcasting()">Broadcasting Now</button>
+            <button class="btn btn-primary button-effect btn-sm" type="button" data-toggle="modal" data-target="#broadcastvideocall" data-keyboard="false" data-backdrop="static" @click="startBroadcasting()">Broadcasting Now</button>
           </div>
         </div>
       </div>
@@ -5939,10 +5935,10 @@
                       <!--<div class="icon-btn btn-outline-success button-effect btn-sm">
                         <phone-icon size="1.5x" class="custom-class"></phone-icon>
                       </div>-->
-                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-target="#o2oaudiocall" @click="startAudiocall(friends)">
+                      <a class="icon-btn btn-light button-effect" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#o2oaudiocall" @click="startAudiocall(friends)">
                         <phone-icon size="1.5x" class="custom-class"></phone-icon>
                       </a>
-                      <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall(friends)" data-tippy-content="Quick Video Call" data-toggle="modal" data-target="#o2ovideocall">
+                      <a class="icon-btn btn-light button-effect" href="#" @click="videostartCall(friends)" data-tippy-content="Quick Video Call" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#o2ovideocall">
                         <video-icon size="1.5x" class="custom-class"></video-icon>
                       </a>
                     </div>
