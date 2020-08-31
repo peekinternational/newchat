@@ -559,7 +559,7 @@ ul.chat-cont-setting.open {
 }
 .audiocall1.call-modal .center-con, .audiocall2.call-modal .center-con, .conferencecall.call-modal .center-con, .videocall.call-modal .center-con, .videocallhang.call-modal .center-con {
     position: absolute;
-    bottom: 120px;
+    bottom: 30px;
     width: 100%;
 }
 .videocall.call-modal .videocall-details, .videocallhang.call-modal .videocall-details {

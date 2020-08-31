@@ -4526,7 +4526,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-body" style="border: 3px solid white; padding: 0px;">
           <div class="audiocall1 call-modal">
-            <div class="center-con text-center">
+            <div class="center-con text-center" style="margin-bottom:120px">
                <div class="profile incomingName align-self-center">
                     <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar"  />
                   </div>
