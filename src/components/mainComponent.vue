@@ -8700,7 +8700,7 @@ localStorage.setItem('tokenIs', this.c_user._id + '-' + this.singlefriend._id + 
         friendId: Rid,
         status: 0
       });
-    this.updateCallStatus();
+    this.updateCallStatus(Rid);
 
       this.msgObj = {
         chatType: 3,
@@ -8839,7 +8839,7 @@ localStorage.setItem('tokenIs', this.c_user._id + '-' + this.singlefriend._id + 
       console.log(this.oncallFriend);
     },
 
-updateCallStatus(){
+updateCallStatus(Rid){
   axios.post('/updateCallStatus', {
         userId: this.c_user._id,
         friendId: Rid,
@@ -8882,16 +8882,8 @@ updateCallStatus(){
           friendId: this.oncallFriend._id,
           status: 1
         });
-        axios.post('/updateCallStatus', {
-          userId: this.c_user._id,
-          friendId: this.oncallFriend._id,
-          status: 1
-        }).then(response => {
-
-        }, function(err) {
-          console.log('err', err);
-          //alert('error');
-        });
+        this.this.updateCallStatus(this.oncallFriend._id);
+      
       }
       else {
 
@@ -9495,16 +9487,7 @@ groupSidebar(){
     console.log(this.c_user.name);
     this.current_User = this.c_user;
     console.log(JSON.parse(localStorage.getItem('userData')));
-    axios.post('/updateCallStatus', {
-				   userId: this.c_user._id,
-				   friendId:'',
-				   status: 0
-				  }).then(response => {
-					   
-						}, function(err) {
-						  console.log('err', err);
-						  //alert('error');
-				   });
+    this.this.updateCallStatus('hello');
   localStorage.setItem('tokenData', this.c_user._id);
     this.hostname = this.$hostname;
     this.getfriends();
