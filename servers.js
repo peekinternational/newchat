@@ -1,10 +1,23 @@
+var path = require('path');
+const fs = require('fs');
 var app= require('express')();
-var server = require('http').Server(app);	//var server = require('https');//.Server(app);
-var io= require('socket.io')(server);	
-var redis= require('redis');	
-//var redis= require('redis');
+var redis= require('redis');
+//var redis= require('redis');	var https = require('https');
+
+
+const privateKey = fs.readFileSync('/var/www/demos/peekVueChat/private/peekchat/server.key').toString();
+const certificate = fs.readFileSync('/var/www/demos/peekVueChat/private/peekchat/server.crt').toString();
+
+
+const options     = {
+    	key: privateKey,
+    	cert: certificate,
+      };
+const server = require('https').Server(options,app);
 var io= require('socket.io')(server);
 server.listen(6998);
+
+
 
 io.on('connection', function (socket) {
     console.log('start');
