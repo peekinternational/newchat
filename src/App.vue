@@ -9,19 +9,19 @@
 <style>
   @import './assets/css/style.css';
   @import './assets/css/newStyle.css';
-  @import './assets/css/magnific-popup.css';
-  @import './assets/css/tour.css';
+  /*@import './assets/css/magnific-popup.css';*/
+/*  @import './assets/css/tour.css';*/
   @import './assets/css/date-picker.css';
 </style>
 
 <script>
 
-import Login from './components/loginComponent.vue'
+// import Login from './components/loginComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    Login
+    // Login
   },
   data() {
             return {
@@ -29,17 +29,7 @@ export default {
                
             }
         },
-         mounted() {
-           window.addEventListener('beforeunload', this.sendData)
-        },
-      created() {
-    
-  },
-        methods: {
-           sendData() {
-      alert('fsdfsd');
-    }, 
-        }
+       
 }
 </script>
 

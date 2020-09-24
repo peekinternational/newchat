@@ -23,7 +23,7 @@ Vue.use(VueResource)
 Vue.use(Toasted)
 Vue.use(VueClipboard)
 
-const SocketInstance = socketio.connect(':6998');
+const SocketInstance = socketio.connect(':22000');
 
 //export const SocketInstance = socketio('http://localhost:4113')
 
@@ -33,10 +33,10 @@ Vue.use(VueSocketIO, SocketInstance, MyVuexStore)
 
 //Vue.prototype.$apiService = new ApiService();
 
-import Main from './components/mainComponent.vue';
-import Login from './components/loginComponent.vue';
-import Signup from './components/signupComponent.vue';
-import O2O from './components/o2oCallComponent.vue';
+// import Main from './components/mainComponent.vue';
+// import Login from './components/loginComponent.vue';
+// import Signup from './components/signupComponent.vue';
+// import O2O from './components/o2oCallComponent.vue';
 
 // 2. Define some routes
 // Each route should map to a component. The "component" can
@@ -49,10 +49,10 @@ Vue.prototype.$hostname = 'https://peekvideochat.com:22000/'
 
 
 const routes = [
-  { path: '/', component: Main },
-  { path: '/login', component: Login },
-  { path: '/signup', component: Signup },
-  { path: '/o2o', component: O2O },
+  { path: '/', component: () => import(/* webpackChunkName: "home" */ './components/mainComponent.vue') },
+  { path: '/login', component: () => import(/* webpackChunkName: "home" */ './components/loginComponent.vue') },
+  { path: '/signup', component: () => import(/* webpackChunkName: "home" */ './components/signupComponent.vue')},
+  // { path: '/o2o', component: O2O },
 ]
 
 // 3. Create the router instance and pass the `routes` option

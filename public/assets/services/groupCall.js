@@ -3,8 +3,10 @@ var groupRoomName = '';
 var name;
 var socket = io('https://'+"peekvideochat.com:3000");
 var participants = {};
-const PARTICIPANT_MAIN_CLASS = 'participant main';
-const PARTICIPANT_CLASS = 'participant';
+var parsed = {};
+//const PARTICIPANT_MAIN_CLASS = 'participant main col-3';
+//const PARTICIPANT_CLASS = 'participant col-3';
+var userCount= 0;
 
 window.onbeforeunload = function () {
     socket.disconnect();
@@ -15,8 +17,8 @@ socket.on('connect', () => {
 });
 
 socket.on('message', parsedMessage => {
-        console.info('Received message: ' + parsedMessage.id);
-
+      //  console.info('Received message: ' + parsedMessage.id);
+parsed=parsedMessage;
         switch (parsedMessage.id) {
             case 'existingParticipants':
                 onExistingParticipants(parsedMessage);
@@ -31,6 +33,7 @@ socket.on('message', parsedMessage => {
                 receiveVideoResponse(parsedMessage);
                 break;
             case 'iceCandidate':
+		//	console.log('iceCandidate iceCandidate iceCandidate iceCandidate');
                 participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
                     if (error) {
                         console.error("Error adding candidate: " + error);
@@ -63,7 +66,7 @@ socket.on('message', parsedMessage => {
 
         console.log("name: " + name);
         console.log("roomName: " + roomName);
-        document.getElementById('room-header').innerText = 'Meeting Id ' + roomName;
+        document.getElementById('room-header').innerText = 'Group Name ' + roomName;
         document.getElementById('join').style.display = 'none';
         document.getElementById('room').style.display = 'block';
 
@@ -75,7 +78,8 @@ socket.on('message', parsedMessage => {
         sendMessage(message);
     }
 
-    function callResponse(message) {
+    // ---------- reCheck needed ------------------
+    function groupCallResponse(message) {
         if (message.response != 'accepted') {
             console.info('Call not accepted by peer. Closing call');
             stop();
@@ -102,7 +106,7 @@ socket.on('message', parsedMessage => {
         participants[groupUser] = participant;
         var video = participant.getVideoElement();
 
-        console.log(video);
+      //  console.log(video);
 
         var options = {
             localVideo: video,
@@ -122,20 +126,7 @@ socket.on('message', parsedMessage => {
     }
 
 //Call this function from HTML button click, if user leaves a group-call
-  function leaveRoom(userData = null, status = 2) {
-        sendMessage({
-            'id': 'leaveRoom'
-        });
 
-        for (var key in participants) {
-            participants[key].dispose();
-        }
-
-        document.getElementById('join').style.display = 'block';
-        document.getElementById('room').style.display = 'none';
-
-        socket.close();
-    }
 
    function receiveVideo(sender) {
         var participant = new Participant(sender);
@@ -158,22 +149,77 @@ socket.on('message', parsedMessage => {
     }
 
     function onParticipantLeft(request) {
-        console.log('Participant ' + request.name + ' left');
+       // console.log('Participant ' + request.name + ' left');
         var participant = participants[request.name];
         participant.dispose();
         delete participants[request.name];
+		 userCount--;
+	//	console.log(userCount);
+		var maincolratio=12;
+		var colratio=12;
+		if(userCount == 2){
+			colratio=12;
+			maincolratio=12;
+		}else if(userCount == 3){
+			colratio=6;
+			maincolratio=12;
+		}else if(userCount == 4 ){
+			colratio=6;
+			maincolratio=6;
+		}else if(userCount == 5 || userCount == 6){
+			colratio=4;
+			maincolratio=4;
+		}else if(userCount == 7 || userCount == 8){
+			colratio=3;
+			maincolratio=3;
+		}else if(userCount == 9 || userCount == 10 || userCount == 11 || userCount == 12 || userCount == 13 || userCount == 14 || userCount == 15 || userCount == 16 ){
+			colratio=2;
+			maincolratio=2;
+		}else{
+			
+		}
+		$('#participants').find('.participant').attr('class','participant col-'+colratio);	
     }
 
     function sendMessage(message) {
-        console.log('Senging message: ' + message.id);
+     //   console.log('Senging message: ' + message.id);
         socket.emit('message', message);
     }
 
 
 
 function Participant(name) {
-        console.log("Participant name: " + name);
-       
+      //  console.log("Participant name: " + name);
+        userCount++;
+	//	console.log(userCount);
+		
+		var maincolratio=12;
+		var colratio=12;
+		if(userCount == 2){
+			colratio=12;
+			maincolratio=12;
+		}else if(userCount == 3){
+			colratio=6;
+			maincolratio=12;
+		}else if(userCount == 4 ){
+			colratio=6;
+			maincolratio=6;
+		}else if(userCount == 5 || userCount == 6){
+			colratio=4;
+			maincolratio=4;
+		}else if(userCount == 7 || userCount == 8){
+			colratio=3;
+			maincolratio=3;
+		}else if(userCount == 9 || userCount == 10 || userCount == 11 || userCount == 12 || userCount == 13 || userCount == 14 || userCount == 15 || userCount == 16 ){
+			colratio=2;
+			maincolratio=2;
+		}else{
+			
+		}
+		$('#participants').find('.participant').attr('class','participant col-'+colratio);		
+				
+		const PARTICIPANT_MAIN_CLASS = 'participant main col-'+maincolratio;
+        const PARTICIPANT_CLASS = 'participant col-'+colratio;
         this.name = name;
         var container = document.createElement('div');
         container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
@@ -201,6 +247,7 @@ function Participant(name) {
         this.getVideoElement = function () {
             return video;
         }
+		
 
         function switchContainerClass() {
             if (container.className === PARTICIPANT_CLASS) {
@@ -220,7 +267,7 @@ function Participant(name) {
 
         this.offerToReceiveVideo = function (error, offerSdp, wp) {
             if (error) return console.error("sdp offer error")
-            console.log('Invoking SDP offer callback function: ' + name);
+         //   console.log('Invoking SDP offer callback function: ' + name);
             var msg = {
                 id: "receiveVideoFrom",
                 sender: name,
@@ -231,7 +278,7 @@ function Participant(name) {
 
 
         this.onIceCandidate = function (candidate, wp) {
-            console.log("Local candidate" + candidate);
+        //    console.log("Local candidate" + candidate);
 
             var message = {
                 id: 'onIceCandidate',
@@ -244,8 +291,52 @@ function Participant(name) {
         Object.defineProperty(this, 'rtcPeer', { writable: true });
 
         this.dispose = function () {
-            console.log('Disposing participant ' + this.name);
+         //   console.log('Disposing participant ' + this.name);
             this.rtcPeer.dispose();
             container.parentNode.removeChild(container);
         };
+    }
+	  function leaveRoom(userData = null, status = 2) {
+        sendMessage({
+            'id': 'leaveRoom'
+        });
+
+        for (var key in participants) {
+            participants[key].dispose();
+        }
+
+        document.getElementById('join').style.display = 'block';
+        document.getElementById('room').style.display = 'none';
+        userCount= userCount-1;
+	//	console.log(userCount);
+		var maincolratio=12;
+		var colratio=12;
+		if(userCount == 1){
+			colratio=12;
+			maincolratio=12;
+		}
+		if(userCount == 2){
+			colratio=12;
+			maincolratio=12;
+		}else if(userCount == 3){
+			colratio=6;
+			maincolratio=12;
+		}else if(userCount == 4 ){
+			colratio=6;
+			maincolratio=6;
+		}else if(userCount == 5 || userCount == 6){
+			colratio=4;
+			maincolratio=4;
+		}else if(userCount == 7 || userCount == 8){
+			colratio=3;
+			maincolratio=3;
+		}else if(userCount == 9 || userCount == 10 || userCount == 11 || userCount == 12 || userCount == 13 || userCount == 14 || userCount == 15 || userCount == 16 ){
+			colratio=2;
+			maincolratio=2;
+		}else{
+			
+		}
+		$('#participants').find('.participant').attr('class','participant col-'+colratio);		
+		
+        socket.close();
     }

@@ -90,32 +90,17 @@ import 'bootstrap';
 import feather from 'feather-icons';
 import Popper from 'popper.js';
 
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel';
-import '../assets/js/owl.carousel.js';
-import '../assets/js/popper.min.js';
 import 'feather-icons/dist/feather.min.js';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
-import '../assets/js/bootstrap.js';
 
-import '../assets/js/easytimer.min.js';
-
-import '../assets/js/date-picker/datepicker.js';
-import '../assets/js/date-picker/datepicker.en.js';
-import '../assets/js/date-picker/datepicker.custom.js';
-import '../assets/js/tour/intro.js';
-import '../assets/js/tour/intro-init.js';
-import '../assets/js/jquery.magnific-popup.js';
-import '../assets/js/zoom-gallery.js';
-import '../assets/js/script.js';
 
 
 import { AirplayIcon, AtSignIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneIncomingIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon} from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
-  name: 'MainComponent',
+  name: 'Signup',
    components: { carousel,PhoneIncomingIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon },
       props:[],
         data(){

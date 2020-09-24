@@ -546,7 +546,7 @@ ul.chat-cont-setting.open {
     max-width: 900px;
 }
 .viddiolog .videocall.call-modal{
-    min-height: 78vh !important;
+    min-height: 96.5vh !important;
     background: #6F66FF;
     background-image: none !important;
 }
@@ -646,7 +646,7 @@ ul.call-cont-setting li a span {
     padding: 0px;
     padding-top: 45px;
     padding-bottom: 45px;
-    height: calc(707px - 101px);
+    height: 635px;
     min-height: calc(100vh - 95px);
     overflow: auto;
     overflow-x: hidden;
@@ -744,4 +744,20 @@ ul.call-cont-setting li a span {
    width: 113px;
     display: block !important;
     border-radius: 63px !important;
+}
+
+.participant.col-12 video{
+	width: 50% !important;
+    object-fit: fill;
+    height: 290px;
+}
+.participant{
+	text-align:center;
+}
+
+.participant video{
+	width: 100% !important;
+}
+.displayclass{
+    display: inline-block !important;
 }
