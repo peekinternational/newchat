@@ -50,7 +50,7 @@
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/schedule.png" alt="Avatar" style="height: auto;" /></span>
               <span style="padding-left: 22px;">Schedule</span>
             </li>
-            <li>
+            <li @click="favourite()">
               <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/todo.png" alt="Avatar" style="height: auto;" /></span>
               <span style="padding-left: 20px;">To-Do</span>
             </li>
@@ -162,7 +162,11 @@
                   <p style="display:none">{{checkcallTime}}</p>
 
                   <div style="border: 1px #BAC5E9 solid;padding: 1px;border-radius: 26px;width: 62px !important;height: 62px !important;" v-if="c_user.onlineStatus == 1" class="profile">
-                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;width: 57px;" />
+                    
+                    <img class="bg-img" v-if="userImageName" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" style="border-radius: 30px;width: 57px;" />
+                    <img class="bg-img" v-else  src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;width: 57px;" />
+                    <label for="imageInput" style="position: absolute;right: 0; top: 37px;"><camera-icon size="1.5x"  class="custom-class"></camera-icon></label>
+                    <input type="file" id="imageInput" ref="userImage" @change="userUploadfile($event)" style="display:none"/> 
                   </div>
                   <div style="padding-left: 12px; margin-top: 5px;">
                     <h5 style="font-size:16px;margin-bottom: 10px;"> {{c_user.name}} </h5>
@@ -236,7 +240,7 @@
             <ul class="chat-cont-setting" style="padding: 7px;margin-left: 14px;margin-bottom:-15px;box-shadow: 0px 0px 0px 1px #0000000f;">
               <li>
 
-                <a href="#" data-toggle="modal" data-target="#newGroupCall" data-keyboard="false" data-backdrop="static">
+                <a href="#" data-toggle="modal" data-target="#msgchatModal" data-keyboard="false" data-backdrop="static">
                   <div style="margin-right: 11px;">
                     <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" />
                     </i>
@@ -365,9 +369,11 @@
                             <li v-if="friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                               <div class="chat-box">
                                 <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                                  <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                 <div v-else class="profile offline">
-                                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                                 <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                 </div>
 
                                 <div class="details" style="padding-left: 73px;">
@@ -386,9 +392,11 @@
                             <li v-else-if="friends.friendReqStatus == 2" class="init" :id="'friend'+friends._id" data-to="blank">
                               <div class="chat-box">
                                 <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                                 <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                 <div v-else class="profile offline">
-                                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                                <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                 </div>
                                 <div v-if="friends.friendReqSenderId == friends._id">
                                   <div class="details" style="padding-left: 73px;">
@@ -423,9 +431,11 @@
                               <li v-if="friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                                 <div class="chat-box">
                                   <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                                   <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                   <div v-else class="profile offline">
-                                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                                   <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                   </div>
 
                                   <div class="details" style="padding-left: 73px;">
@@ -447,9 +457,11 @@
                               <li v-else-if="friends.friendReqStatus == 2" class="init" :id="'friend'+friends._id" data-to="blank">
                                 <div class="chat-box">
                                   <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                   <div v-else class="profile offline">
-                                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                   </div>
                                   <div v-if="friends.friendReqSenderId == friends._id">
                                     <div class="details" style="padding-left: 73px;">
@@ -480,9 +492,11 @@
                               <li v-else :id="'friend'+friends._id" data-to="blank" style="">
                                 <div class="chat-box">
                                   <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                   <div v-else class="profile offline">
-                                    <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                   </div>
 
                                   <div class="details" style="padding-left: 73px;">
@@ -1047,127 +1061,105 @@
         </div>
 
         <div class="fevorite-tab dynemic-sidebar" id="favourite">
-          <div class="theme-title">
-            <div class="media">
-              <div>
-                <h2>Favourite</h2>
-                <h4>Last Recent</h4>
-              </div>
-              <div class="media-body text-right">
-                <a class="icon-btn btn-outline-light btn-sm m-r-15 search" href="#">
-                  <search-icon size="1.5x" class="custom-class"></search-icon>
-                </a>
-                <form class="form-inline search-form">
-                  <div class="form-group">
-                    <input class="form-control-plaintext" type="search" placeholder="Search.." />
-                    <div class="icon-close close-search"></div>
+           <div class="todo-main">
+                <div class="theme-title">
+                  <div class="media">
+                    <div>
+                      <h2>Todo</h2>
+                      <h4>to create your task</h4>
+                    </div>
+                    <div class="media-body media-body text-right">
+                      <a class="icon-btn btn-sm btn-outline-light close-panel" href="javascript:void(0);">
+                        <x-icon size="1.5x" class="custom-class"></x-icon>
+                      </a>
+                    </div>
                   </div>
-                </form>
+                </div>
+              
+                <div class="todo-tab theme-tab custom-scroll">
+                  <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                      <a class="buttoneffect active show" data-toggle="pill" href="#todo1" @click="getTodo">All</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="buttoneffect button-effect" data-toggle="pill" href="#todo2" @click="getMytodo">My to-dos</a>
+                    </li>
+                    <li>
+                      <a class="icon-btn btn-light button-effect btn-sm" data-toggle="modal" data-target="#createtodoModal" data-keyboard="false" data-backdrop="static">
+                        <plus-icon size="1.5x" class="custom-class"></plus-icon>
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active show" id="todo1">
+                     <div v-if="TodoList.length > 0">
+                             <div class="tab-card text-left">
+                        <div class="todo-task" >
+                         <template v-for="todoData in TodoList">
+                          <div class="todo-main-content" >
+                            <div class="input-text" style="margin-bottom: 12px;font-weight: 700;">
+                              {{todoData.todo}}
+                            </div>
+                           <div><p style="float:left">Assign From <br>
+                            <span>{{todoData.assignFrom}}</span></p>
+                            <p style="float:right">Due Date <br>
+                            <span>{{isToday(todoData.assignDate)}}</span></p></div>
+                          </div>
+                         
+                          <div class="todo-list" style="padding-bottom: 28px;border-bottom: 1px solid #eff1f2; margin-bottom: 36px;">
+                            <div class="element" id="div_1">
+                              <p class="add add-to-do" style="float:left">Status</p>
+                             
+                              <span class="add add-to-do" style="float:right">
+                                  <select class="custom-scroll" name=""   @change="todoStatusUpdate($event)">
+                                <option :selected="todoData.status == 0 ?true : false" :value="'0,'+todoData._id" >Pending</option>
+                                <option :selected="todoData.status == 1 ?true : false" :value="'1,'+todoData._id" >In Progress</option>
+                                <option :selected="todoData.status == 2 ?true : false" :value="'2,'+todoData._id" >Complete</option>
+                              </select>
+                              </span>
+                            </div>
+                          </div>
+                          </template>
+                        </div>
+                          </div>
 
-                <a class="icon-btn btn-outline-light btn-sm close-panel">
-                  <x-icon size="1.5x" class="custom-class"></x-icon>
-                </a>
-              </div>
-            </div>
-          </div>
-          <ul class="chat-main">
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                  <div class="details">
-                    <h5>Josephin water</h5>
-                    <h6>Alabma , USA</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#">
-                      <star-icon size="1.5x" class="custom-class"></star-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                  <div class="details">
-                    <h5>Jony Lynetin</h5>
-                    <h6>Los Angeles, California</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#">
-                      <star-icon size="1.5x" class="custom-class"></star-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile busy"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                  <div class="details">
-                    <h5>Sufiya Elija</h5>
-                    <h6>Glasgow , Scotland</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#">
-                      <star-icon size="1.5x" class="custom-class"></star-icon>
-                    </a>
+                      </div>
+                       <div v-else> No task in list</div>
+                    </div>
+                    <div class="tab-pane fade" id="todo2">
+                      <div v-if="myTodoList.length > 0">
+                             <div class="tab-card text-left">
+                        <div class="todo-task" >
+                         <template v-for="mytodo in myTodoList">
+                          <div class="todo-main-content" >
+                            <div class="input-text" style="margin-bottom: 12px;font-weight: 700;">
+                              {{mytodo.todo}}
+                            </div>
+                           <div><p style="float:left">Assign to <br>
+                            <span>{{mytodo.assignTo}}</span></p>
+                            <p style="float:right">Due Date <br>
+                            <span>{{isToday(mytodo.assignDate)}}</span></p></div>
+                          </div>
+                          <div class="todo-list" style="padding-bottom: 28px;border-bottom: 1px solid #eff1f2; margin-bottom: 36px;">
+                            <div class="element" id="div_1">
+                              <p class="add add-to-do" style="float:left">Status</p>
+                              <span class="add add-to-do" style="float:right"><template v-if="mytodo.status == 0">Pending</template> <template v-else-if="mytodo.status == 1">In Progress</template>
+                                <template v-else>Complete</template></span>
+                            </div>
+                          </div>
+                          </template>
+                        </div>
+                          </div>
+                      </div>
+                      <div v-else class="converstaion-docs tab-card">
+                        <i class="fa fa-sticky-note-o"></i>
+                        <h5 class="mb-3">No Open To-Dos Here </h5>
+                        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createtodoModal">Create A To-Do</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/4.jpg" alt="Avatar" /></div>
-                  <div class="details">
-                    <h5>Pabelo Mukrani</h5>
-                    <h6>Leicester , England</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#">
-                      <star-icon size="1.5x" class="custom-class"></star-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                  <div class="details">
-                    <h5>Josephin water</h5>
-                    <h6>Alabma , USA</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#">
-                      <star-icon size="1.5x" class="custom-class"></star-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile online"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                  <div class="details">
-                    <h5>Josephin water</h5>
-                    <h6>Alabma , USA</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-primary btn-sm pull-right favourite" href="#">
-                      <star-icon size="1.5x" class="custom-class"></star-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
         </div>
         <div class="document-tab dynemic-sidebar" id="document">
           <div class="theme-title">
@@ -1338,216 +1330,33 @@
               </div>
             </div>
           </div>
-          <ul class="chat-main">
-            <li>
-              <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Josephin water</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6 class="todayDate">22/10/19</h6>
-                  <h6 class="font-success status"> Seen</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>Hello</h6>
-                </div>
-                <div class="date-status">
-                  <h6 class="todayDate">30/11/19</h6>
-                  <div class="badge badge-primary sm">8</div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Sufiya Elija</h5>
-                  <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status">
-                  <h6 class="todayDate">15/06/19</h6>
-                  <h6 class="font-dark status"> Sending</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="../assets/images/contact/4.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Pabelo Mukrani</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6 class="todayDate">04/06/19</h6>
-                  <h6 class="font-danger status"> Failed</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Josephin water</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>22/10/19</h6>
-                  <h6 class="font-success status"> Seen</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>Hello</h6>
-                </div>
-                <div class="date-status">
-                  <h6>30/11/19</h6>
-                  <div class="badge badge-primary sm">8</div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Sufiya Elija</h5>
-                  <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status">
-                  <h6 class="todayDate">15/06/19</h6>
-                  <h6 class="font-dark status"> Sending</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>Hello</h6>
-                </div>
-                <div class="date-status">
-                  <h6>30/11/19</h6>
-                  <div class="badge badge-primary sm">8</div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Josephin water</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>22/10/19</h6>
-                  <h6 class="font-success status"> Seen</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>Hello</h6>
-                </div>
-                <div class="date-status">
-                  <h6>30/11/19</h6>
-                  <div class="badge badge-primary sm">8</div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Sufiya Elija</h5>
-                  <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>15/06/19</h6>
-                  <h6 class="font-dark status"> Sending</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile busy"><img class="bg-img" src="../assets/images/contact/4.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Pabelo Mukrani</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>04/06/19</h6>
-                  <h6 class="font-danger status"> Failed</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Josephin water</h5>
-                  <h6>Hi, i am josephin. How are you.. ! There are many variations of passages.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>22/10/19</h6>
-                  <h6 class="font-success status"> Seen</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>Hello</h6>
-                </div>
-                <div class="date-status">
-                  <h6>30/11/19</h6>
-                  <div class="badge badge-primary sm">8</div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Sufiya Elija</h5>
-                  <h6>I need job, please help me.</h6>
-                </div>
-                <div class="date-status">
-                  <h6>15/06/19</h6>
-                  <h6 class="font-dark status"> Sending</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="profile online"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <h5>Jony Lynetin</h5>
-                  <h6>Hello</h6>
-                </div>
-                <div class="date-status">
-                  <h6>30/11/19</h6>
-                  <div class="badge badge-primary sm">8</div>
-                </div>
-              </div>
-            </li>
-          </ul>
+           <ul class="chat-main custom-scroll">
+                <li v-for="friends in orderedUsers" v-if="friends._id != c_user._id || friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" data-dismiss="modal" style="cursor: pointer;width: 100%;    padding-left: 0px;padding-right: 5px;">
+                  <div class="chat-box">
+                    <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
+                     <img class="bg-img" v-if="friends.user_image"  :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg"alt="Avatar" /></div>
+                    <div v-else class="profile offline">
+                      <img class="bg-img" v-if="friends.user_image"  :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg"alt="Avatar" />
+                    </div>
+
+                    <div class="details" style="padding-left: 73px;">
+                      <h5>{{friends.name}}</h5>
+                      <h6 :id="'f_typing'+friends._id" v-if="friends.latestMsg">{{ friends.latestMsg.message }}</h6>
+                      <h6 v-else>Start Chat</h6>
+                    </div>
+
+                    <div class="date-status">
+                      <h6 class="todayDate">{{isToday(friends.updatedByMsg)}}</h6>
+                      <div v-if="friends.usCount != 0" class="badge badge-primary sm">{{friends.usCount}}</div>
+                      <h6 class="font-success status" v-else-if="friends.seenStatus == 1 "> Seen</h6>
+                    </div>
+                  </div>
+                </li>
+              </ul>
         </div>
         <div class="notification-tab dynemic-sidebar custom-scroll" id="notification">
           <div class="theme-title">
@@ -1809,7 +1618,7 @@
                 <h4>Shared Media</h4>
               </div>
               <div class="media-body media-body text-right">
-                <a class="icon-btn btn-sm btn-outline-light close-apps" href="javascript:void(0);">
+                <a class="icon-btn btn-sm btn-outline-light close-panel" href="javascript:void(0);">
                   <x-icon size="1.5x" class="custom-class"></x-icon>
                 </a>
               </div>
@@ -2511,6 +2320,7 @@
               </div>
               <div class="col-12" style="margin-top: 35px;">
                 <div v-if="current_User.onlineStatus == 1" class="profile mainpanleProfile" v-bind:class="{ online: current_User.pStatus == 0, unreachable : current_User.pStatus == 1, busy: current_User.pStatus == 2, offline: current_User.pStatus == 3, offline: current_User.pStatus == 4 }">
+
                   <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
                 </div>
 
@@ -2525,7 +2335,27 @@
         </div>
         <div class="chat-content tabto active" id="group_chat">
           <div class="custom-scroll active">
+    <div class="chat-content tabto active">
+          <div class=" custom-scroll active">
+            <div class="row" style="margin-top: 157px;text-align: center;">
+              <div class="col-12" style="">
+                <h2 style="text-transform: capitalize;">Welcome, {{current_User.name}} </h2>
+              </div>
+              <div class="col-12" style="margin-top: 35px;">
+                <div v-if="current_User.onlineStatus == 1" class="profile mainpanleProfile" v-bind:class="{ online: current_User.pStatus == 0, unreachable : current_User.pStatus == 1, busy: current_User.pStatus == 2, offline: current_User.pStatus == 3, offline: current_User.pStatus == 4 }">
+                  
+                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
+                </div>
 
+                <div class="col-12" style="margin-top: 21px;">
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#msgchatModal" style="cursor: pointer; margin-top: 21px; margin-bottom: 21px;"> Start a conversation </button>
+                  <p>Search for someone to start chatting with or go to Contact to see who is availabe</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
           </div>
         </div>
 
@@ -2594,7 +2424,7 @@
                     </li>
                     <template v-if="grouCallStatus == true">
                       <li>
-                        <a class="icon-btn btn-success" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-keyboard="false" @click="groupvideoJoinCall(singlegroup)" data-backdrop="static" data-target="#" data-target="#groupvideocall">
+                        <a class="icon-btn btn-success" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-keyboard="false" @click="groupvideoJoinCall(singlegroup)" data-backdrop="static" data-target="#groupvideocall">
                           Join Call
                         </a>
                       </li>
@@ -2815,9 +2645,20 @@
                     <div class="media-left mr-3" @click="chatSidebar()">
 
                       <div v-if="singlefriend.onlineStatus == 1" style="border-radius: 30px;" class="profile menu-trigger" v-bind:class="{ online: singlefriend.pStatus == 0, unreachable : singlefriend.pStatus == 1, busy: singlefriend.pStatus == 2, offline: singlefriend.pStatus == 3, offline: singlefriend.pStatus == 4 }">
-                        <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+
+                         <img class="bg-img" v-if="singlefriend.user_image" style ="width: 60px;" :src="hostname+'images/chatImages/'+singlefriend.user_image" alt="Avatar" />
+
+                    <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style ="width: 60px;" alt="Avatar" /> 
+
+                  </div>
+
                       <div v-else class="profile offline menu-trigger" style="border-radius: 30px;">
-                        <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+
+                         <img class="bg-img" v-if="singlefriend.user_image" style ="width: 60px;" :src="hostname+'images/chatImages/'+singlefriend.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style ="width: 60px;" alt="Avatar" /> 
+
+                       </div>
                     </div>
 
                     <div class="media-body">
@@ -2930,7 +2771,8 @@
                 <li class="replies" style="padding-bottom:20px" v-else-if="chat.senderId._id == c_user._id">
                   <div class="media">
                     <div class="profile mr-4">
-                      <img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                       <img class="bg-img" v-if="userImageName" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar"  />
+                    <img class="bg-img" v-else  src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                     <div class="media-body">
                       <div class="contact-name">
                         <h5>{{ c_user.name}}</h5>
@@ -3004,7 +2846,9 @@
                 <li class="sent" style="padding-bottom:20px" v-else>
 
                   <div class="media">
-                    <div class="profile mr-4"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
+                    <div class="profile mr-4">
+                       <img class="bg-img" v-if="singlefriend.user_image" :src="hostname+'images/chatImages/'+singlefriend.user_image" alt="Avatar" />
+                    <img class="bg-img" v-else  src="../assets/images/contact/1.jpg" alt="Avatar"> </div>
                     <div class="media-body">
                       <div class="contact-name">
                         <h5>{{ singlefriend.name }}</h5>
@@ -4278,7 +4122,9 @@
                 <div style="padding-right: 10px;">
                   <h4 style="margin-bottom: 4px; color: black;">Group:</h4>
                   <div style="border: 1px #E5EAF9 solid;padding: 4px;border-radius: 6px;">
-                    <span><img class="" src="../assets/images/nav/icon.png" alt="Avatar" style="height: auto;border-radius: 0;" /></span>
+                    <span>  <img class="bg-img" v-if="userImageName" style ="max-height: 40px;; border-radius:0px" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style ="max-height: 40px;; border-radius:0px"  alt="Avatar" /> </span>
                   </div>
                 </div>
                 <div class="form-group" style="width: 100%;margin-top: 22px;">
@@ -4301,9 +4147,13 @@
                     <li v-if="friends.friendReqStatus == 1" class="init" data-to="blank" style="padding-left: 0px;cursor: pointer;width: 100%;display: inline-block;margin: 0 0px;    padding-top: 0px;padding-bottom: 0px;">
                       <div class="chat-box">
                         <div v-if="friends.onlineStatus == 1" class="profile" style="width: 56px;height: 56px;" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                          <img class="bg-img" src="../assets/images/contact/1.jpg" style="width: 48px;" alt="Avatar" /></div>
+                           <img class="bg-img" v-if="friends.user_image" style="width: 48px;" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" /></div>
                         <div v-else class="profile offline" style="width: 56px;height: 56px;">
-                          <img class="bg-img" src="../assets/images/contact/1.jpg" style="width: 48px;" alt="Avatar" />
+                          <img class="bg-img" v-if="friends.user_image" style="width: 48px;" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
                         </div>
 
                         <div class="details" style="padding-left: 73px;">
@@ -4990,7 +4840,7 @@
             <div class="" style="text-align:center">
             <video id="videoOutput" poster="../assets/loaderGif.gif" class="remoteVideoWidth" style="width:100%" autoplay></video>
             <video id="remoteScreenshare" class="" style="width:100%;display:none"> </video>
-               <div class="col-12" style="margin-top: 35px;text-align:center" id="userbackground" style="width:100%;display:none">
+               <div class="col-12" style="margin-top: 35px;text-align:center;width:100%;display:none" id="userbackground">
                 <div  class="profile mainpanleProfile displayclass" style="">
                   <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
                 
@@ -5872,34 +5722,25 @@
                 <h5>Felling Lonely</h5>
                 <div class="todo-main-content">
                   <div class="form-group">
-                    <input type="checkbox" aria-label="Checkbox for following text input" />
-                    <input class="w-100" id="user_input123" type="text" placeholder="Fill Your Fillings " />
+                    <input class="w-100" id="user_input123" v-model="todo" type="text" placeholder="Fill Your Fillings " />
                   </div>
-                  <div class="drop-picker">
-                    <div class="dropdown currency" tabindex="1">
-                      <div class="select">
-                        <span>Assign To</span>
-                      </div>
-                      <input type="hidden" name="currency" />
-                      <ul class="dropdown-menu">
-                        <li class="dropdown-divider">
-                          <div class="fa fa-user text-muted"></div>
-                          <h5 class="text-muted">Assign To</h5>
-                        </li>
-                        <li>Josephin john</li>
-                        <li>Lynetin john</li>
-                        <li>Sufiya john</li>
-                        <li>Jhon john</li>
-                      </ul>
-                    </div>
-                    <input class="datepicker-here form-control digits" type="url" data-language="en" placeholder="Due date" />
+                   <div class="form-group">
+                       <select class="custom-scroll" name="" v-model="assignName">
+                      <option selected value="">Assign To</option>
+                      <template v-for="item in friendsdata">
+                      <option :value="item">{{item.name}}</option>
+                      </template>
+                    </select>
+                  </div>
+                   <div class="form-group">
+                      <input type="date" style="width:100%" name="" v-model="assignDate">
                   </div>
                 </div>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-danger button-effect btn-sm" type="button">Save</button>
+            <button class="btn btn-danger button-effect btn-sm" type="button" @click="saveTodo()">Save</button>
             <button class="btn btn-primary button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
           </div>
         </div>
@@ -5927,9 +5768,13 @@
                 <li v-for="friends in orderedUsers" v-if="friends._id != c_user._id || friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" data-dismiss="modal" style="cursor: pointer;width: 100%;    padding-left: 0px;padding-right: 5px;">
                   <div class="chat-box">
                     <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                     <img class="bg-img" v-if="friends.user_image"  :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg"alt="Avatar" /></div>
                     <div v-else class="profile offline">
-                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                      <img class="bg-img" v-if="friends.user_image"  :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg"alt="Avatar" />
                     </div>
 
                     <div class="details" style="padding-left: 73px;">
@@ -5973,9 +5818,13 @@
                 <li style="width: 100%;padding-left: 0px; padding-right: 11px;" v-for="friends in orderedUsers" v-if="friends._id != c_user._id">
                   <div class="call-box">
                     <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                       <img class="bg-img" v-if="friends.user_image"  :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg"alt="Avatar" /></div>
                     <div v-else class="profile offline">
-                      <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" />
+                      <img class="bg-img" v-if="friends.user_image"  :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" /> 
+
+                       <img class="bg-img" v-else  src="../assets/images/contact/2.jpg"alt="Avatar" />
                     </div>
                     <div class="details">
                       <h5>{{friends.name }}</h5>
@@ -6073,12 +5922,12 @@ import {
   InstagramLoader,
   ListLoader
 } from 'vue-content-loader'
-import { UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
+import {CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-  components: { UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, AudioRecorder, ContentLoader, InfiniteLoading, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+  components: {CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, AudioRecorder, ContentLoader, InfiniteLoading, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
   props: [],
   data() {
     return {
@@ -6089,6 +5938,7 @@ export default {
       searchUsers: [],
       userId: '',
       current_User: '',
+      userImageName:'',
       singlefriend: {},
       searchFriend: '',
       showSearchfriends: false,
@@ -6190,6 +6040,12 @@ export default {
       groupData: true,
       groupSearching: false,
       selectFriendStatus: false,
+      todo:'',
+      assignDate:'',
+      assignName:'',
+      myTodoList:[],
+      TodoList:[],
+      todoStatus:''
 
 
     }
@@ -6812,28 +6668,7 @@ export default {
         this.showUsers = true;
       }
     }, 500),
-    //searchFriend(){
-    //if (this.searchFriend.length > 0) {
-    // this.showUsers=false;
-    //this.showSearchfriends= true;
-
-    // }
-    // else{
-    // this.showSearchfriends= false;
-    //  this.showUsers=true;
-    // }
-    // },
-
-    // message() {
-    //   //this.removecross();
-    //   if (this.message.length > 0) {
-    //     this.$socket.emit('msgtyping', { selectFrienddata:this.singlefriend, UserId:this.c_user._id});
-    //     console.log(this.typing);
-    //   } else {
-    //     console.log(this.typing);
-
-    //   }
-    // }
+   
 
   },
   created() {
@@ -7073,7 +6908,9 @@ export default {
       $('#message-input').hide();
       $('#singlemessage-input').hide();
       $('#startchat').hide();
+      $('#group_chat').hide();
       $('#mainsearch').show();
+      $('#mainchatpage').show();
     },
     chatTab() {
       $('.init').removeClass('active');
@@ -7104,6 +6941,8 @@ export default {
 
 
     startchat(friend) {
+      $('#group_chat').hide();
+    $('#mainchatpage').hide();
       $('#startchat').css('opacity', '1');
       this.selectFriendStatus = true;
       $('#startchat').show();
@@ -7167,9 +7006,9 @@ export default {
       setTimeout(() => {
         this.isLoading = false
       }, 1000)
-      $('#mainchatpage').remove();
+      $('#mainchatpage').hide();
 
-      $('#group_chat').remove();
+      $('#group_chat').hide();
       var container = this.$el.querySelector("#chating");
       $("#chating").animate({ scrollTop: container.scrollHeight + 7020 }, "fast");
 
@@ -7632,7 +7471,8 @@ export default {
             alert('error');
           });
       }
-
+   $('#group_chat').show();
+   $('#mainchatpage').hide();
       $('#group_chat').addClass("active");
       $('.group_chat').removeClass("active");
 
@@ -7644,7 +7484,7 @@ export default {
     },
 
     getgroupsfirst() {
-
+$('#group_chat').hide();
       if (this.orderedGroups.length == 0) {
         this.groupLoader = true;
         axios.get('/getCreatedGroups/' + this.c_user._id + '/5d4c07fb030f5d0600bf5c03')
@@ -7664,6 +7504,7 @@ export default {
 
 
     startgroupchat(group, index) {
+      $('#group_chat').hide();
       $('#singlemessage-input').hide();
       $('#message-input').show();
       $('.group_chat').removeClass("active");
@@ -7692,7 +7533,7 @@ export default {
         .catch((error) => console.log(error));
       $('#startchat').removeClass("active");
       $('#startgroupchat').addClass("active");
-      $('#mainchatpage').remove();
+      $('#mainchatpage').hide();
       $('.group_chat_open').addClass("active");
       var container = this.$el.querySelector("#group_chat_open");
       $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020 }, "fast");
@@ -7959,42 +7800,12 @@ export default {
             isDeleted: 0,
             createdAt: new Date().toISOString(),
           };
-          // if (this.singlefriend.chatWithRefId == this.c_user._id) {
-          //   // alert('dasdasdas');
-          //   this.$set(this.msgObj, 'isSeen', 1);
-          // }
-
-          // console.log(this.msgObj);
-          // this.isSeen = false;
-          // this.friendchat.push(this.msgObj);
+        
           this.$socket.emit('sendgroupmsg', this.groupmsgObj);
           this.isLoading = false;
           var container = this.$el.querySelector("#group_chat_open");
           $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020 }, "fast");
-          // this.userdec = this.friendsdata.filter((obj) => {
-          //   return this.singlefriend._id === obj._id;
-          // }).pop();
-          // this.userdec.updatedByMsg = new Date().toISOString();
-
-
-          // setTimeout(() => {
-          //   const id = $(".active.init").attr("id");
-
-          //   if (id != 'friend' + this.singlefriend._id) {
-          //     $('.init').removeClass("active");
-          //     setTimeout(() => {
-
-          //       $('#friend' + this.singlefriend._id).addClass("active");
-          //       setTimeout(() => {
-
-          //         $('.chat-main .active .details h6').html('<span>You : </span>' + response.data.message);
-          //       }, 200);
-
-          //     }, 1);
-
-
-          //   }
-          // }, 0);
+          
         }, function(err) {
           console.log('err', err);
           alert('error');
@@ -8341,6 +8152,7 @@ export default {
     },
     favourite() {
 
+      this.getTodo();
       $("#recent").removeClass("active");
       $("#contact-list").removeClass("active");
       $("#document").removeClass("active");
@@ -8353,7 +8165,6 @@ export default {
     },
 
     status() {
-
       $("#recent").removeClass("active");
       $("#contact-list").removeClass("active");
       $("#document").removeClass("active");
@@ -8466,24 +8277,7 @@ export default {
       alert('hello');
 
       $state.loaded();
-      //this.$http.get('/post?page='+this.page)
-      //  .then(response => {
-      //      return response.json();
-      //  }).then(data => {
-      //     $.each(data.data, function(key, value) {
-      //            vm.task.push(value);
-      // });
-      //if(data.data.length == 0){
-      //$(".loading-default").css("display", "none");
-      //$('.nomore').html('No More Data');
-      //}else{
-      //  $state.loaded();
-      //}
-      //  });
-
-
-
-      //this.page = this.page + 1;
+   
     },
 
 
@@ -8734,37 +8528,7 @@ export default {
     /////////////////////////////////////// END BROADCASTING //////////////////////////////////////////
 
     ////////////////////////////////////// O2O VIDEO CALL ////////////////////////////////////////
-    // o2oshowCallchat() {
-    //       $('#o2ochatopen').removeClass('dot-btn dot-success grow');
-    //       $('#o2ochatopen').hide();
-    //       $('#o2ochatclose').show();
-    //       $('#o2ochating').addClass('active');
-    //       $('#o2osinglemessage-input').show();
-    //       $('#message-input').hide();
-    //       var containers = this.$el.querySelector("#o2ochating");
-    //       console.log(containers.scrollHeight);
-    //       $("#o2ochating").animate({ scrollTop: containers.scrollHeight + 7020 }, "fast");
 
-    //       this.message = '';
-    //       this.editChatid = '';
-    //       this.onEditclear = false;
-    //       this.onChat = true;
-    //       $('#singlemessage-input').css("height", "96px");
-
-
-    //       $('.videocall').removeClass('o2obeforeopenChat');
-    //       $('.videocall').addClass('o2oafteropenChat');
-    //       $('#o2omodalcall').removeClass('o2omodelbefore');
-    //       $('#o2omodalcall').addClass('o2omodelafter');
-    //       $('#local-video').removeClass('beforelocalVideo');
-    //       $('#local-video').addClass('afterlocalVideo');
-
-    //       $('#o2odetail').removeClass('beforeDetail');
-    //       $('#o2odetail').addClass('afterDetail');
-
-    //       $('#o2ocontents').show();
-    //       $('.chitchat-main .chat-content').css('opacity', '1');
-    //     },
 
     o2ohideCallchat() {
 
@@ -9369,69 +9133,7 @@ export default {
         console.log('err', err);
         //alert('error');
       });
-      // $('#groupmsgcallModal').modal('hide');
-      // console.log(this.singlefriend.callStatus);
-      // if (this.singlefriend.callStatus == 0) {
-      //   this.videogroupPause = true;
-      //   this.videogroupPlay = false;
-      //   this.audiogroupPause = true;
-      //   this.audiogroupPlay = false;
-      //   this.grouphideCallchat();
-      //   var incoming = document.getElementById("incommingcall");
-      //   incoming.play();
-      //   incoming.muted = false;
-      //   incoming.loop = true;
-      //   this.checkcallstart();
-      //   //$('body').removeClass('modal-open');
-      //   //$('.modal-backdrop').remove();
-      //   //$('#o2ovideocall').modal('show');
 
-      //   $('#groupsinglemessage-input').show();
-      //   this.oncallFriend = this.singlefriend;
-      //   let userDataobj = {
-      //     friendId: this.oncallFriend._id,
-      //     callerName: this.c_user.name,
-      //     callerId: this.c_user._id,
-      //     callType: 0
-      //   };
-
-      //   groupvideoKCall(this.c_user._id, this.oncallFriend._id, userDataobj, 0);
-      //   this.$socket.emit('updateCallStatus', {
-      //     userId: this.c_user._id,
-      //     friendId: this.oncallFriend._id,
-      //     status: 1
-      //   });
-      //   axios.post('/updateCallStatus', {
-      //     userId: this.c_user._id,
-      //     friendId: this.oncallFriend._id,
-      //     status: 1
-      //   }).then(response => {
-
-      //   }, function(err) {
-      //     console.log('err', err);
-      //     //alert('error');
-      //   });
-
-      //   $('#local-video').css('display', 'block');
-      // }
-      // else {
-
-      //   setTimeout(() => {
-
-      //     $('#groupvideocall').modal('hide');
-      //     $('.groupvideocallModel').modal('hide');
-      //     $('#groupmodalcall').modal('hide');
-      //     $('.modal-backdrop').remove();
-      //   }, 2000);
-
-      //   this.$toasted.success('User Busy An Another Call ', {
-      //     theme: "toasted-primary",
-      //     position: "top-right",
-      //     duration: 4000
-      //   })
-
-
-      // }
 
     },
     groupvideoJoinCall(group) {
@@ -9472,104 +9174,7 @@ export default {
       $('#groupchating').removeClass('active');
       $('#groupsinglemessage-input').hide();
       $('#chating').removeClass('active');
-      //this.audio.pause();
-      // stopCall();
-      // var x = document.getElementById("outgoingcall"); console.log(x);
-      // x.pause();
-      // x.muted = true;
-      // var incoming = document.getElementById("incommingcall");
-      // incoming.pause();
-      // incoming.muted = true;
-
-      // $('body').removeClass('modal-open');
-      // $('.modal-backdrop').remove();
-      // $('#showCallMin').hide();
-      // $('#audioshowCallMin').hide();
-      // this.checkreset();
-      // this.checkcallstop();
-      // //this.singlefriend= this.oncallFriend;
-      // this.groupstatus = false;
-      // console.log(this.oncallFriend);
-
-
-      // $('#showcallModel' + this.oncallFriend._id).show();
-
-      // var o2oobg = {
-      //   reciverid: receiverId(),
-      //   friendId: this.oncallFriend._id,
-      //   stoperId: this.c_user._id
-      // }
-
-      // this.$socket.emit('O2OcloseReceiverPanal', o2oobg);
-      // $('#startchat').show();
-      // $('#message-input').hide();
-      // $('#singlemessage-input').show();
-      // var endtime = $('#basicUsage').text();
-      // this.$toasted.success('Call Ended ' + endtime, {
-      //   theme: "toasted-primary",
-      //   position: "top-right",
-      //   duration: 4000
-      // })
-
-      // var Rid = '';
-      // var idddd = receiverId();
-      // if (receiverId()) {
-      //   Rid = receiverId();
-      //   console.log('reciver');
-      // }
-      // else {
-      //   Rid = this.oncallFriend._id;
-      // }
-      // this.$socket.emit('updateCallStatus', {
-      //   userId: this.c_user._id,
-      //   friendId: Rid,
-      //   status: 0
-      // });
-      // axios.post('/updateCallStatus', {
-      //   userId: this.c_user._id,
-      //   friendId: Rid,
-      //   status: 0
-      // }).then(response => {
-
-      // }, function(err) {
-      //   console.log('err', err);
-      //   //alert('error');
-      // });
-
-      // this.msgObj = {
-      //   chatType: 3,
-      //   isGroup: 0,
-      //   messageType: 3,
-      //   senderId: { _id: this.c_user._id },
-      //   senderImage: '',
-      //   receiverImage: '',
-      //   receiverId: { _id: Rid },
-      //   senderName: this.c_user.name,
-      //   message: endtime,
-      //   createdAt: new Date().toISOString(),
-      // };
-      // console.log(this.selectFriendStatus);
-      // if (this.selectFriendStatus) {
-      //   this.friendchat.push(this.msgObj);
-      // }
-      // this.$socket.emit('sendmsg', {
-      //   selectFrienddata: Rid,
-      //   userId: this.c_user._id,
-      //   msgData: this.msgObj
-      // })
-      // axios.post('/chat', {
-      //   msgData: this.msgObj,
-      //   selectedUserData: Rid
-      // }).then(response => {
-      //   console.log(response);
-
-      // }, function(err) {
-      //   console.log('err', err);
-      //   //alert('error');
-      // })
-      // this.reset();
-      // this.stop();
-      // this.oncallFriend = {};
+    
     },
     minimizeScreen() {
       $('#startchat').hide();
@@ -9638,28 +9243,7 @@ export default {
         console.log('err', err);
         //alert('error');
       });
-      // this.grouphideCallchat();
-      // var x = document.getElementById("outgoingcall");
-      // x.pause();
-      // x.muted = true;
-      // startCall();
-      // this.reset();
-      // this.start();
-      // var groupobg = {
-      //   reciverid: receiverId(),
-      //   friendId: this.oncallFriend._id
-      // }
-      // this.$socket.emit('groupstarTimer', groupobg);
-      // $('#videocallReceiver').modal('hide');
 
-      // $('#groupvideocall').modal('show');
-      // $('#local-video').css('display', 'block');
-
-      // const post = this.friendsdata.filter((obj) => {
-      //   return receiverId() === obj._id;
-      // }).pop();
-      // this.oncallFriend = post;
-      // console.log(this.oncallFriend);
     },
 
 
@@ -9673,21 +9257,7 @@ export default {
       console.log(this.searchUsers);
       if (friend.friendReqStatus == 0) {
         console.log("IFF");
-        //  var statusUpdate={
-        // 	_id: friend._id,
-        // 	status: 2,
-        //   myId:this.c_user.split_id
-        // }
-        // this.$socket.emit('updateRequeststatus',statusUpdate);
-
-        // ---- NOT NEEDED HERE NOW -----------------------------------
-        // 	const searchdata = this.searchUsers.filter((obj) => {
-        //           return friend._id === obj._id;
-        //         }).pop();
-        // searchdata.friendReqStatus=2;
-        // searchdata.friendReqSenderId=this.c_user._id;
-        // this.friendsdata.push(searchdata);
-
+ 
         axios.post('/friends/sendFriendRequest', {
           userId: this.c_user._id,
           friendId: friend._id,
@@ -9723,18 +9293,7 @@ export default {
       }
       else if (friend.friendReqStatus == 3) {
         console.log("ELSE IF");
-        // 	  var statusUpdate={
-        //   	  _id: friend._id,
-        //     	status: 2,
-        // 	  	myId:this.c_user._id
-        //   	}
-        // this.$socket.emit('updateRequeststatus',statusUpdate);
-        // const fdata = this.searchUsers.filter((obj) => {
-        // return friend._id === obj._id;
-        // }).pop();
 
-        // fdata.friendReqStatus=2;
-        // fdata.friendReqSenderId=this.c_user._id;
 
         axios.post('/friends/updateFriendRequest', {
           _id: friend.friendReqId,
@@ -9803,7 +9362,36 @@ export default {
     },
 
 
-    ///////////////////////////////////////// ADD FRIENDS //////////////////////////////////////////////////////
+    /////////////////////////////////////// ADD FRIENDS END ////////////////////////////////////////////////////
+
+    userUploadfile(event){
+     let userfilesdata = this.$refs.userImage.files;
+      userfilesdata.forEach((file) => {
+        console.log(file);
+        let userProfiledata = new FormData();
+        userProfiledata.append('file', file);
+        userProfiledata.append('imageName', file.name);
+        userProfiledata.append('id', this.c_user._id);
+    
+        console.log(userProfiledata);
+        let config = {
+          header: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        //this.isLoading = true;
+        axios.post('/uploadProfilePic', userProfiledata, config).then((response) => {
+          console.log(response.data);
+       this.userImageName=response.data;
+       this.$session.set('c_user_image', response.data)
+       
+          
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+          })
+    },
 
     chatSidebar() {
       $('#groupslide-menu').hide();
@@ -9813,6 +9401,71 @@ export default {
       $('#slide-menu').hide();
       $('#groupslide-menu').show();
     },
+    saveTodo(){
+     var todoObj={
+          userId: this.c_user._id,
+          assignFrom: this.c_user.name,
+          todo: this.todo,
+          assignTo: this.assignName,
+          assignDate: this.assignDate,
+        }
+   axios.post('/addTodo', todoObj).then(response => {
+          console.log(response);
+          this.myTodoList.push(response.data);
+        //  this.$socket.emit('notification', todoObj);
+           this.$toasted.success('Task Created Successfully ', {
+          theme: "toasted-primary",
+          position: "top-center",
+          duration: 3000
+        })
+         
+           setTimeout(() => {
+              $('#createtodoModal').modal('hide');
+        }, 3000);
+
+       
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+    },
+
+    getMytodo(){
+        axios.post('/getmyTodo',{userId: this.c_user._id}).then(response => {
+          console.log(response);
+          this.myTodoList = response.data;
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+
+    },
+    getTodo(){
+        axios.post('/getTodo',{userId: this.c_user._id}).then(response => {
+          console.log(response);
+          this.TodoList = response.data;
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+
+    },
+    todoStatusUpdate(value){
+     // console.log(value.target);
+       console.log($.parseJSON(JSON.stringify(value.target.value)));
+       axios.post('/todoStatus',
+        {
+          userId: this.c_user._id,
+          status:value.target.value
+        }).then(response => {
+          console.log(response);
+          //this.TodoList = response.data;
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+
+    },
   },
 
   mounted() {
@@ -9821,6 +9474,7 @@ export default {
     this.c_user = this.$session.get('c_user');
     console.log(this.c_user.name);
     this.current_User = this.c_user;
+    this.userImageName=this.$session.get('c_user_image');
     console.log(JSON.parse(localStorage.getItem('userData')));
     var dd = '';
     this.updateCallStatus(dd);
@@ -9828,6 +9482,8 @@ export default {
     this.hostname = this.$hostname;
     this.getfriends();
     this.getgroupsfirst();
+    // this.getMytodo();
+    // this.getTodo();
     //console.log(this.getUsers());
     this.emptyChatWithId();
     if (screen.width < 600) {

@@ -761,3 +761,40 @@ ul.call-cont-setting li a span {
 .displayclass{
     display: inline-block !important;
 }
+
+.profile.offline.menu-trigger{
+    background-image: none !important;
+}
+.profile.online.menu-trigger{
+    background-image: none !important;
+}
+.profile.offline.menu-trigger img{
+    display:  block !important;
+}
+.profile.online.menu-trigger img{
+    display: block !important;
+}
+div span.bg-size{
+    background-image: none !important;
+}
+div span.bg-size img{
+    display: block !important;
+}
+.theme-tab .nav-tabs .nav-item .buttoneffect.active {
+    background-color: transparent !important;
+    color: #1c9dea !important;
+    transition: all 0.3s ease;
+    font-weight: 700;
+}
+.todo-main-content{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #eff1f2;
+}
+.theme-tab .nav-tabs .nav-item .buttoneffect {
+    background-color: transparent !important;
+    color: #223645 !important;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
