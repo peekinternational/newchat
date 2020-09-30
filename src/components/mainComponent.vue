@@ -6746,7 +6746,7 @@ export default {
   watch: {
     callstatus() {
       console.log(this.callstatus);
-      if (this.callstatus > 20) {
+      if (this.callstatus > 30) {
         this.o2ostopKCall();
         // var incoming = document.getElementById("incommingcall");
         //	incoming.pause();
