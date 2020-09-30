@@ -244,6 +244,7 @@ h5{
 .profile.mr-4 img{
     border-radius: 30px !important  ;
     width: 48px !important;
+    min-height: 48px;
 }
 .msg-setting-main .msg-dropdown-main .msg-dropdown {
     background-color: #fff;
