@@ -1100,10 +1100,16 @@
                             <div class="input-text" style="margin-bottom: 12px;font-weight: 700;">
                               {{todoData.todo}}
                             </div>
-                           <div><p style="float:left">Assign From <br>
-                            <span>{{todoData.assignFrom}}</span></p>
-                            <p style="float:right">Due Date <br>
-                            <span>{{isToday(todoData.assignDate)}}</span></p></div>
+                             <div style="float:left">
+                            <p >Assign by</p>
+                             <p >  Assign Date</p>
+                               <p >  Due Date </p>
+                             </div>
+                               <div style="float:right">  
+                            <p style="color: #223645;">{{todoData.assignTo}}</p>
+                           <p style="color: #223645;"> {{isToday(todoData.createdAt)}}</p> 
+                            <p style="color: #223645;">{{isToday(todoData.assignDate)}}</p>
+                          </div>
                           </div>
                          
                           <div class="todo-list" style="padding-bottom: 28px;border-bottom: 1px solid #eff1f2; margin-bottom: 36px;">
@@ -1135,16 +1141,22 @@
                             <div class="input-text" style="margin-bottom: 12px;font-weight: 700;">
                               {{mytodo.todo}}
                             </div>
-                           <div><p style="float:left">Assign to <br>
-                            <span>{{mytodo.assignTo}}</span></p>
-                            <p style="float:right">Due Date <br>
-                            <span>{{isToday(mytodo.assignDate)}}</span></p></div>
+                             <div style="float:left">
+                            <p >Assign to</p>
+                             <p >  Assign Date</p>
+                               <p >  Due Date </p>
+                             </div>
+                               <div style="float:right">  
+                            <p style="color: #223645;">{{mytodo.assignTo}}</p>
+                           <p style="color: #223645;"> {{isToday(mytodo.createdAt)}}</p> 
+                            <p style="color: #223645;">{{isToday(mytodo.assignDate)}}</p>
+                          </div>
                           </div>
                           <div class="todo-list" style="padding-bottom: 28px;border-bottom: 1px solid #eff1f2; margin-bottom: 36px;">
                             <div class="element" id="div_1">
                               <p class="add add-to-do" style="float:left">Status</p>
-                              <span class="add add-to-do" style="float:right"><template v-if="mytodo.status == 0">Pending</template> <template v-else-if="mytodo.status == 1">In Progress</template>
-                                <template v-else>Complete</template></span>
+                              <p class="add add-to-do" style="float:right"><span class="badge badge-dark" v-if="mytodo.status == 0">Pending</span> <span class="badge badge-primary" v-else-if="mytodo.status == 1">In Progress</span>
+                                <span class="badge badge-success" v-else>Complete</span></p>
                             </div>
                           </div>
                           </template>
