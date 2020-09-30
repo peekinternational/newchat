@@ -114,6 +114,7 @@ export default {
 					   })
                     this.$session.start()
                     this.$session.set('c_user', response.data.user)
+                    this.$session.set('c_user_image', response.data.user.user_image)
                     localStorage.setItem('userData', JSON.stringify(response.data.user));
                     this.$session.set('jwt', response.data.user.token)
                     Vue.http.headers.common['Authorization'] = 'Bearer ' + response.data.user.token
