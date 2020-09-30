@@ -8,8 +8,8 @@
               <div class="left-page">
                 <div class="login-content">
                   <div class="login-content-header"><img class="image-fluid" src="../assets/images/logo/logo_big.png" alt="images"></div>
-                  <h3 style="margin: 2px;">Hello Everyone , We are Chitchat</h3>
-                  <h4>Wellcome to chitchat please login to your account.</h4>
+                  <h3 style="margin: 2px;">Hello Everyone , We are Chatto</h3>
+                  <h4>Wellcome to chatto please login to your account.</h4>
                  <h5> {{this.errorMessage}} </h5>
                   <form v-on:submit="loginuser" class="form1">
                     <div class="form-group">

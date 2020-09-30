@@ -163,7 +163,7 @@
 
                   <div style="border: 1px #BAC5E9 solid;padding: 1px;border-radius: 26px;width: 62px !important;height: 62px !important;" v-if="c_user.onlineStatus == 1" class="profile">
                     
-                    <img class="bg-img" v-if="userImageName" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" style="border-radius: 30px;width: 57px;" />
+                    <img class="bg-img" v-if="userImageName" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" style="border-radius: 30px;width: 57px;min-height: 57px;" />
                     <img class="bg-img" v-else  src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;width: 57px;" />
                     <label for="imageInput" style="position: absolute;right: 0; top: 37px;"><camera-icon size="1.5x"  class="custom-class"></camera-icon></label>
                     <input type="file" id="imageInput" ref="userImage" @change="userUploadfile($event)" style="display:none"/> 
@@ -369,10 +369,10 @@
                             <li v-if="friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                               <div class="chat-box">
                                 <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                  <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                  <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                 <div v-else class="profile offline">
-                                 <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                 <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                 </div>
 
@@ -392,10 +392,10 @@
                             <li v-else-if="friends.friendReqStatus == 2" class="init" :id="'friend'+friends._id" data-to="blank">
                               <div class="chat-box">
                                 <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                 <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                 <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                 <div v-else class="profile offline">
-                                <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                 </div>
                                 <div v-if="friends.friendReqSenderId == friends._id">
@@ -431,10 +431,10 @@
                               <li v-if="friends.friendReqStatus == 1" class="init" @click="startchat(friends)" :id="'friend'+friends._id" data-to="blank" style="cursor: pointer;">
                                 <div class="chat-box">
                                   <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                   <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                   <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                   <div v-else class="profile offline">
-                                   <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                   <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                   </div>
 
@@ -457,10 +457,10 @@
                               <li v-else-if="friends.friendReqStatus == 2" class="init" :id="'friend'+friends._id" data-to="blank">
                                 <div class="chat-box">
                                   <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                    <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                   <div v-else class="profile offline">
-                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                    <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                   </div>
                                   <div v-if="friends.friendReqSenderId == friends._id">
@@ -492,10 +492,10 @@
                               <li v-else :id="'friend'+friends._id" data-to="blank" style="">
                                 <div class="chat-box">
                                   <div v-if="friends.onlineStatus == 1" class="profile" v-bind:class="{ online: friends.pStatus == 0, unreachable : friends.pStatus == 1, busy: friends.pStatus == 2, offline: friends.pStatus == 3, offline: friends.pStatus == 4 }">
-                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                    <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                                   <div v-else class="profile offline">
-                                    <img class="bg-img"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
+                                    <img class="bg-img" style="min-height: 49px;"  v-if="friends.user_image" :src="hostname+'images/chatImages/'+friends.user_image" alt="Avatar" />
                                   <img class="bg-img" v-else src="../assets/images/contact/1.jpg" alt="Avatar" />
                                   </div>
 
@@ -2654,7 +2654,7 @@
 
                       <div v-else class="profile offline menu-trigger" style="border-radius: 30px;">
 
-                         <img class="bg-img" v-if="singlefriend.user_image" style ="width: 60px;" :src="hostname+'images/chatImages/'+singlefriend.user_image" alt="Avatar" /> 
+                         <img class="bg-img" v-if="singlefriend.user_image" style ="width: 60px;min-height: 60px;" :src="hostname+'images/chatImages/'+singlefriend.user_image" alt="Avatar" /> 
 
                        <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style ="width: 60px;" alt="Avatar" /> 
 
@@ -4122,7 +4122,7 @@
                 <div style="padding-right: 10px;">
                   <h4 style="margin-bottom: 4px; color: black;">Group:</h4>
                   <div style="border: 1px #E5EAF9 solid;padding: 4px;border-radius: 6px;">
-                    <span>  <img class="bg-img" v-if="userImageName" style ="max-height: 40px;; border-radius:0px" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" /> 
+                    <span>  <img class="bg-img" v-if="userImageName" style ="max-height: 40px; border-radius:0px" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" /> 
 
                        <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style ="max-height: 40px;; border-radius:0px"  alt="Avatar" /> </span>
                   </div>
