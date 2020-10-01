@@ -11,8 +11,8 @@ import AudioRecorder from 'vue-audio-recorder';
 
 window.axios = require('axios');
 //window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL = 'https://peekvideochat.com:22000/';
-//window.axios.defaults.baseURL = 'https://192.168.1.107:22000/';
+//window.axios.defaults.baseURL = 'https://peekvideochat.com:22000/';
+window.axios.defaults.baseURL = 'https://192.168.1.114:22000/';
 window.axios.defaults.withCredentials = true
 import { MyVuexStore } from './my-vuex-store.js';
 //import {ApiService} from './services/api.service.js';
@@ -44,8 +44,8 @@ Vue.use(VueSocketIO, SocketInstance, MyVuexStore)
 // `Vue.extend()`, or just a component options object.
 // We'll talk about nested routes later.
 Vue.config.productionTip = false
-Vue.prototype.$hostname = 'https://peekvideochat.com:22000/'
-//Vue.prototype.$hostname = 'https://192.168.1.107:22000/'
+//Vue.prototype.$hostname = 'https://peekvideochat.com:22000/'
+Vue.prototype.$hostname = 'https://192.168.1.114:22000/'
 
 
 const routes = [
