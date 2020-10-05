@@ -1197,7 +1197,7 @@
             </div>
           </div>
           <ul class="chat-main">
-            <li>
+            <li v-for="document in allDocument">
               <div class="chat-box">
                 <div class="media">
                   <div class="profile">
@@ -1206,117 +1206,18 @@
                     </a>
                   </div>
                   <div class="details">
-                    <h5>messenger.html</h5>
-                    <h6>2, octomber 2019</h6>
+                    <h5>{{document.message}}</h5>
+                    <h6>{{docToday(document.createdAt)}}</h6>
                   </div>
                   <div class="media-body">
-                    <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
+                    <a class="icon-btn btn-outline-light btn-sm pull-right" :href="hostname+'images/chatImages/'+document.message" target="_blank">
                       <download-icon size="1.5x" class="custom-class"></download-icon>
                     </a>
                   </div>
                 </div>
               </div>
             </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile">
-                    <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
-                      <i class="fa fa-file-video-o"></i>
-                    </a>
-                  </div>
-                  <div class="details">
-                    <h5>chapter1.MP4</h5>
-                    <h6>3, Octomber 2019</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/chapter1.MP4" target="_blank">
-                      <download-icon size="1.5x" class="custom-class"></download-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile">
-                    <a class="icon-btn btn-outline-primary btn-xl pull-right rouded15" href="#">
-                      <i class="fa fa-file-word-o"></i>
-                    </a>
-                  </div>
-                  <div class="details">
-                    <h5>salary.xlsx</h5>
-                    <h6>5, Octomber 2019</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/salary.xlsx" target="_blank">
-                      <download-icon size="1.5x" class="custom-class"></download-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile">
-                    <a class="icon-btn btn-outline-warning btn-xl pull-right rouded15" href="#">
-                      <i class="fa fa-file-pdf-o"></i>
-                    </a>
-                  </div>
-                  <div class="details">
-                    <h5>document.pdf</h5>
-                    <h6>7, Octomber 2019</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/document.pdf" target="_blank">
-                      <download-icon size="1.5x" class="custom-class"></download-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile">
-                    <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
-                      <i class="fa fa-file-text-o"></i>
-                    </a>
-                  </div>
-                  <div class="details">
-                    <h5>details.txt</h5>
-                    <h6>20, Octomber 2019</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/details.txt" target="_blank">
-                      <download-icon size="1.5x" class="custom-class"></download-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box">
-                <div class="media">
-                  <div class="profile">
-                    <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
-                      <i class="fa fa-file-code-o"></i>
-                    </a>
-                  </div>
-                  <div class="details">
-                    <h5>messenger.html</h5>
-                    <h6>2, octomber 2019</h6>
-                  </div>
-                  <div class="media-body">
-                    <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
-                      <download-icon size="1.5x" class="custom-class"></download-icon>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
+            
           </ul>
         </div>
         <div class="contact-list-tab dynemic-sidebar custom-scroll" id="contact-list">
@@ -1639,13 +1540,13 @@
           <div class="theme-tab">
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link button-effect active" data-toggle="pill" href="#tab1">Media</a>
+                <a class="buttoneffect active" data-toggle="pill" href="#tab1">Media</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link button-effect" data-toggle="pill" href="#tab2">Link</a>
+                <a class="buttoneffect" data-toggle="pill" href="#tab2">Link</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link button-effect" data-toggle="pill" href="#tab3">Docs</a>
+                <a class="buttoneffect" data-toggle="pill" href="#tab3">Docs</a>
               </li>
             </ul>
           </div>
@@ -1659,7 +1560,7 @@
                     </h5>
                     <div class="block-content">
                       <div class="row share-media zoom-gallery">
-                        <div class="col-4 isotopeSelector filter">
+                        <!--<div class="col-4 isotopeSelector filter">
                           <div class="media-big">
                             <div class="overlay">
                               <div class="border-portfolio">
@@ -1670,51 +1571,21 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="col-4">
+                        </div>-->
+                        <div class="col-4" v-for="media in allMedia">
                           <div class="media-small isotopeSelector filter">
                             <div class="overlay">
                               <div class="border-portfolio">
-                                <a href="../assets/images/gallery/2.jpg">
+                                <a :href="hostname+'images/chatImages/'+media.message" target="_blank">
                                   <div class="overlay-background">
                                     <i class="ti-plus" aria-hidden="true"></i>
-                                  </div><img class="img-fluid bg-img" src="../assets/images/gallery/2.jpg" alt="portfolio-image" /></a>
+                                  </div><img class="img-fluid bg-img" :src="hostname+'images/chatImages/'+media.message" alt="portfolio-image" /></a>
                               </div>
                             </div>
                           </div>
-                          <div class="media-small isotopeSelector filter">
-                            <div class="overlay">
-                              <div class="border-portfolio">
-                                <a href="../assets/images/gallery/3.jpg">
-                                  <div class="overlay-background">
-                                    <i class="ti-plus" aria-hidden="true"></i>
-                                  </div><img class="img-fluid bg-img" src="../assets/images/gallery/3.jpg" alt="portfolio-image" /></a>
-                              </div>
-                            </div>
-                          </div>
+                         
                         </div>
-                        <div class="col-4">
-                          <div class="media-small isotopeSelector filter">
-                            <div class="overlay">
-                              <div class="border-portfolio">
-                                <a href="../assets/images/gallery/4.jpg">
-                                  <div class="overlay-background">
-                                    <i class="ti-plus" aria-hidden="true"></i>
-                                  </div><img class="img-fluid bg-img" src="../assets/images/gallery/4.jpg" alt="portfolio-image" /></a>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="media-small isotopeSelector filter fashion">
-                            <div class="overlay">
-                              <div class="border-portfolio">
-                                <a href="../assets/images/gallery/5.jpg">
-                                  <div class="overlay-background">
-                                    <i class="ti-plus" aria-hidden="true"></i>
-                                  </div><img class="img-fluid bg-img" src="../assets/images/gallery/5.jpg" alt="portfolio-image" /></a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                     
                       </div>
                     </div>
                     <h5 class="block-title">10/01/2020
@@ -2195,126 +2066,27 @@
               </div>
               <div class="tab-pane fade" id="tab3">
                 <ul class="chat-main">
-                  <li>
-                    <div class="chat-box">
-                      <div class="media">
-                        <div class="profile">
-                          <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
-                            <i class="fa fa-file-code-o"></i>
-                          </a>
-                        </div>
-                        <div class="details">
-                          <h5>messenger.html</h5>
-                          <h6>2, octomber 2019</h6>
-                        </div>
-                        <div class="media-body">
-                          <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
-                            <download-icon size="1.5x" class="custom-class"></download-icon>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="chat-box">
-                      <div class="media">
-                        <div class="profile">
-                          <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
-                            <i class="fa fa-file-video-o"></i>
-                          </a>
-                        </div>
-                        <div class="details">
-                          <h5>chapter1.MP4</h5>
-                          <h6>3, Octomber 2019</h6>
-                        </div>
-                        <div class="media-body">
-                          <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/chapter1.MP4" target="_blank">
-                            <download-icon size="1.5x" class="custom-class"></download-icon>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="chat-box">
-                      <div class="media">
-                        <div class="profile">
-                          <a class="icon-btn btn-outline-primary btn-xl pull-right rouded15" href="#">
-                            <i class="fa fa-file-word-o"></i>
-                          </a>
-                        </div>
-                        <div class="details">
-                          <h5>salary.xlsx</h5>
-                          <h6>5, Octomber 2019</h6>
-                        </div>
-                        <div class="media-body">
-                          <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/salary.xlsx" target="_blank">
-                            <download-icon size="1.5x" class="custom-class"></download-icon>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="chat-box">
-                      <div class="media">
-                        <div class="profile">
-                          <a class="icon-btn btn-outline-warning btn-xl pull-right rouded15" href="#">
-                            <i class="fa fa-file-pdf-o"></i>
-                          </a>
-                        </div>
-                        <div class="details">
-                          <h5>document.pdf</h5>
-                          <h6>7, Octomber 2019</h6>
-                        </div>
-                        <div class="media-body">
-                          <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/document.pdf" target="_blank">
-                            <download-icon size="1.5x" class="custom-class"></download-icon>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="chat-box">
-                      <div class="media">
-                        <div class="profile">
-                          <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
-                            <i class="fa fa-file-text-o"></i>
-                          </a>
-                        </div>
-                        <div class="details">
-                          <h5>details.txt</h5>
-                          <h6>20, Octomber 2019</h6>
-                        </div>
-                        <div class="media-body">
-                          <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/details.txt" target="_blank">
-                            <download-icon size="1.5x" class="custom-class"></download-icon>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="chat-box">
-                      <div class="media">
-                        <div class="profile">
-                          <a class="icon-btn btn-outline-success btn-xl pull-right rouded15" href="#">
-                            <i class="fa fa-file-code-o"></i>
-                          </a>
-                        </div>
-                        <div class="details">
-                          <h5>messenger.html</h5>
-                          <h6>2, octomber 2019</h6>
-                        </div>
-                        <div class="media-body">
-                          <a class="icon-btn btn-outline-light btn-sm pull-right" href="../assets/doc/messenger.html" target="_blank">
-                            <download-icon size="1.5x" class="custom-class"></download-icon>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+                 <li v-for="document in allDocument">
+              <div class="chat-box">
+                <div class="media">
+                  <div class="profile">
+                    <a class="icon-btn btn-outline-danger btn-xl pull-right rouded15" href="#">
+                      <i class="fa fa-file-code-o"></i>
+                    </a>
+                  </div>
+                  <div class="details">
+                    <h5>{{document.message}}</h5>
+                    <h6>{{docToday(document.createdAt)}}</h6>
+                  </div>
+                  <div class="media-body">
+                    <a class="icon-btn btn-outline-light btn-sm pull-right" :href="hostname+'images/chatImages/'+document.message" target="_blank">
+                      <download-icon size="1.5x" class="custom-class"></download-icon>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </li>
+                  
                 </ul>
               </div>
             </div>
@@ -6087,7 +5859,9 @@ export default {
       assignName:'',
       myTodoList:[],
       TodoList:[],
-      todoStatus:''
+      todoStatus:'',
+      allMedia:[],
+      allDocument:[],
 
 
     }
@@ -6878,7 +6652,9 @@ export default {
     isToday(date) {
       return moment(date).format('l');
     },
-
+  docToday(date) {
+      return moment(date).format('LL');
+    },
     chatTime(date) {
       return moment(date).format('LT');
     },
@@ -8222,6 +7998,8 @@ $('#group_chat').hide();
     },
 
     status() {
+      this.allChatMedia();
+
       $("#recent").removeClass("active");
       $("#contact-list").removeClass("active");
       $("#document").removeClass("active");
@@ -8230,11 +8008,12 @@ $('#group_chat').hide();
       $("#favourite").removeClass("active");
       // add class to the one we clicked
       $('#status').addClass("active");
+       this.allChatDocument();
 
     },
 
     document() {
-
+       this.allChatDocument();
       $("#recent").removeClass("active");
       $("#contact-list").removeClass("active");
       $("#status").removeClass("active");
@@ -9517,6 +9296,36 @@ $('#group_chat').hide();
         }).then(response => {
           console.log(response);
           //this.TodoList = response.data;
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+
+    },
+
+     allChatMedia(){
+     // console.log(value.target);
+       axios.post('/allImageChat',
+        {
+          userId: this.c_user._id,
+        }).then(response => {
+          console.log(response);
+          this.allMedia = response.data;
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+
+    },
+    
+     allChatDocument(){
+     // console.log(value.target);
+       axios.post('/allDocumentChat',
+        {
+          userId: this.c_user._id,
+        }).then(response => {
+          console.log(response);
+          this.allDocument = response.data;
         }, function(err) {
           console.log('err', err);
           alert('error');

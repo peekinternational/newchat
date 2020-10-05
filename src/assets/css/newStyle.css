@@ -799,6 +799,7 @@ div span.bg-size img{
     transition: all 0.3s ease;
     font-weight: 600;
 }
+
 ul.sidebar-top li.active {
     border-radius: 2px;
     background-color: gainsboro;
@@ -846,5 +847,12 @@ ul.sidebar-top li.active:before {
     position: absolute;
     right: 5px;
     top: 11px;
+}
+
+.portfolio-section .isotopeSelector img{
+    width: 100%;
+    height: auto;
+    max-height: 80px;
+
 }
 
