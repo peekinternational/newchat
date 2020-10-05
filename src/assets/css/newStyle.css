@@ -799,3 +799,52 @@ div span.bg-size img{
     transition: all 0.3s ease;
     font-weight: 600;
 }
+ul.sidebar-top li.active {
+    border-radius: 2px;
+    background-color: gainsboro;
+    margin: 0 3px 0px 3px;
+    width: 100%;
+}
+
+ul.sidebar-top li.active .activecss {
+    padding-left: 0px !important;
+    padding-right: 13px;
+    
+}
+ul.sidebar-top li.active .activelive {
+    padding-left: 0px !important;
+    padding-right: 49px;
+    
+}
+ul.sidebar-top li.active .activetodo {
+    padding-left: 0px !important;
+    padding-right: 35px;
+}
+ul.sidebar-top li.active .activefile {
+    padding-left: 18px !important;
+    padding-right: 10px;
+    
+}
+ul.sidebar-top li.active .activefile1 {
+    float: left;
+    padding-left: 7px;    
+}
+ul.sidebar-top li.active .activecss1 {
+    float: left;
+    padding-left: 5px;
+    
+}
+ul.sidebar-top li:before {
+  content: '';
+}
+
+
+ul.sidebar-top li.active:before {
+    font-family: FontAwesome;
+    content: '\f105';
+    margin-right: 5px;
+    position: absolute;
+    right: 5px;
+    top: 11px;
+}
+

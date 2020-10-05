@@ -17,66 +17,66 @@
           <div style="margin-top: 17px;padding-right: 10px;">
             <span><img class="" src="../assets/images/nav/bars.png" alt="Avatar" style="height: auto;border-radius: 0;" /></span>
             <span style="margin-left: 12px; margin-right: 12px;" v-if="current_User.onlineStatus == 1" class="navprofile" v-bind:class="{ online: current_User.pStatus == 0, unreachable : current_User.pStatus == 1, busy: current_User.pStatus == 2, offline: current_User.pStatus == 3, offline: current_User.pStatus == 4 }">
-              <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
+              <img class="bg-img"  v-if="userImageName" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" style="border-radius: 30px;max-width: 42px;" />
+              <img  v-else class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
             </span>
             <span><img class="" src="../assets/images/nav/dots.png" alt="Avatar" style="height: auto;" /></span>
           </div>
         </div>
         <div class="sidebar-main">
           <ul class="sidebar-top">
-            <li style="display: flex;">
-              <div style="width: 20px;">
-                <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;" /></span>
-              </div>
-              <span style="padding-left: 18px;">Chat</span>
+            <li @click="chatNav()" class="active" style="display: flex;">
+              
+                <span class="activefile1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/chaticon.png" alt="Avatar" style="height: auto;" /></span>
+              
+              <span class="activefile" style="padding-left: 18px;">Chat</span>
+            </li>
+            <li @click="meetingNav()">
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/meetings.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss" style="padding-left: 16px;">Meetings</span>
             </li>
             <li>
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/meetings.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Meetings</span>
-            </li>
-            <li>
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/rooms.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 20px;">Rooms</span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/rooms.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss" style="padding-left: 20px;">Rooms</span>
             </li>
             <li data-toggle="modal" data-target="#showPresenter" data-keyboard="false" data-backdrop="static">
-              <span style="vertical-align: text-bottom;" class="" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 17px;">Live</span>
+              <span  style="vertical-align: text-bottom;" class="activecss1" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activelive" style="padding-left: 17px;">Live</span>
             </li>
             <li @click="contact()">
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/contacts.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 16px;">Contacts</span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/contacts.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss" style="padding-left: 16px;">Contacts</span>
             </li>
             <li>
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/schedule.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 22px;">Schedule</span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/schedule.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss"  style="padding-left: 22px;">Schedule</span>
             </li>
             <li @click="favourite()">
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/todo.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 20px;">To-Do</span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/todo.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activetodo" style="padding-left: 20px;">To-Do</span>
             </li>
             <li>
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/projects.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 17px;">Projects</span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/projects.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss" style="padding-left: 17px;">Projects</span>
             </li>
             <li @click="document()">
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/documents.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 17px;">Documents</span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/documents.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss" style="padding-left: 17px;">Documents</span>
             </li>
             <li @click="status()" style="display: flex;">
 
-              <div style="width: 20px;">
-                <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/files.png" alt="Avatar" style="height: auto;" /></span>
-              </div>
-              <span style="padding-left: 19px;">Files</span>
+                <span class="activefile1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/files.png" alt="Avatar" style="height: auto;" /></span>
+              
+              <span class="activefile" style="padding-left: 19px;">Files</span>
             </li>
             <li class="records">
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/records.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/records.png" alt="Avatar" style="height: auto;" /></span>
               <span style="padding-left: 24px;">Records</span>
-              <span style="margin-left: 16px;" class="badge badge-danger sm">2</span>
+              <span  style="margin-left: 16px;" class="active_class badge badge-danger sm">2</span>
             </li>
             <li class="minutes" style="    margin-bottom: 66px !important;">
-              <span style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/minutes.png" alt="Avatar" style="height: auto;" /></span>
-              <span style="padding-left: 22px;">Minutes</span>
+              <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/minutes.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss" style="padding-left: 22px;">Minutes</span>
             </li>
 
             <!--<li>
@@ -124,7 +124,7 @@
         <span @click="setting()" style="padding-left: 5px;padding-right: 5px;"><img class="" src="../assets/images/nav/setting.png" alt="Avatar" style="height: auto;" /></span>
         <span v-on:click="logout()"><img class="" src="../assets/images/nav/logout.png" alt="Avatar" style="height: auto;" /></span>
       </div>
-      <aside class="chitchat-left-sidebar left-disp">
+      <aside class="chitchat-left-sidebar left-disp" id="mainSidebar" >
         <div class="recent-default dynemic-sidebar active" id="recent">
           <div class="recent">
             <div class="theme-title">
@@ -2323,7 +2323,7 @@
         </div>
       </aside>
 
-      <div class="chitchat-main small-sidebar" id="content">
+      <div class="chitchat-main small-sidebar" id="content" >
         <div class="chat-content tabto active" id="mainchatpage">
           <div class=" custom-scroll active">
             <div class="row" style="margin-top: 157px;text-align: center;">
@@ -4057,7 +4057,37 @@
           </ul>
         </div>
       </aside>
+
+                 <!-- MEETING -->
+
+       <div id="meeting" style="width:100%; display:none">
+      <div class="row" style="margin: 0;">
+        
+        <div class="col-6">
+          <div><h6>Hello Dear </h6></div>
+           <div class="search2" id="" style="padding: 0px;border-top: none;margin-bottom: 6px;">
+            <div style="border-radius:none">
+              <div class="input-group">
+
+                <input class="form-control" v-model="searchFriend" type="text" placeholder="Search ..." />
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <h5>Meeting2</h5>
+        </div>
+      </div>
     </div>
+                <!-- MEETING END -->
+    </div>
+
+    
     <div class="modal fade add-popup add-contact-modal" id="showGroupsMembers" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -8162,6 +8192,21 @@ $('#group_chat').hide();
     callback(msg) {
       //console.debug('Event: ', msg)
     },
+
+    chatNav(){
+      $('#meeting').hide();
+      $('#mainSidebar').show();
+      $('#content').show();
+      
+    },
+
+    meetingNav(){
+      $('#mainSidebar').hide();
+      $('#content').hide();
+      $('#meeting').show();
+
+    },
+
     favourite() {
 
       this.getTodo();
@@ -9548,6 +9593,14 @@ $('#group_chat').hide();
     });
 
 
+  $('.sidebar-top li').click(function(e) {
+
+    $('.sidebar-top li.active').removeClass('active');
+
+    var $parent = $(this).parent();
+    $(this).addClass('active');
+    e.preventDefault();
+  });
 
     /*=====================
           04. Chitchat Loder js
@@ -10162,15 +10215,7 @@ img.emojione {
   width: 0%;
   float: left;
 }
-  /*#mainnav{
-display:none !important;
-}
-.app-list{
-display:none !important;
-}
-.sidebar-toggle .main-nav.on ~ .chitchat-main .messages .contact-details {
-  width: 93.5vw !important;
-}*/
+
   li.sent h5 {
     margin-left: 15px;
   }
