@@ -27,6 +27,8 @@ window.onbeforeunload = function () {
 }
 
 O2O_ws.onopen = function (message) {
+    if (!c_userData) return;
+    
     console.log("onopen");
     sendKMessage({
         id: 'register',
