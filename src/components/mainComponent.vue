@@ -120,7 +120,7 @@
 
       </nav>
       <div class="logoutDiv">
-        <span @click="notification()" class="dot-btn dot-danger grow" style="padding-left: 3px;"><img class="" src="../assets/images/nav/notification.png" alt="Avatar" style="height: auto;" /></span>
+        <span @click="notification()" v-bind:class="{'dot-btn dot-danger grow' : notificationStatus == true }" style="padding-left: 3px;"><img class="" src="../assets/images/nav/notification.png" alt="Avatar" style="height: auto;" /></span>
         <span @click="setting()" style="padding-left: 5px;padding-right: 5px;"><img class="" src="../assets/images/nav/setting.png" alt="Avatar" style="height: auto;" /></span>
         <span v-on:click="logout()"><img class="" src="../assets/images/nav/logout.png" alt="Avatar" style="height: auto;" /></span>
       </div>
@@ -1118,9 +1118,9 @@
                              
                               <span class="add add-to-do" style="float:right">
                                   <select class="custom-scroll" name=""   @change="todoStatusUpdate($event)">
-                                <option :selected="todoData.status == 0 ?true : false" :value="'0,'+todoData._id" >Pending</option>
-                                <option :selected="todoData.status == 1 ?true : false" :value="'1,'+todoData._id" >In Progress</option>
-                                <option :selected="todoData.status == 2 ?true : false" :value="'2,'+todoData._id" >Complete</option>
+                                <option :selected="todoData.status == 0 ?true : false" :value="'0,'+todoData._id+','+todoData.userId" >Assigned</option>
+                                <option :selected="todoData.status == 1 ?true : false" :value="'1,'+todoData._id+','+todoData.userId" >In Progress</option>
+                                <option :selected="todoData.status == 2 ?true : false" :value="'2,'+todoData._id+','+todoData.userId" >Complete</option>
                               </select>
                               </span>
                             </div>
@@ -1155,7 +1155,7 @@
                           <div class="todo-list" style="padding-bottom: 28px;border-bottom: 1px solid #eff1f2; margin-bottom: 36px;">
                             <div class="element" id="div_1">
                               <p class="add add-to-do" style="float:left">Status</p>
-                              <p class="add add-to-do" style="float:right"><span class="badge badge-dark" v-if="mytodo.status == 0">Pending</span> <span class="badge badge-primary" v-else-if="mytodo.status == 1">In Progress</span>
+                              <p class="add add-to-do" style="float:right"><span class="badge badge-dark" v-if="mytodo.status == 0">Assigned</span> <span class="badge badge-primary" v-else-if="mytodo.status == 1">In Progress</span>
                                 <span class="badge badge-success" v-else>Complete</span></p>
                             </div>
                           </div>
@@ -1286,12 +1286,12 @@
             </div>
           </div>
           <ul class="chat-main">
-            <li>
+            <li style="padding: 0 0px;" v-for="notification in notificationDate">
               <div class="chat-box notification">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
+                <div class="profile"><img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" /></div>
                 <div class="details">
-                  <span>Josephin water</span>
-                  <h5>Upload New Photos</h5>
+                  <span>{{notification.senderName}}</span>
+                  <h5>{{notification.notificationText}}</h5>
                   <p>Lorem Ipsum is simply dummy text of the printing.</p>
                 </div>
                 <div class="date-status">
@@ -1299,62 +1299,7 @@
                 </div>
               </div>
             </li>
-            <li>
-              <div class="chat-box notification">
-                <div class="profile bg-success offline">
-                  <span>J</span>
-                </div>
-                <div class="details">
-                  <span>Jony Today Birthday</span>
-                  <h5>Upload New Photos</h5>
-                  <p>Lorem Ipsum is simply dummy text of the printing.</p>
-                </div>
-                <div class="date-status">
-                  <h6>1 hour ago</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box notification">
-                <div class="profile offline"><img class="bg-img" src="../assets/images/contact/2.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <span>Sufiya Elija</span>
-                  <h5>Comment On your Photo</h5>
-                  <p>Lorem Ipsum is simply dummy text of the printing.</p>
-                </div>
-                <div class="date-status">
-                  <h6>5 hour ago</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box notification">
-                <div class="profile unreachable"><img class="bg-img" src="../assets/images/contact/3.jpg" alt="Avatar" /></div>
-                <div class="details">
-                  <span>Pabelo Mukrani</span>
-                  <h5>Invite Your New Friend</h5>
-                  <p>Lorem Ipsum is simply dummy text of the printing.</p>
-                </div>
-                <div class="date-status">
-                  <h6>6 hour ago</h6>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="chat-box notification">
-                <div class="profile bg-success offline">
-                  <span>PM</span>
-                </div>
-                <div class="details">
-                  <span>Pabelo Mukrani</span>
-                  <h5>Update Profile Picture</h5>
-                  <p>Lorem Ipsum is simply dummy text of the printing.</p>
-                </div>
-                <div class="date-status">
-                  <h6>6 hour ago</h6>
-                </div>
-              </div>
-            </li>
+            
           </ul>
         </div>
         <div class="settings-tab dynemic-sidebar custom-scroll" id="settings">
@@ -5263,7 +5208,7 @@
                   <label class="icon-btn btn-outline-primary mr-4" style="height: 30px;width: 30px;margin-right: 0.3rem !important;" for="fileupload">
                     <i class="fa fa-plus"></i>
                   </label>
-                  <input type="file" id="fileupload" ref="groupmyFiles" style="display:none" @change="uploadfile($event)" multiple>
+                  <input type="file" id="fileupload" ref="groupCallmyFiles" style="display:none" @change="groupCalluploadfile($event)" multiple>
 
                   <input class="setemoj" id="setemoj" ref="afterClick" type="text" v-on:keyup="" @keyup.enter="groupchat()" v-model="groupmessage" style="font-size: 11px;width: calc(100% - 100px);" placeholder="Write your message..." />
 
@@ -6605,6 +6550,8 @@ export default {
       todoStatus:'',
       allMedia:[],
       allDocument:[],
+      notificationDate:[],
+      notificationStatus:false,
 
 
     }
@@ -7122,6 +7069,20 @@ export default {
 
     },
 
+
+    /////////////////////////////////REQUEST UPDATE STATUS ////////////////////////////	
+  receivenotification(data) {
+   console.log('notification receive');
+   console.log(data);
+      if (data.receiverId == this.c_user._id ) {
+           this.notificationStatus=true;
+           console.log('Notification');
+           this.notificationDate.push(data);
+      }
+    },
+
+
+
   },
 
 
@@ -7161,7 +7122,7 @@ export default {
   watch: {
     callstatus() {
       console.log(this.callstatus);
-      if (this.callstatus > 20) {
+      if (this.callstatus > 30) {
         this.o2ostopKCall();
         // var incoming = document.getElementById("incommingcall");
         //	incoming.pause();
@@ -7271,10 +7232,10 @@ export default {
 
       var result = returnPdata();
       // console.log(result);
-      if (result.length == 0) {
+      if (result && result.length == 0) {
         this.presentersData = [];
       }
-      if (this.presentersData.length > result.length) {
+      if (result && this.presentersData.length > result.length) {
         console.log('alert remove');
 
         for (var i = this.presentersData.length - 1; i >= 0; i--) {
@@ -7361,7 +7322,7 @@ export default {
 
     logout: function() {
 
-      axios.post('/externalLogout/' + this.c_user._id)
+      axios.post('/externalLogout/' + this.c_user._id + '/' + '5d4c07fb030f5d0600bf5c03')
         .then((responce) => {
           this.$socket.emit('logout', this.c_user._id);
           this.emptyChatWithId();
@@ -7430,7 +7391,7 @@ export default {
     },
 
     emptyChatWithId() {
-      axios.get('/emptyChatWithId/' + this.c_user._id)
+      axios.get('/emptyChatWithId/' + this.c_user._id + '/5d4c07fb030f5d0600bf5c03')
         .then(responce => {
           this.isSeen = false;
         })
@@ -7485,7 +7446,8 @@ export default {
       axios.post('/friends/searchFriend/', {
         name: this.searchFriend,
         userId: this.c_user._id,
-        lastUserTime: ''
+        lastUserTime: '',
+         projectId: '5d4c07fb030f5d0600bf5c03'
       }).then(response => {
         console.log(response.data);
         this.searchUsers = response.data;
@@ -7548,7 +7510,7 @@ export default {
 
       //$(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
       this.friendchat = {};
-      axios.get('/getChat/' + this.c_user._id + '/' + friend._id + '/50')
+      axios.get('/getChat/' + this.c_user._id + '/' + friend._id + '/50' + '/5d4c07fb030f5d0600bf5c03')
         .then(responce => {
 
           this.friendchat = responce.data;
@@ -7602,8 +7564,10 @@ export default {
 
           this.$socket.emit('updatechatmsg', this.msgObj)
           // this.removecross();
-          axios.post('/updateChat/' + this.editChatid, {
-            msgData: this.msgObj
+          axios.post('/updateChat', {
+            msgData: this.msgObj,
+            id: this.editChatid,
+            projectId: '5d4c07fb030f5d0600bf5c03'
           }).then(response => {
 
           }, function(err) {
@@ -7649,7 +7613,8 @@ export default {
           this.chatreplydata = "";
           axios.post('/chat', {
             msgData: this.msgObj,
-            selectedUserData: this.singlefriend._id
+            selectedUserData: this.singlefriend._id,
+              projectId: '5d4c07fb030f5d0600bf5c03'
           }).then(response => {
             this.$socket.emit('sendid', response.data)
 
@@ -7738,7 +7703,8 @@ export default {
           this.$socket.emit('stopTyping', { selectFrienddata: this.singlefriend, UserId: this.c_user._id });
           axios.post('/chat', {
             msgData: this.msgObj,
-            selectedUserData: this.singlefriend._id
+            selectedUserData: this.singlefriend._id,
+              projectId: '5d4c07fb030f5d0600bf5c03'
           }).then(response => {
             this.$socket.emit('sendid', response.data)
 
@@ -7877,7 +7843,7 @@ export default {
         formDatas.append('senderName', this.c_user.name);
         formDatas.append('friendId', this.singlefriend._id);
         formDatas.append('isGroup', 0);
-
+        formDatas.append('projectId', '5d4c07fb030f5d0600bf5c03');
         console.log(formDatas);
         let config = {
           header: {
@@ -7900,6 +7866,7 @@ export default {
             senderName: this.c_user.name,
             message: response.data.file[0].originalname,
             createdAt: new Date().toISOString(),
+            projectId: '5d4c07fb030f5d0600bf5c03'
           };
           if (this.singlefriend.chatWithRefId == this.c_user._id) {
             // alert('dasdasdas');
@@ -7991,7 +7958,7 @@ export default {
       this.replyBox = false;
       $('#sender' + data._id).html('message deleted');
       console.log(data._id);
-      axios.get('/deleteMsg/' + data._id + '/0')
+      axios.get('/deleteMsg/' + data._id + '/0' + '/5d4c07fb030f5d0600bf5c03')
         .then((responce) => console.log(responce))
         .catch((error) => console.log(error));
 
@@ -8089,7 +8056,7 @@ $('#group_chat').hide();
       $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020 }, "fast");
       //$('#friend'+friend._id).addClass("active");
       // $(".contact-chat").animate({ scrollTop: window.innerHeight }, "fast");
-      axios.get('/getGroupChat/' + group._id + '/50')
+      axios.get('/getGroupChat/' + group._id + '/50' + '/5d4c07fb030f5d0600bf5c03')
         .then((responce) => this.groupchatdata = responce.data)
         .catch((error) => console.log(error));
       $('#startchat').removeClass("active");
@@ -8117,8 +8084,10 @@ $('#group_chat').hide();
 
           this.$socket.emit('updateGroupchatmsg', this.msgObj)
 
-          axios.post('/updateGroupChat/' + this.editgroupChatid, {
-            msgData: this.msgObj
+          axios.post('/updateGroupChat', {
+            msgData: this.msgObj,
+            id: this.editgroupChatid,
+            projectId: '5d4c07fb030f5d0600bf5c03'
           }).then(response => {
 
           }, function(err) {
@@ -8144,7 +8113,8 @@ $('#group_chat').hide();
             createdAt: new Date().toISOString(),
             chatType: 1,
             isGroup: 1,
-            isDeleted: 0
+            isDeleted: 0,
+            projectId: '5d4c07fb030f5d0600bf5c03'
           };
 
           this.$socket.emit('sendgroupmsg', this.groupmsgObj);
@@ -8178,7 +8148,8 @@ $('#group_chat').hide();
             message: this.groupmessage,
             groupId: this.singlegroup._id,
             isDeleted: 0,
-            messageType: 0
+            messageType: 0,
+            projectId: '5d4c07fb030f5d0600bf5c03'
           };
           console.log(this.groupmsgObj);
           this.$socket.emit('sendgroupmsg', this.groupmsgObj);
@@ -8238,7 +8209,7 @@ $('#group_chat').hide();
 
       $('#groupsender' + data._id).html('message deleted');
       console.log(data._id);
-      axios.get('/deleteMsg/' + data._id + '/0')
+      axios.get('/deleteMsg/' + data._id + '/0' + '/' + '5d4c07fb030f5d0600bf5c03')
         .then((responce) => console.log(responce))
         .catch((error) => console.log(error));
 
@@ -8268,8 +8239,7 @@ $('#group_chat').hide();
       formData.append('senderName', this.c_user.name);
       formData.append('groupId', this.singlegroup._id);
       formData.append('isGroup', 1);
-
-
+      formData.append('projectId', '5d4c07fb030f5d0600bf5c03');
     },
 
     groupComplete(file, response) {
@@ -8330,9 +8300,10 @@ $('#group_chat').hide();
       $("#dropzone").css("display", "none");
     },
 
-    groupuploadfile(event) {
-      // console.log(event.target.value)
-      let groupfilesdata = this.$refs.groupmyFiles.files;
+    groupCalluploadfile(event){
+        console.log("groupCalluploadfile");
+      let groupfilesdata = this.$refs.groupCallmyFiles.files;
+          console.log(groupfilesdata);
       groupfilesdata.forEach((file) => {
         let groupformDatas = new FormData();
         groupformDatas.append('file', file);
@@ -8340,6 +8311,7 @@ $('#group_chat').hide();
         groupformDatas.append('senderName', this.c_user.name);
         groupformDatas.append('groupId', this.singlegroup._id);
         groupformDatas.append('isGroup', 1);
+        groupformDatas.append('projectId', '5d4c07fb030f5d0600bf5c03')
         console.log(groupformDatas);
         let config = {
           header: {
@@ -8360,6 +8332,54 @@ $('#group_chat').hide();
             groupId: this.singlegroup._id,
             isDeleted: 0,
             createdAt: new Date().toISOString(),
+            projectId: '5d4c07fb030f5d0600bf5c03'
+          };
+        
+          this.$socket.emit('sendgroupmsg', this.groupmsgObj);
+          this.isLoading = false;
+          var container = this.$el.querySelector("#group_chat_open");
+          $("#group_chat_open").animate({ scrollTop: container.scrollHeight + 7020 }, "fast");
+          
+        }, function(err) {
+          console.log('err', err);
+          alert('error');
+        })
+      })
+    },
+
+    groupuploadfile(event) {
+      console.log("groupCalluploadfile");
+      let groupfilesdata = this.$refs.groupmyFiles.files;
+          console.log(groupfilesdata);
+      groupfilesdata.forEach((file) => {
+        let groupformDatas = new FormData();
+        groupformDatas.append('file', file);
+        groupformDatas.append('senderId', this.c_user._id);
+        groupformDatas.append('senderName', this.c_user.name);
+        groupformDatas.append('groupId', this.singlegroup._id);
+        groupformDatas.append('isGroup', 1);
+        groupformDatas.append('projectId', '5d4c07fb030f5d0600bf5c03')
+        console.log(groupformDatas);
+        let config = {
+          header: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+        this.isLoading = true;
+        axios.post('/chatFilesShare', groupformDatas, config).then((response) => {
+          //console.log(response.data);
+          this.groupmsgObj = {
+            _id: response.data.data._id,
+            chatType: 0,
+            isGroup: 1,
+            messageType: response.data.data.messageType,
+            senderId: { _id: this.c_user._id, name: this.c_user.name },
+            senderName: this.c_user.name,
+            message: response.data.file[0].originalname,
+            groupId: this.singlegroup._id,
+            isDeleted: 0,
+            createdAt: new Date().toISOString(),
+            projectId: '5d4c07fb030f5d0600bf5c03'
           };
         
           this.$socket.emit('sendgroupmsg', this.groupmsgObj);
@@ -8495,6 +8515,7 @@ $('#group_chat').hide();
         axios.post('/editGroupName', {
           groupId: this.singlegroup._id,
           groupName: this.singlegroup.name,
+          projectId: '5d4c07fb030f5d0600bf5c03'
         }).then(response => {
 
         }, function(err) {
@@ -8556,6 +8577,7 @@ $('#group_chat').hide();
       axios.post('/removeGroupUser', {
         groupId: this.singlegroup._id,
         memberId: id,
+        projectId: '5d4c07fb030f5d0600bf5c03'
       }).then(response => {
         console.log(response);
         this.$socket.emit('updateMembers', {
@@ -8655,6 +8677,7 @@ $('#group_chat').hide();
         axios.post('/addNewMembers', {
           groupId: this.singlegroup._id,
           members: this.multipleneewmembers,
+          projectId: '5d4c07fb030f5d0600bf5c03'
         }).then(response => {
           //this.$socket.emit('getGroups', response.data);
           for (var i = 0; i < this.multipleneewmembers.length; i++) {
@@ -8791,7 +8814,7 @@ $('#group_chat').hide();
     },
 
     notification() {
-
+      this.notificationStatus= false;
       $("#recent").removeClass("active");
       $("#contact-list").removeClass("active");
       $("#document").removeClass("active");
@@ -8882,7 +8905,8 @@ $('#group_chat').hide();
       presenter(this.broadcastHtml);
       axios.post('/startPresenter/', {
         password: this.broadcastPassword,
-        userId: this.c_user._id
+        userId: this.c_user._id,
+        projectId: '5d4c07fb030f5d0600bf5c03'
       }).then(response => {
         console.log(response.data);
         this.broadcastingId = response.data.broadcastRefId._id;
@@ -8942,7 +8966,7 @@ $('#group_chat').hide();
       $('#broadcastvideocall').modal();
       $('#broadcastvideocall').show();
       viewer(presenterid, this.broadcastHtml);
-      axios.get('/getBroadcastId/' + presenterid)
+      axios.get('/getBroadcastId/' + presenterid + '/5d4c07fb030f5d0600bf5c03')
         .then(response => {
           this.broadcastingId = response.data.broadcastRefId._id;
           this.bcJoinedChat = {
@@ -8957,6 +8981,7 @@ $('#group_chat').hide();
             preId: this.starterBroid, //set presenterId here
             joinMsg: this.bcJoinedChat, //set joinMessage here
             broadcastId: this.broadcastingId, //set broadcast id here
+            projectId: '5d4c07fb030f5d0600bf5c03',
             userData: this.c_user  //user data here
           }).then(response => {
             console.log(response.data);
@@ -8988,11 +9013,9 @@ $('#group_chat').hide();
 
         this.$socket.emit('closebroadcastpanel', this.broadcastingId);
         this.broadcastChat = [];
-        axios.get('/stopPresenter/' + this.c_user._id + '/' + this.broadcastingId)
+        axios.get('/stopPresenter/' + this.c_user._id + '/' + this.broadcastingId + '/' + '5d4c07fb030f5d0600bf5c03')
           .then(response => {
-
-
-          })
+        })
       }
       else {
 
@@ -9003,7 +9026,7 @@ $('#group_chat').hide();
           chatType: 2
         }
         axios.post('/stopViewer', {
-
+          projectId: '5d4c07fb030f5d0600bf5c03',
           userData: this.c_user,
           userId: this.c_user._id,
           preId: this.starterBroid
@@ -9035,6 +9058,7 @@ $('#group_chat').hide();
       this.$socket.emit('broadcastmsg', this.bcJoinedChat); //emit socket to show other that I have joined BC
       this.broadCastmsg = '';
       axios.post('/chat', {
+        projectId: '5d4c07fb030f5d0600bf5c03',
         msgData: this.bcJoinedChat
       }).then(response => {
 
@@ -9194,7 +9218,8 @@ $('#group_chat').hide();
         axios.post('/updateCallStatus', {
           userId: this.c_user._id,
           friendId: this.oncallFriend._id,
-          status: 1
+          status: 1,
+          projectId: "5d4c07fb030f5d0600bf5c03"
         }).then(response => {
 
         }, function(err) {
@@ -9360,7 +9385,8 @@ $('#group_chat').hide();
       this.$socket.emit('callsendmsg', o2oobg)
       axios.post('/chat', {
         msgData: this.msgObj,
-        selectedUserData: Rid
+        selectedUserData: Rid,
+        projectId: '5d4c07fb030f5d0600bf5c03'
       }).then(response => {
         console.log(response);
 
@@ -9428,7 +9454,7 @@ $('#group_chat').hide();
 
 
       this.friendchat = {};
-      axios.get('/getChat/' + this.c_user._id + '/' + this.oncallFriend._id + '/50')
+      axios.get('/getChat/' + this.c_user._id + '/' + this.oncallFriend._id + '/50' + '/5d4c07fb030f5d0600bf5c03')
         .then(responce => {
 
           this.friendchat = responce.data;
@@ -9454,7 +9480,8 @@ $('#group_chat').hide();
       axios.post('/updateCallStatus', {
         userId: this.c_user._id,
         friendId: Rid,
-        status: 0
+        status: 0,
+        projectId: "5d4c07fb030f5d0600bf5c03"
       }).then(response => {
 
       }, function(err) {
@@ -9561,7 +9588,7 @@ $('#group_chat').hide();
 
 
       this.friendchat = {};
-      axios.get('/getChat/' + this.c_user._id + '/' + this.oncallFriend._id + '/50')
+      axios.get('/getChat/' + this.c_user._id + '/' + this.oncallFriend._id + '/50' + '/5d4c07fb030f5d0600bf5c03')
         .then(responce => {
 
           this.friendchat = responce.data;
@@ -9750,7 +9777,8 @@ $('#group_chat').hide();
       axios.post('/leaveCallGroup', {
         _id: this.groupCallId,
         groupId: this.callGroup._id,
-        userId: this.c_user._id
+        userId: this.c_user._id,
+        projectId: '5d4c07fb030f5d0600bf5c03'
       }).then(response => {
         console.log(response);
       }, function(err) {
@@ -9793,7 +9821,7 @@ $('#group_chat').hide();
       this.groupchatreplydata = "";
       $('#groupsinglemessage-input').css("height", "96px");
 
-      axios.get('/getGroupChat/5f5626fec7ebca22288ec2fd/50')
+      axios.get('/getGroupChat/5f5626fec7ebca22288ec2fd/50/5d4c07fb030f5d0600bf5c03')
         .then((responce) => this.groupchatdata = responce.data)
         .catch((error) => console.log(error));
       $('.videocall').removeClass('groupbeforeopenChat');
@@ -9888,6 +9916,7 @@ $('#group_chat').hide();
           status: 2,
           userId: this.c_user._id,
           friendId: friend._id,
+          projectId: '5d4c07fb030f5d0600bf5c03'
         }).then(response => {
           console.log(response);
 
@@ -9941,6 +9970,7 @@ $('#group_chat').hide();
       axios.post('/friends/updateFriendRequest', {
         _id: data.friendReqId,
         status: status,
+        projectId: '5d4c07fb030f5d0600bf5c03'
       }).then(response => {
         console.log(response);
       }, function(err) {
@@ -9960,7 +9990,7 @@ $('#group_chat').hide();
         userProfiledata.append('file', file);
         userProfiledata.append('imageName', file.name);
         userProfiledata.append('id', this.c_user._id);
-    
+        userProfiledata.append('projectId', '5d4c07fb030f5d0600bf5c03');
         console.log(userProfiledata);
         let config = {
           header: {
@@ -9996,11 +10026,21 @@ $('#group_chat').hide();
           todo: this.todo,
           assignTo: this.assignName,
           assignDate: this.assignDate,
+          type:'todo',
+          image:this.c_user.user_image,
+          projectId: '5d4c07fb030f5d0600bf5c03'
         }
+        var socketNotificationObj={
+          receiverId:this.assignName._id,
+          senderId:this.c_user._id,
+          senderName:this.c_user.name,
+          notificationText:'You been assign a new task by '+this.c_user.name
+        }
+         this.$socket.emit('notification', socketNotificationObj);
    axios.post('/addTodo', todoObj).then(response => {
           console.log(response);
           this.myTodoList.push(response.data);
-        //  this.$socket.emit('notification', todoObj);
+        
            this.$toasted.success('Task Created Successfully ', {
           theme: "toasted-primary",
           position: "top-center",
@@ -10019,7 +10059,7 @@ $('#group_chat').hide();
     },
 
     getMytodo(){
-        axios.post('/getmyTodo',{userId: this.c_user._id}).then(response => {
+        axios.post('/getmyTodo',{userId: this.c_user._id, projectId: '5d4c07fb030f5d0600bf5c03'}).then(response => {
           console.log(response);
           this.myTodoList = response.data;
         }, function(err) {
@@ -10029,7 +10069,7 @@ $('#group_chat').hide();
 
     },
     getTodo(){
-        axios.post('/getTodo',{userId: this.c_user._id}).then(response => {
+        axios.post('/getTodo',{userId: this.c_user._id, projectId: '5d4c07fb030f5d0600bf5c03'}).then(response => {
           console.log(response);
           this.TodoList = response.data;
         }, function(err) {
@@ -10041,10 +10081,20 @@ $('#group_chat').hide();
     todoStatusUpdate(value){
      // console.log(value.target);
        console.log($.parseJSON(JSON.stringify(value.target.value)));
+       var data= value.target.value.split(',');
+       console.log(data[0]);
+       var socketNotificationObj={
+          receiverId:data[2],
+          senderId:this.c_user._id,
+          senderName:this.c_user.name,
+          notificationText:' task update by '+this.c_user.name
+        }
+         this.$socket.emit('notification', socketNotificationObj);
        axios.post('/todoStatus',
         {
           userId: this.c_user._id,
-          status:value.target.value
+          status:value.target.value,
+          projectId: '5d4c07fb030f5d0600bf5c03'
         }).then(response => {
           console.log(response);
           //this.TodoList = response.data;
@@ -10060,6 +10110,7 @@ $('#group_chat').hide();
        axios.post('/allImageChat',
         {
           userId: this.c_user._id,
+          projectId: '5d4c07fb030f5d0600bf5c03'
         }).then(response => {
           console.log(response);
           this.allMedia = response.data;
@@ -10075,6 +10126,7 @@ $('#group_chat').hide();
        axios.post('/allDocumentChat',
         {
           userId: this.c_user._id,
+           projectId: '5d4c07fb030f5d0600bf5c03'
         }).then(response => {
           console.log(response);
           this.allDocument = response.data;
@@ -11022,4 +11074,14 @@ img.emojione {
   object-fit: initial;
   height: 630px;
 }
+
+
+/* ********** Screenshare (Ammar) ******** */
+ #videos-container {
+            width: 100%;
+        }
+
+        #videos-container video {
+            width: 100%;
+        }
 </style>

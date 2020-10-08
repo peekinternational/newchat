@@ -27,6 +27,8 @@ window.onbeforeunload = function () {
 }
 
 O2O_ws.onopen = function (message) {
+    if (!c_userData) return;
+    
     console.log("onopen");
     sendKMessage({
         id: 'register',
@@ -40,7 +42,8 @@ O2O_ws.onmessage = function (message) {
     var parsedMessage = JSON.parse(message.data);
     //  console.info('Received message: ' + message.data);
     o2oSocConEst = true;
-    //   console.info(parsedMessage);
+    console.info("++++ parsedMessage ++++");
+    console.info(parsedMessage);
     switch (parsedMessage.id) {
         case 'registerResponse':
             // resgisterResponse(parsedMessage);
@@ -59,11 +62,11 @@ O2O_ws.onmessage = function (message) {
             console.info("Communication ended by remote peer");
             stopK(true);
             break;
-        case 'onIceCandidate': // testing purpose, needs reCheck
-            webRtcO2OPeer.addIceCandidate(parsedMessage.candidate)
-            break;
+        // case 'onIceCandidate': // testing purpose, needs reCheck
+        //     webRtcO2OPeer.addIceCandidate(parsedMessage.candidate);
+        //     break;
         case 'iceCandidate':
-            webRtcO2OPeer.addIceCandidate(parsedMessage.candidate)
+            webRtcO2OPeer.addIceCandidate(parsedMessage.candidate);
             break;
         default:
             console.error('Unrecognized message', parsedMessage);

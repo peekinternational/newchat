@@ -98,7 +98,8 @@ export default {
 
                 axios.post('/login', {
                   password: this.input.password,
-                  name: this.input.username
+                  name: this.input.username,
+                  projectId: "5d4c07fb030f5d0600bf5c03"
                 }).then(response => {
 
                 console.log(response);

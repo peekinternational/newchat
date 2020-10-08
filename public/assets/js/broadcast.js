@@ -3,6 +3,7 @@ let hostIs = location.host.split(':');
 let webSocketIp = "peekvideochat.com";
 if (hostIs[0] == 'localhost') webSocketIp = '127.0.0.1';
 let broadCastUrl = 'wss://' + webSocketIp + ':8444/one2many';
+console.log(broadCastUrl);
 var ws = new WebSocket(broadCastUrl);
 var presenterArr = [];
 var returnpresenterData = [];

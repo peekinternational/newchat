@@ -1,45 +1,94 @@
 <template>
   <div class="hello">
-     <div class="login-page1">
+    <div class="login-page1">
       <div class="container-fluid p-0">
         <div class="row">
           <div class="col-12">
             <div class="login-contain-main">
               <div class="left-page">
                 <div class="login-content">
-                  <div class="login-content-header"><img class="image-fluid" src="../assets/images/logo/landing-logo.png" alt="images"></div>
-                  <h3 style="margin: 2px;">Hello Everyone , We are Chitchat</h3>
+                  <div class="login-content-header">
+                    <img
+                      class="image-fluid"
+                      src="../assets/images/logo/landing-logo.png"
+                      alt="images"
+                    />
+                  </div>
+                  <h3 style="margin: 2px">Hello Everyone , We are Chitchat</h3>
                   <h4>Wellcome to chitchat please login to your account.</h4>
                   <form v-on:submit="registeruser" class="form1">
-                      <div class="form-group">
+                    <div class="form-group">
                       <label class="col-form-label" for="inputname">Name</label>
-                      <input class="form-control" id="inputname" v-model="input.username" type="text" placeholder="Enter Usename" required>
-                    </div>
-                      <div class="form-group">
-                      <label class="col-form-label" for="inputemail">Email Address</label>
-                      <input class="form-control" id="inputemail" type="email" v-model="input.email" placeholder="Enter Email" required>
-                    </div>
-                      <div class="form-group">
-                      <label class="col-form-label" for="inputphone">Phone Number</label>
-                      <input class="form-control" id="inputphone" type="number" v-model="input.phone" placeholder="Enter Phone Number" required>
+                      <input
+                        class="form-control"
+                        id="inputname"
+                        v-model="input.username"
+                        type="text"
+                        placeholder="Enter Usename"
+                        required
+                      />
                     </div>
                     <div class="form-group">
-                      <label class="col-form-label" for="inputpassword">Password</label>
-                      <input class="form-control" id="inputpassword" v-model="input.password" type="password" placeholder="Password">
+                      <label class="col-form-label" for="inputemail"
+                        >Email Address</label
+                      >
+                      <input
+                        class="form-control"
+                        id="inputemail"
+                        type="email"
+                        v-model="input.email"
+                        placeholder="Enter Email"
+                        required
+                      />
                     </div>
-                    
-                    
+                    <div class="form-group">
+                      <label class="col-form-label" for="inputphone"
+                        >Phone Number</label
+                      >
+                      <input
+                        class="form-control"
+                        id="inputphone"
+                        type="number"
+                        v-model="input.phone"
+                        placeholder="Enter Phone Number"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label class="col-form-label" for="inputpassword"
+                        >Password</label
+                      >
+                      <input
+                        class="form-control"
+                        id="inputpassword"
+                        v-model="input.password"
+                        type="password"
+                        placeholder="Password"
+                      />
+                    </div>
+
                     <div class="form-group">
                       <div class="buttons">
-					  <button type="submit" class="btn btn-primary button-effect">Sign Up</button>
-					  <router-link to="/login" class="btn button-effect btn-signup">Login</router-link>
+                        <button
+                          type="submit"
+                          class="btn btn-primary button-effect"
+                        >
+                          Sign Up
+                        </button>
+                        <router-link
+                          to="/login"
+                          class="btn button-effect btn-signup"
+                          >Login</router-link
+                        >
                       </div>
                     </div>
                   </form>
-                  
-			
+
                   <div class="termscondition">
-                    <h4 class="mb-0"><span>*</span>Terms and condition<b>&amp;</b>Privacy policy</h4>
+                    <h4 class="mb-0">
+                      <span>*</span>Terms and condition<b>&amp;</b>Privacy
+                      policy
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -70,7 +119,52 @@
                     <div class="bottom-circle"></div>
                     <div class="bottom-circle1"></div>
                     <div class="right-circle"></div>
-                    <div class="right-circle1"></div><img class="heart-logo" src="../assets/images/login_signup/5.png" alt="login logo"/><img class="has-logo" src="../assets/images/login_signup/4.png" alt="login logo"/><img class="login-img" src="../assets/images/login_signup/1.png" alt="login logo"/><img class="boy-logo" src="../assets/images/login_signup/6.png" alt="login boy logo"/><img class="girl-logo" src="../assets/images/login_signup/7.png" alt="girllogo"/><img class="cloud-logo" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo1" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo2" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo3" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="cloud-logo4" src="../assets/images/login_signup/2.png" alt="login logo"/><img class="has-logo1" src="../assets/images/login_signup/4.png" alt="login logo"/>
+                    <div class="right-circle1"></div>
+                    <img
+                      class="heart-logo"
+                      src="../assets/images/login_signup/5.png"
+                      alt="login logo"
+                    /><img
+                      class="has-logo"
+                      src="../assets/images/login_signup/4.png"
+                      alt="login logo"
+                    /><img
+                      class="login-img"
+                      src="../assets/images/login_signup/1.png"
+                      alt="login logo"
+                    /><img
+                      class="boy-logo"
+                      src="../assets/images/login_signup/6.png"
+                      alt="login boy logo"
+                    /><img
+                      class="girl-logo"
+                      src="../assets/images/login_signup/7.png"
+                      alt="girllogo"
+                    /><img
+                      class="cloud-logo"
+                      src="../assets/images/login_signup/2.png"
+                      alt="login logo"
+                    /><img
+                      class="cloud-logo1"
+                      src="../assets/images/login_signup/2.png"
+                      alt="login logo"
+                    /><img
+                      class="cloud-logo2"
+                      src="../assets/images/login_signup/2.png"
+                      alt="login logo"
+                    /><img
+                      class="cloud-logo3"
+                      src="../assets/images/login_signup/2.png"
+                      alt="login logo"
+                    /><img
+                      class="cloud-logo4"
+                      src="../assets/images/login_signup/2.png"
+                      alt="login logo"
+                    /><img
+                      class="has-logo1"
+                      src="../assets/images/login_signup/4.png"
+                      alt="login logo"
+                    />
                   </div>
                 </div>
               </div>
@@ -83,83 +177,121 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import $ from 'jquery';
-import JQuery from 'jquery';
-import 'bootstrap';
-import feather from 'feather-icons';
-import Popper from 'popper.js';
+import Vue from "vue";
+import $ from "jquery";
+import JQuery from "jquery";
+import "bootstrap";
+import feather from "feather-icons";
+import Popper from "popper.js";
 
-import 'feather-icons/dist/feather.min.js';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
+import "feather-icons/dist/feather.min.js";
+import tippy from "tippy.js";
+import "tippy.js/dist/tippy.css";
 
-
-
-import { AirplayIcon, AtSignIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneIncomingIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon} from 'vue-feather-icons';
-import carousel from 'vue-owl-carousel';
+import {
+  AirplayIcon,
+  AtSignIcon,
+  PhoneIcon,
+  VideoIcon,
+  SmileIcon,
+  MicIcon,
+  SendIcon,
+  MessageSquareIcon,
+  UsersIcon,
+  PlusCircleIcon,
+  PlusIcon,
+  PhoneIncomingIcon,
+  PhoneOutgoingIcon,
+  FileIcon,
+  ClockIcon,
+  ListIcon,
+  GridIcon,
+  BookIcon,
+  XIcon,
+  DownloadIcon,
+  SearchIcon,
+  StarIcon,
+  MoreVerticalIcon,
+} from "vue-feather-icons";
+import carousel from "vue-owl-carousel";
 
 export default {
-  name: 'Signup',
-   components: { carousel,PhoneIncomingIcon,PhoneIcon,VideoIcon,SmileIcon,MicIcon,SendIcon,MessageSquareIcon,UsersIcon,PlusCircleIcon,PlusIcon,PhoneOutgoingIcon,FileIcon,ClockIcon,ListIcon,GridIcon,BookIcon,XIcon,DownloadIcon,SearchIcon,StarIcon,MoreVerticalIcon },
-      props:[],
-        data(){
-            return{
-             input: {
-                    username: "",
-					email: "",
-					phone: "",
-					password: ""
-                },
+  name: "Signup",
+  components: {
+    carousel,
+    PhoneIncomingIcon,
+    PhoneIcon,
+    VideoIcon,
+    SmileIcon,
+    MicIcon,
+    SendIcon,
+    MessageSquareIcon,
+    UsersIcon,
+    PlusCircleIcon,
+    PlusIcon,
+    PhoneOutgoingIcon,
+    FileIcon,
+    ClockIcon,
+    ListIcon,
+    GridIcon,
+    BookIcon,
+    XIcon,
+    DownloadIcon,
+    SearchIcon,
+    StarIcon,
+    MoreVerticalIcon,
+  },
+  props: [],
+  data() {
+    return {
+      input: {
+        username: "",
+        email: "",
+        phone: "",
+        password: "",
+      },
+    };
+  },
+  watch: {},
+  methods: {
+    registeruser: function (event) {
+      event.preventDefault();
+
+      axios
+        .post("/projects/register-user", {
+          projectId: "5d4c07fb030f5d0600bf5c03",
+          name: this.input.username,
+          email: this.input.email,
+          phone: this.input.phone,
+          password: this.input.password,
+        })
+        .then(
+          (response) => {
+            console.log(response);
+            if (response.data != "") {
+              this.$toasted.success("Register Successfully !!", {
+                theme: "toasted-primary",
+                position: "top-left",
+                duration: 5000,
+              });
+              this.$router.push("/login");
+            } else {
+              this.$toasted.error("Error !!", {
+                theme: "toasted-primary",
+                position: "top-left",
+                duration: 5000,
+              });
             }
-    
-        },
-        watch:{
-    
-                },
-        methods:{
-
- registeruser: function (event) {
-              event.preventDefault();
-
-                axios.post('/projects/register-user', {
-                  projectId: '5d4c07fb030f5d0600bf5c03',
-                  name: this.input.username,
-				  email: this.input.email,
-                  phone: this.input.phone,
-				  password: this.input.password,
-                }).then(response => {
-
-                console.log(response);
-                  if (response.data != '' ) {
-                     this.$toasted.success(  'Register Successfully !!', { 
-					 theme: "toasted-primary", 
-					 position: "top-left", 
-					 duration : 5000
-               })
-                    this.$router.push('/login')
-                  }else{
-                    
-                     this.$toasted.error(  'Error !!', { 
-					 theme: "toasted-primary", 
-					 position: "top-left", 
-					 duration : 5000
-               })
-
-                  }
-                }, function (err) {
-                  console.log('err', err);
-                  alert(err.body);
-                })
-              }
-        },
-        mounted() {
-    
-     
-
-        }
-    }
-  
+          },
+          function (err) {
+            console.log("err", err);
+            alert(err.body);
+          }
+        );
+    },
+  },
+  mounted() {},
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
