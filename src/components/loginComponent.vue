@@ -106,28 +106,33 @@ export default {
 				
 				
                   if (response.data != null ) {
-				  $('#loginbtn').addClass('disabled').attr('disabled',true);
+				              $('#loginbtn').addClass('disabled').attr('disabled',true);
                         this.$toasted.success(  'Welcome Back !!', { 
-						 theme: "toasted-primary", 
-						 position: "top-left", 
-						 duration : 2000
-					   })
-                    this.$session.start()
-                    this.$session.set('c_user', response.data.user)
-                    this.$session.set('c_user_image', response.data.user.user_image)
+          						 theme: "toasted-primary", 
+          						 position: "top-left", 
+          						 duration : 2000
+          					   })
+                    //localStorage.setItem('c_user', JSON.stringify(response.data.user));
                     localStorage.setItem('userData', JSON.stringify(response.data.user));
-                    this.$session.set('jwt', response.data.user.token)
+                     localStorage.setItem('c_user_image', JSON.stringify(response.data.user.user_image));
+                     localStorage.setItem('jwt', JSON.stringify(response.data.user.token));
+                     
+                   //  this.$session.start()
+                   // // this.$session.set('c_user', response.data.user)
+                   //  this.$session.set('c_user_image', response.data.user.user_image)
+                    
+                   //  this.$session.set('jwt', response.data.user.token)
                     Vue.http.headers.common['Authorization'] = 'Bearer ' + response.data.user.token
                     //this.$router.push('/')
 					
-					window.location.href = '/';
+				          	window.location.href = '/';
                   }else{
                     
                     this.$toasted.error(  'Wrong username and password !!', { 
-                 theme: "toasted-primary", 
-                 position: "top-left", 
-                 duration : 5000
-               })
+                     theme: "toasted-primary", 
+                     position: "top-left", 
+                     duration : 5000
+                   })
 
                   }
                 }, function (err) {

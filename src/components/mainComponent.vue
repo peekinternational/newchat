@@ -35,7 +35,7 @@
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/meetings.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 16px;">Meetings</span>
             </li>
-            <li>
+            <li @click="roomNav()">
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/rooms.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 20px;">Rooms</span>
             </li>
@@ -236,7 +236,7 @@
                       </div>
                     </div> -->
           </div>
-          <div class="chat custom-scroll" style="margin-top: 0px;">
+          <div class="chat custom-scroll" style="margin-top: 18px;">
             <ul class="chat-cont-setting" style="padding: 7px;margin-left: 14px;margin-bottom:-15px;box-shadow: 0px 0px 0px 1px #0000000f;">
               <li>
 
@@ -272,7 +272,7 @@
               <div class="media">
                 <div>
                   <h2>Chat</h2>
-                  <h4>Start New Conversation</h4>
+                  <h4></h4>
                 </div>
                 <div class="media-body text-right">
                   <a class="icon-btn btn-outline-light btn-sm search contact-search" href="#">
@@ -2105,7 +2105,8 @@
               <div class="col-12" style="margin-top: 35px;">
                 <div v-if="current_User.onlineStatus == 1" class="profile mainpanleProfile" v-bind:class="{ online: current_User.pStatus == 0, unreachable : current_User.pStatus == 1, busy: current_User.pStatus == 2, offline: current_User.pStatus == 3, offline: current_User.pStatus == 4 }">
 
-                  <img class="bg-img" src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
+                  <img class="bg-img" v-if="userImageName" :src="hostname+'images/chatImages/'+userImageName" alt="Avatar" style="border-radius: 30px;min-height: 64px;" />
+                    <img class="bg-img" v-else  src="../assets/images/contact/1.jpg" alt="Avatar" style="border-radius: 30px;" />
                 </div>
 
                 <div class="col-12" style="margin-top: 21px;">
@@ -2377,14 +2378,7 @@
               </p>
             </div>
             <div class="wrap emojis-main">
-              <!--<a class="icon-btn btn-outline-primary button-effect mr-3 toggle-sticker outside"  >
-                        <svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="2158px" height="2148px" viewbox="0 0 2158 2148" enable-background="new 0 0 2158 2148" xml:space="preserve">
-                          <path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#000000" stroke-width="60" stroke-miterlimit="10" d="M699,693                        c0,175.649,0,351.351,0,527c36.996,0,74.004,0,111,0c18.058,0,40.812-2.485,57,1c11.332,0.333,22.668,0.667,34,1                        c7.664,2.148,20.769,14.091,25,20c8.857,12.368,6,41.794,6,62c0,49.329,0,98.672,0,148c175.649,0,351.351,0,527,0                        c0-252.975,0-506.025,0-759C1205.692,693,952.308,693,699,693z"></path>
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M886,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C877.255,799.833,882.716,801.036,886,799z"></path>
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M1258,799c59.172-0.765,93.431,25.289,111,66c6.416,14.867,14.612,39.858,9,63                        c-2.391,9.857-5.076,20.138-9,29c-15.794,35.671-47.129,53.674-90,63c-20.979,4.563-42.463-4.543-55-10                        c-42.773-18.617-85.652-77.246-59-141c10.637-25.445,31.024-49,56-60c7.999-2.667,16.001-5.333,24-8                        C1249.255,799.833,1254.716,801.036,1258,799z"></path>
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M1345,1184c-0.723,18.71-11.658,29.82-20,41c-18.201,24.489-50.129,37.183-83,47                        c-7.333,1-14.667,2-22,3c-12.013,2.798-33.636,5.15-44,3c-11.332-0.333-22.668-0.667-34-1c-15.332-3-30.668-6-46-9                        c-44.066-14.426-80.944-31.937-110-61c-22.348-22.353-38.992-45.628-37-90c0.667,0,1.333,0,2,0c9.163,5.585,24.723,3.168,36,6                        c26.251,6.583,54.736,7.174,82,14c34.068,8.53,71.961,10.531,106,19c9.999,1.333,20.001,2.667,30,4c26.193,6.703,54.673,7.251,82,14                        C1304.894,1178.445,1325.573,1182.959,1345,1184z"></path>
-                          <polygon fill-rule="evenodd" clip-rule="evenodd" points="668.333,1248.667 901.667,1482 941.667,1432 922.498,1237.846                         687,1210.667 "></polygon>
-                        </svg></a>-->
+           
 
               <div class="dot-btn dot-primary mr-3">
                 <a class="icon-btn btn-outline-primary button-effect" @click="showGroupemoji">
@@ -2430,7 +2424,7 @@
 
                       <div v-if="singlefriend.onlineStatus == 1" style="border-radius: 30px;" class="profile menu-trigger" v-bind:class="{ online: singlefriend.pStatus == 0, unreachable : singlefriend.pStatus == 1, busy: singlefriend.pStatus == 2, offline: singlefriend.pStatus == 3, offline: singlefriend.pStatus == 4 }">
 
-                         <img class="bg-img" v-if="singlefriend.user_image" style ="width: 60px;" :src="hostname+'images/chatImages/'+singlefriend.user_image" alt="Avatar" />
+                         <img class="bg-img" v-if="singlefriend.user_image" style ="width: 60px;min-height:60px" :src="hostname+'images/chatImages/'+singlefriend.user_image" alt="Avatar" />
 
                     <img class="bg-img" v-else  src="../assets/images/contact/2.jpg" style ="width: 60px;" alt="Avatar" /> 
 
@@ -3832,16 +3826,20 @@
 
                  <!-- MEETING -->
 
-       <div id="meeting" style="width:100%; display:none">
-      <div class="row" style="margin: 0;">
-        
-        <div class="col-6">
-          <div><h6>Hello Dear </h6></div>
-           <div class="search2" id="" style="padding: 0px;border-top: none;margin-bottom: 6px;">
-            <div style="border-radius:none">
+       <div id="meeting" style="width:100%;background-color: #f3f6ff; display:none">
+
+      <div class="row meetingRow" >
+        <div class="col-2" style="margin-top: 3px;">
+          <img class="" src="../assets/images/icons/meetingUser.png" alt="Avatar" style="height: auto;padding-right: 10px;" />
+          <span style="font-size: 15px;">Meeting</span>
+        </div>
+        <div class="col-5" style="display: inherit;">
+         
+           <div class="search2" id="" style="padding: 0px;border-top: none;margin-bottom: 6px;justify-content: initial;">
+            <div style="border-radius: 0px;">
               <div class="input-group">
 
-                <input class="form-control" v-model="searchFriend" type="text" placeholder="Search ..." />
+                <input class="form-control" v-model="searchFriend" type="text" placeholder="Join By Id / Link" />
                 <div class="input-group-append">
                   <span class="input-group-text">
                     <i class="fa fa-search"></i>
@@ -3851,12 +3849,664 @@
             </div>
           </div>
         </div>
-        <div class="col-6">
-          <h5>Meeting2</h5>
+        <div class="col-5">
+          <button data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#addMeetingmodal" class="btn addMeeting" >
+            <span style="color: white;padding-right: 8px;">
+              <i class="fa fa-plus" aria-hidden="true"></i></span> 
+              <span style="color: white;">Create Meeting </span>
+            </button>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-4" style="background-color: white;margin-left: 15px;">
+          <div class="theme-tab tab-sm meeting-tabs" style="border-top: 1px solid #eaeef8;border-bottom: 1px solid #eaeef8;padding-top: 16px;">
+            <ul class="nav nav-tabs">
+            <li class="nav-item">
+             <a id="up-meeting" data-toggle="tab" href="#upmeeting" role="tab" aria-controls="upmeeting" aria-selected="true" class="nav-link button-effect active">Upcomming Meeting</a>
+            </li>
+            <li class="nav-item">
+              <a id="complete-meeting" data-toggle="tab" href="#completemeeting" role="tab" aria-controls="completemeeting" aria-selected="true" class="nav-link button-effect ">Completed Meeting</a>
+            </li>
+          </ul>          
+         </div>
+
+              <div class="tab-content meetingContent custom-scroll">
+                <div id="upmeeting" class="container tab-pane active">
+                  <div class="row meetingContentRow active"  style="margin-bottom: 12px;margin-top: 12px;">
+                  <div class="col-2">
+                    <div>
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col-6">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+                  <div class="col-4 meetingUser" >
+                       <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                              <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                          </div>
+                  </div>
+                </div>
+                <div class="row meetingContentRow" style="margin-bottom: 12px;margin-top: 12px;">
+                  <div class="col-2">
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+                  <div class="col-4 meetingUser" style="border-left:  1px solid #eaeef8;height: 56px;">
+                       <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                              <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                          </div>
+                  </div>
+                </div>
+                     <div class="row meetingContentRow" style="margin-bottom: 12px;margin-top: 12px;">
+                  <div class="col-2">
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+                  <div class="col-4 meetingUser" style="border-left:  1px solid #eaeef8;height: 56px;">
+                       <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                              <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                          
+
+                          </div>
+                  </div>
+                </div>
+                </div>
+                <div id="completemeeting" class="container tab-pane fade"><br>
+                 
+                </div>
+               
+              </div>
+                </div>
+
+                <div class="col-8" style="max-width: 64.66667%;">
+                  <div class="row" style="margin-top: 11px;border-bottom: 1px solid #cbd3ef99;">
+                     <div class="col-1">
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  <div class="col-5">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+
+                      <div class="col-6">
+                        <div class="row" >  
+                          <div class="col-2" style="margin-top: 17px;">
+                            <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                          </div>
+                        <div class="col-6 meetingUser">                
+                          <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                            
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                              <div class="addMeetingPar" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#showGroupsMembers">
+                              <div class="" style="padding: 3px;color: #6F66FF;">
+                                <plus-icon size="1.5x" class="custom-class"></plus-icon>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>  
+                         <div class="col-2" style="margin-top: 17px;">
+                            <span><img class="" src="../assets/images/nav/dots.png" alt="Avatar" style="height: auto;" /></span>
+                            </div>
+                          </div>
+                   </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 15px;">
+                      <div class="col-8" >
+                        <div class="col-12" style="background-color:white;margin-bottom: 12px;">
+                          <div class="row" style="padding-top: 13px;padding-bottom: 9px;">
+                           <div class="col-1">
+                             <img class="" src="../assets/images/icons/attach.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                             
+                           </div>
+                           <div class="col-9" style="border-left: 1px solid gainsboro;height: 15px;">
+                             <p>URL: <span> https://www.chatto.com/@123-456-789</span></p>
+                           </div>
+                           <div class="col-2">
+                             <clipboard-icon size="1.5x" style="float: right;" class="custom-class"></clipboard-icon>
+                         </div>
+                           </div>
+                        </div>
+                        <div class="col-12 meetingTopic">
+                           <p>Meeting Topic:</p>
+                           <p>Loram ipsum</p>
+                        </div>
+                         <div class="col-12 meetingTopic">
+                            <div class="row" style="padding-top: 14px;padding-bottom: 9px;">
+                           <div class="col-1">
+                             <img class="" src="../assets/images/icons/brace.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                             
+                           </div>
+                           <div class="col-9" style="border-left: 1px solid gainsboro;height: 15px;">
+                             <p>URL: <span> https://www.chatto.com/@123-456-789</span></p>
+                           </div>
+                           <div class="col-2">
+                             <clipboard-icon size="1.5x" style="float: right;" class="custom-class"></clipboard-icon>
+                         </div>
+                           </div>
+                        </div>
+                         <div class="col-12 meetingTopic">
+                           <div class="row" style="padding-top: 14px;padding-bottom: 9px;">
+                           <div class="col-1">
+                             <img class="" src="../assets/images/icons/batch.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                             
+                           </div>
+                           <div class="col-9" style="border-left: 1px solid gainsboro;height: 15px;">
+                             <p>Password: <span> * * * * * * * * *</span></p>
+                           </div>
+                           <div class="col-2">
+                             <clipboard-icon size="1.5x"  style="float: right;" class="custom-class"></clipboard-icon>
+                         </div>
+                           </div>
+                        </div>
+                        <div class="col-12" style="padding-left: 0px;padding-right: 0px;">
+                           <div class="document">
+                          <div class="filter-block">
+                            <div class="collapse-block open">
+                              <h5 class="block-title">Advance Options
+                                
+                              </h5>
+                              <div class="block-content">
+                                <div class="col-12" style="background-color: white;padding: 12px;margin-bottom: 12px;">
+                                 <span>Enable Video</span>
+                                  <span style="float:right">
+                                  <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                  </label>
+                                </span>
+                                </div>
+                                
+                                <div class="col-12" style="background-color: white;padding: 12px;margin-bottom: 12px;margin-top: 12px;">
+                                   <span>Record Meeting</span>
+                                  <span style="float:right">
+                                  <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </span>
+                                </div>
+                                <div class="col-12" style="background-color: white;padding: 12px;margin-bottom: 12px;margin-top: 12px;">
+                                   <span>Allow others to invite / add to meeting</span>
+                                  <span style="float:right">
+                                  <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                  </label>
+                                </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                          
+                        </div>
+                      </div>
+
+                      <div class="col-4">
+                        <div class="row">
+                          <div class="col-12" style="background-color: white;text-align:center;margin-bottom: 20px;">
+                            <div style="width: 100%;margin-top: 10px;height: 50px;background-color: aliceblue;">
+                                <img class="" src="../assets/images/icons/schdule.png" alt="Avatar" style="height: auto;border-radius: 0;position: absolute;top: 35px;right: 123px;" /> 
+                            </div>
+                            <div class="meetingUser" style="margin-top: 40px; margin-bottom: 19px;">
+
+                              <p>Date: 07/12/2020</p>
+                              
+                            </div>
+                            
+                          </div>
+                          <div class="col-12" style="background-color: white;text-align:center;margin-bottom: 20px;margin-top:20px">
+                            <div style="width: 100%;margin-top: 10px;height: 50px;background-color: aliceblue;">
+                                <img class="" src="../assets/images/icons/clock.png" alt="Avatar" style="height: auto;border-radius: 0;position: absolute;top: 35px;right: 123px;" /> 
+                            </div>
+                            <div class="meetingUser" style="margin-top: 40px; margin-bottom: 19px;">
+
+                              <p>Time: 2:00 pm</p>
+                            
+                            </div>
+                            
+                          </div>
+                         
+                        </div>
+                      </div>
+
+                    </div>
+
+                  <div class="row" style="margin-top: 25px; border-top: 1px solid rgba(203, 211, 239, 0.6); padding-top: 25px;">
+                    <div class="col-1">
+                   <img class="" src="../assets/images/icons/editmeeting.png" alt="Avatar" style="height: auto;border-radius: 0;" /> <span> Edit</span>
+                  </div>
+                  <div class="col-1" style="border-left: 1px solid #BAC5E9; height: 20px;padding-right: 0; padding-left: 10px;">
+                     <img class="" src="../assets/images/icons/invitemeeting.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                     <span> Invite</span>
+                  </div>
+                  <div class="col-4" style="border-left: 1px solid #BAC5E9;height: 20px;">
+                     <span style="color:#B70A0A"> Cancel</span>
+                  </div>
+
+                      <div class="col-6">
+                            <button data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#addMeetingmodal" class="btn addMeeting" >
+                                <span style="color: white;">Start Meeting</span>
+                              </button>
+                   </div>
+                    </div>
+
+                </div>
+      </div>
+
     </div>
                 <!-- MEETING END -->
+
+
+                 <!-- ROOM -->
+
+       <div id="room" style="width:100%;background-color: #f3f6ff; display:none">
+
+      <div class="row meetingRow" >
+        <div class="col-2" style="margin-top: 3px;">
+          <img class="" src="../assets/images/icons/roomUser.png" alt="Avatar" style="height: auto;padding-right: 10px;" /><span style="font-size: 15px;">Room</span>
+        </div>
+        <div class="col-5" style="display: inherit;">
+         
+           <div class="search2" id="" style="padding: 0px;border-top: none;margin-bottom: 6px;justify-content: initial;">
+            <div style="border-radius: 0px;">
+              <div class="input-group">
+
+                <input class="form-control" v-model="searchFriend" type="text" placeholder="Search Room" />
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i class="fa fa-search"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <button type="button" class="btn addMeeting" ><span style="color: white;padding-right: 8px;"><i class="fa fa-plus" aria-hidden="true"></i></span> <span style="color: white;">Create Room </span></button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4" style="background-color: white;margin-left: 15px;">
+          <div class="theme-tab tab-sm meeting-tabs" style="border-top: 1px solid #eaeef8;border-bottom: 1px solid #eaeef8;padding-top: 16px;">
+            <ul class="nav nav-tabs">
+            <li class="nav-item" style="width:25%">
+             
+             <a id="up-meeting" data-toggle="tab" href="#allroom" role="tab" aria-controls="allroom" aria-selected="true" class="nav-link button-effect active">All</a>
+            </li>
+            <li class="nav-item">
+             <a id="create-room" data-toggle="tab" href="#createroom" role="tab" aria-controls="createroom" aria-selected="true" class="nav-link button-effect">Create Room</a>
+            </li>
+            <li class="nav-item">
+              <a id="join-room" data-toggle="tab" href="#joinroom" role="tab" aria-controls="joinroom" aria-selected="true" class="nav-link button-effect ">Join Room</a>
+            </li>
+          </ul>          
+         </div>
+
+              <div class="tab-content meetingContent custom-scroll">
+                <div id="allroom" class="container tab-pane active">
+                  <div class="row roomContentRow active"  style="margin-bottom: 12px;margin-top: 12px;">
+                  <div class="col-2">
+                    <div>
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col-6">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+                  <div class="col-4 meetingUser" >
+                       <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                              <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                          
+
+                          </div>
+                  </div>
+                </div>
+
+
+                <div class="row roomContentRow" style="margin-bottom: 12px;margin-top: 12px;">
+                  <div class="col-2">
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+                  <div class="col-4 meetingUser" style="border-left:  1px solid #eaeef8;height: 56px;">
+                       <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                              <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                          </div>
+                  </div>
+                </div>
+                
+                     <div class="row roomContentRow" style="margin-bottom: 12px;margin-top: 12px;">
+                  <div class="col-2">
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+                  <div class="col-4 meetingUser" style="border-left:  1px solid #eaeef8;height: 56px;">
+                       <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                              <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                          </div>
+                  </div>
+                </div>
+                </div>
+                <div id="joinroom" class="container tab-pane fade"><br>
+                 
+                </div>
+               
+              </div>
+                </div>
+
+                <div class="col-8" style="max-width: 64.66667%;">
+                  <div class="row" style="margin-top: 11px;border-bottom: 1px solid #cbd3ef99;">
+                     <div class="col-1">
+                    <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+                  </div>
+                  <div class="col-5">
+                    <p>Chatto Meeting</p>
+                    <p>2020/12/21</p>
+                  </div>
+
+                      <div class="col-6">
+                        <div class="row" >  
+                          <div class="col-2" style="margin-top: 17px;">
+                            <img class="" src="../assets/images/nav/newchat.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                          </div>
+                        <div class="col-6 meetingUser">                
+                          <h6 style="font-size: 13px;font-weight: 600;padding: 3px;"> Participants: </h6>
+                          <div class="usersprof">
+                            
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                               <div class="profile">
+                                <img class="bg-img" src="../assets/images/avtar/2.jpg" alt="Avatar" />
+                              </div>
+                            <div class="profile">
+                              <div class="usersCount">+20</div>
+                            </div>
+                              <div class="addMeetingPar" data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#showGroupsMembers">
+                              <div class="" style="padding: 3px;color: #6F66FF;">
+                                <plus-icon size="1.5x" class="custom-class"></plus-icon>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>  
+                         <div class="col-2" style="margin-top: 17px;">
+                            <span><img class="" src="../assets/images/nav/dots.png" alt="Avatar" style="height: auto;" /></span>
+                            </div>
+                          </div>
+                   </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 15px;">
+                      <div class="col-8" >
+                     
+                        <div class="col-12 meetingTopic" style="margin-bottom: 12px;">
+                           <p>Meeting Topic:</p>
+                           <p>Loram ipsum</p>
+                        </div>
+                         <div class="col-12 meetingTopic">
+                            <div class="row" style="padding-top: 4px;padding-bottom: 9px;">
+                           <div class="col-1">
+                             <img class="" src="../assets/images/icons/brace.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                             
+                           </div>
+                           <div class="col-9" style="border-left: 1px solid gainsboro;height: 15px;">
+                             <p>URL: <span> https://www.chatto.com/@123-456-789</span></p>
+                           </div>
+                           <div class="col-2">
+                             <clipboard-icon size="1.5x" style="float: right;" class="custom-class"></clipboard-icon>
+                         </div>
+                           </div>
+                        </div>
+                         <div class="col-12 meetingTopic">
+                           <div class="row" style="padding-top: 4px;padding-bottom: 9px;">
+                           <div class="col-1">
+                             <img class="" src="../assets/images/icons/batch.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                             
+                           </div>
+                           <div class="col-9" style="border-left: 1px solid gainsboro;height: 15px;">
+                             <p>Password: <span> * * * * * * * * *</span></p>
+                           </div>
+                           <div class="col-2">
+                             <clipboard-icon size="1.5x"  style="float: right;" class="custom-class"></clipboard-icon>
+                         </div>
+                           </div>
+                        </div>
+                           <div class="col-12 meetingTopic" style="">
+                          <div class="row" style="padding-top: 4px;padding-bottom: 9px;">
+                           <div class="col-1">
+                             <img class="" src="../assets/images/icons/document.png" alt="Avatar" style="height: auto;border-radius: 0;" /> 
+                             
+                           </div>
+                           <div class="col-9" style="border-left: 1px solid gainsboro;height: 15px;">
+                             <p>Documents</p>
+                           </div>
+                           
+                           </div>
+                        </div>
+                        <div class="col-12" style="padding-left: 0px;padding-right: 0px;">
+                           <div class="document">
+                          <div class="filter-block">
+                            <div class="collapse-block open">
+                              <h5 class="block-title">Advance Options
+                                
+                              </h5>
+                              <div class="block-content">
+                                <div class="col-12" style="background-color: white;padding: 12px;margin-bottom: 12px;">
+                                 <span>Allow others to invite / add to room</span>
+                                  <span style="float:right">
+                                  <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                  </label>
+                                </span>
+                                </div>
+                                
+                                <div class="col-12" style="background-color: white;padding: 12px;margin-bottom: 12px;margin-top: 12px;">
+                                   <span>Allow others to Schedule meeting</span>
+                                  <span style="float:right">
+                                  <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                  </label>
+                                </span>
+                                </div>
+                                <div class="col-12" style="background-color: white;padding: 12px;margin-bottom: 12px;margin-top: 12px;">
+                                   <span>Manage Participants </span>
+                                  <span style="float:right">
+                                  <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                  </label>
+                                </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                          
+                        </div>
+                      </div>
+
+                      <div class="col-4">
+                        <div class="row">
+                          <div class="col-12" style="background-color: white;text-align:center;margin-bottom: 10px;">
+                            <div style="width: 100%;margin-top: 10px;height: 50px;background-color: aliceblue;">
+                                <img class="" src="../assets/images/icons/addUser.png" alt="Avatar" style="height: auto;border-radius: 0;position: absolute;top: 35px;right: 123px;" /> 
+                            </div>
+                            <div class="meetingUser" style="margin-top: 40px; ">
+
+                              <p>Date: 07/12/2020</p>
+                              
+                            </div>
+                            
+                          </div>
+                          <div class="col-12" style="background-color: white;text-align:center;margin-bottom: 10px;margin-top:10px">
+                            <div style="width: 100%;margin-top: 10px;height: 50px;background-color: aliceblue;">
+                                <img class="" src="../assets/images/icons/share.png" alt="Avatar" style="height: auto;border-radius: 0;position: absolute;top: 35px;right: 137px;" /> 
+                            </div>
+                            <div class="meetingUser" style="margin-top: 40px; margin-bottom: 19px;">
+                              <p>Time: 2:00 pm</p>
+                            </div>
+                          </div>
+
+                           <div class="col-12" style="background-color: white;text-align:center;margin-bottom: 10px;margin-top:10px">
+                            <div style="width: 100%;margin-top: 10px;height: 50px;background-color: aliceblue;">
+                                <img class="" src="../assets/images/icons/invite.png" alt="Avatar" style="height: auto;border-radius: 0;position: absolute;top: 35px;right: 137px;" /> 
+                            </div>
+                            <div class="meetingUser" style="margin-top: 40px; margin-bottom: 19px;">
+                              <p>Time: 2:00 pm</p>
+                            </div>
+                          </div>
+                         
+                        </div>
+                      </div>
+
+                    </div>
+
+                   <div class="row" style="margin-top: 25px; border-top: 1px solid rgba(203, 211, 239, 0.6); padding-top: 25px;">
+                    <div class="col-5">
+                   <img class="" src="../assets/images/icons/editmeeting.png" alt="Avatar" style="height: auto;border-radius: 0;" /> <span> Edit</span>
+                  </div>
+                  <div class="col-4" style="">
+                      <button @click="meetingNav()" class="btn addMeeting" style="background-color:#FFFFFF;border: 1px solid #2C3550" >
+                                <span style="color: #2C3550;">Schedule Meeting</span>
+                              </button>
+                  </div>
+
+                      <div class="col-3">
+                            <button data-toggle="modal" data-keyboard="false" data-backdrop="static" data-target="#addMeetingmodal" class="btn addMeeting" >
+                                <span style="color: white;">Start Meeting</span>
+                              </button>
+                   </div>
+                    </div>
+                </div>
+      </div>
+    </div>
+                <!-- ROOM END -->
     </div>
 
     
@@ -4455,16 +5105,7 @@
                   <br>
                   <div id="basicUsage">{{formattedElapsedTime}}</div>
                 </li>
-                <!--<li>
-
-                          <a v-if="audioPause" class="icon-btn btn-light button-effect pause" href="#" @click="audioPausecall()" data-tippy-content="">
-                            <i class="fa fa-microphone"></i>
-                          </a>
-
-                          <a v-if="audioPlay" class="icon-btn btn-light button-effect " href="#" @click="audioPlaycall()" data-tippy-content="UnMute">
-                            <i class="fa fa-microphone-slash" aria-hidden="true"></i>
-                          </a>
-                        </li>-->
+                
               </ul>
 
             </div>
@@ -5442,6 +6083,108 @@
         </div>
       </div>
     </div>
+
+ <div class="modal fade fev-addcall-main add-popup" id="addMeetingmodal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">
+              Create Meeting</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="default-form">
+              <div class="row">
+              <div class="col-8">
+              <div class="form-group">
+                <span>Meeting Title:</span>
+                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="Give it a name" />
+              </div>
+              </div>
+                <div class="col-4">
+              <div class="form-group">
+                <span>Time Zone:</span>
+                <input class="form-control" id="examplemsg2" type="text" placeholder="Select timezone" />
+              </div>
+            </div>
+              <div class="col-8">
+              <div class="form-group">
+                <span>Meeting Topic:</span>
+                <textarea id="" class="form-control" name="w3review" placeholder="What is this meeting for?" rows="3" cols="50">
+                 </textarea>
+               
+              </div>
+              </div>
+                <div class="col-4">
+              <div class="form-group">
+                <span>Notification Time:</span>
+                <input class="form-control" id="examplemsg2" type="text" placeholder="Select notification time" />
+              </div>
+            </div>
+              <div class="col-4">
+              <div class="form-group">
+                <span>Date:</span>
+                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="DD / MM / YYYY" />
+              </div>
+              </div>
+                <div class="col-4">
+              <div class="form-group">
+                <span>Time:</span>
+                <input class="form-control" id="examplemsg2" type="text" placeholder="HH : MM : SS" />
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <span>Duration:</span>
+                <input class="form-control" id="examplemsg2" type="text" placeholder="HH : MM" />
+              </div>
+            </div>
+              <div class="col-6">
+              <div class="form-group">
+                <span>Meeting ID:</span>
+                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="@123 - 456 - 7890" />
+              </div>
+              </div>
+                <div class="col-6">
+              <div class="form-group">
+                <span>Meeting Password:</span>
+                <input class="form-control" id="examplemsg2" type="text" placeholder="* * * * * * * *" />
+              </div>
+            </div>
+             <div class="col-12">
+              <div class="form-group">
+                <span>Add Particapant</span>
+               <label class="btn btn-sm btn-primary" style="position: absolute;top: 26px;left: 22px;">Invite Members</label> <input class="form-control"style="padding: 15px 138px;" id="examplemsg2" type="text" placeholder="Select Participants" />
+              </div>
+            </div>
+              <div class="col-12">
+              <div class="form-group">
+                <span>Add Particapant</span><br>
+                <div style="border: 1px #E5EAF9 solid;height: 45px;padding: 7px;border-radius: 3px;">
+              <label for="upload" class="btn btn-sm btn-primary">Attach File</label>
+              <input type="file" class="text-center form-control-file custom_file" id="upload" name="user_image">
+              <label for="file_default">&nbsp; &nbsp; Upload refrence file </label>
+              <label for="file_name"><b></b></label>
+              </div>
+              </div>
+            </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            
+            <button  class="btn addMeeting" >
+            <span style="color: white;padding-right: 8px;">
+              <i class="fa fa-plus" aria-hidden="true"></i></span> 
+              <span style="color: white;">Create Meeting </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade fev-addcall-main add-popup" id="addcallmodal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -5736,12 +6479,12 @@ import {
   InstagramLoader,
   ListLoader
 } from 'vue-content-loader'
-import {CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
+import {ClipboardIcon ,CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, AirplayIcon, AtSignIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneIncomingIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon } from 'vue-feather-icons';
 import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-  components: {CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, AudioRecorder, ContentLoader, InfiniteLoading, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+  components: {ClipboardIcon ,CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, AudioRecorder, ContentLoader, InfiniteLoading, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
   props: [],
   data() {
     return {
@@ -5868,7 +6611,7 @@ export default {
 
   },
   beforeCreate: function() {
-    if (!this.$session.exists()) {
+    if (localStorage.getItem("userData") === null) {
       this.$router.push('/login')
     }
   },
@@ -7971,6 +8714,7 @@ $('#group_chat').hide();
 
     chatNav(){
       $('#meeting').hide();
+      $('#room').hide();
       $('#mainSidebar').show();
       $('#content').show();
       
@@ -7979,7 +8723,15 @@ $('#group_chat').hide();
     meetingNav(){
       $('#mainSidebar').hide();
       $('#content').hide();
+      $('#room').hide();
       $('#meeting').show();
+
+    },
+     roomNav(){
+      $('#mainSidebar').hide();
+      $('#content').hide();
+      $('#meeting').hide();
+      $('#room').show();
 
     },
 
@@ -9219,7 +9971,7 @@ $('#group_chat').hide();
         axios.post('/uploadProfilePic', userProfiledata, config).then((response) => {
           console.log(response.data);
        this.userImageName=response.data;
-       this.$session.set('c_user_image', response.data)
+       localStorage.setItem('c_user_image', JSON.stringify(response.data));
        
           
         }, function(err) {
@@ -9337,10 +10089,10 @@ $('#group_chat').hide();
   mounted() {
 
 
-    this.c_user = this.$session.get('c_user');
+    this.c_user = JSON.parse(localStorage.getItem('userData'));
     console.log(this.c_user.name);
     this.current_User = this.c_user;
-    this.userImageName=this.$session.get('c_user_image');
+    this.userImageName=JSON.parse(localStorage.getItem('c_user_image'));
     console.log(JSON.parse(localStorage.getItem('userData')));
     var dd = '';
     this.updateCallStatus(dd);
@@ -9405,6 +10157,24 @@ $('#group_chat').hide();
   $('.sidebar-top li').click(function(e) {
 
     $('.sidebar-top li.active').removeClass('active');
+
+    var $parent = $(this).parent();
+    $(this).addClass('active');
+    e.preventDefault();
+  });
+
+  $('.meetingContentRow').click(function(e) {
+
+    $('.meetingContentRow.active').removeClass('active');
+
+    var $parent = $(this).parent();
+    $(this).addClass('active');
+    e.preventDefault();
+  });
+
+  $('.roomContentRow').click(function(e) {
+
+    $('.roomContentRow.active').removeClass('active');
 
     var $parent = $(this).parent();
     $(this).addClass('active');
@@ -9542,6 +10312,17 @@ $('#group_chat').hide();
       return false;
     });
 
+$('#upload').change(function() {
+    var filename = $('#upload').val();
+    if (filename.substring(3,11) == 'fakepath') {
+        filename = filename.substring(12);
+    } // For Remove fakepath
+    $("label[for='file_name'] b").html(filename);
+    $("label[for='file_default']").text('Selected File: ');
+    if (filename == "") {
+        $("label[for='file_default']").text('No File Choosen');
+    }
+});
 
     /*=====================
     14 footer responsive js
