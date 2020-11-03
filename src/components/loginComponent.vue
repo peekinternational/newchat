@@ -82,7 +82,7 @@ export default {
             }
         },
          beforeCreate: function () {
-        if (this.$session.exists()) {
+        if (localStorage.getItem("userData")) {
           this.$router.push('/')
         }
       },

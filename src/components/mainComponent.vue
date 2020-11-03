@@ -31,14 +31,14 @@
               
               <span class="activefile" style="padding-left: 18px;">Chat</span>
             </li>
-            <li @click="meetingNav()">
+            <!-- <li @click="meetingNav()">
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/meetings.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 16px;">Meetings</span>
             </li>
             <li @click="roomNav()">
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/rooms.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 20px;">Rooms</span>
-            </li>
+            </li> -->
             <li data-toggle="modal" data-target="#showPresenter" data-keyboard="false" data-backdrop="static">
               <span  style="vertical-align: text-bottom;" class="activecss1" v-bind:class="{'dot-btn dot-danger grow' : presentersData.length > 0 }"><img class="" src="../assets/images/nav/live.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activelive" style="padding-left: 17px;">Live</span>
@@ -47,18 +47,18 @@
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/contacts.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 16px;">Contacts</span>
             </li>
-            <li>
+           <!--  <li>
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/schedule.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss"  style="padding-left: 22px;">Schedule</span>
-            </li>
+            </li> -->
             <li @click="favourite()">
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/todo.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activetodo" style="padding-left: 20px;">To-Do</span>
             </li>
-            <li>
+         <!--    <li>
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/projects.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 17px;">Projects</span>
-            </li>
+            </li> -->
             <li @click="document()">
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/documents.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 17px;">Documents</span>
@@ -69,7 +69,25 @@
               
               <span class="activefile" style="padding-left: 19px;">Files</span>
             </li>
-            <li class="records">
+
+           <li @click="notification()">
+              <span class="activecss1" v-bind:class="{'dot-btn dot-danger grow' : notificationStatus == true }" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/notification-no.png" alt="Avatar" style="height: auto;" /></span>
+              <span class="activecss" style="padding-left: 17px;">Notification</span>
+            </li>
+            <li @click="setting()" style="display: flex;">
+
+                <span class="activefile1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/setting-no.png" alt="Avatar" style="height: auto;" /></span>
+              
+              <span class="activefile" style="padding-left: 19px;">Setting</span>
+            </li>
+            <li v-on:click="logout()" style="display: flex;">
+
+                <span class="activefile1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/logout-no.png" alt="Avatar" style="height: auto;" /></span>
+              
+              <span class="activefile" style="padding-left: 19px;">Logout</span>
+            </li>
+
+          <!--   <li class="records">
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/records.png" alt="Avatar" style="height: auto;" /></span>
               <span style="padding-left: 24px;">Records</span>
               <span  style="margin-left: 16px;" class="active_class badge badge-danger sm">2</span>
@@ -77,7 +95,7 @@
             <li class="minutes" style="    margin-bottom: 66px !important;">
               <span class="activecss1" style="vertical-align: text-bottom;"><img class="" src="../assets/images/nav/minutes.png" alt="Avatar" style="height: auto;" /></span>
               <span class="activecss" style="padding-left: 22px;">Minutes</span>
-            </li>
+            </li> -->
 
             <!--<li>
                   <a class="icon-btn btn-light button-effect" href="javascript:void(0);" @click="favourite()" id="Fav">
@@ -119,11 +137,11 @@
         </div>
 
       </nav>
-      <div class="logoutDiv">
+     <!--  <div class="logoutDiv">
         <span @click="notification()" v-bind:class="{'dot-btn dot-danger grow' : notificationStatus == true }" style="padding-left: 3px;"><img class="" src="../assets/images/nav/notification.png" alt="Avatar" style="height: auto;" /></span>
         <span @click="setting()" style="padding-left: 5px;padding-right: 5px;"><img class="" src="../assets/images/nav/setting.png" alt="Avatar" style="height: auto;" /></span>
         <span v-on:click="logout()"><img class="" src="../assets/images/nav/logout.png" alt="Avatar" style="height: auto;" /></span>
-      </div>
+      </div> -->
       <aside class="chitchat-left-sidebar left-disp" id="mainSidebar" >
         <div class="recent-default dynemic-sidebar active" id="recent">
           <div class="recent">
@@ -160,6 +178,7 @@
 
                   </audio>
                   <p style="display:none">{{checkcallTime}}</p>
+                  <p style="display:none">{{checkGroupcallTime}}</p>
 
                   <div style="border: 1px #BAC5E9 solid;padding: 1px;border-radius: 26px;width: 62px !important;height: 62px !important;" v-if="c_user.onlineStatus == 1" class="profile">
                     
@@ -303,7 +322,7 @@
                 </li>
                 <li class="nav-item" data-to="contact-content">
                   <a class="nav-link button-effect" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
-                    <monitor-icon size="2x" class="custom-class"></monitor-icon> Room</a>
+                    <monitor-icon size="2x" class="custom-class"></monitor-icon> Contact</a>
                 </li>
               </ul>
               <div class="tab-content" id="myTabContent" style="">
@@ -313,14 +332,12 @@
                       <li class="nav-item" style="margin: 0px 0px;">
                         <a class="nav-link button-effect active" @click="usertab()" id="direct-tab" data-toggle="tab" href="#direct" role="tab" aria-controls="direct" aria-selected="false" data-to="chating">Direct</a>
                       </li>
-                      <span style="border-right: 1px #bac5e947 solid;border-width: 1px;padding: 15px 0;"></span>
+                      <span style="border-right: 1px #bac5e947 solid;border-width: 1px;padding: 15px 10px;"></span>
                       <li class="nav-item" style="margin: 0px 0px;">
                         <a class="nav-link button-effect" @click="getgroups()" id="group-tab" data-toggle="tab" href="#group" role="tab" aria-controls="group" aria-selected="true" data-to="group_chat">Group</a>
                       </li>
                       <span style="border-right: 1px #bac5e947 solid;border-width: 1px;padding: 15px 0;"></span>
-                      <li class="nav-item" style="margin: 0px 0px;">
-                        <a class="nav-link button-effect" id="meeting-tab" data-toggle="tab" href="#meeting" role="tab" aria-controls="meeting" aria-selected="true" data-to="meeting_chat">Meeting</a>
-                      </li>
+                      
                     </ul>
                     <div class="tab-content" id="myTabContent1">
                       <div class="tab-pane fade show active" id="direct" role="tabpanel" aria-labelledby="direct-tab">
@@ -2152,7 +2169,7 @@
                         <search-icon size="1.5x" class="custom-class"></search-icon>
                       </a>
                     </li>
-                    <template v-if="grouCallStatus == true">
+                    <template v-if="grouCallStatus == true && singlegroup._id == callGroup._id "  >
                       <li>
                         <a class="icon-btn btn-success" href="#" data-tippy-content="Quick Audio Call" data-toggle="modal" data-keyboard="false" @click="groupvideoJoinCall(singlegroup)" data-backdrop="static" data-target="#groupvideocall">
                           Join Call
@@ -4112,7 +4129,7 @@
 
                  <!-- ROOM -->
 
-       <div id="room" style="width:100%;background-color: #f3f6ff; display:none">
+       <div id="rooms" style="width:100%;background-color: #f3f6ff; display:none">
 
       <div class="row meetingRow" >
         <div class="col-2" style="margin-top: 3px;">
@@ -4861,7 +4878,7 @@
                   </a>
                 </li>
                 <li>
-                  <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#" @click="o2ostopKCall()" data-dismiss="modal">
+                  <a class="icon-btn btn-danger button-effect btn-xl is-animating cancelcall" href="#"  data-dismiss="modal">
                     <phone-icon size="1.5x" class="custom-class"></phone-icon>
                   </a>
                 </li>
@@ -4878,7 +4895,7 @@
       <div class="modal-dialog modal-dialog-centered" id="groupmodalcall" role="document">
         <div class="modal-body" style="border: 3px solid white;padding: 0px 0px;">
 
-          <div class="videocall groupbeforeopenChat call-modal">
+          <div class="groupcall groupbeforeopenChat call-modal">
 
             <!-- <div class="modal-footer" style="background-color: aliceblue;"> -->
             <div id="room" style="display: none;">
@@ -5003,7 +5020,7 @@
                 </li>
               </ul>
             </div>
-            <div class="center-con text-center">
+            <div id="groupCenter" class="center-con text-center">
               <ul style="float: right;">
                 <!--<li>
                           <a v-if="videoPause" class="icon-btn btn-light button-effect pause" href="#" @click="videoPausecall()" data-tippy-content="Hold">
@@ -5137,7 +5154,7 @@
                           <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 35px !important;" alt="Avatar" /></div>
                         <div class="media-body">
                           <div class="contact-name">
-                            <h5 style="font-size: 10px;">{{ oncallFriend.name }}</h5>
+                            <h5 style="font-size: 10px;">{{ g_chat.senderId.name }}</h5>
                             <h6 style="font-size: 10px;">{{chatTime(g_chat.createdAt)}}</h6>
                             <ul class="msg-box" style="margin-top: 0px;margin-left: 8px;">
                               <li class="msg-setting-main">
@@ -5205,10 +5222,10 @@
                     </a>
                   </div>
 
-                  <label class="icon-btn btn-outline-primary mr-4" style="height: 30px;width: 30px;margin-right: 0.3rem !important;" for="fileupload">
+                  <label class="icon-btn btn-outline-primary mr-4" style="height: 30px;width: 30px;margin-right: 0.3rem !important;" for="groupCallmyFiles">
                     <i class="fa fa-plus"></i>
                   </label>
-                  <input type="file" id="fileupload" ref="groupCallmyFiles" style="display:none" @change="groupCalluploadfile($event)" multiple>
+                  <input type="file" id="groupCallmyFiles" ref="groupCallmyFiles" style="display:none" @change="groupCalluploadfile($event)" multiple>
 
                   <input class="setemoj" id="setemoj" ref="afterClick" type="text" v-on:keyup="" @keyup.enter="groupchat()" v-model="groupmessage" style="font-size: 11px;width: calc(100% - 100px);" placeholder="Write your message..." />
 
@@ -6045,19 +6062,21 @@
               <div class="col-8">
               <div class="form-group">
                 <span>Meeting Title:</span>
-                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="Give it a name" />
+                <input class="form-control" id="exampleInputEmail12" v-model="meeting.meeting_title" type="text" placeholder="Give it a name" />
               </div>
               </div>
                 <div class="col-4">
               <div class="form-group">
                 <span>Time Zone:</span>
-                <input class="form-control" id="examplemsg2" type="text" placeholder="Select timezone" />
+               <select class="form-control" id="sel1" v-model="meeting.meeting_zone" style="border: 1px solid #d2d2d2;height:46px;font-size: 13px;border-radius: 4px; background: none;">
+				   
+			  </select>
               </div>
             </div>
               <div class="col-8">
               <div class="form-group">
                 <span>Meeting Topic:</span>
-                <textarea id="" class="form-control" name="w3review" placeholder="What is this meeting for?" rows="3" cols="50">
+                <textarea id="" class="form-control" v-model="meeting.meeting_topic" placeholder="What is this meeting for?" rows="3" cols="50">
                  </textarea>
                
               </div>
@@ -6065,43 +6084,52 @@
                 <div class="col-4">
               <div class="form-group">
                 <span>Notification Time:</span>
-                <input class="form-control" id="examplemsg2" type="text" placeholder="Select notification time" />
+                <select class="form-control" v-model="meeting.meeting_notification" id="sel1" style="border: 1px solid #d2d2d2;height:46px;font-size: 13px;border-radius: 4px; background: none;">
+				    <option>Select notification time</option>
+				    <option>2</option>
+				    <option>3</option>
+				    <option>4</option>
+			  </select>
+               
               </div>
             </div>
               <div class="col-4">
               <div class="form-group">
                 <span>Date:</span>
-                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="DD / MM / YYYY" />
+                <datepicker :format="format" v-model="meeting.meeting_date" placeholder="DD / MM / YYYY"></datepicker>
+                <!-- <input class="form-control" id="exampleInputEmail12" type="text" placeholder="DD / MM / YYYY" /> -->
               </div>
               </div>
                 <div class="col-4">
               <div class="form-group">
                 <span>Time:</span>
-                <input class="form-control" id="examplemsg2" type="text" placeholder="HH : MM : SS" />
+                <vue-timepicker  manual-input hide-dropdown format="hh:mm a" v-model="meeting.meeting_time" placeholder="HH:MM"></vue-timepicker>
+                <!-- <input class="form-control" id="examplemsg2" type="text" placeholder="HH : MM : SS" /> -->
               </div>
             </div>
             <div class="col-4">
               <div class="form-group">
                 <span>Duration:</span>
-                <input class="form-control" id="examplemsg2" type="text" placeholder="HH : MM" />
+                <vue-timepicker  manual-input hide-dropdown format="hh:mm" v-model="meeting.meeting_duration" placeholder="HH:MM"></vue-timepicker>
               </div>
             </div>
               <div class="col-6">
               <div class="form-group">
                 <span>Meeting ID:</span>
-                <input class="form-control" id="exampleInputEmail12" type="text" placeholder="@123 - 456 - 7890" />
+                <input class="form-control" id="exampleInputEmail12" v-model="meeting.meeting_id" type="text" placeholder="@123 - 456 - 7890" />
               </div>
               </div>
                 <div class="col-6">
               <div class="form-group">
                 <span>Meeting Password:</span>
-                <input class="form-control" id="examplemsg2" type="text" placeholder="* * * * * * * *" />
+                <input class="form-control" id="examplemsg2" v-model="meeting.meeting_password" type="password" placeholder="* * * * * * * *" />
               </div>
             </div>
              <div class="col-12">
               <div class="form-group">
                 <span>Add Particapant</span>
-               <label class="btn btn-sm btn-primary" style="position: absolute;top: 26px;left: 22px;">Invite Members</label> <input class="form-control"style="padding: 15px 138px;" id="examplemsg2" type="text" placeholder="Select Participants" />
+               <label class="btn btn-sm btn-primary" data-toggle="modal" data-target="#invitePersonMeeting" data-keyboard="false" data-backdrop="static" data-dismiss="modal" style="position: absolute;top: 26px;left: 22px;">Invite Members</label>
+             <input-tag v-model="invitePersons"></input-tag>
               </div>
             </div>
               <div class="col-12">
@@ -6109,7 +6137,7 @@
                 <span>Add Particapant</span><br>
                 <div style="border: 1px #E5EAF9 solid;height: 45px;padding: 7px;border-radius: 3px;">
               <label for="upload" class="btn btn-sm btn-primary">Attach File</label>
-              <input type="file" class="text-center form-control-file custom_file" id="upload" name="user_image">
+              <input type="file" class="text-center form-control-file custom_file" ref="meeting_file" id="upload" >
               <label for="file_default">&nbsp; &nbsp; Upload refrence file </label>
               <label for="file_name"><b></b></label>
               </div>
@@ -6120,7 +6148,7 @@
           </div>
           <div class="modal-footer">
             
-            <button  class="btn addMeeting" >
+            <button  class="btn addMeeting" @click="addMeeting()">
             <span style="color: white;padding-right: 8px;">
               <i class="fa fa-plus" aria-hidden="true"></i></span> 
               <span style="color: white;">Create Meeting </span>
@@ -6129,6 +6157,51 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade fev-addcall-main add-popup" id="invitePersonMeeting" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 45%;
+">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">
+             Invite From Email or Phone Number</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="default-form">
+               <div class="form-group">
+                <span>Enter Email / Phone Number</span>
+               <label class="btn btn-sm btn-primary" @click="addMeetingPersons"  style="position: absolute;top: 34px;right: 19px;">Add</label> <input class="form-control"style="padding: 15px 21px;" v-model="invitePersonMeeting" type="text" placeholder="Type email or phone number" />
+              </div>
+             
+            </form>
+            <div class="row"  v-for=" (invite,index) in invitePersons" style="margin-bottom:20px">
+            	<div class="col-2">
+            		 <div  class="profile" style="width: 56px;height: 56px;">
+                      <img class="bg-img" src="../assets/images/contact/2.jpg" style="width: 48px;"  alt="Avatar" />
+                    </div>
+            	</div>
+
+            	<div class="col-8" style="padding-left: 0px;padding-top: 17px;border-bottom: 1px solid #bac5e991;">
+            		<span>{{invite}}</span>
+            	</div>
+            	<div class="col-2" style="max-width: 12.86667%;padding-right: 0px;padding-top: 17px;border-bottom: 1px solid #bac5e991;">
+            		<x-icon size="1.5x" style="float: right;" class="custom-class"></x-icon>
+            	</div>
+            	
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger button-effect btn-sm" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary button-effect btn-sm"  data-toggle="modal" data-target="#addMeetingmodal" data-keyboard="false" data-backdrop="static" data-dismiss="modal" type="button">Add contact</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="modal fade fev-addcall-main add-popup" id="addcallmodal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
@@ -6159,6 +6232,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade add-popup todo-main-modal" id="todoModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -6415,6 +6489,12 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 import VEmojiPicker from 'v-emoji-picker';
 import ApiService from '../services/api.service.js';
 import AudioRecorder from 'vue-audio-recorder';
+import Datepicker from 'vuejs-datepicker';
+import VueTimepicker from 'vue2-timepicker';
+import 'vue2-timepicker/dist/VueTimepicker.css';
+import InputTag from 'vue-input-tag';
+
+
 Vue.use(AudioRecorder);
 import {
   ContentLoader,
@@ -6429,10 +6509,11 @@ import carousel from 'vue-owl-carousel';
 
 export default {
   name: 'MainComponent',
-  components: {ClipboardIcon ,CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, AudioRecorder, ContentLoader, InfiniteLoading, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
+  components: {InputTag, VueTimepicker, Datepicker, ClipboardIcon ,CameraIcon , UserIcon, VolumeXIcon, SlashIcon, FilePlusIcon, MonitorIcon, MessageCircleIcon, AudioRecorder, ContentLoader, InfiniteLoading, RadioIcon, Minimize2Icon, Trash2Icon, CheckIcon, VEmojiPicker, Loading, vueDropzone, carousel, PhoneIncomingIcon, PhoneIcon, VideoIcon, SmileIcon, MicIcon, SendIcon, MessageSquareIcon, UsersIcon, PlusCircleIcon, PlusIcon, PhoneOutgoingIcon, FileIcon, ClockIcon, ListIcon, GridIcon, BookIcon, XIcon, DownloadIcon, SearchIcon, StarIcon, MoreVerticalIcon, ArrowLeftIcon },
   props: [],
   data() {
     return {
+      format: "d / MM / yyyy",
       data: '',
       isConnected: false,
       socketMessage: '',
@@ -6531,6 +6612,9 @@ export default {
       elapsedcallTime: 0,
       calltimer: undefined,
       callstatus: 0,
+      groupelapsedcallTime: 0,
+      groupcalltimer: undefined,
+      groupcallstatus: 0,
       audio: {},
       videoPause: true,
       videoPlay: false,
@@ -6552,6 +6636,22 @@ export default {
       allDocument:[],
       notificationDate:[],
       notificationStatus:false,
+      invitePersons:[],
+      invitePersonMeeting:'',
+      tagsperson:'',
+      meeting:{
+	      meeting_title:'',
+	      meeting_zone:'',
+	      meeting_notification:'',
+	      meeting_topic:'',
+	      meeting_password:'',
+	      meeting_time:'',
+	      meeting_date:'',
+	      meeting_duration:'',
+	      meeting_id:''
+      },
+     
+
 
 
     }
@@ -6805,6 +6905,7 @@ export default {
           this.grouCallStatus = true;
           console.log(this.grouCallStatus);
           this.callGroup = groupId;
+          this.checkGroupcallstart();
           $('#groupcallReceiver').modal('show');
 
         }
@@ -7116,6 +7217,14 @@ export default {
       return utc.substr(-6, 3);
     },
 
+checkGroupcallTime() {
+      const date = new Date(null);
+      date.setSeconds(this.groupelapsedcallTime / 1000);
+      const utc = date.toUTCString();
+      //console.log(utc.substr(-6,3));
+      this.groupcallstatus = utc.substr(-6, 3);
+      return utc.substr(-6, 3);
+    },
   },
 
 
@@ -7131,6 +7240,17 @@ export default {
         $('.modal-backdrop').remove();
         $('#o2ovideocall').modal('hide');
         $('#o2oaudiocall').modal('hide');
+
+
+      }
+    },
+
+      groupcallstatus() {
+      console.log(this.groupcallstatus);
+      if (this.groupcallstatus > 20) {
+        $('#groupcallReceiver').modal('hide');
+        this.checkGroupreset();
+        this.checkGroupcallstop();
 
 
       }
@@ -7228,6 +7348,19 @@ export default {
     checkreset() {
       this.elapsedcallTime = 0;
     },
+
+ checkGroupcallstart() {
+      this.groupcalltimer = setInterval(() => {
+        this.groupelapsedcallTime += 1000;
+      }, 1000);
+    },
+    checkGroupcallstop() {
+      clearInterval(this.groupcalltimer);
+    },
+    checkGroupreset() {
+      this.groupelapsedcallTime = 0;
+    },
+
     startTimer() {
 
       var result = returnPdata();
@@ -7652,9 +7785,7 @@ export default {
           $("#chating").animate({ scrollTop: container.scrollHeight + 7020 }, "fast");
           var container2 = this.$el.querySelector("#o2ochating");
           $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020 }, "fast");
-          var container3 = this.$el.querySelector("#o2oaudiochating");
-          $("#o2oaudiochating").animate({ scrollTop: container3.scrollHeight + 7020 }, "fast");
-
+         
           this.message = '';
           $('#send-msg').addClass('disabled').attr("disabled", "disabled");
         }
@@ -7746,10 +7877,7 @@ export default {
           $("#chating").animate({ scrollTop: container.scrollHeight + 7020 }, "fast");
           var container2 = this.$el.querySelector("#o2ochating");
           $("#o2ochating").animate({ scrollTop: container2.scrollHeight + 7020 }, "fast");
-          var container3 = this.$el.querySelector("#o2oaudiochating");
-          $("#o2oaudiochating").animate({ scrollTop: container3.scrollHeight + 7020 }, "fast");
-
-
+        
           $('#send-msg').addClass('disabled').attr("disabled", "disabled");
 
         }
@@ -7763,7 +7891,9 @@ export default {
       formData.append('senderId', this.c_user._id);
       formData.append('senderName', this.c_user.name);
       formData.append('friendId', this.singlefriend._id);
+      formData.append('messageType', 1);
       formData.append('isGroup', 0);
+      formData.append('projectId', '5d4c07fb030f5d0600bf5c03');
 
 
     },
@@ -7777,7 +7907,7 @@ export default {
         chatType: 0,
         isSeen: 0,
         isGroup: 0,
-        messageType: response.data.messageType,
+        messageType: 1,
         senderId: { _id: this.c_user._id },
         senderImage: '',
         receiverImage: '',
@@ -7843,6 +7973,7 @@ export default {
         formDatas.append('senderName', this.c_user.name);
         formDatas.append('friendId', this.singlefriend._id);
         formDatas.append('isGroup', 0);
+        formDatas.append('messageType', 1);
         formDatas.append('projectId', '5d4c07fb030f5d0600bf5c03');
         console.log(formDatas);
         let config = {
@@ -7858,7 +7989,7 @@ export default {
             chatType: 0,
             isSeen: 0,
             isGroup: 0,
-            messageType: response.data.data.messageType,
+            messageType: 1,
             senderId: { _id: this.c_user._id },
             senderImage: '',
             receiverImage: '',
@@ -8301,7 +8432,7 @@ $('#group_chat').hide();
     },
 
     groupCalluploadfile(event){
-        console.log("groupCalluploadfile");
+    //alert("groupCalluploadfile");
       let groupfilesdata = this.$refs.groupCallmyFiles.files;
           console.log(groupfilesdata);
       groupfilesdata.forEach((file) => {
@@ -8309,7 +8440,7 @@ $('#group_chat').hide();
         groupformDatas.append('file', file);
         groupformDatas.append('senderId', this.c_user._id);
         groupformDatas.append('senderName', this.c_user.name);
-        groupformDatas.append('groupId', this.singlegroup._id);
+        groupformDatas.append('groupId', this.callGroup._id);
         groupformDatas.append('isGroup', 1);
         groupformDatas.append('projectId', '5d4c07fb030f5d0600bf5c03')
         console.log(groupformDatas);
@@ -8329,7 +8460,7 @@ $('#group_chat').hide();
             senderId: { _id: this.c_user._id, name: this.c_user.name },
             senderName: this.c_user.name,
             message: response.data.file[0].originalname,
-            groupId: this.singlegroup._id,
+            groupId: this.callGroup._id,
             isDeleted: 0,
             createdAt: new Date().toISOString(),
             projectId: '5d4c07fb030f5d0600bf5c03'
@@ -8737,7 +8868,7 @@ $('#group_chat').hide();
 
     chatNav(){
       $('#meeting').hide();
-      $('#room').hide();
+      $('#rooms').hide();
       $('#mainSidebar').show();
       $('#content').show();
       
@@ -8746,7 +8877,7 @@ $('#group_chat').hide();
     meetingNav(){
       $('#mainSidebar').hide();
       $('#content').hide();
-      $('#room').hide();
+      $('#rooms').hide();
       $('#meeting').show();
 
     },
@@ -8754,7 +8885,7 @@ $('#group_chat').hide();
       $('#mainSidebar').hide();
       $('#content').hide();
       $('#meeting').hide();
-      $('#room').show();
+      $('#rooms').show();
 
     },
 
@@ -9672,61 +9803,11 @@ $('#group_chat').hide();
 
     ////////////////////////////////////// GROUP VIDEO CALL ////////////////////////////////////////
 
-    groupshowCallchat() {
-      $('#groupchatopen').removeClass('dot-btn dot-success grow');
-      $('#groupchatopen').hide();
-      $('#groupchatclose').show();
-      $('#groupchating').addClass('active');
-      $('#groupsinglemessage-input').hide();
 
-      var containers = this.$el.querySelector("#groupchating");
-      console.log(containers.scrollHeight);
-      $("#groupchating").animate({ scrollTop: containers.scrollHeight + 7020 }, "fast");
-
-      this.onEditgroupclear = false;
-      this.ongroupChat = true;
-      this.groupmessage = '';
-      this.editgroupChatid = '';
-      $('#groupsinglemessage-input').css("height", "96px");
-
-
-      $('.videocall').removeClass('groupbeforeopenChat');
-      $('.videocall').addClass('groupafteropenChat');
-      $('#groupmodalcall').removeClass('groupmodelbefore');
-      $('#groupmodalcall').addClass('groupmodelafter');
-      $('#local-video').removeClass('beforelocalVideo');
-      $('#local-video').addClass('afterlocalVideo');
-
-      $('#groupdetail').removeClass('beforeDetail');
-      $('#groupdetail').addClass('afterDetail');
-
-      $('#groupcontents').show();
-      $('.chitchat-main .chat-content').css('opacity', '1');
-    },
-
-    grouphideCallchat() {
-
-      $('#groupchatopen').removeClass('dot-btn dot-success grow');
-      $('.videocall').addClass('groupbeforeopenChat');
-      $('.videocall').removeClass('groupafteropenChat');
-      $('#groupmodalcall').removeClass('groupmodelafter');
-      $('#groupmodalcall').addClass('groupmodelbefore');
-      $('#local-video').removeClass('afterlocalVideo');
-      $('#local-video').addClass('beforelocalVideo');
-      $('#local-video').removeClass('afterlocalVideo');
-      $('#local-video').addClass('beforelocalVideo');
-      $('#groupdetail').removeClass('afterDetail');
-      $('#groupdetail').addClass('beforeDetail');
-      $('#groupcontents').hide();
-      $('#groupchatclose').hide();
-      $('#groupchatopen').show();
-
-
-
-    },
-
+ 
     groupvideostartCall(group) {
       this.singlegroup = group;
+      this.callGroup=group;
       var groupRoomName = group.name;
       var groupUser = this.c_user.name;
       console.log(groupRoomName);
@@ -9800,10 +9881,41 @@ $('#group_chat').hide();
       $('#groupshowcallModel' + this.oncallGroup._id).hide();
       $('#showCallMin').show();
     },
+
+
+    groupReceiveCall() {
+      this.singlegroup = this.callGroup;
+      var groupRoomName = this.receiveGroupName;
+      var groupUser = this.c_user.name;
+      console.log(this.groupCallId, 'lllllllllllldsaaaaaaaa');
+      register(groupRoomName, groupUser);
+      $('#groupcallReceiver').modal('hide');
+      $('#groupvideocall').modal('show');
+      this.checkGroupreset();
+      this.checkGroupcallstop();
+      axios.post('/joinCallGroup', {
+        _id: this.groupCallId,
+        groupId: this.callGroup._id,
+        userId: this.c_user._id,
+        projectId: '5d4c07fb030f5d0600bf5c03',
+        member: this.c_user._id
+      }).then(response => {
+        console.log(response);
+      }, function(err) {
+        console.log('err', err);
+        //alert('error');
+      });
+
+    },
     groupstartchat() {
 
       //console.log(this.oncallGroup);
       this.groupstatus = true;
+       $('#groupdetail').removeClass('groupCallOptionsb4');
+	  $('#groupdetail').addClass('groupCallOptionsafter');
+
+      $('#groupCenter').removeClass('groupCallOptionsb4');
+      $('#groupCenter').addClass('groupCallOptionsafter');
       $('#groupchatopen').removeClass('dot-btn dot-success grow');
       $('#groupchatopen').hide();
       $('#groupchatclose').show();
@@ -9821,47 +9933,41 @@ $('#group_chat').hide();
       this.groupchatreplydata = "";
       $('#groupsinglemessage-input').css("height", "96px");
 
-      axios.get('/getGroupChat/5f5626fec7ebca22288ec2fd/50/5d4c07fb030f5d0600bf5c03')
+      axios.get('/getGroupChat/'+this.callGroup._id+'/50/5d4c07fb030f5d0600bf5c03')
         .then((responce) => this.groupchatdata = responce.data)
         .catch((error) => console.log(error));
-      $('.videocall').removeClass('groupbeforeopenChat');
-      $('.videocall').addClass('groupafteropenChat');
+      $('.groupcall').removeClass('groupbeforeopenChat');
+      $('.groupcall').addClass('groupafteropenChat');
       $('#groupmodalcall').removeClass('groupmodelbefore');
       $('#groupmodalcall').addClass('groupmodelafter');
-      $('#local-video').removeClass('beforelocalVideo');
-      $('#local-video').addClass('afterlocalVideo');
-
-      $('#groupdetail').removeClass('beforeDetail');
-      $('#groupdetail').addClass('afterDetail');
 
       $('#groupcontents').show();
       $('.chitchat-main .chat-content').css('opacity', '1');
 
 
     },
-    groupReceiveCall() {
-      this.singlegroup = this.callGroup;
-      var groupRoomName = this.receiveGroupName;
-      var groupUser = this.c_user.name;
-      console.log(this.groupCallId, 'lllllllllllldsaaaaaaaa');
-      register(groupRoomName, groupUser);
-      $('#groupcallReceiver').modal('hide');
-      $('#groupvideocall').modal('show');
-      axios.post('/joinCallGroup', {
-        _id: this.groupCallId,
-        groupId: this.callGroup._id,
-        userId: this.c_user._id,
-        projectId: '5d4c07fb030f5d0600bf5c03',
-        member: this.c_user._id
-      }).then(response => {
-        console.log(response);
-      }, function(err) {
-        console.log('err', err);
-        //alert('error');
-      });
+
+       grouphideCallchat() {
+//alert('close');
+      $('#groupdetail').removeClass('groupCallOptionsafter');
+	  $('#groupdetail').addClass('groupCallOptionsb4');
+
+      $('#groupCenter').removeClass('groupCallOptionsafter');
+      $('#groupCenter').addClass('groupCallOptionsb4');
+      $('#groupchatopen').removeClass('dot-btn dot-success grow');
+      $('.groupcall').addClass('groupbeforeopenChat');
+      $('.groupcall').removeClass('groupafteropenChat');
+      $('#groupmodalcall').removeClass('groupmodelafter');
+      $('#groupmodalcall').addClass('groupmodelbefore');
+     
+
+      $('#groupcontents').hide();
+      $('#groupchatclose').hide();
+      $('#groupchatopen').show();
+
+
 
     },
-
 
     ////////////////////////////////////// END GROUP VIDEO CALL ////////////////////////////////////////
 
@@ -10136,6 +10242,43 @@ $('#group_chat').hide();
         })
 
     },
+
+    //////////////////////////////////////////// MEETING SECTION //////////////////////////
+
+    addMeetingPersons(){
+      //alert(this.invitePersonMeeting);
+      this.invitePersons.push(this.invitePersonMeeting);
+      this.invitePersonMeeting='';
+    },
+    addMeeting(){
+
+         let meeting_file =  this.$refs.meeting_file.files;
+         console.log(meeting_file);
+
+    	 meeting_file.forEach((file) => {
+	        let meetingformDatas = new FormData();
+		        meetingformDatas.append('file', file);
+		        meetingformDatas.append('filename', file.name);
+		        meetingformDatas.append('userId', this.c_user._id);
+		        meetingformDatas.append('meetingData', JSON.stringify(this.meeting));
+		        meetingformDatas.append('meetingPersons', this.invitePersons);
+		        console.log(meetingformDatas);
+		         let config = {
+			          header: {
+			            'Content-Type': 'multipart/form-data'
+			          }
+			        }
+			         axios.post('/createMeeting', meetingformDatas, config).then((response) => {
+                        console.log(response)
+				        }, function(err) {
+				          console.log('err', err);
+				          alert('error');
+				        })
+		        
+			     })
+
+    	console.log(this.meeting);
+    }
   },
 
   mounted() {
@@ -10160,7 +10303,7 @@ $('#group_chat').hide();
       $('.main-nav').removeClass('on');
       $('.main-nav').addClass('off');
     }
-
+    $('.new-tag').attr("type", "hidden");
     ////////////////Chat dropzone //////////////////////
 
     document.addEventListener('dragenter', function(e) {

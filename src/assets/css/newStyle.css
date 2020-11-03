@@ -244,7 +244,7 @@ h5{
 .profile.mr-4 img{
     border-radius: 30px !important  ;
     width: 48px !important;
-    min-height: 48px;
+    min-height: 32px;
 }
 .msg-setting-main .msg-dropdown-main .msg-dropdown {
     background-color: #fff;
@@ -551,6 +551,12 @@ ul.chat-cont-setting.open {
     background: #6F66FF;
     background-image: none !important;
 }
+
+.viddiolog .groupcall.call-modal{
+    min-height: 96.5vh !important;
+    background: #6F66FF;
+    background-image: none !important;
+}
 #basicUsage {
     font-size: 16px;
     color: #fff;
@@ -558,7 +564,7 @@ ul.chat-cont-setting.open {
     font-weight: 700;
     width: 100px;
 }
-.audiocall1.call-modal .center-con, .audiocall2.call-modal .center-con, .conferencecall.call-modal .center-con, .videocall.call-modal .center-con, .videocallhang.call-modal .center-con {
+.audiocall1.call-modal .center-con, .audiocall2.call-modal .center-con, .conferencecall.call-modal .center-con, .groupcall.call-modal .center-con, .videocall.call-modal .center-con, .videocallhang.call-modal .center-con {
     position: absolute;
     bottom: 30px;
     width: 100%;
@@ -571,6 +577,8 @@ ul.chat-cont-setting.open {
     left: 0;
     align-items: center;
 }
+
+
 .videocall.call-modal .small-image, .videocallhang.call-modal .small-image {
     width: 201px !important;
     height: 185px !important;
@@ -578,6 +586,27 @@ ul.chat-cont-setting.open {
     left: 40px;
     bottom: 5%;
 }
+.groupCallOptionsb4{
+    width: 100%;
+}
+.groupCallOptionsafter{
+    width: 70% !important;
+}
+.groupcall.call-modal .videocall-details, .videocallhang.call-modal .videocall-details {
+    position: absolute;
+    top: 0px;
+    padding: 20px;
+    right: 0;
+    left: 0;
+    align-items: center;
+}
+/*.groupcall.call-modal .small-image, .videocallhang.call-modal .small-image {
+    width: 201px !important;
+    height: 185px !important;
+    position: absolute;
+    left: 40px;
+    bottom: 5%;
+}*/
 ul.call-cont-setting {
     background-color: #fff;
     box-shadow: 0 0 10px #e5edf5;
@@ -610,7 +639,7 @@ ul.call-cont-setting li a span {
     margin-right: 0px;
     font-size: 12px;
 }
-.audiocall1.call-modal ul li+li, .audiocall2.call-modal ul li+li, .videocall.call-modal ul li+li, .videocallhang.call-modal ul li+li, .conferencecall.call-modal ul li+li {
+.audiocall1.call-modal ul li+li, .audiocall2.call-modal ul li+li, .videocall.call-modal ul li+li, .groupcall.call-modal ul li+li, .videocallhang.call-modal ul li+li, .conferencecall.call-modal ul li+li {
     margin-left:12px;
 }
 .calloption-close {
@@ -724,12 +753,12 @@ ul.call-cont-setting li a span {
     transition: all 0.3s ease;
     justify-content: center;
 }
-.audiocall1.call-modal, .audiocall2.call-modal, .videocall.call-modal, .videocallhang.call-modal, .conferencecall.call-modal {
+.audiocall1.call-modal, .audiocall2.call-modal, .videocall.call-modal, .groupcall.call-modal, .videocallhang.call-modal, .conferencecall.call-modal {
     min-height: 655px;
     background-image: none !important;
     background: #6F66FF;
 }
-.audiocall1.call-modal .title2, .audiocall2.call-modal .title2, .videocall.call-modal .title2, .videocallhang.call-modal .title2, .conferencecall.call-modal .title2 {
+.audiocall1.call-modal .title2, .audiocall2.call-modal .title2, .videocall.call-modal .title2, .groupcall.call-modal .title2, .videocallhang.call-modal .title2, .conferencecall.call-modal .title2 {
     margin-bottom: 100px;
 }
 .incomingName{
@@ -1055,4 +1084,45 @@ input:checked + .slider:before {
 #addMeetingmodal .default-form .form-group .form-control {
     padding: 15px 10px;
     margin-bottom: 9px;
+}
+.vue__time-picker input.display-time {
+    border: 1px solid #e5eaf9;
+    width: 13em !important;
+    height: 3.6em !important;
+    padding: .3em .5em;
+    font-size: 1em;
+}
+.vue__time-picker {
+    display: block !important;
+    position: relative;
+    font-size: 1em;
+    width: 10em;
+    font-family: sans-serif;
+    vertical-align: middle;
+}
+.vue__time-picker .dropdown {
+    
+    width: 13em !important;
+    height: 10em;
+ 
+}
+.vue__time-picker .dropdown .select-list {
+    width: 13em !important;
+    height: 10em;
+}
+.vue-input-tag-wrapper {
+    background-color: #fff;
+    border: 1px solid #e5eaf9 !important;
+    overflow: hidden;
+    min-height: 45px;
+    padding-left: 136px !important;
+    padding-top: 4px;
+    cursor: text;
+    text-align: left;
+    -webkit-appearance: textfield;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
 }

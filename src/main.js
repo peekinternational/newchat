@@ -8,6 +8,7 @@ import VueSocketIO from 'vue-socket.io';
 import socketio from 'socket.io-client';
 import VueClipboard from 'vue-clipboard2';
 import AudioRecorder from 'vue-audio-recorder';
+import VEmojiPicker from 'v-emoji-picker';
 
 window.axios = require('axios');
 //window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -22,6 +23,8 @@ Vue.use(VueSession)
 Vue.use(VueResource)
 Vue.use(Toasted)
 Vue.use(VueClipboard)
+Vue.use(VEmojiPicker);
+
 
 const SocketInstance = socketio.connect(':22000');
 
@@ -38,11 +41,7 @@ Vue.use(VueSocketIO, SocketInstance, MyVuexStore)
 // import Signup from './components/signupComponent.vue';
 // import O2O from './components/o2oCallComponent.vue';
 
-// 2. Define some routes
-// Each route should map to a component. The "component" can
-// either be an actual component constructor created via
-// `Vue.extend()`, or just a component options object.
-// We'll talk about nested routes later.
+
 Vue.config.productionTip = false
 Vue.prototype.$hostname = 'https://peekvideochat.com:22000/'
 //Vue.prototype.$hostname = 'https://192.168.100.30:22000/'

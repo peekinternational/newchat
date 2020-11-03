@@ -12,15 +12,33 @@ var parsed = {};
 var userCount = 0;
 var mySocketId = 0;
 
-window.onbeforeunload = function () {
-    socket.close();
-};
+// window.onbeforeunload = function () {
+//     socket.close();
+// };
 
+// ----------------------------------------------------------------------------------------
+// function connect() {
+//     socket = new WebSocket('wss://' + 'peekvideochat.com:3000' + '/groupcall');
+// }
+
+// socket.onclose = function (e) {
+//     console.log('Socket is closed. Reconnect will be attempted in 1 second.', e.reason);
+//     setTimeout(function () {
+//         connect();
+//     }, 1000);
+// };
+
+// socket.onerror = function (err) {
+//     console.error('Socket encountered error: ', err.message, 'Closing socket');
+//     socket.close();
+// };
+// ----------------------------------------------------------------------------------------
 
 socket.onmessage = function (message) {
     var parsedMessage = JSON.parse(message.data);
     //  console.info('Received message: ' + parsedMessage.id);
-    // parsed = parsedMessage;
+    // if (yourWsObject.readyState === WebSocket.CLOSED) {
+    // }
     switch (parsedMessage.id) {
         case 'existingParticipants':
             onExistingParticipants(parsedMessage);
@@ -34,6 +52,9 @@ socket.onmessage = function (message) {
         case 'receiveVideoAnswer':
             receiveVideoResponse(parsedMessage);
             break;
+        // case 'participandsCountUpdate':
+        //     participandsCountUpdate(parsedMessage);
+        //     break;
         case 'iceCandidate':
             //	console.log('iceCandidate iceCandidate iceCandidate iceCandidate');
             participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
@@ -48,6 +69,9 @@ socket.onmessage = function (message) {
     }
 }
 
+// function participandsCountUpdate(msg){
+//  console.log(msg);
+// }
 
 function nextUniqueId() {
     mySocketId = Math.floor(Math.random() * Math.floor(9000));
@@ -55,6 +79,8 @@ function nextUniqueId() {
 }
 
 function onNewParticipant(request) {
+    console.log("... onNewParticipant ...");
+    console.log(request);
     receiveVideo(request.name);
 }
 
@@ -100,6 +126,8 @@ function groupCallResponse(message) {
 }
 
 function onExistingParticipants(msg) {
+    console.log('... onExistingParticipants ...');
+    console.log(msg);
     var constraints = {
         audio: true,
         video: {
@@ -193,7 +221,7 @@ function onParticipantLeft(request) {
 function sendGroupMessage(message) {
     // console.log(message);
     var jsonMessage = JSON.stringify(message);
-	socket.send(jsonMessage);
+    socket.send(jsonMessage);
 }
 
 
