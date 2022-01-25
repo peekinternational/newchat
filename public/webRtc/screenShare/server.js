@@ -10,25 +10,20 @@ Object.keys(ifaces).forEach(function (ifname) {
     var alias = 0;
     ifaces[ifname].forEach(function (iface) {
         if (('IPv4' !== iface.family || iface.internal !== false) && iface.address != '127.0.0.1') return;
-        //console.log(alias,' and ',iface.address,' and ',iface.family,' and ',iface.internal);
+        //console.log (alias,' and ',iface.address,' and ',iface.family,' and ',iface.internal);
         if (alias < 1) serverIpAdd.push(iface.address);
         ++alias;
     });
 });
+
 var siteLink = 'https://localhost:9559/';
-if (serverIpAdd.includes('138.68.27.231')) { //Job callme
+if (serverIpAdd.includes('138.68.27.231')) { 
     options = {
         key: sslConfig.keyJcm,
         cert: sslConfig.certJcm,
     };
-    siteLink = 'https://www.peekvideochat.com:9559/';
-} else if (serverIpAdd.includes('192.168.1.10') || serverIpAdd.includes('127.0.0.1')) { // Peek let 
-    options = {
-        key: sslConfig.keyPl,
-        cert: sslConfig.certPl,
-    };
-    siteLink = 'https://www.peeklet.com:9559/';
-}
+    siteLink = 'https://peekvideochat.com:9559/';
+} 
 
 
 // HTTPs server
@@ -57,6 +52,7 @@ io.set('transports', [
 var channels = {};
 
 io.sockets.on('connection', function (socket) {
+    // socket.setMaxListeners(0);
     console.log('connection ===');
     var initiatorChannel = '';
     if (!io.isConnected) {
@@ -74,7 +70,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('presence', function (channel) {
-        console.log('presence ===');
+       // console.log('presence ===');
         var isChannelPresent = !!channels[channel];
         socket.emit('presence', isChannelPresent);
     });
@@ -89,7 +85,7 @@ io.sockets.on('connection', function (socket) {
 
 function onNewNamespace(channel, sender) {
     io.of('/' + channel).on('connection', function (socket) {
-        console.log('onNewNamespace ===');
+       // console.log('onNewNamespace ===');
         var username;
         if (io.isConnected) {
             io.isConnected = false;
@@ -97,7 +93,7 @@ function onNewNamespace(channel, sender) {
         }
 
         socket.on('message', function (data) {
-            console.log('onNewNamespace === message ===');
+           // console.log('onNewNamespace === message ===');
 
             if (data.sender == sender) {
                 if (!username) username = data.data.sender; 
@@ -105,8 +101,14 @@ function onNewNamespace(channel, sender) {
             }
         });
 
+        // socket.on('userleft', function (data){
+        //     console.log('user left server');
+        //     socket.broadcast.emit('user-left', username);
+        //     console.log(data);
+        // });
+
         socket.on('disconnect', function () {
-            console.log('onNewNamespace- disconnect ===');
+          //  console.log('onNewNamespace- disconnect ===');
             if (username) {
                 socket.broadcast.emit('user-left', username);
                 username = null;

@@ -19,9 +19,8 @@ const projectSchema = mongoose.Schema({
     "broadcasting": { type: Number, default: 0 }, //1=Show /0=Hide     
     "audioCall": {type: Number, default: 0}, //1=Show /0=Hide   
     "videoCall": {type: Number, default: 0}, //1=Show /0=Hide   
-    "sslKey": {type: String, default: ''}, 
-    "sslCert": {type: String, default: ''},
     "status": { type: Number, default: 0 },  //1=Active /0=Inactive
+    "verificationWay": { type: Number, default: 1 } //0= No verification, 1= Email, 2= SMS, 3= Both Email/SMS
 },
     { timestamps: true });
 

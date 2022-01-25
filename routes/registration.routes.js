@@ -21,15 +21,14 @@ const upload = multer({
 // -----------------------------------------------------------------------------------------------
 
 registrationRoutes.route("/login").post(function (req, res) { 
-
     var User = regModel;
     var fullUrl = req.protocol + '://' + req.get('host') + '/profilePhotos/';
 
     projectModel.findOne({ 'status': 1 , 'projectId': req.body.projectId}).exec(function (err, projectData) {
         //  { $or:[ {'email':req.body.email}, {'phone':req.body.phone} ]}
-         console.log(req.body);
+        // console.log(req.body);
         if (req.body.email != '') {
-            console.log("if");
+           // console.log("if");
             User.findOne({ 'email': req.body.email , 'projectId': req.body.projectId}).then(
                 (result) => {
 
@@ -53,7 +52,7 @@ registrationRoutes.route("/login").post(function (req, res) {
                 });
         }
         else if (req.body.phone != '') {
-            console.log("else if 1");
+         //   console.log("else if 1");
             User.findOne({ 'phone': req.body.phone , 'projectId': req.body.projectId}).then(
                 (result) => {
                     if (!result) {
@@ -77,17 +76,17 @@ registrationRoutes.route("/login").post(function (req, res) {
                 });
         }
         else if (req.body.name != '') {
-            console.log("else if 2");
-            console.log(req.body);
-            console.log(req.body.name);
+         //   console.log("else if 2");
+          //  console.log(req.body);
+          //  console.log(req.body.name);
             User.findOne({ 'name': req.body.name , 'projectId': req.body.projectId}).then(
                 (result) => {
-                    console.log(result);
+                  //  console.log(result);
                     if (!result) {
                         return res.json({ 'message': "Incorrect username", 'isUserExist': false });
                     }
                     else {
-                        console.log(req.body.password);
+                      //  console.log(req.body.password);
                         // if (!bcrypt.compareSync(req.body.password, result.password)) {
                         //     return res.json({ 'message': "Incorrect password", 'isUserExist': false });
                         // }
@@ -96,7 +95,7 @@ registrationRoutes.route("/login").post(function (req, res) {
                         if (result.user_image != '') {
                             var imageFile = fullUrl + result.user_image;
                         }
-                        console.log(result);
+                      //  console.log(result);
                         const data = { 'id': result.id, 'email': result.email, 'name': result.name };
                         return res.json({ 'data': data, 'imageFile': imageFile, 'isUserExist': true });
                     }
@@ -111,9 +110,11 @@ registrationRoutes.route("/login").post(function (req, res) {
 registrationRoutes.route("/getloggeduser").post(function (req, res) {
     var User = regModel;
     var fullUrl = req.protocol + '://' + req.get('host') + '/profilePhotos/';
-
+  //  console.log("getloggeduser");
+ //   console.log(req.body);
     User.findOne({ email: req.body.email , projectId: req.body.projectId}).then(
         (result) => {
+          //  console.log(result);
             var imageFile = "";
             if (result.user_image != '') {
                 var imageFile = fullUrl + result.user_image;

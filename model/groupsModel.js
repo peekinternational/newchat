@@ -1,7 +1,3 @@
-/*
-* author  => Peek International
-* designBy => Peek International
-*/
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -23,6 +19,8 @@ const groupSchema = mongoose.Schema({
 		type: Number,
 		default: 1        //1=Active, 0=Deleted
 	},
+	"updatedByMsg": { type: Date, default: Date.now },  // updated time according to which user has messaged
+	"group_image": { type: String, default: '' },
 	"isGroup": {type: Number, default: 1} // for mobileApp, to tell them is this entity a user or group
 }, { timestamps: true });
 

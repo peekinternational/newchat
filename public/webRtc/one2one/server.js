@@ -28,6 +28,8 @@ const sslConfig = require('../../../ssl-config');
 // let webSocketIp='110.10.130.70';
 // if(hostIs[0]=='localhost') webSocketIp='127.0.0.1';  //searchbysearch.com
 
+const sdpTransform = require('sdp-transform');
+
 var os = require('os');
 var ifaces = os.networkInterfaces();
 
@@ -50,12 +52,12 @@ if (serverIpAdd.includes('138.68.27.231')) { //Job callme
         key: sslConfig.keyJcm,
         cert: sslConfig.certJcm,
     };
-    siteLink = 'https://www.mooz.jp:8443/';
+    siteLink = 'https://www.peekvideochat.com:8443/';
 }
 
 var argv = minimist(process.argv.slice(2), {
     default: {
-        as_uri: "https://localhost:8443/",
+        as_uri: siteLink,
         ws_uri: "ws://localhost:8888/kurento"
     }
 });
@@ -71,6 +73,8 @@ var userRegistry = new UserRegistry();
 var pipelines = {};
 var candidatesQueue = {};
 var idCounter = 0;
+var endpoints = {};
+var callersBandwidth = [];
 
 function nextUniqueId() {
     idCounter++;
@@ -91,8 +95,8 @@ function UserSession(id, name, ws) {
 }
 
 UserSession.prototype.sendMessage = function (message) {
-    console.log('Sending message from server ================ ', message);
-    this.ws.send(JSON.stringify(message));
+  //  console.log('Sending message from server ================ ', message);
+  this.ws.send(JSON.stringify(message));
 }
 
 // Represents registrar of users
@@ -133,24 +137,50 @@ function CallMediaPipeline() {
     this.webRtcEndpoint = {};
 }
 
+//------------ needs recheck ------------------------------------
+function updateBandwidth(sessionId, bandwidthVal){
+    console.log('sessionId: ', sessionId, ', bandwidthVal: ', bandwidthVal);
+    console.log('pipeline: ', pipelines[sessionId]);
+    
+    if (endpoints[sessionId]){
+        endpoints[sessionId].setMaxVideoSendBandwidth(bandwidthVal);
+        endpoints[sessionId].setMaxVideoRecvBandwidth(bandwidthVal);
+    }
+   
+
+    // var callerMessage = {
+    //     id: 'bandwidth updated'
+    // }
+    // caller.sendMessage(callerMessage);
+}
+
 CallMediaPipeline.prototype.createPipeline = function (callerId, calleeId, ws, callback) {
     var self = this;
     getKurentoClient(function (error, kurentoClient) {
         if (error) {
             return callback(error);
         }
-
+        
         kurentoClient.create('MediaPipeline', function (error, pipeline) {
             if (error) {
                 return callback(error);
             }
 
+           // pipeline.setOutputBitrate();
             pipeline.create('WebRtcEndpoint', function (error, callerWebRtcEndpoint) {
+        
+                const userIdfound = callersBandwidth.filter(data => data.id == callerId);
+                if(userIdfound && userIdfound.length > 0){
+                    console.log(userIdfound[0].bandwidthVal ,' --- ', callerId);
+                    callerWebRtcEndpoint.setMaxVideoSendBandwidth(userIdfound[0].bandwidthVal);
+                    callerWebRtcEndpoint.setMaxVideoRecvBandwidth(userIdfound[0].bandwidthVal);
+                }
+
                 if (error) {
                     pipeline.release();
                     return callback(error);
                 }
-
+                // console.log("#### OnIceCandidate CALLER ####", callerId);
                 if (candidatesQueue[callerId]) {
                     while (candidatesQueue[callerId].length) {
                         var candidate = candidatesQueue[callerId].shift();
@@ -167,12 +197,22 @@ CallMediaPipeline.prototype.createPipeline = function (callerId, calleeId, ws, c
                 });
 
                 pipeline.create('WebRtcEndpoint', function (error, calleeWebRtcEndpoint) {
+
+                    const userIdfound = callersBandwidth.filter(data => data.id == calleeId);
+                    if(userIdfound && userIdfound.length > 0){
+                        console.log(userIdfound[0].bandwidthVal ,' --- ', calleeId);
+                        calleeWebRtcEndpoint.setMaxVideoSendBandwidth(userIdfound[0].bandwidthVal);
+                        calleeWebRtcEndpoint.setMaxVideoRecvBandwidth(userIdfound[0].bandwidthVal);
+                    }
+
                     if (error) {
                         pipeline.release();
                         return callback(error);
                     }
-
+                 //   console.log("#### OnIceCandidate CALLEE ####", calleeId);
+                 //   console.log(candidate);
                     if (candidatesQueue[calleeId]) {
+                  //      console.log("OnIceCandidate CALLEE 1");
                         while (candidatesQueue[calleeId].length) {
                             var candidate = candidatesQueue[calleeId].shift();
                             calleeWebRtcEndpoint.addIceCandidate(candidate);
@@ -180,6 +220,7 @@ CallMediaPipeline.prototype.createPipeline = function (callerId, calleeId, ws, c
                     }
 
                     calleeWebRtcEndpoint.on('OnIceCandidate', function (event) {
+                     //   console.log("OnIceCandidate CALLEE 2");
                         var candidate = kurento.getComplexType('IceCandidate')(event.candidate);
                         userRegistry.getById(calleeId).ws.send(JSON.stringify({
                             id: 'iceCandidate',
@@ -188,6 +229,8 @@ CallMediaPipeline.prototype.createPipeline = function (callerId, calleeId, ws, c
                     });
 
                     callerWebRtcEndpoint.connect(calleeWebRtcEndpoint, function (error) {
+                     //   console.log("OnIceCandidate CALLEE 3 connect");
+
                         if (error) {
                             pipeline.release();
                             return callback(error);
@@ -201,6 +244,10 @@ CallMediaPipeline.prototype.createPipeline = function (callerId, calleeId, ws, c
                         });
 
                         self.pipeline = pipeline;
+
+                        endpoints[callerId] = callerWebRtcEndpoint;
+                        endpoints[calleeId] = calleeWebRtcEndpoint;
+
                         self.webRtcEndpoint[callerId] = callerWebRtcEndpoint;
                         self.webRtcEndpoint[calleeId] = calleeWebRtcEndpoint;
                         callback(null);
@@ -210,6 +257,8 @@ CallMediaPipeline.prototype.createPipeline = function (callerId, calleeId, ws, c
         });
     })
 }
+
+
 
 CallMediaPipeline.prototype.generateSdpAnswer = function (id, sdpOffer, callback) {
     this.webRtcEndpoint[id].processOffer(sdpOffer, callback);
@@ -241,6 +290,7 @@ var wss = new ws.Server({
     path: '/one2one'
 });
 
+
 wss.on('connection', function (ws) {
     var sessionId = nextUniqueId();
     console.log('Connection received with sessionId ' + sessionId);
@@ -259,11 +309,35 @@ wss.on('connection', function (ws) {
     ws.on('message', function (_message) {
         var message = JSON.parse(_message);
         if (typeof message.event !== "undefined") message = JSON.parse(message.event);
-        console.log(message.id, ' = Connection ' + sessionId + ' received message ', message);
+       // console.log("------message----");
+       // console.log(message);
+
+        // ------------------ needs reCheck ------------------
+       
         switch (message.id) {
             case 'register':
                 register(sessionId, message.name, ws);
                 break;
+            
+          //  case 'callSintonous':
+               // const transSdp = sdpTransform.parse(message.sdpOffer);
+              //  console.log('transSdp-> ', transSdp);
+               // console.log('==================================================================');
+              //  console.log('transSdp_media-> ', transSdp.media[1]);
+              //  console.log('==================================================================');
+               // console.log('fmtp-> ', transSdp.media[1].fmtp[4]);
+
+               // transSdp.media[1].fmtp[4] = "a=fmtp:101 stereo=1; sprop-stereo=1";
+            //   console.log('callSintonous: ', message.audioType);
+              //  if (message.audioType == "stereo"){
+                 // message.sdpOffer = message.sdpOffer.replace('a=fmtp:101 apt=100', 'a=fmtp:101 stereo=1; sprop-stereo=1');
+                //  message.sdpOffer = message.sdpOffer.replace('a=rtpmap:111 opus/48000/2' , 'a=rtpmap:111 opus/48000/2\r\na=fmtp:111 maxplaybackrate=48000; sprop-maxcapturerate=48000;maxaveragebitrate=510000; stereo=1; useinbandfec=0; usedtx=0; cbr=0;maxptime=120; ');
+             //   message.sdpOffer = message.sdpOffer.replace('useinbandfec=1', 'useinbandfec=1; stereo=1; maxaveragebitrate=510000');
+             //  }
+               
+              //  console.log('message.sdpOffer-> ', message.sdpOffer);
+              //  callSintonous(sessionId, message.to, message.from, message.sdpOffer, message.userData, message.bandwidthVal, ws);
+              //  break;
 
             case 'call':
                 call(sessionId, message.to, message.from, message.sdpOffer, message.userData, ws);
@@ -273,6 +347,17 @@ wss.on('connection', function (ws) {
                 incomingCallResponse(sessionId, message.from, message.to, message.callResponse, message.sdpOffer, ws);
                 break;
 
+           // case 'incomingCallResponseSintonous':
+              //  console.log('incomingCallResponseSintonous:', message.audioType);
+
+                // if (message.audioType == "stereo"){
+                //     message.sdpOffer = message.sdpOffer.replace('a=rtpmap:111 opus/48000/2' , 'a=rtpmap:111 opus/48000/2\r\na=fmtp:111 maxplaybackrate=48000; sprop-maxcapturerate=48000;maxaveragebitrate=510000; stereo=1; useinbandfec=0; usedtx=0; cbr=0;maxptime=120; ');
+                //     message.sdpOffer = message.sdpOffer.replace('a=fmtp:101 apt=100', 'a=fmtp:101 stereo=1; sprop-stereo=1');
+                // }
+               
+             //   incomingCallResponseSintonous(sessionId, message.from, message.to, message.callResponse, message.bandwidthVal, message.sdpOffer, ws);
+             //   break;
+
             case 'stop':
                 stop(sessionId, message.to, message.from);
                 break;
@@ -280,9 +365,19 @@ wss.on('connection', function (ws) {
             case 'onIceCandidate':
                 onIceCandidate(sessionId, message.candidate, message.to, message.from);
                 break;
+            
+            case 'updateBandwidth':
+                console.log('::updateBandwidth::');
+                updateBandwidth(message.to, message.bandwidthValue);
+                  ws.send(JSON.stringify({
+                    id: 'Bandwidth updated'
+                  }));
+                break;
+
             case '__ping__':
                 checkRegistration(sessionId, message.from, ws);
                 break;
+        
             default:
                 ws.send(JSON.stringify({
                     id: 'error',
@@ -313,7 +408,7 @@ function getKurentoClient(callback) {
 
 function stop(sessionId, to_id, from_id) {
     sessionId = from_id;
-    console.log("Stop from server called ", sessionId, ' to ', to_id);
+    // console.log("Stop from server called ", sessionId, ' to ', to_id);
     if (!pipelines[sessionId]) return;
 
     var pipeline = pipelines[sessionId];
@@ -340,13 +435,114 @@ function stop(sessionId, to_id, from_id) {
     clearCandidatesQueue(sessionId);
 }
 
+function incomingCallResponseSintonous(calleeId, from, to_id, callResponse, bandwidthVal, calleeSdp, ws) {
+  calleeId = to_id;
+  clearCandidatesQueue(calleeId);
+
+  function onError(callerReason, calleeReason) {
+      if (pipeline) pipeline.release();
+      if (caller) {
+          var callerMessage = {
+              id: 'callResponse',
+              response: 'rejected'
+          }
+          if (callerReason) callerMessage.message = callerReason;
+          caller.sendMessage(callerMessage);
+      }
+
+      var calleeMessage = {
+          id: 'stopCommunication'
+      };
+      if (calleeReason) calleeMessage.message = calleeReason;
+      callee.sendMessage(calleeMessage);
+  }
+
+  var callee = userRegistry.getById(calleeId);
+  if (typeof from === "undefined" || from == null) return onError(null, 'unknown from = ' + from);
+
+  var caller = userRegistry.getByName(from);
+  if (typeof caller === "undefined" || caller == null) return onError(null, 'unknown caller = ' + caller);
+
+  if (callResponse === 'accept') {
+      var pipeline = new CallMediaPipeline();
+      pipelines[caller.id] = pipeline;
+      pipelines[callee.id] = pipeline;
+
+    let userBand = {
+        'id': to_id,
+        'bandwidthVal': bandwidthVal
+    }
+    console.log('to_id: ', to_id, ';; bandwidth: ', bandwidthVal);
+    if (callersBandwidth && callersBandwidth.length > 0){
+      for (let i= 0; i < callersBandwidth.length; i++){
+          if(callersBandwidth[i].id == to_id || callersBandwidth[i].id == from){
+              console.log("call if: ", i);
+              callersBandwidth[i].bandwidthVal = bandwidthVal;
+              break;
+          }
+          else{
+              callersBandwidth.push(userBand);
+              break;
+          }
+        }
+    }
+    else{
+      console.log("call else");
+      callersBandwidth.push(userBand);
+    }
+
+      console.log('...createPipeline...', callersBandwidth);
+      pipeline.createPipeline(caller.id, callee.id, ws, function (error) {
+          if (error) {
+              return onError(error, error);
+          }
+
+          pipeline.generateSdpAnswer(caller.id, caller.sdpOffer, function (error, callerSdpAnswer) {
+              if (error) {
+                  return onError(error, error);
+              }
+
+              pipeline.generateSdpAnswer(callee.id, calleeSdp, function (error, calleeSdpAnswer) {
+                  if (error) {
+                      return onError(error, error);
+                  }
+
+                  var message = {
+                      id: 'startCommunication',
+                      sdpAnswer: calleeSdpAnswer
+                  };
+                  callee.sendMessage(message);
+
+                  message = {
+                      id: 'callResponse',
+                      response: 'accepted',
+                      sdpAnswer: callerSdpAnswer
+                  };
+                  caller.sendMessage(message);
+              });
+          });
+      });
+  } else {
+      var decline = {
+          id: 'callResponse',
+          response: 'rejected',
+          message: 'user declined'
+      };
+      caller.sendMessage(decline);
+  }
+}
+
 function incomingCallResponse(calleeId, from, to_id, callResponse, calleeSdp, ws) {
+    
+    // console.log("........ from: "+ from);
+   //  console.log("........ to_id: "+ to_id);
+  //   console.log("........ calleeId: "+ calleeId);
     calleeId = to_id;
     clearCandidatesQueue(calleeId);
 
     function onError(callerReason, calleeReason) {
-        console.log('callerReason: ', callerReason);
-        console.log('calleeReason: ', calleeReason);
+        //  console.log('callerReason: ', callerReason);
+        //  console.log('calleeReason: ', calleeReason);
         if (pipeline) pipeline.release();
         if (caller) {
             var callerMessage = {
@@ -375,6 +571,7 @@ function incomingCallResponse(calleeId, from, to_id, callResponse, calleeSdp, ws
         pipelines[caller.id] = pipeline;
         pipelines[callee.id] = pipeline;
 
+        console.log('...createPipeline...');
         pipeline.createPipeline(caller.id, callee.id, ws, function (error) {
             if (error) {
                 return onError(error, error);
@@ -415,31 +612,114 @@ function incomingCallResponse(calleeId, from, to_id, callResponse, calleeSdp, ws
     }
 }
 
+function callSintonous(callerId, to, from, sdpOffer, userData, bandwidthVal, ws) {
+      callerId = from;
+      clearCandidatesQueue(callerId);
+      let userBand = {
+          'id': callerId,
+          'bandwidthVal': bandwidthVal
+      }
+
+      console.log(callersBandwidth);
+      console.log(callersBandwidth.length);
+      if (callersBandwidth && callersBandwidth.length > 0){
+        for (let i= 0; i < callersBandwidth.length; i++){
+            if(callersBandwidth[i].id == to || callersBandwidth[i].id == from){
+                console.log("call if: ", i);
+                callersBandwidth[i].bandwidthVal = bandwidthVal;
+                break;
+            }
+            else{
+                callersBandwidth.push(userBand);
+                break;
+            }
+          }
+      }
+      else{
+        console.log("call else");
+        callersBandwidth.push(userBand);
+      }
+     
+    //   if(!userIdfound || userIdfound.length == 0) callersBandwidth.push(userBand);
+
+      console.log('callersBandwidth: ', callersBandwidth);
+
+      var caller = userRegistry.getById(callerId);
+      if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
+          caller = userRegistry.getByName(from);
+          if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") 
+              userRegistry.register(new UserSession(callerId, from, ws));
+      }
+  
+     var rejectCause = 'User ' + to + ' is not registered';
+
+     if (userRegistry.getByName(to) && typeof caller === 'object' && typeof caller.sdpOffer !== "undefined") {
+          var callee = userRegistry.getByName(to);
+          caller.sdpOffer = sdpOffer
+          callee.peer = from;
+          caller.peer = to;
+  
+          var message = {
+              id: 'incomingCall',
+              from: from,
+              // sdpOffer: sdpOffer, // >>>>>>>> NEEDS RECHECK (FOR IOS) <<<<<<<<<<
+              userData: userData
+          };
+
+          try {
+              return callee.sendMessage(message);
+          } catch (exception) {
+              rejectCause = "Error " + exception;
+          }
+      }
+  
+      if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
+      }
+      else {
+          caller.sendMessage({
+            id: 'callResponse',
+            response: 'rejected: ',
+            message: rejectCause
+        });
+      }
+  }
+
+
 function call(callerId, to, from, sdpOffer, userData, ws) {
+  //  console.log("CALL CASE");
     callerId = from;
+  //  console.log("from: "+ from);
+  //  console.log("to: "+ to);
+ //   console.log(sdpOffer);
+
     clearCandidatesQueue(callerId);
 
     var caller = userRegistry.getById(callerId);
-    console.log('Checking caller1 ==================== ', caller);
+   // console.log('Checking caller1 ==================== ', caller);
     if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
         caller = userRegistry.getByName(from);
-        console.log('Checking caller2 ==================== ', caller);
+      //  console.log('Checking caller2 ==================== ', caller);
         if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
             userRegistry.register(new UserSession(callerId, from, ws));
-            console.log('Registered in call');
+         //   console.log(callerId + ' :Registered in call');
         }
     }
 
     var rejectCause = 'User ' + to + ' is not registered';
-    console.log(callerId, '===============================================Caller ', from, ' and callee ', to);
-    if (userRegistry.getByName(to) && typeof caller === 'object' && typeof caller.sdpOffer !== "undefined") {
+  //  console.log(callerId, '=============Caller ', from, ' and callee ', to);
+  //  console.log(userRegistry.getByName(to));
+   if (userRegistry.getByName(to) && typeof caller === 'object' && typeof caller.sdpOffer !== "undefined") {
         var callee = userRegistry.getByName(to);
         caller.sdpOffer = sdpOffer
         callee.peer = from;
         caller.peer = to;
+
+     //   console.log('callee.peer: '+ from);
+     //   console.log('caller.peer: '+ to);
         var message = {
             id: 'incomingCall',
             from: from,
+            // sdpOffer: sdpOffer, // >>>>>>>> NEEDS RECHECK (FOR IOS) <<<<<<<<<<
             userData: userData
         };
 
@@ -452,17 +732,17 @@ function call(callerId, to, from, sdpOffer, userData, ws) {
         //     }
         // } 
 
-        console.log('Sending incomingCall ===========================================');
+    //    console.log('Sending incomingCall ===========================================');
         try {
             return callee.sendMessage(message);
         } catch (exception) {
             rejectCause = "Error " + exception;
         }
     }
-    else console.log('Call else case =========');
+  //  else console.log('Call else case =========');
 
     if (typeof caller !== 'object' || typeof caller.sdpOffer === "undefined") {
-        console.log('caller.sdpOffer ', caller);
+      //  console.log('caller.sdpOffer ', caller);
     }
     else {
         var message = {
@@ -470,7 +750,7 @@ function call(callerId, to, from, sdpOffer, userData, ws) {
             response: 'rejected: ',
             message: rejectCause
         };
-        //console.log('Outside ',message,' caller ',caller);
+     //   console.log('Outside ',message,' caller ',caller);
         caller.sendMessage(message);
     }
 
@@ -485,7 +765,7 @@ function checkRegistration(sessionId, from, ws) {
 
 function register(id, name, ws, callback) {
     id = name;
-    console.log('register id: ', id, ' and ', name);
+  //  console.log('register id: ', id, ' and ', name);
     function onError(error) {
         ws.send(JSON.stringify({
             id: 'registerResponse',
@@ -518,17 +798,35 @@ function clearCandidatesQueue(sessionId) {
 
 function onIceCandidate(sessionId, _candidate, to_id, from_id) {
     sessionId = from_id;
-    console.log('onIceCandidate to:', to_id, ' and ', sessionId);
+    // console.log('from_id:', from_id);
+    // console.log('onIceCandidate to:', to_id, ' and ', sessionId);
+    // console.log(_candidate);
+    // console.log('_candidate, :::> ', _candidate);
+
+    // var candidate
+    // let candidateType = typeof _candidate;
+    // console.log('candidateType: ', candidateType);
+    // if (candidateType === 'string'){
+    //     candidate = kurento.getComplexType('IceCandidate')(_candidate);
+    // }
+    // else {
+    //     candidate = kurento.getComplexType('IceCandidate')(_candidate.candidate+"");
+    // }
+    // console.log('onIceCandidate >>> ', candidate);
     var candidate = kurento.getComplexType('IceCandidate')(_candidate);
     var user = userRegistry.getById(sessionId);
-
+   // console.log('userRegistry > ', user);
     if (pipelines[user.id] && pipelines[user.id].webRtcEndpoint && pipelines[user.id].webRtcEndpoint[user.id]) {
         var webRtcEndpoint = pipelines[user.id].webRtcEndpoint[user.id];
-        webRtcEndpoint.addIceCandidate(candidate);
+       //  console.log(candidate);
+       //  console.log("---- IF ----");
+         webRtcEndpoint.addIceCandidate(candidate);
     } else {
         if (!candidatesQueue[user.id]) {
             candidatesQueue[user.id] = [];
         }
+      //  console.log("---- ELSE ----");
+      //  console.log(candidate);
         candidatesQueue[sessionId].push(candidate);
     }
 }

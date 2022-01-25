@@ -7,9 +7,10 @@
   },
   "dependencies": {
     "express": "^4.17.0",
-    "minimist": "^1.1.1",
-    "ws": "^7.1.0",
-    "kurento-client": "git+https://github.com/Kurento/kurento-client-js.git"
+    "kurento-client": "6.6.0",
+    "minimist": "^1.2.0",
+    "sdp-transform": "^2.14.1",
+    "ws": "^7.1.0"
   },
   "devDependencies": {
     "bower": "^1.4.1"

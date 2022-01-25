@@ -148,10 +148,10 @@ groupsRouter.route("/deletegroup").post(function (req, res) {
 })
 })
 
-groupsRouter.route("/getgroups").get(function (req, res) {
+groupsRouter.route("/getgroups/:projectId").get(function (req, res) {
     var Groups = groupModel;
-
-    Groups.find({ 'status': 1, 'projectId': req.body.projectId})
+ 
+    Groups.find({ 'status': 1, 'projectId': req.params.projectId})
     .populate({ path: 'members', match: { status: { $gt: 0 }, isAdmin: 0 }, select: { 'password': false } })
     .populate({ path: 'projectId', match: {status: 1} ,select: {'status': true}})
     .exec(function (err, groups) {
@@ -177,7 +177,7 @@ groupsRouter.route("/getaddedusers").post(function (req, res) {
     .exec(function (err, groups) {
         if (err) { return console.log(err); }
         var groupUsers = groups;
-        console.log(groups);
+       // console.log(groups);
 
         User.find({ '_id': { $nin: groupUsers[0].members }, 'isAdmin': 0, 'status': {$gt : 0} , 'projectId': req.body.projectId}, {}).exec(function (err, remainingUsers) {
             if (err) { return console.log(err); }

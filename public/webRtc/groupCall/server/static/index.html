@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>GroupCall</title>
+	<link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+	<!-- <button onclick="changeStream()" style="z-index: 9999;">get stream</button> -->
+	<div id="container">
+
+		<!-- ------------------ CAMERA SWITCH TEST ---------------------------------------- -->
+		<!-- <video id="videoSwitcher" controls autoplay playsInline></video>
+
+		<div style="width: 10%; border-radius: 4px; background-color: azure; padding: 7px; margin:auto">
+			<button id="btn-front">Front</button>
+			<button id="btn-back">Back</button>
+		</div> -->
+		<!-- ------------------ ****************** ---------------------------------------- -->
+
+		<div id="wrapper">
+			<div id="incommingCall" class="animate">
+				<h2>Incomming Call</h2>
+				<div class="accept-div">
+					<img onclick="acceptCall()" src="./img/accept.png">
+				</div>
+				<div class="reject-div">
+					<img onclick="rejectCall()" src="./img/reject.png">
+				</div>
+			</div>
+
+			<div id="join" class="animate join">
+				<h1>Join a Room</h1>
+				<form onsubmit="register('group'); return false;" accept-charset="UTF-8">
+					<p>
+						<input type="text" name="name" value="" id="name" placeholder="Username" required>
+					</p>
+					<p>
+						<input type="text" name="room" value="" id="roomName" placeholder="Room" required>
+					</p>
+					<p class="submit">
+						<input type="submit" name="commit" value="Join!">
+					</p>
+				</form>
+			</div>
+
+			<!-- <h1 id="loader" style="text-align: center; color: white;"></h1> -->
+			<!-- <button onclick="capture1('user')" style="position: absolute; left: 0; z-index: 9999">user bottun</button>
+			<button onclick="capture1('environment')" style="position: absolute; right: 0; z-index: 9999">env bottun</button> -->
+			<div id="room" style="display: none;">
+				<div id="participants">
+				</div>
+
+				<!-- <div id="closeCall" class="endcall-div">
+					<img onclick="leaveRoom()" src="./img/reject.png">
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+	</div>
+
+	<script src="./bower_components/socket.io-client/dist/socket.io.js"></script>
+	<script src="./bower_components/adapter.js/adapter.js"></script>
+	<script src="./bower_components/kurento-utils/js/kurento-utils.min.js"></script>
+	<script src="./js/index.js"></script>
+	<script src="./js/participants.js"></script>
+
+
+	<script type="text/javascript"> 
+		document.getElementById('incommingCall').style.display = 'none';
+		document.getElementById('join').style.display = 'none';
+
+		function getParameterByName(name, url) {
+			if (!url) url = window.location.href;
+			name = name.replace(/[\[\]]/g, '\\$&');
+			var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+				results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, ' '));
+		}
+	
+		if (getParameterByName('name') && getParameterByName('roomName') && getParameterByName('socketId')) {
+			document.getElementById('join').style.display = 'none';
+		
+			setTimeout(() => {
+				document.getElementById('room').style.display = 'block';
+				joinCallRoom(getParameterByName('name'), getParameterByName('roomName'), getParameterByName('socketId'), getParameterByName('groupData'), getParameterByName('userData'));
+			}, 3000);
+		}
+		else {
+			document.getElementById('join').style.display = 'block';
+		}
+
+		function acceptCall() {
+			document.getElementById('incommingCall').style.display = 'none';
+			register();
+		}
+
+		function rejectCall() {
+			document.getElementById('incommingCall').style.display = 'none';
+			document.getElementById('join').style.display = 'block';
+		}
+
+		function capture1(mode) {
+			console.log(mode);
+			capture(mode);
+		}
+	</script>
+</body>
+
+</html>

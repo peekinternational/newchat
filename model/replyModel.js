@@ -23,6 +23,9 @@ const replySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'groups'            //If isGroup is 1 then there will be groupId and no receiver id          
     },
+    "projectId": {
+		type: String
+	},
     "message": String,
     "messageType": {
         type: Number,    // 0- Normal , 1- Image, 2- Text, PDF etc..

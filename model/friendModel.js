@@ -10,11 +10,16 @@ const friendSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'users'
     },
-    "ProjectId": {
-        type: Schema.ObjectId,
-        ref: 'projects'
+    "projectId": {
+        type: String,
+		// ref: 'projects'
     },
-    "status": { type: Number, default: 1 }
+    "updatedByMsg": {
+        type: Date, default: Date.now
+    }, // updated time according to which user has been messaged
+    "status": { 
+        type: Number, default: 1 // 0- nothing, 1- request accepted, 2- request send, 3- request rejected
+    }
 }, {
         timestamps: true
     });
